@@ -2,13 +2,13 @@
 <layout>
     <data>
         <variable
-            name="termsModalBottomSheet"
-            type="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.TermsOfAgreementDialog" />
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/terms_of_agreement_content"
                 android:layout_marginTop="24dp"
-                style="@style/bottomSheetContentStyle"
+                style="@style/bottomSheetContent"
                 android:gravity="start"
                 />
 
@@ -45,7 +45,7 @@
             android:scaleType="center"
             android:src="@drawable/icons_tabs_close"
             android:layout_gravity="top|end"
-            android:onClick="@{() -> termsModalBottomSheet.close() }"
+            android:onClick="@{() -> listener.close() }"
             />
     </FrameLayout>
 </layout>

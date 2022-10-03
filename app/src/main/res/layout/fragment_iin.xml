@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="codeFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.code.CodeFragment" />
+            name="iinFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.iin.IINFragment" />
         <variable
             name="phoneNumber"
             type="String" />
@@ -58,7 +58,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="10dp"
                 android:textColor="#40bdff"
-                android:onClick="@{() -> codeFragment.backToPhoneNumberFragment()}"
                 />
 
             <FrameLayout
@@ -111,13 +110,14 @@
                 android:text="@string/login_with_iin"
                 style="@style/buttonStyle"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin" />
+                android:layout_marginTop="@dimen/margin"
+                android:onClick="@{() -> iinFragment.openChangeNumberFragment()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             layout="@layout/layout_toolbar"
-            android:onClick="@{() -> codeFragment.backToPhoneNumberFragment()}"
+            android:onClick="@{() -> iinFragment.backToCodeFragment()}"
             />
     </FrameLayout>
 </layout>

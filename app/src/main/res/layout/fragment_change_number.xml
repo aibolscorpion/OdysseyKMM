@@ -4,9 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="phoneNumberFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.phonenumber.PhoneNumberFragment" />
-        <variable
             name="phoneNumber"
             type="String" />
     </data>
@@ -149,8 +146,7 @@
                 style="@style/buttonStyle"
                 android:text="@string/change_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> phoneNumberFragment.checkPhoneNumber()}"/>
+                android:layout_marginTop="@dimen/margin"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -43,6 +43,7 @@ class CodeFragment : Fragment() {
             }
 
             override fun onFinish() {
+                openIINFragment()
                 if(countSmsBtnPress == Config.SMS_RECEIVE_ATTEMPT){
                     showContactSupportBtn()
                     return
@@ -54,6 +55,10 @@ class CodeFragment : Fragment() {
         }.start()
     }
 
+    fun openIINFragment(){
+        val action = CodeFragmentDirections.actionCodeFragmentToIINFragment()
+        findNavController().navigate(action)
+    }
 
     fun showTimer(){
         countSmsBtnPress+=1

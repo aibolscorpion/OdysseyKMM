@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable
+            name="phoneNumberAddedDialog"
+            type="kz.divtech.odyssey.rotation.ui.login.changenumber.dialogs.PhoneNumberAddedDialog" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -29,17 +31,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_added"
-                style="@style/titleTextStyle"
-                android:textSize="20sp"
-                android:textColor="@color/bottom_sheet_title"
-                android:layout_gravity="center_horizontal"
+                style="@style/bottomSheetTitle"
                 />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_added_content"
                 android:layout_marginTop="@dimen/margin"
-                style="@style/bottomSheetContentStyle"
+                style="@style/bottomSheetContent"
                 android:layout_marginBottom="@dimen/margin"
                 />
 
@@ -49,18 +49,13 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pt_root_ui"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/try_again_btn_background"
-            android:textColor="#0061e1"
-            android:letterSpacing="0.01"
-            android:lineSpacingExtra="7sp"
+            style="@style/bottomSheetBtn"
+            android:background="@drawable/bottom_sheet_btn_bg"
             android:textAllCaps="false"
-            android:gravity="center"
             android:text="@string/go_to_login_page"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="20dp"
+            android:onClick="@{() -> phoneNumberAddedDialog.goToLoginPage()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

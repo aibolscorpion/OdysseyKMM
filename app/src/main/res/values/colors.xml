@@ -23,5 +23,6 @@
     <color name="bottom_sheet_title">#081426</color>
     <color name="bottom_sheet_line">#EBEBEB</color>
     <color name="bottom_sheet_error_title">#FF4242</color>
+    <color name="bottom_sheet_btn">#0061E1</color>
 
 </resources>

@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogAccountDeactivatedBinding
+import kz.divtech.odyssey.rotation.ui.login.listener.DialogListener
 
 
-class AccountDeactivatedDialog : BottomSheetDialogFragment() {
+class AccountDeactivatedDialog : BottomSheetDialogFragment(), DialogListener {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
@@ -22,10 +24,16 @@ class AccountDeactivatedDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val dataBinding  = DialogAccountDeactivatedBinding.inflate(inflater)
+        dataBinding.listener = this
         return dataBinding.root
     }
 
-    fun close(){
+    override fun contact() {
+        val action = AccountDeactivatedDialogDirections.actionAccountDeactivatedDialogToContactSupportDialog()
+        findNavController().navigate(action)
+    }
+
+    override fun close(){
         dismiss()
     }
 

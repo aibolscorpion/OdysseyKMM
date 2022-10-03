@@ -29,14 +29,15 @@
                 >
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/employee_not_found"
+                android:layout_height="wrap_content"
+                android:text="@string/error_happened"
+                android:textColor="@color/bottom_sheet_error_title"
                 style="@style/bottomSheetTitle"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/employee_not_found_with_contents"
+                android:text="@string/phone_number_error_content"
                 android:layout_marginTop="@dimen/margin"
                 style="@style/bottomSheetContent"
                 />
@@ -54,7 +55,7 @@
                 style="@style/bottomSheetBtn"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:onClick="@{()-> listener.contact()}"
+                android:onClick="@{() -> listener.contact()}"
                 />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
@@ -68,7 +69,7 @@
             android:text="@string/try_again"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="20dp"
-            android:onClick="@{()-> listener.close()}"/>
+            android:onClick="@{() -> listener.close()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

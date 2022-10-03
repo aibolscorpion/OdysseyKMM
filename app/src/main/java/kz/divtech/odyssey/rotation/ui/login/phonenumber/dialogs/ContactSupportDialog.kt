@@ -9,9 +9,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogContactSupportBinding
+import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class ContactSupportDialog : BottomSheetDialogFragment() {
+class ContactSupportDialog : BottomSheetDialogFragment(), OnCloseListener {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
@@ -22,10 +23,11 @@ class ContactSupportDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val dataBinding  = DialogContactSupportBinding.inflate(inflater)
+        dataBinding.listener = this
         return dataBinding.root
     }
 
-    fun close(){
+    override fun close(){
         dismiss()
     }
 

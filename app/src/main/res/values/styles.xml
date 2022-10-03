@@ -38,8 +38,15 @@
         <item name="android:lineSpacingExtra">-1sp</item>
     </style>
 
+    <style name="bottomSheetTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/bottom_sheet_title</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/pt_root_ui</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
-    <style name="bottomSheetContentStyle">
+    <style name="bottomSheetContent">
         <item name="android:fontFamily">@font/pt_root_ui_medium</item>
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/bottom_sheet_content</item>
@@ -48,6 +55,14 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="bottomSheetBtn">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/bottom_sheet_btn</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 
     <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/terms_bottom_sheet_dialog_fragment_bg</item>

@@ -37,7 +37,7 @@ class PhoneNumberFragment : Fragment() {
         phoneNumberET.addTextChangedListener(maskedETListener)
         phoneNumberET.onFocusChangeListener = maskedETListener
 
-
+        showErrorDialog()
         return view
     }
 
@@ -69,17 +69,12 @@ class PhoneNumberFragment : Fragment() {
     }
 
     fun showErrorDialog(){
-        val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToErrorHappenedDialog()
+        val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToPhoneNumberErrorDialog()
         findNavController().navigate(action)
     }
 
     fun showAccountDeactivatedDialog(){
         val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog()
-        findNavController().navigate(action)
-    }
-
-    fun showContactSupportDialog(){
-        val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToContactSupportDialog()
         findNavController().navigate(action)
     }
 

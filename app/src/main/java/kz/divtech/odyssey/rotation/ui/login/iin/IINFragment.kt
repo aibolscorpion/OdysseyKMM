@@ -14,12 +14,23 @@ class IINFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = FragmentIinBinding.inflate(inflater)
-        return view.root
+        val binding = FragmentIinBinding.inflate(inflater)
+        showEmployeeNotFoundDialog()
+        binding.iinFragment = this
+        return binding.root
     }
 
     fun showEmployeeNotFoundDialog(){
         val action = IINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog()
+        findNavController().navigate(action)
+    }
+
+    fun backToCodeFragment(){
+        findNavController().popBackStack()
+    }
+
+    fun openChangeNumberFragment(){
+        val action = IINFragmentDirections.actionIINFragmentToChangeNumberFragment()
         findNavController().navigate(action)
     }
 }

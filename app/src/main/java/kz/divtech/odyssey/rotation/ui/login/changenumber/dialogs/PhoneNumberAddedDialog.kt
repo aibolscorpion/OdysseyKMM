@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogPhoneNumberAddedBinding
+import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
+import kz.divtech.odyssey.rotation.ui.login.phonenumber.PhoneNumberFragmentDirections
 
 
 class PhoneNumberAddedDialog : BottomSheetDialogFragment() {
@@ -22,11 +25,13 @@ class PhoneNumberAddedDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         val dataBinding  = DialogPhoneNumberAddedBinding.inflate(inflater)
+        dataBinding.phoneNumberAddedDialog = this
         return dataBinding.root
     }
 
-    fun close(){
-        dismiss()
+    fun goToLoginPage(){
+        val action = PhoneNumberAddedDialogDirections.actionPhoneNumberAddedDialogToPhoneNumberFragment()
+        findNavController().navigate(action)
     }
 
 }

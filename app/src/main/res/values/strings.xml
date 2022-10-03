@@ -47,11 +47,21 @@
     <string name="contact_support_btn">Обратиться в поддержку</string>
     <string name="try_again">Попробывать снова</string>
     <string name="error_happened">Произошла ошибка</string>
-    <string name="error_happened_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
+    <string name="phone_number_error_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
     <string name="application_sent">Заявка отправлена</string>
     <string name="application_sent_content">Заявка на изменение номера телефона на +7 701 399 35 38 успешно отправлена. Обработка займет до 30 минут. После подтверждения Вы получите уведомление на Ваш телефон.</string>
     <string name="close_window">Закрыть окно</string>
     <string name="phone_number_added">Номер успешно добавлен</string>
     <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
+    <string name="change_number_error_content">Не удалось добавить номер телефона по указаному ИИН. Попробуйте снова либо обратитесь в службу поддержки.</string>
     <string name="go_to_login_page">Перейти на страницу входа</string>
+    <string name="account_deactivated">Аккаунт деактивирован</string>
+    <string name="account_deactivated_content">Уважаемый Руслан Владимирович, ваш аккаунт был деактивирован вашим работодателем. Если у вас есть вопросы обратитесь в службу поддержки.</string>
+    <string name="cancel">Отмена</string>
+    <string name="call">Позвонить</string>
+    <string name="seven_days_24_hours">круглосуточно, без выходных</string>
+    <string name="write_in_whatsapp">Написать в WhatsApp</string>
+    <string name="write_in_telegram">Написать в Telegram</string>
+    <string name="operator_online">оператор онлайн</string>
+
 </resources>

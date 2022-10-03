@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.DialogListener" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -29,17 +31,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/application_sent"
-                style="@style/titleTextStyle"
-                android:textSize="20sp"
-                android:textColor="@color/bottom_sheet_title"
-                android:layout_gravity="center_horizontal"
+                style="@style/bottomSheetTitle"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/employee_not_found_with_contents"
                 android:layout_marginTop="@dimen/margin"
-                style="@style/bottomSheetContentStyle"
+                style="@style/bottomSheetContent"
                 />
             <View
                 android:layout_width="match_parent"
@@ -52,12 +51,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/contact_support_btn"
-                style="@style/titleTextStyle"
-                android:layout_gravity="center_horizontal"
+                style="@style/bottomSheetBtn"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:textSize="17sp"
-                android:textColor="#0061e1"
+                android:onClick="@{()-> listener.contact()}"
                 />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
@@ -65,18 +62,13 @@
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pt_root_ui"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/try_again_btn_background"
-            android:textColor="#0061e1"
-            android:letterSpacing="0.01"
-            android:lineSpacingExtra="7sp"
+            style="@style/bottomSheetBtn"
+            android:background="@drawable/bottom_sheet_btn_bg"
             android:textAllCaps="false"
-            android:gravity="center"
             android:text="@string/close_window"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="20dp"
+            android:onClick="@{() -> listener.close()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

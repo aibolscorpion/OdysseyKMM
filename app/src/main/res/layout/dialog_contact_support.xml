@@ -2,7 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -16,67 +18,164 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin"
-                android:paddingTop="@dimen/two_times_margin"
-                >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/employee_not_found"
-                style="@style/titleTextStyle"
-                android:textSize="20sp"
-                android:textColor="@color/bottom_sheet_title"
-                android:layout_gravity="center_horizontal"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/employee_not_found_with_contents"
-                android:layout_marginTop="@dimen/margin"
-                style="@style/bottomSheetContentStyle"
-                />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/two_times_margin"
-                android:background="@color/bottom_sheet_line"
-                />
+                android:paddingTop="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_support_btn"
-                style="@style/titleTextStyle"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:textSize="17sp"
-                android:textColor="#0061e1"
-                />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin">
+
+                    <ImageView
+                        android:id="@+id/callIconImgVw"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/icons_phone_outgoing"
+                        app:layout_constraintTop_toTopOf="@+id/callTitleTV"
+                        app:layout_constraintBottom_toBottomOf="@+id/callContentTV"
+                        app:layout_constraintEnd_toStartOf="@+id/callTitleTV" />
+
+                    <TextView
+                        android:id="@+id/callTitleTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/call"
+                        style="@style/bottomSheetTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/callIconImgVw"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+
+                    <TextView
+                        android:id="@+id/callContentTV"
+                        style="@style/bottomSheetContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/seven_days_24_hours"
+                        app:layout_constraintStart_toEndOf="@+id/callIconImgVw"
+                        app:layout_constraintTop_toBottomOf="@+id/callTitleTV"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintTop_toBottomOf="@+id/callContentTV"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin">
+
+                    <ImageView
+                        android:id="@+id/whatsAppIconImgVw"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/icons_8_whatsapp"
+                        app:layout_constraintBottom_toBottomOf="@+id/whatsAppContentTV"
+                        app:layout_constraintEnd_toStartOf="@+id/whatsAppTitleTV"
+                        app:layout_constraintTop_toTopOf="@+id/whatsAppTitleTV" />
+
+                    <TextView
+                        android:id="@+id/whatsAppTitleTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/write_in_whatsapp"
+                        style="@style/bottomSheetTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/whatsAppIconImgVw"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+
+                    <TextView
+                        android:id="@+id/whatsAppContentTV"
+                        style="@style/bottomSheetContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/operator_online"
+                        app:layout_constraintStart_toEndOf="@+id/whatsAppIconImgVw"
+                        app:layout_constraintTop_toBottomOf="@+id/whatsAppTitleTV"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintTop_toBottomOf="@+id/whatsAppContentTV"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin">
+
+                    <ImageView
+                        android:id="@+id/telegramIconImgVw"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="6dp"
+                        android:src="@drawable/icons_telegram"
+                        app:layout_constraintBottom_toBottomOf="@+id/telegramContentTV"
+                        app:layout_constraintEnd_toStartOf="@+id/telegramTitleTV"
+                        app:layout_constraintTop_toTopOf="@+id/telegramTitleTV" />
+
+                    <TextView
+                        android:id="@+id/telegramTitleTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/write_in_telegram"
+                        style="@style/bottomSheetTitle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/telegramIconImgVw"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+
+                    <TextView
+                        android:id="@+id/telegramContentTV"
+                        style="@style/bottomSheetContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/operator_online"
+                        app:layout_constraintStart_toEndOf="@+id/telegramIconImgVw"
+                        app:layout_constraintTop_toBottomOf="@+id/telegramTitleTV"
+                        android:layout_marginStart="@dimen/margin"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintTop_toBottomOf="@+id/telegramContentTV"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/pt_root_ui"
-            android:textStyle="bold"
-            android:textSize="17sp"
-            android:background="@drawable/try_again_btn_background"
-            android:textColor="#0061e1"
-            android:letterSpacing="0.01"
-            android:lineSpacingExtra="7sp"
+            style="@style/bottomSheetBtn"
+            android:background="@drawable/bottom_sheet_btn_bg"
             android:textAllCaps="false"
-            android:gravity="center"
-            android:text="@string/try_again"
+            android:text="@string/cancel"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"/>
+            android:layout_marginBottom="20dp"
+            android:onClick="@{() -> listener.close()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -6,14 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import kz.divtech.odyssey.rotation.databinding.FragmentChangeNumberBinding
 
 class ChangeNumberFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+    ): View {
+        val binding = FragmentChangeNumberBinding.inflate(inflater)
+        showApplicationSentDialog()
+        return binding.root
     }
 
     fun showApplicationSentDialog(){
@@ -27,7 +30,7 @@ class ChangeNumberFragment : Fragment() {
     }
 
     fun showErrorDialog(){
-        val action = ChangeNumberFragmentDirections.actionChangeNumberFragmentToErrorHappenedDialog()
+        val action = ChangeNumberFragmentDirections.actionChangeNumberFragmentToChangeNumberErrorDialog()
         findNavController().navigate(action)
     }
 
