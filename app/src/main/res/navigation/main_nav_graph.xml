@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
+        android:label="@string/main_fragment"
+        app:layout="@layout/activity_main"/>
+    <fragment
+        android:id="@+id/tripsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
+        android:label="@string/trips_fragment"
+        app:layout="@layout/fragment_trips"/>
+    <fragment
+        android:id="@+id/helpFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.help.HelpFragment"
+        android:label="@string/help_fragment"
+        app:layout="@layout/fragment_help" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment"
+        android:label="@string/profile_fragment"
+        app:layout="@layout/fragment_profile"/>
+</navigation>

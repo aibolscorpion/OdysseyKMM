@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">Odyssey Rotation</string>
+
+    //Bottom Navigation Menu
+    <string name="main_fragment">Главная</string>
+    <string name="trips_fragment">Поездки</string>
+    <string name="help_fragment">Помощь</string>
+    <string name="profile_fragment">Профиль</string>
+
+    //login with phoneNumber
+    <string name="login">Войти в аккаунт</string>
+    <string name="telephone_number_linked_to_odyssey_id">По номеру телефона привязанному к Odyssey ID</string>
+    <string name="enter">Войти</string>
+    <string name="terms_of_service_and_user_agreement">Авторизируясь вы автоматически соглашаетесь с правилами сервиса и пользовательским соглашением сервиса Odyssey Rotation</string>
+    <string name="telephone">Телефон</string>
+    <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
+    <string name="phone_number_placeholder">+7 (</string>
+
+    <string name="enter_code">Введите код</string>
+    <string name="code_was_sent_to_number">На номер %1$s отправлено SMS с кодом авторизации</string>
+    <string name="enter_phone_number_fully">Введите номер телефона полностью</string>
+    <string name="zero">0</string>
+    <string name="resend_sms">Выслать SMS повторно</string>
+    <string name="resend_sms_with_seconds">Переотправить SMS: %1$s сек</string>
+    <string name="change_number">Изменить номер</string>
+    <string name="back">Назад</string>
+    <string name="not_find_telephone_number">Номер не найден.\n Войти по ИИН</string>
+    <string name="enter_your_iin">Номер %1$d не найден. Пожалуйста, введите ваш ИИН.</string>
+    <string name="login_with_iin">Войти по ИИН</string>
+    <string name="iin">ИИН</string>
+    <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
+    <string name="contact_support">Обратитесь к службе поддержки</string>
+    <string name="confirm_data">Подтвердите данные</string>
+    <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
+    <string name="employee_name_placeholder">Баталгазиев Руслан Владимирович</string>
+    <string name="employee_position_placeholder">Старший бригадир</string>
+    <string name="add_phone_number">Добавить номер телефона</string>
+    <string name="change_phone_number">Изменить номер телефона</string>
+    <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
+    <string name="change_iin">Изменить ИИН</string>
+    <string name="terms_of_agreement">Пользовательское соглашение</string>
+    <string name="terms_of_agreement_content">"К основным стандартам можно отнести: стандарты чистоты (чистота зала, рабочих зон персонала, входной группы и т.д.), стандарты внешнего вида (форма персонала, обувь, прически, украшения, маникюр, макияж и т.п.), стандарты обслуживания гостей (сценарий обслуживание, конфликтные ситуации, комплименты и лояльность, встреча гостей с детьми, продажи, работа с возражениями, обратная связь с гостем и т.д.), стандарты подачи блюд и напитков (правила выноса блюд и напитков, комплиментов и угощений, время подачи), стандарты сервировки (до прихода гостя, во время его пребывания, после прощания с гостям, в перерывах между подачей блюд и т.д.)
+Несмотря на то, что стандарты работы заведения, казалось бы, первостепенная вещь в ресторане, далеко не все украинские рестораторы их соблюдают.
+Стандартизация сервиса и конкурентное преимущество заведения — тесно связанные вещи. Для начала нужно получить обратную связь от клиентов, чтобы понять, что и как стандартизировать.</string>
+    <string name="employee_not_found">Сотрудник не найден</string>
+    <string name="employee_not_found_with_contents">Сотрудник с ИИН: 920911300248 не найден. Внимательно проверьте ваши данные и попробуйте снова.</string>
+    <string name="contact_support_btn">Обратиться в поддержку</string>
+    <string name="try_again">Попробывать снова</string>
+    <string name="error_happened">Произошла ошибка</string>
+    <string name="error_happened_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
+    <string name="application_sent">Заявка отправлена</string>
+    <string name="application_sent_content">Заявка на изменение номера телефона на +7 701 399 35 38 успешно отправлена. Обработка займет до 30 минут. После подтверждения Вы получите уведомление на Ваш телефон.</string>
+    <string name="close_window">Закрыть окно</string>
+    <string name="phone_number_added">Номер успешно добавлен</string>
+    <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
+    <string name="go_to_login_page">Перейти на страницу входа</string>
+</resources>
