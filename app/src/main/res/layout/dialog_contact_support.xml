@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/call"
-                        style="@style/bottomSheetTitle"
+                        style="@style/contactSupportTitle"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/callIconImgVw"
                         android:layout_marginTop="12dp"
@@ -53,7 +53,7 @@
 
                     <TextView
                         android:id="@+id/callContentTV"
-                        style="@style/bottomSheetContent"
+                        style="@style/contactSupportContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/seven_days_24_hours"
@@ -90,7 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/write_in_whatsapp"
-                        style="@style/bottomSheetTitle"
+                        style="@style/contactSupportTitle"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/whatsAppIconImgVw"
                         android:layout_marginTop="12dp"
@@ -99,7 +99,7 @@
 
                     <TextView
                         android:id="@+id/whatsAppContentTV"
-                        style="@style/bottomSheetContent"
+                        style="@style/contactSupportContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/operator_online"
@@ -137,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/write_in_telegram"
-                        style="@style/bottomSheetTitle"
+                        style="@style/contactSupportTitle"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/telegramIconImgVw"
                         android:layout_marginTop="12dp"
@@ -146,7 +146,7 @@
 
                     <TextView
                         android:id="@+id/telegramContentTV"
-                        style="@style/bottomSheetContent"
+                        style="@style/contactSupportContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/operator_online"
@@ -167,8 +167,6 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             style="@style/bottomSheetBtn"
             android:background="@drawable/bottom_sheet_btn_bg"
             android:textAllCaps="false"

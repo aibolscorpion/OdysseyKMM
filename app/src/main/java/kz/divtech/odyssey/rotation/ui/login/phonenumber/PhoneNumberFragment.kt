@@ -37,7 +37,7 @@ class PhoneNumberFragment : Fragment() {
         phoneNumberET.addTextChangedListener(maskedETListener)
         phoneNumberET.onFocusChangeListener = maskedETListener
 
-        showErrorDialog()
+        showAccountDeactivatedDialog()
         return view
     }
 

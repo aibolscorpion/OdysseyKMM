@@ -15,6 +15,7 @@ class ChangeNumberFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentChangeNumberBinding.inflate(inflater)
+        binding.changeNumberFragment = this
         showApplicationSentDialog()
         return binding.root
     }
@@ -34,5 +35,9 @@ class ChangeNumberFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    fun openConfirmDataFragment(){
+        val action = ChangeNumberFragmentDirections.actionChangeNumberFragmentToConfirmData()
+        findNavController().navigate(action)
+    }
 
 }

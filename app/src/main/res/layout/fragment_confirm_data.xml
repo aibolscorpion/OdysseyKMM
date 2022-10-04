@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="phoneNumberFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.phonenumber.PhoneNumberFragment" />
+            name="confirmDataFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.confirmdata.ConfirmData" />
         <variable
             name="phoneNumber"
             type="String" />
@@ -25,49 +25,59 @@
             >
 
 
-            <TextView
-                android:id="@+id/titleTV"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/titleLL"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/confirm_data"
-                style="@style/titleTextStyle"
-                app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL">
+                <TextView
+                    android:id="@+id/titleTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirm_data"
+                    style="@style/titleTextStyle"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            <TextView
-                android:id="@+id/descriptionTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/found_employee_by_id"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/titleTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="9dp"
-                />
+                <TextView
+                    android:id="@+id/descriptionTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/found_employee_by_id"
+                    style="@style/descriptionTextStyle"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toBottomOf="@+id/titleTV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="9dp"
+                    />
 
-            <TextView
-                android:id="@+id/changeIINTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_iin"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#40bdff"
-                />
-
+                <TextView
+                    android:id="@+id/changeIINTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_iin"
+                    style="@style/descriptionTextStyle"
+                    android:layout_gravity="center"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#40bdff"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/employeeInformationLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/changeIINTV"
-                app:layout_constraintBottom_toTopOf="@+id/editTextFL">
+                app:layout_constraintBottom_toTopOf="@+id/editTextFL"
+                android:layout_marginBottom="16dp">
 
                 <View
                     android:id="@+id/lineOneVw"
@@ -77,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/employeeNameTV"
-                    style="@style/titleTextStyle"
+                    style="@style/nameTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
@@ -105,8 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.6">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/phoneNumberET"
@@ -150,7 +159,7 @@
                 android:text="@string/add_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
                 android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> phoneNumberFragment.checkPhoneNumber()}"/>
+                android:onClick="@{() -> confirmDataFragment.openMainActivity()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

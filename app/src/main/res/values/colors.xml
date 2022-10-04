@@ -8,7 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text_title">#FEFFFE</color>
-    <color name="text">#CFD5DC</color>
+    <color name="text_description">#CFD5DC</color>
+    <color name="text_description_2">#FCFDFD</color>
     <color name="line">#1EFEFFFE</color>
     <color name="status_bar">#174887</color>
     <color name="code_edit_text_hint">#1AFEFFFE</color>
@@ -24,5 +25,5 @@
     <color name="bottom_sheet_line">#EBEBEB</color>
     <color name="bottom_sheet_error_title">#FF4242</color>
     <color name="bottom_sheet_btn">#0061E1</color>
-
+    <color name="contact_support_title">#1B304D</color>
 </resources>

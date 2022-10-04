@@ -4,6 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
+            name="ChangeNumberFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.changenumber.ChangeNumberFragment" />
+        <variable
             name="phoneNumber"
             type="String" />
     </data>
@@ -21,50 +24,58 @@
             android:background="@drawable/screen_background"
             >
 
-
-            <TextView
-                android:id="@+id/titleTV"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/titleLL"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/change_number"
-                style="@style/titleTextStyle"
-                app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL">
 
-            <TextView
-                android:id="@+id/descriptionTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/do_you_want_to_change_iin"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/titleTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="9dp"
-                />
+                <TextView
+                    android:id="@+id/titleTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_number"
+                    style="@style/titleTextStyle"
+                    android:layout_gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/changeIINTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_iin"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#40bdff"
-                />
+                <TextView
+                    android:id="@+id/descriptionTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/do_you_want_to_change_iin"
+                    style="@style/descriptionTextStyle"
+                    app:layout_constraintTop_toBottomOf="@+id/titleTV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="9dp"
+                    />
 
+                <TextView
+                    android:id="@+id/changeIINTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_iin"
+                    style="@style/descriptionTextStyle"
+                    app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:textColor="#40bdff"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/employeeInformationLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/changeIINTV"
-                app:layout_constraintBottom_toTopOf="@+id/editTextFL">
+                app:layout_constraintBottom_toTopOf="@+id/editTextFL"
+                android:layout_marginBottom="16dp">
 
                 <View
                     android:id="@+id/lineOneVw"
@@ -74,7 +85,7 @@
 
                 <TextView
                     android:id="@+id/employeeNameTV"
-                    style="@style/titleTextStyle"
+                    style="@style/nameTextStyle"
                     android:gravity="start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,8 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.6">
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <EditText
                     android:id="@+id/phoneNumberET"
@@ -146,7 +156,8 @@
                 style="@style/buttonStyle"
                 android:text="@string/change_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin"/>
+                android:layout_marginTop="@dimen/margin"
+                android:onClick="@{()-> ChangeNumberFragment.openConfirmDataFragment()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

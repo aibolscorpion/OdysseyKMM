@@ -101,6 +101,9 @@
         <action
             android:id="@+id/action_changeNumberFragment_to_changeNumberErrorDialog"
             app:destination="@id/changeNumberErrorDialog" />
+        <action
+            android:id="@+id/action_changeNumberFragment_to_confirmData"
+            app:destination="@id/confirmData" />
     </fragment>
 
     <activity
@@ -135,5 +138,13 @@
             android:id="@+id/action_changeNumberErrorDialog_to_contactSupportDialog"
             app:destination="@id/contactSupportDialog" />
     </dialog>
+    <fragment
+        android:id="@+id/confirmData"
+        android:name="kz.divtech.odyssey.rotation.ui.login.confirmdata.ConfirmData"
+        android:label="ConfirmData" >
+        <action
+            android:id="@+id/action_confirmData_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
 
 </navigation>

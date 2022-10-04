@@ -29,6 +29,7 @@
     <string name="login_with_iin">Войти по ИИН</string>
     <string name="iin">ИИН</string>
     <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
+    <string name="contact_support_content">К вам не поступил SMS-код? Свяжитесь с нашей службой поддержки.</string>
     <string name="contact_support">Обратитесь к службе поддержки</string>
     <string name="confirm_data">Подтвердите данные</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
@@ -63,5 +64,6 @@
     <string name="write_in_whatsapp">Написать в WhatsApp</string>
     <string name="write_in_telegram">Написать в Telegram</string>
     <string name="operator_online">оператор онлайн</string>
+    <string name="fill_all_empty_fields">Заполните все поля</string>
 
 </resources>
