@@ -65,5 +65,16 @@
     <string name="write_in_telegram">Написать в Telegram</string>
     <string name="operator_online">оператор онлайн</string>
     <string name="fill_all_empty_fields">Заполните все поля</string>
+    <string name="my_profile">Мой профиль</string>
+    <string name="company">Компания</string>
+    <string name="position">Должность</string>
+    <string name="table_number">№ табеля</string>
+    <string name="odyssey_id">ODYSSEY_ID</string>
+    <string name="private_data">Личные данные</string>
+    <string name="documents">Документы</string>
+    <string name="notifications">Уведомления</string>
+    <string name="user_agreement">Пользовательское соглашение</string>
+    <string name="logout">Выйти из приложения</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

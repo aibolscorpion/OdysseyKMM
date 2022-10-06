@@ -20,7 +20,7 @@
         android:id="@+id/profileFragment"
         android:title="@string/profile_fragment"
         android:label="@string/profile_fragment"
-        android:icon="@drawable/icons_tabs_profile"
+        android:icon="@drawable/icons_tabs_profile_menu"
         />
 
 </menu>

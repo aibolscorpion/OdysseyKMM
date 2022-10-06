@@ -148,7 +148,7 @@
                 android:id="@+id/contactSupportBtn"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:text="@string/contact_support"
+                android:text="@string/contact_support_btn"
                 style="@style/buttonStyle"
                 android:visibility="gone"
                 android:background="@drawable/contact_support_button_background"

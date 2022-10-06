@@ -23,5 +23,13 @@
         android:id="@+id/profileFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment"
         android:label="@string/profile_fragment"
-        app:layout="@layout/fragment_profile"/>
+        app:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_termsOfAgreementDialog2"
+            app:destination="@id/termsOfAgreementDialog2" />
+    </fragment>
+    <dialog
+        android:id="@+id/termsOfAgreementDialog2"
+        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.TermsOfAgreementDialog"
+        android:label="TermsOfAgreementDialog" />
 </navigation>
