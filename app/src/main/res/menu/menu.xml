@@ -2,24 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/mainFragment"
-        android:title="@string/main_fragment"
+        android:title="@string/main"
         android:icon="@drawable/icons_tabs_home"
 
         />
     <item
         android:id="@+id/tripsFragment"
-        android:title="@string/trips_fragment"
+        android:title="@string/trips"
         android:icon="@drawable/icons_tabs_calendar"
         />
     <item
         android:id="@+id/helpFragment"
-        android:title="@string/help_fragment"
+        android:title="@string/help"
         android:icon="@drawable/icons_tabs_help"
         />
     <item
         android:id="@+id/profileFragment"
-        android:title="@string/profile_fragment"
-        android:label="@string/profile_fragment"
+        android:title="@string/profile"
+        android:label="@string/profile"
         android:icon="@drawable/icons_tabs_profile_menu"
         />
 

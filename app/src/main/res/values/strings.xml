@@ -2,10 +2,10 @@
     <string name="app_name">Odyssey Rotation</string>
 
     //Bottom Navigation Menu
-    <string name="main_fragment">Главная</string>
-    <string name="trips_fragment">Поездки</string>
-    <string name="help_fragment">Помощь</string>
-    <string name="profile_fragment">Профиль</string>
+    <string name="main">Главная</string>
+    <string name="trips">Поездки</string>
+    <string name="help">Помощь</string>
+    <string name="profile">Профиль</string>
 
     //login with phoneNumber
     <string name="login">Войти в аккаунт</string>
@@ -76,5 +76,22 @@
     <string name="user_agreement">Пользовательское соглашение</string>
     <string name="logout">Выйти из приложения</string>
     <string name="title_activity_main">MainActivity</string>
-
+    <string name="call_support">Позвонить в поддержку</string>
+    <string name="write_support">Написать в поддержку</string>
+    <string name="questions_and_answers">Вопросы и ответы</string>
+    <string name="press_service">Пресс-служба</string>
+    <string name="write_support_content">Наши онлайн-консультанты работают круглосуточно. Пишите по любым вопросам.</string>
+    <string name="call_support_content">Если у вас возникли сложности с приложением либо с поездкой, вы поможете позвонить нам в удобное для вас время:\n\n+7 727 355 37 37\n+7 701 355 37 37\n\nТакже, мы рекомендуем обратится в круглосуточный онлайн чат.</string>
+    <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>
+    <string name="no.">№</string>
+    <string name="work_permission_number_placeholder">0005011</string>
+    <string name="expire_date_until">Срок до</string>
+    <string name="expire_date_placeholder">10.07.2015 – 15.02.2021</string>
+    <string name="work_permission">Разрешение на работу</string>
+    <string name="id">Удостоверение личности</string>
+    <string name="id_placeholder">931004300975</string>
+    <string name="id_issue_expire_date">Выдано / срок до</string>
+    <string name="id_issue_expire_date_placeholder">11.09.2017 – 11.09.2027, МВД РК</string>
+    <string name="passport">Паспорт</string>
+    <string name="resident_card">Вид на жительство</string>
 </resources>

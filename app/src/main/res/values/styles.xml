@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="titleTextStyle">
+    <style name="loginTitleTextStyle">
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/text_title</item>
@@ -103,13 +103,6 @@
         <item name="android:gravity">start</item>
     </style>
 
-    <style name="profileValuesTextStyle">
-        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#15304D</item>
-        <item name="android:letterSpacing">0.2</item>
-        <item name="android:lineSpacingExtra">8sp</item>
-    </style>
 
     <style name="profileMenuTextStyle">
         <item name="android:fontFamily">@font/pt_root_ui_medium</item>
@@ -117,6 +110,27 @@
         <item name="android:textColor">#15304D</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
+    <style name="mainTitleTextStyle">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#15304D</item>
+    </style>
+
+    <style name="mainTitle2TextStyle">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">#0c2b4c</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">-3sp</item>
+    </style>
+
+    <style name="keyTextStyle">
+        <item name="android:fontFamily">@font/pt_root_ui_medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#748595</item>
+        <item name="android:lineSpacingExtra">8sp</item>
     </style>
 
     <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import kz.divtech.odyssey.rotation.databinding.FragmentIinBinding
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -18,6 +17,11 @@ class ProfileFragment : Fragment() {
 
     fun showTermsOfAgreement(){
         val action = ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog2()
+        findNavController().navigate(action)
+    }
+
+    fun openDocumentsFragment(){
+        val action = ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment()
         findNavController().navigate(action)
     }
 

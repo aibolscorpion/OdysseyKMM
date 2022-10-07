@@ -27,5 +27,5 @@
     <color name="bottom_sheet_btn">#0061E1</color>
     <color name="contact_support_title">#1B304D</color>
     <color name="main_bg">#F3F6FB</color>
-    <color name="logout_btn">#748595</color>
+    <color name="gray">#748595</color>
 </resources>

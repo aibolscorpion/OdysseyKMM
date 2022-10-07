@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.DialogListener" />
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:paddingTop="28dp"
+                >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/call_support_content"
+                style="@style/bottomSheetContent"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin"
+                android:background="@color/bottom_sheet_line"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/call_support"
+                style="@style/bottomSheetBtn"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:onClick="@{()-> listener.contact()}"
+                />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/bottomSheetBtn"
+            android:text="@string/cancel"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="@{()-> listener.close()}"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

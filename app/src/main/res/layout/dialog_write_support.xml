@@ -18,63 +18,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="4dp"
-                android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="28dp"
                 android:paddingBottom="24dp">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/bottomSheetContent"
+                    android:text="@string/write_support_content"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
 
-                    <ImageView
-                        android:id="@+id/callIconImgVw"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/icons_phone_outgoing"
-                        app:layout_constraintTop_toTopOf="@+id/callTitleTV"
-                        app:layout_constraintBottom_toBottomOf="@+id/callContentTV"
-                        app:layout_constraintEnd_toStartOf="@+id/callTitleTV" />
-
-                    <TextView
-                        android:id="@+id/callTitleTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/call"
-                        style="@style/contactSupportTitle"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/callIconImgVw"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginStart="@dimen/margin"
-                        />
-
-                    <TextView
-                        android:id="@+id/callContentTV"
-                        style="@style/contactSupportContent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/seven_days_24_hours"
-                        app:layout_constraintStart_toEndOf="@+id/callIconImgVw"
-                        app:layout_constraintTop_toBottomOf="@+id/callTitleTV"
-                        android:layout_marginStart="@dimen/margin"
-                        />
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="12dp"
                         android:background="@color/bottom_sheet_line"
-                        app:layout_constraintTop_toBottomOf="@+id/callContentTV"
+                        app:layout_constraintTop_toTopOf="parent"
                         />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                     <ImageView
                         android:id="@+id/whatsAppIconImgVw"
                         android:layout_width="40dp"

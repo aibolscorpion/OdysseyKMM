@@ -7,29 +7,51 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
-        android:label="@string/main_fragment"
+        android:label="@string/main"
         app:layout="@layout/activity_main"/>
     <fragment
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
-        android:label="@string/trips_fragment"
+        android:label="@string/trips"
         app:layout="@layout/fragment_trips"/>
     <fragment
         android:id="@+id/helpFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.HelpFragment"
-        android:label="@string/help_fragment"
-        app:layout="@layout/fragment_help" />
+        android:label="@string/help"
+        app:layout="@layout/fragment_help" >
+        <action
+            android:id="@+id/action_helpFragment_to_writeSupportDialog"
+            app:destination="@id/writeSupportDialog" />
+        <action
+            android:id="@+id/action_helpFragment_to_callSupportDialog"
+            app:destination="@id/callSupportDialog" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment"
-        android:label="@string/profile_fragment"
+        android:label="@string/profile"
         app:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_termsOfAgreementDialog2"
-            app:destination="@id/termsOfAgreementDialog2" />
+            app:destination="@id/termsOfAgreementDialog" />
+        <action
+            android:id="@+id/action_profileFragment_to_documentsFragment"
+            app:destination="@id/documentsFragment" />
     </fragment>
     <dialog
-        android:id="@+id/termsOfAgreementDialog2"
+        android:id="@+id/termsOfAgreementDialog"
         android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.TermsOfAgreementDialog"
         android:label="TermsOfAgreementDialog" />
+    <dialog
+        android:id="@+id/writeSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.help.WriteSupportDialog"
+        android:label="WriteSupportDialog" />
+    <dialog
+        android:id="@+id/callSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.help.CallSupportDialog"
+        android:label="CallSupportDialog" />
+    <fragment
+        android:id="@+id/documentsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.DocumentsFragment"
+        android:label="@string/documents" />
 </navigation>

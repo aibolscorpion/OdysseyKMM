@@ -37,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/enter_code"
-                style="@style/titleTextStyle"/>
+                style="@style/loginTitleTextStyle"/>
 
             <TextView
                 android:id="@+id/descriptionTV"

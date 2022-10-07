@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/confirm_data"
-                    style="@style/titleTextStyle"
+                    style="@style/loginTitleTextStyle"
                     android:layout_gravity="center"
                     app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
                     app:layout_constraintEnd_toEndOf="parent"
