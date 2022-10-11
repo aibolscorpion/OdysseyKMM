@@ -8,8 +8,9 @@ import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
 
 class NotificationAdapter(private val notificationList: List<Notification>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
-        val binding = ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, true)
+        val binding = ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NotificationViewHolder(binding)
+
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
