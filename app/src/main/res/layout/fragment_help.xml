@@ -53,7 +53,8 @@
                 android:src="@drawable/icons_tabs_phone"
                 app:layout_constraintBottom_toBottomOf="@+id/privateDataTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/privateDataTV" />
+                app:layout_constraintTop_toTopOf="@+id/privateDataTV"
+                android:contentDescription="@string/call_support" />
 
             <TextView
                 android:id="@+id/privateDataTV"
@@ -70,11 +71,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/privateDataTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/privateDataTV" />
+                app:layout_constraintTop_toTopOf="@+id/privateDataTV"
+                android:contentDescription="@string/go"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -99,7 +101,8 @@
                 android:src="@drawable/icons_tabs_chat"
                 app:layout_constraintBottom_toBottomOf="@+id/documentTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/documentTV" />
+                app:layout_constraintTop_toTopOf="@+id/documentTV"
+                android:contentDescription="@string/write_support" />
 
             <TextView
                 android:id="@+id/documentTV"
@@ -116,11 +119,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/documentTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/documentTV" />
+                app:layout_constraintTop_toTopOf="@+id/documentTV"
+                android:contentDescription="@string/go" />
 
             <View
                 android:layout_width="match_parent"
@@ -145,7 +149,8 @@
                 android:src="@drawable/icons_tabs_faq"
                 app:layout_constraintBottom_toBottomOf="@+id/notificationTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/notificationTV" />
+                app:layout_constraintTop_toTopOf="@+id/notificationTV"
+                android:contentDescription="@string/questions_and_answers" />
 
             <TextView
                 android:id="@+id/notificationTV"
@@ -162,11 +167,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/notificationTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/notificationTV" />
+                app:layout_constraintTop_toTopOf="@+id/notificationTV"
+                android:contentDescription="@string/go" />
 
             <View
                 android:layout_width="match_parent"
@@ -192,7 +198,8 @@
                 android:src="@drawable/icons_tabs_news"
                 app:layout_constraintBottom_toBottomOf="@+id/userAgreementTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/userAgreementTV" />
+                app:layout_constraintTop_toTopOf="@+id/userAgreementTV"
+                android:contentDescription="@string/press_service" />
 
             <TextView
                 android:id="@+id/userAgreementTV"
@@ -209,11 +216,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/userAgreementTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/userAgreementTV" />
+                app:layout_constraintTop_toTopOf="@+id/userAgreementTV"
+                android:contentDescription="@string/go" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

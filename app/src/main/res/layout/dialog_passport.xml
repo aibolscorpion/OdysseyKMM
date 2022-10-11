@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="closeListener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+        <variable
+            name="saveListener"
+            type="kz.divtech.odyssey.rotation.ui.profile.documents.SaveListener" />
+    </data>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:paddingTop="@dimen/two_times_margin"
+                android:paddingBottom="@dimen/two_times_margin">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/passport"
+                    style="@style/mainTitleTextStyle"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="15sp"
+                    android:textColor="@color/bottom_sheet_content"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="7sp"
+                    android:layout_marginTop="13dp"
+                    android:text="@string/be_careful_when_filling_data"/>
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/name_latin" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/name_placeholder"
+                    android:backgroundTint="@color/bottom_sheet_line"
+                    style="@style/profileMenuTextStyle"
+                    />
+
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/surname_latin" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/surname_placeholder"
+                    android:backgroundTint="@color/bottom_sheet_line"
+                    style="@style/profileMenuTextStyle"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/date_of_birth" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/date_of_birth_placeholder"
+                    android:backgroundTint="@color/bottom_sheet_line"
+                    style="@style/profileMenuTextStyle"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/document_number" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/document_number_placeholder"
+                    android:backgroundTint="@color/bottom_sheet_line"
+                    style="@style/profileMenuTextStyle"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/citizenship"
+                    android:layout_marginTop="20dp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/countriesSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    style="@style/profileMenuTextStyle"
+                    android:background="@drawable/bg_spinner"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/issue_date" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/issue_date_placeholder"
+                    style="@style/profileMenuTextStyle"
+                    android:background="@drawable/bg_date_edit_text"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/expire_date" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/issue_date_placeholder"
+                    style="@style/profileMenuTextStyle"
+                    android:background="@drawable/bg_date_edit_text"
+                    />
+
+                <TextView
+                    style="@style/keyTextStyle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/issue_authority" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/issueAuthoritySpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="7dp"
+                    style="@style/profileMenuTextStyle"
+                    android:background="@drawable/bg_spinner"
+                    />
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_gravity="bottom"
+                    android:text="@string/save"
+                    android:layout_marginTop="@dimen/margin"
+                    android:onClick="@{() -> saveListener.onSave()}"
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="center"
+                android:src="@drawable/icons_tabs_close"
+                android:layout_gravity="top|end"
+                android:onClick="@{() -> closeListener.close() }"
+                />
+        </FrameLayout>
+    </ScrollView>
+</layout>

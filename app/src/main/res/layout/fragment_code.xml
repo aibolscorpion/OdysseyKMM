@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:paddingStart="@dimen/margin"
             android:paddingEnd="@dimen/margin"
-            android:background="@drawable/screen_background">
+            android:background="@drawable/bg_screen">
 
             <TextView
                 android:id="@+id/titleTV"
@@ -147,11 +147,11 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/contactSupportBtn"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="@dimen/button_height"
                 android:text="@string/contact_support_btn"
                 style="@style/buttonStyle"
                 android:visibility="gone"
-                android:background="@drawable/contact_support_button_background"
+                android:background="@drawable/bg_contact_support_button"
                 app:layout_constraintTop_toBottomOf="@+id/contactSupportTV"
                 android:layout_marginTop="24dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

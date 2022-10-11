@@ -6,5 +6,6 @@
     <dimen name="corner_radius">8dp</dimen>
     <dimen name="code_edit_text_width">56dp</dimen>
     <dimen name="action_bar_height">56dp</dimen>
+    <dimen name="button_height">52dp</dimen>
 
 </resources>

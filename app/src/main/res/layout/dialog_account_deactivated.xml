@@ -40,7 +40,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icons_unactive"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/account_deactivated" />
 
                     <TextView
                         android:id="@+id/telegramTitleTV"
@@ -88,7 +89,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/button_height"
             style="@style/bottomSheetBtn"
             android:text="@string/try_again"
             android:layout_marginTop="12dp"

@@ -25,4 +25,13 @@ class ProfileFragment : Fragment() {
         findNavController().navigate(action)
     }
 
+    fun openPersonalDataFragment(){
+        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment()
+        findNavController().navigate(action)
+    }
+
+    fun openNotificationFragment(){
+        val action = ProfileFragmentDirections.actionProfileFragmentToNotificationFragment()
+        findNavController().navigate(action)
+    }
 }

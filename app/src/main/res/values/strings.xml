@@ -7,7 +7,7 @@
     <string name="help">Помощь</string>
     <string name="profile">Профиль</string>
 
-    //login with phoneNumber
+    //Страница Авторизации с помощью номера телефона
     <string name="login">Войти в аккаунт</string>
     <string name="telephone_number_linked_to_odyssey_id">По номеру телефона привязанному к Odyssey ID</string>
     <string name="enter">Войти</string>
@@ -16,6 +16,31 @@
     <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
     <string name="phone_number_placeholder">+7 (</string>
 
+    // Модалка Пользовательское соглашение
+    <string name="terms_of_agreement">Пользовательское соглашение</string>
+    <string name="terms_of_agreement_content">"К основным стандартам можно отнести: стандарты чистоты (чистота зала, рабочих зон персонала, входной группы и т.д.), стандарты внешнего вида (форма персонала, обувь, прически, украшения, маникюр, макияж и т.п.), стандарты обслуживания гостей (сценарий обслуживание, конфликтные ситуации, комплименты и лояльность, встреча гостей с детьми, продажи, работа с возражениями, обратная связь с гостем и т.д.), стандарты подачи блюд и напитков (правила выноса блюд и напитков, комплиментов и угощений, время подачи), стандарты сервировки (до прихода гостя, во время его пребывания, после прощания с гостям, в перерывах между подачей блюд и т.д.)
+        \nНесмотря на то, что стандарты работы заведения, казалось бы, первостепенная вещь в ресторане, далеко не все украинские рестораторы их соблюдают.
+        \nСтандартизация сервиса и конкурентное преимущество заведения — тесно связанные вещи. Для начала нужно получить обратную связь от клиентов, чтобы понять, что и как стандартизировать.</string>
+
+    //Модалка Произошла ошибка
+    <string name="error_happened">Произошла ошибка</string>
+    <string name="phone_number_error_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
+    <string name="contact_support_btn">Обратиться в поддержку</string>
+    <string name="try_again">Попробывать снова</string>
+
+    //Модалка аккаунт деактивирован
+    <string name="account_deactivated">Аккаунт деактивирован</string>
+    <string name="account_deactivated_content">Уважаемый Руслан Владимирович, ваш аккаунт был деактивирован вашим работодателем. Если у вас есть вопросы обратитесь в службу поддержки.</string>
+
+    //Модалка Обратиться в поддержку
+    <string name="call">Позвонить</string>
+    <string name="seven_days_24_hours">круглосуточно, без выходных</string>
+    <string name="write_in_whatsapp">Написать в WhatsApp</string>
+    <string name="write_in_telegram">Написать в Telegram</string>
+    <string name="operator_online">оператор онлайн</string>
+    <string name="cancel">Отмена</string>
+
+    //Страница Ведение SMS кода
     <string name="enter_code">Введите код</string>
     <string name="code_was_sent_to_number">На номер %1$s отправлено SMS с кодом авторизации</string>
     <string name="enter_phone_number_fully">Введите номер телефона полностью</string>
@@ -23,75 +48,143 @@
     <string name="resend_sms">Выслать SMS повторно</string>
     <string name="resend_sms_with_seconds">Переотправить SMS: %1$s сек</string>
     <string name="change_number">Изменить номер</string>
+    <string name="contact_support_content">К вам не поступил SMS-код? Свяжитесь с нашей службой поддержки.</string>
+    <string name="contact_support">Обратитесь к службе поддержки</string>
     <string name="back">Назад</string>
+    <string name="fill_all_empty_fields">Заполните все поля</string>
+
+    //Страница Войти По ИИН
     <string name="not_find_telephone_number">Номер не найден.\n Войти по ИИН</string>
     <string name="enter_your_iin">Номер %1$d не найден. Пожалуйста, введите ваш ИИН.</string>
     <string name="login_with_iin">Войти по ИИН</string>
     <string name="iin">ИИН</string>
     <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
-    <string name="contact_support_content">К вам не поступил SMS-код? Свяжитесь с нашей службой поддержки.</string>
-    <string name="contact_support">Обратитесь к службе поддержки</string>
+
+    //Страница подтвердите данные
     <string name="confirm_data">Подтвердите данные</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
     <string name="employee_name_placeholder">Баталгазиев Руслан Владимирович</string>
     <string name="employee_position_placeholder">Старший бригадир</string>
     <string name="add_phone_number">Добавить номер телефона</string>
+
+    //Страница Изменить номер
     <string name="change_phone_number">Изменить номер телефона</string>
     <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
     <string name="change_iin">Изменить ИИН</string>
-    <string name="terms_of_agreement">Пользовательское соглашение</string>
-    <string name="terms_of_agreement_content">"К основным стандартам можно отнести: стандарты чистоты (чистота зала, рабочих зон персонала, входной группы и т.д.), стандарты внешнего вида (форма персонала, обувь, прически, украшения, маникюр, макияж и т.п.), стандарты обслуживания гостей (сценарий обслуживание, конфликтные ситуации, комплименты и лояльность, встреча гостей с детьми, продажи, работа с возражениями, обратная связь с гостем и т.д.), стандарты подачи блюд и напитков (правила выноса блюд и напитков, комплиментов и угощений, время подачи), стандарты сервировки (до прихода гостя, во время его пребывания, после прощания с гостям, в перерывах между подачей блюд и т.д.)
-Несмотря на то, что стандарты работы заведения, казалось бы, первостепенная вещь в ресторане, далеко не все украинские рестораторы их соблюдают.
-Стандартизация сервиса и конкурентное преимущество заведения — тесно связанные вещи. Для начала нужно получить обратную связь от клиентов, чтобы понять, что и как стандартизировать.</string>
+
+    // Модалка сотрудник не найден
     <string name="employee_not_found">Сотрудник не найден</string>
     <string name="employee_not_found_with_contents">Сотрудник с ИИН: 920911300248 не найден. Внимательно проверьте ваши данные и попробуйте снова.</string>
-    <string name="contact_support_btn">Обратиться в поддержку</string>
-    <string name="try_again">Попробывать снова</string>
-    <string name="error_happened">Произошла ошибка</string>
-    <string name="phone_number_error_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
+
+    //Модалка заявка отправлена
     <string name="application_sent">Заявка отправлена</string>
     <string name="application_sent_content">Заявка на изменение номера телефона на +7 701 399 35 38 успешно отправлена. Обработка займет до 30 минут. После подтверждения Вы получите уведомление на Ваш телефон.</string>
     <string name="close_window">Закрыть окно</string>
+
+    //Модалка номер успешно добавлен
     <string name="phone_number_added">Номер успешно добавлен</string>
     <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
-    <string name="change_number_error_content">Не удалось добавить номер телефона по указаному ИИН. Попробуйте снова либо обратитесь в службу поддержки.</string>
     <string name="go_to_login_page">Перейти на страницу входа</string>
-    <string name="account_deactivated">Аккаунт деактивирован</string>
-    <string name="account_deactivated_content">Уважаемый Руслан Владимирович, ваш аккаунт был деактивирован вашим работодателем. Если у вас есть вопросы обратитесь в службу поддержки.</string>
-    <string name="cancel">Отмена</string>
-    <string name="call">Позвонить</string>
-    <string name="seven_days_24_hours">круглосуточно, без выходных</string>
-    <string name="write_in_whatsapp">Написать в WhatsApp</string>
-    <string name="write_in_telegram">Написать в Telegram</string>
-    <string name="operator_online">оператор онлайн</string>
-    <string name="fill_all_empty_fields">Заполните все поля</string>
+
+    //Модалка ошибка добавления номера телефона
+    <string name="change_number_error_content">Не удалось добавить номер телефона по указаному ИИН. Попробуйте снова либо обратитесь в службу поддержки.</string>
+
+
+
+
+    //Страница Помощь
+    <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>
+    <string name="call_support">Позвонить в поддержку</string>
+    <string name="write_support">Написать в поддержку</string>
+    <string name="questions_and_answers">Вопросы и ответы</string>
+    <string name="press_service">Пресс-служба</string>
+
+    //Модалки Позвонить и написать в поддержку
+    <string name="write_support_content">Наши онлайн-консультанты работают круглосуточно. Пишите по любым вопросам.</string>
+    <string name="call_support_content">Если у вас возникли сложности с приложением либо с поездкой, вы поможете позвонить нам в удобное для вас время:\n\n+7 727 355 37 37\n+7 701 355 37 37\n\nТакже, мы рекомендуем обратится в круглосуточный онлайн чат.</string>
+
+
+    //Страница Профиль
     <string name="my_profile">Мой профиль</string>
     <string name="company">Компания</string>
     <string name="position">Должность</string>
     <string name="table_number">№ табеля</string>
     <string name="odyssey_id">ODYSSEY_ID</string>
-    <string name="private_data">Личные данные</string>
+    <string name="personal_data">Личные данные</string>
     <string name="documents">Документы</string>
     <string name="notifications">Уведомления</string>
     <string name="user_agreement">Пользовательское соглашение</string>
     <string name="logout">Выйти из приложения</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="call_support">Позвонить в поддержку</string>
-    <string name="write_support">Написать в поддержку</string>
-    <string name="questions_and_answers">Вопросы и ответы</string>
-    <string name="press_service">Пресс-служба</string>
-    <string name="write_support_content">Наши онлайн-консультанты работают круглосуточно. Пишите по любым вопросам.</string>
-    <string name="call_support_content">Если у вас возникли сложности с приложением либо с поездкой, вы поможете позвонить нам в удобное для вас время:\n\n+7 727 355 37 37\n+7 701 355 37 37\n\nТакже, мы рекомендуем обратится в круглосуточный онлайн чат.</string>
-    <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>
+    <string name="go">Перейти</string>
+
+    //Страница Личные данные
+    <string name="main_information">Основная информация</string>
+    <string name="name">Имя</string>
+    <string name="name_placeholder">Руслан</string>
+    <string name="surname">Фамилия</string>
+    <string name="surname_placeholder">Баталгазиев</string>
+    <string name="father_name">Отчество</string>
+    <string name="father_name_placeholder">Владимирович</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="date_of_birth_placeholder">11.09.1992</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужской</string>
+    <string name="female">Женский</string>
+    <string name="citizenship">Гражданство</string>
+    <string name="kazakhstan">Казахстан</string>
+    <string name="contact_data">Контактные данные</string>
+    <string name="phone">Телефон</string>
+    <string name="phone_placeholder">+7 (701) 399 3538</string>
+    <string name="email">Эл. почта</string>
+    <string name="save">Сохранить</string>
+    <string-array name="countries_array">
+        <item>Казахстан</item>
+        <item>Россия</item>
+    </string-array>
+
+    //Страница Документы
+    <string name="work_permission">Разрешение на работу</string>
+    <string name="id">Удостоверение личности</string>
+    <string name="passport">Паспорт</string>
+    <string name="residency_permit">Вид на жительство</string>
     <string name="no.">№</string>
     <string name="work_permission_number_placeholder">0005011</string>
     <string name="expire_date_until">Срок до</string>
     <string name="expire_date_placeholder">10.07.2015 – 15.02.2021</string>
-    <string name="work_permission">Разрешение на работу</string>
-    <string name="id">Удостоверение личности</string>
-    <string name="id_placeholder">931004300975</string>
+    <string name="iin_value">931004300975</string>
     <string name="id_issue_expire_date">Выдано / срок до</string>
     <string name="id_issue_expire_date_placeholder">11.09.2017 – 11.09.2027, МВД РК</string>
-    <string name="passport">Паспорт</string>
-    <string name="resident_card">Вид на жительство</string>
+    <string name="you_have_not_filled_passport_data">Вы еще не указали данные вашего паспорта. Нажмите, чтобы добавить</string>
+    <string name="you_have_not_filled_residency_permit_data">Вы еще не указали данные вида на жительство. Нажмите, чтобы добавить</string>
+
+    //Модалка Разрешение на работу
+    <string name="status">Статус</string>
+    <string name="active">Активно</string>
+    <string name="permission_no.">№ разрешения</string>
+    <string name="permission_number_placeholder">0005011</string>
+    <string name="issue_date">Дата выдачи</string>
+    <string name="expire_date">Срок действия</string>
+    <string name="issue_date_placeholder">11.09.2017</string>
+
+    //Модалка Удостоверение личности
+    <string name="issue_authority">Орган выдачи</string>
+    <string name="document_number">№ документа</string>
+    <string name="document_number_placeholder">042080568</string>
+    <string-array name="issue_authority_array">
+        <item>МВД РК</item>
+        <item>МЮ РК</item>
+    </string-array>
+    <string name="be_careful_when_filling_data">Будьте внимательны, при заполнении. Данные должны соответсвовать документу.</string>
+
+
+    //Модалка Паспорт
+    <string name="name_latin">Имя (на латинице)</string>
+    <string name="surname_latin">Фамилия (на латинице)</string>
+
+
+    //Страница Уведомления
+    <string name="notification_title_placeholder">Смещение графика</string>
+    <string name="notification_content_placeholder">Новый график: 18 апреля - 9 мая 202…</string>
+    <string name="notification_time_placeholder">2 ч назад</string>
+
 </resources>

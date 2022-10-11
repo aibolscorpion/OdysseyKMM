@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data/>
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <data>
+        <variable
+            name="documentsFragment"
+            type="kz.divtech.odyssey.rotation.ui.profile.documents.DocumentsFragment" />
+    </data>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/main_bg"
         android:orientation="vertical"
         android:paddingStart="@dimen/margin"
@@ -29,40 +38,50 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="22dp"
                 android:paddingBottom="@dimen/margin"
                 >
-
-                <TextView
-                    android:id="@+id/wordPermissionTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/work_permission"
-                    style="@style/mainTitle2TextStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chevron_right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/wordPermissionTV"
-                    app:layout_constraintTop_toTopOf="@+id/wordPermissionTV" />
-
-                <View
-                    android:id="@+id/lineVw"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/workPermissionCL"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bottom_sheet_line"
-                    app:layout_constraintTop_toBottomOf="@+id/wordPermissionTV"
-                    android:layout_marginTop="@dimen/margin"/>
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> documentsFragment.showWorkPermissionDialog()}">
+
+                    <TextView
+                        android:id="@+id/wordPermissionTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/work_permission"
+                        style="@style/mainTitle2TextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icons_tabs_right_blue"
+                        android:layout_gravity="end|center_vertical"
+                        app:layout_constraintTop_toTopOf="@+id/wordPermissionTV"
+                        app:layout_constraintBottom_toBottomOf="@+id/wordPermissionTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:contentDescription="@string/go" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/workPermissionLLC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/lineVw"
+                    app:layout_constraintTop_toBottomOf="@+id/workPermissionCL"
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/margin">
@@ -87,7 +106,7 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/lineVw"
+                    app:layout_constraintTop_toBottomOf="@+id/workPermissionCL"
                     app:layout_constraintStart_toEndOf="@+id/workPermissionLLC"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/margin"
@@ -121,40 +140,49 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="22dp"
                 android:paddingBottom="@dimen/margin"
                 >
-
-                <TextView
-                    android:id="@+id/idTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/id"
-                    style="@style/mainTitle2TextStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chevron_right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/idTV"
-                    app:layout_constraintTop_toTopOf="@+id/idTV" />
-
-                <View
-                    android:id="@+id/line2Vw"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/idCL"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bottom_sheet_line"
-                    app:layout_constraintTop_toBottomOf="@+id/idTV"
-                    android:layout_marginTop="@dimen/margin"/>
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:orientation="horizontal"
+                    android:onClick="@{() -> documentsFragment.showIdDialog()}">
+
+                    <TextView
+                        android:id="@+id/idTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/id"
+                        style="@style/mainTitle2TextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icons_tabs_right_blue"
+                        android:layout_gravity="end|center_vertical"
+                        app:layout_constraintTop_toTopOf="@+id/idTV"
+                        app:layout_constraintBottom_toBottomOf="@+id/idTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:contentDescription="@string/go" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/idLLC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line2Vw"
+                    app:layout_constraintTop_toBottomOf="@+id/idCL"
                     app:layout_constraintStart_toStartOf="parent"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/margin">
@@ -174,12 +202,12 @@
                         android:textSize="14sp"
                         android:textColor="#15304d"
                         android:lineSpacingExtra="8sp"
-                        android:text="@string/id_placeholder" />
+                        android:text="@string/iin_value" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/line2Vw"
+                    app:layout_constraintTop_toBottomOf="@+id/idCL"
                     app:layout_constraintStart_toEndOf="@+id/idLLC"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/margin"
@@ -213,34 +241,53 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="22dp"
                 android:paddingBottom="@dimen/margin"
                 >
 
-                <TextView
-                    android:id="@+id/passportTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/passport"
-                    style="@style/mainTitle2TextStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chevron_right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/passportTV"
-                    app:layout_constraintTop_toTopOf="@+id/passportTV" />
-
-                <View
-                    android:id="@+id/line3Vw"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/passportCL"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bottom_sheet_line"
-                    app:layout_constraintTop_toBottomOf="@+id/passportTV"
-                    android:layout_marginTop="@dimen/margin"/>
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{() -> documentsFragment.showPassportDialog()}">
+
+                    <TextView
+                        android:id="@+id/passportTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/passport"
+                        style="@style/mainTitle2TextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icons_tabs_right_blue"
+                        android:layout_gravity="end|center_vertical"
+                        app:layout_constraintTop_toTopOf="@+id/passportTV"
+                        app:layout_constraintBottom_toBottomOf="@+id/passportTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:contentDescription="@string/go" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/descriptionTextStyle"
+                    android:textColor="@color/profile_description"
+                    android:gravity="start"
+                    app:layout_constraintTop_toBottomOf="@id/passportCL"
+                    android:text="@string/you_have_not_filled_passport_data"
+                    android:layout_marginTop="13dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
@@ -256,36 +303,54 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
-                android:paddingTop="22dp"
                 android:paddingBottom="@dimen/margin"
                 >
 
-                <TextView
-                    android:id="@+id/residentCardTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/resident_card"
-                    style="@style/mainTitle2TextStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chevron_right"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/residentCardTV"
-                    app:layout_constraintTop_toTopOf="@+id/residentCardTV" />
-
-                <View
-                    android:id="@+id/line4Vw"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/residencePermitCL"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bottom_sheet_line"
-                    app:layout_constraintTop_toBottomOf="@+id/residentCardTV"
-                    android:layout_marginTop="@dimen/margin"/>
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{() -> documentsFragment.showRecidencyPermitDialog()}">
 
+                    <TextView
+                        android:id="@+id/residencePermitTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/residency_permit"
+                        style="@style/mainTitle2TextStyle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icons_tabs_right_blue"
+                        android:layout_gravity="end|center_vertical"
+                        app:layout_constraintTop_toTopOf="@+id/residencePermitTV"
+                        app:layout_constraintBottom_toBottomOf="@+id/residencePermitTV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:contentDescription="@string/go" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/bottom_sheet_line"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/descriptionTextStyle"
+                    android:textColor="@color/profile_description"
+                    android:gravity="start"
+                    app:layout_constraintTop_toBottomOf="@id/residencePermitCL"
+                    android:text="@string/you_have_not_filled_residency_permit_data"
+                    android:layout_marginTop="13dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </layout>

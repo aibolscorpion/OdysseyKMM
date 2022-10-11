@@ -37,11 +37,11 @@
         <item name="android:maxLength">1</item>
         <item name="android:inputType">number</item>
         <item name="android:hint">@string/zero</item>
-        <item name="android:background">@drawable/edit_text_layout_background</item>
+        <item name="android:background">@drawable/bg_edit_text_layout</item>
     </style>
 
     <style name="buttonStyle" >
-        <item name="android:background">@drawable/button_background</item>
+        <item name="android:background">@drawable/bg_button</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
@@ -73,7 +73,7 @@
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">7sp</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:background">@drawable/bottom_sheet_btn_bg</item>
+        <item name="android:background">@drawable/bg_bottom_sheet_button</item>
         <item name="android:textAllCaps">false</item>
     </style>
 
@@ -107,7 +107,7 @@
     <style name="profileMenuTextStyle">
         <item name="android:fontFamily">@font/pt_root_ui_medium</item>
         <item name="android:textSize">17sp</item>
-        <item name="android:textColor">#15304D</item>
+        <item name="android:textColor">@color/profile_menu_text</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">7sp</item>
     </style>
@@ -115,7 +115,7 @@
     <style name="mainTitleTextStyle">
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">#15304D</item>
+        <item name="android:textColor">@color/profile_menu_text</item>
     </style>
 
     <style name="mainTitle2TextStyle">
@@ -133,8 +133,16 @@
         <item name="android:lineSpacingExtra">8sp</item>
     </style>
 
+    <style name="keyTextStyle2">
+        <item name="android:fontFamily">@font/pt_root_ui_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#748595</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
     <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/terms_bottom_sheet_dialog_fragment_bg</item>
+        <item name="android:background">@drawable/bg_terms_of_agreement_dialog</item>
     </style>
 
     <style name="TermsOfAgreementBottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
@@ -143,7 +151,7 @@
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bottom_sheet_dialog_fragment_bg</item>
+        <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
     </style>
 
     <style name="BottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">

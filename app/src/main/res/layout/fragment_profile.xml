@@ -29,7 +29,7 @@
                 android:paddingBottom="15dp"
                 android:paddingStart="18dp"
                 android:paddingEnd="@dimen/margin"
-                android:background="@drawable/employee_info_bg">
+                android:background="@drawable/bg_employee_info">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/odysseyIdLL"
@@ -171,7 +171,8 @@
             android:layout_height="56dp"
             app:layout_constraintTop_toBottomOf="@+id/employeeInfoCV"
             android:layout_marginTop="14dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:onClick="@{()-> profileFragment.openPersonalDataFragment()}">
 
             <ImageView
                 android:id="@+id/iconPrivateDataIV"
@@ -181,7 +182,8 @@
                 android:src="@drawable/icons_tabs_profile"
                 app:layout_constraintBottom_toBottomOf="@+id/privateDataTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/privateDataTV" />
+                app:layout_constraintTop_toTopOf="@+id/privateDataTV"
+                android:contentDescription="@string/personal_data" />
 
             <TextView
                 android:id="@+id/privateDataTV"
@@ -190,7 +192,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 style="@style/profileMenuTextStyle"
-                android:text="@string/private_data"
+                android:text="@string/personal_data"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iconPrivateDataIV"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -198,11 +200,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/privateDataTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/privateDataTV" />
+                app:layout_constraintTop_toTopOf="@+id/privateDataTV"
+                android:contentDescription="@string/go"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -227,7 +230,8 @@
                 android:src="@drawable/icons_tabs_docs"
                 app:layout_constraintBottom_toBottomOf="@+id/documentTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/documentTV" />
+                app:layout_constraintTop_toTopOf="@+id/documentTV"
+                android:contentDescription="@string/documents" />
 
             <TextView
                 android:id="@+id/documentTV"
@@ -244,11 +248,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/documentTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/documentTV" />
+                app:layout_constraintTop_toTopOf="@+id/documentTV"
+                android:contentDescription="@string/go" />
 
             <View
                 android:layout_width="match_parent"
@@ -263,7 +268,8 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintTop_toBottomOf="@+id/documentCL"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:onClick="@{()-> profileFragment.openNotificationFragment()}">
 
             <ImageView
                 android:id="@+id/iconNotificationIV"
@@ -273,7 +279,8 @@
                 android:src="@drawable/icons_tabs_notify"
                 app:layout_constraintBottom_toBottomOf="@+id/notificationTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/notificationTV" />
+                app:layout_constraintTop_toTopOf="@+id/notificationTV"
+                android:contentDescription="@string/notifications" />
 
             <TextView
                 android:id="@+id/notificationTV"
@@ -290,11 +297,12 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/notificationTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/notificationTV" />
+                app:layout_constraintTop_toTopOf="@+id/notificationTV"
+                android:contentDescription="@string/go" />
 
             <View
                 android:layout_width="match_parent"
@@ -321,7 +329,8 @@
                 android:src="@drawable/icons_tabs_rules"
                 app:layout_constraintBottom_toBottomOf="@+id/userAgreementTV"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/userAgreementTV" />
+                app:layout_constraintTop_toTopOf="@+id/userAgreementTV"
+                android:contentDescription="@string/terms_of_agreement"/>
 
             <TextView
                 android:id="@+id/userAgreementTV"
@@ -338,16 +347,17 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/chevron_right"
+                android:src="@drawable/icons_tabs_right"
                 app:layout_constraintBottom_toBottomOf="@+id/userAgreementTV"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintTop_toTopOf="@+id/userAgreementTV" />
+                app:layout_constraintTop_toTopOf="@+id/userAgreementTV"
+                android:contentDescription="@string/go" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/button_height"
             android:text="@string/logout"
             style="@style/bottomSheetBtn"
             android:lineSpacingExtra="-1sp"

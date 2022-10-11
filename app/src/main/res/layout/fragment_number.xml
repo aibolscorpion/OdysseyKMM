@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
             name="phoneNumberFragment"
@@ -9,14 +9,13 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:paddingTop="@dimen/action_bar_height"
         android:paddingStart="@dimen/margin"
         android:paddingEnd="@dimen/margin"
-        android:background="@drawable/screen_background"
+        android:background="@drawable/bg_screen"
         >
 
 
@@ -58,7 +57,7 @@
                 android:fontFamily="@font/pt_root_ui"
                 android:hint="@string/phone_number_placeholder"
                 android:inputType="phone"
-                android:background="@drawable/edit_text_layout_background"
+                android:background="@drawable/bg_edit_text_layout"
                 android:letterSpacing="0.02"
                 android:lineSpacingExtra="7sp"
                 android:textColor="@color/text_title"
@@ -68,7 +67,7 @@
                 android:paddingTop="24dp"
                 android:paddingEnd="@dimen/margin"
                 android:paddingBottom="8dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +87,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/loginBtn"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/button_height"
             style="@style/buttonStyle"
             android:text="@string/enter"
             app:layout_constraintTop_toBottomOf="@+id/editTextFL"

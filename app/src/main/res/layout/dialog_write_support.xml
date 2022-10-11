@@ -53,7 +53,8 @@
                         android:src="@mipmap/icons_8_whatsapp"
                         app:layout_constraintBottom_toBottomOf="@+id/whatsAppContentTV"
                         app:layout_constraintEnd_toStartOf="@+id/whatsAppTitleTV"
-                        app:layout_constraintTop_toTopOf="@+id/whatsAppTitleTV" />
+                        app:layout_constraintTop_toTopOf="@+id/whatsAppTitleTV"
+                        android:contentDescription="@string/write_in_whatsapp" />
 
                     <TextView
                         android:id="@+id/whatsAppTitleTV"
@@ -98,7 +99,8 @@
                         android:src="@drawable/icons_telegram"
                         app:layout_constraintBottom_toBottomOf="@+id/telegramContentTV"
                         app:layout_constraintEnd_toStartOf="@+id/telegramTitleTV"
-                        app:layout_constraintTop_toTopOf="@+id/telegramTitleTV" />
+                        app:layout_constraintTop_toTopOf="@+id/telegramTitleTV"
+                        android:contentDescription="@string/write_in_telegram" />
 
                     <TextView
                         android:id="@+id/telegramTitleTV"
@@ -136,7 +138,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="@dimen/button_height"
             style="@style/bottomSheetBtn"
             android:text="@string/cancel"
             android:layout_marginTop="12dp"

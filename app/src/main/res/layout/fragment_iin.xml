@@ -19,7 +19,7 @@
             android:paddingBottom="24dp"
             android:paddingStart="@dimen/margin"
             android:paddingEnd="@dimen/margin"
-            android:background="@drawable/screen_background">
+            android:background="@drawable/bg_screen">
 
 
             <TextView
@@ -90,7 +90,7 @@
                     android:hint="@string/iin_placeholder"
                     android:inputType="number"
                     android:maxLength="12"
-                    android:background="@drawable/edit_text_layout_background"
+                    android:background="@drawable/bg_edit_text_layout"
                     android:letterSpacing="0.02"
                     android:lineSpacingExtra="7sp"
                     android:textColor="@color/text_title"

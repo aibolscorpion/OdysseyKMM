@@ -12,7 +12,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/icons_tab_back" />
+            android:src="@drawable/icons_tabs_back"
+            android:contentDescription="@string/back" />
 
         <TextView
             style="@style/loginTitleTextStyle"
