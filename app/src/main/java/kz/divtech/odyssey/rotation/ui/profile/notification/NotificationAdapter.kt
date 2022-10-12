@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import kz.divtech.odyssey.rotation.Config
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
 
 class NotificationAdapter(private val notificationList: List<Notification>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
@@ -17,7 +18,13 @@ class NotificationAdapter(private val notificationList: List<Notification>) : Re
         holder.binding.notification = notificationList[position]
     }
 
-    override fun getItemCount() =  notificationList.size
+    override fun getItemCount() : Int{
+        return if(notificationList.size > Config.NOTIFICATION_LIMIT_SIZE){
+            Config.NOTIFICATION_LIMIT_SIZE
+        }else{
+            notificationList.size
+        }
+    }
 
     class NotificationViewHolder(val binding : ItemNotificationBinding) : ViewHolder(binding.root)
 }

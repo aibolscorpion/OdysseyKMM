@@ -13,6 +13,16 @@ class NotificationFragment : Fragment() {
         val binding = FragmentNotificationBinding.inflate(inflater)
 
         val notificationList = mutableListOf(Notification("Смещение графика","Новый график: 18 апреля - 9 мая 202…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
+            Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"),
             Notification("Назначен отпуск", "С 18 марта 2021 по 3 апреля 2021…", "2 ч. назад"))
 
         binding.notificationRecyclerView.adapter = NotificationAdapter(notificationList)
