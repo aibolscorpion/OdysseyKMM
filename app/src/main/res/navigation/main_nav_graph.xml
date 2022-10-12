@@ -73,10 +73,6 @@
             android:id="@+id/action_documentsFragment_to_recidencyPermitDialog"
             app:destination="@id/recidencyPermitDialog" />
     </fragment>
-    <fragment
-        android:id="@+id/personalDataFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.PersonalDataFragment"
-        android:label="@string/personal_data" />
     <dialog
         android:id="@+id/idDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.IdDialog"
@@ -93,6 +89,10 @@
         android:id="@+id/recidencyPermitDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.RecidencyPermitDialog"
         android:label="@string/residency_permit" />
+    <fragment
+        android:id="@+id/personalDataFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.PersonalDataFragment"
+        android:label="@string/personal_data" />
     <fragment
         android:id="@+id/notificationFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment"
