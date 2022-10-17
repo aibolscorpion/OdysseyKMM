@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="text_title">#FEFFFE</color>
+    <color name="white_two">#FEFFFE</color>
     <color name="text_description">#CFD5DC</color>
     <color name="text_description_2">#FCFDFD</color>
     <color name="line">#1EFEFFFE</color>
@@ -30,4 +30,5 @@
     <color name="gray">#748595</color>
     <color name="profile_description">#80385780</color>
     <color name="profile_menu_text">#15304D</color>
+    <color name="bottom_line">#DEE1E6</color>
 </resources>

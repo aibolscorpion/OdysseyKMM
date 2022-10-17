@@ -20,8 +20,27 @@
             android:text="@string/press_service"
             android:singleLine="true"/>
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/pressServiceSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/bg_search_view"
+            app:searchIcon="@drawable/icons_tabs_search"
+            app:searchHintIcon="@drawable/icons_tabs_search"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textSize="17sp"
+            android:textColor="#B3748595"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="7sp"
+            android:queryHint="@string/find"
+            app:queryHint="@string/find"
+            app:defaultQueryHint="@string/find"
+            android:iconifiedByDefault="false"
+            app:iconifiedByDefault="false"/>
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notificationRecyclerView"
+            android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_news"
@@ -29,6 +48,7 @@
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

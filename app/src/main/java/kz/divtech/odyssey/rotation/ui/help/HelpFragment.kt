@@ -24,4 +24,13 @@ class HelpFragment : Fragment() {
         val action = HelpFragmentDirections.actionHelpFragmentToCallSupportDialog()
         findNavController().navigate(action)
     }
+
+    fun openQAFragment(){
+
+    }
+
+    fun openPressServiceFragment(){
+        val action = HelpFragmentDirections.actionHelpFragmentToPressServiceFragment()
+        findNavController().navigate(action)
+    }
 }

@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_helpFragment_to_callSupportDialog"
             app:destination="@id/callSupportDialog" />
+        <action
+            android:id="@+id/action_helpFragment_to_pressServiceFragment"
+            app:destination="@id/pressServiceFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -97,4 +100,20 @@
         android:id="@+id/notificationFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment"
         android:label="@string/notifications" />
+    <fragment
+        android:id="@+id/pressServiceFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.help.press_service.PressServiceFragment"
+        android:label="@string/press_service" >
+        <action
+            android:id="@+id/action_pressServiceFragment_to_newsDialog"
+            app:destination="@id/newsDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/newsDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.help.press_service.NewsDialog"
+        android:label="NewsDialog">
+        <argument
+            android:name="news"
+            app:argType="kz.divtech.odyssey.rotation.ui.help.press_service.News" />
+    </dialog>
 </navigation>

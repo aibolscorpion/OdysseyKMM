@@ -1,11 +1,11 @@
 <resources>
 
     <style name="loginTitleTextStyle">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textColor">@color/white_two</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
     </style>
 
     <style name="nameTextStyle">
@@ -30,7 +30,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
         <item name="android:textSize">45sp</item>
-        <item name="android:textColor">@color/text_title</item>
+        <item name="android:textColor">@color/white_two</item>
         <item name="android:letterSpacing">0.04</item>
         <item name="android:gravity">center</item>
         <item name="android:textColorHint">@color/code_edit_text_hint</item>
