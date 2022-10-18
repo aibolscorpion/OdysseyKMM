@@ -17,18 +17,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/mainTitleTextStyle"
-            android:text="@string/notifications"
+            android:text="@string/questions_and_answers"
             android:singleLine="true"/>
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/pressServiceSearchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/bg_search_view"
+            app:searchIcon="@drawable/icons_tabs_search"
+            app:searchHintIcon="@drawable/icons_tabs_search"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textSize="17sp"
+            android:textColor="#B3748595"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="7sp"
+            android:queryHint="@string/what_r_u_interested_in"
+            app:queryHint="@string/what_r_u_interested_in"
+            app:defaultQueryHint="@string/what_r_u_interested_in"
+            android:iconifiedByDefault="false"
+            app:iconifiedByDefault="false"/>
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notificationRecyclerView"
+            android:id="@+id/questionsAnswersRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_notification"
-            android:layout_marginTop="@dimen/margin"
+            tools:listitem="@layout/item_question_answer"
+            android:layout_marginTop="4dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

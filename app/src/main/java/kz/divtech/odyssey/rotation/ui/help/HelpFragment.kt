@@ -26,7 +26,8 @@ class HelpFragment : Fragment() {
     }
 
     fun openQAFragment(){
-
+        val action = HelpFragmentDirections.actionHelpFragmentToQuestionsAnswersFragment()
+        findNavController().navigate(action)
     }
 
     fun openPressServiceFragment(){

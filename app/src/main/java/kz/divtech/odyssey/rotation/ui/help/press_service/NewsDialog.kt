@@ -17,11 +17,7 @@ class NewsDialog : BottomSheetDialogFragment(), OnCloseListener{
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogChosenNewsBinding.inflate(inflater)
         val args = NewsDialogArgs.fromBundle(requireArguments())
         val currentNews = args.news
