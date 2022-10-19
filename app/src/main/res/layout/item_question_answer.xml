@@ -17,16 +17,16 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/bg_card_view">
+                android:background="@drawable/bg_card_view"
+                android:paddingTop="20dp"
+                android:paddingBottom="24dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/questionAnswersCV"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
-                    android:paddingBottom="24dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp">
+                    android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/questionTitleLLC"

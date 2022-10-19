@@ -8,7 +8,20 @@
         android:id="@+id/mainFragment"
         android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
         android:label="@string/main"
-        app:layout="@layout/activity_main"/>
+        app:layout="@layout/activity_main">
+        <action
+            android:id="@+id/action_mainFragment_to_writeSupportDialog"
+            app:destination="@id/writeSupportDialog" />
+        <action
+            android:id="@+id/action_mainFragment_to_callSupportDialog"
+            app:destination="@id/callSupportDialog" />
+        <action
+            android:id="@+id/action_mainFragment_to_questionsAnswersFragment"
+            app:destination="@id/questionsAnswersFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"

@@ -92,6 +92,19 @@
     <string name="profile">Профиль</string>
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    //Страница Главная
+    <string name="see_all_notifications">Смотреть все уведомления</string>
+    <string name="help_24_7">Помощь 24/7</string>
+    <string name="nearest_trip">Ближайшая поездка</string>
+    <string name="to_support">в поддержку</string>
+    <string name="write">Написать</string>
+    <string name="to_online_chat">в онлайн-чат</string>
+    <string name="read">Прочитать</string>
+    <string name="questions_answers">вопрос/ответ</string>
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>
     <string name="call_support">Позвонить в поддержку</string>
