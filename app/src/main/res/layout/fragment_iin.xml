@@ -117,7 +117,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
-            layout="@layout/layout_toolbar"
+            layout="@layout/layout_login_toolbar"
             android:onClick="@{() -> iinFragment.backToCodeFragment()}"
             />
     </FrameLayout>

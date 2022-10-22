@@ -7,79 +7,69 @@
             name="notification"
             type="kz.divtech.odyssey.rotation.ui.profile.notification.Notification" />
     </data>
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="6dp"
-        android:layout_marginTop="4dp">
-        <FrameLayout
-            android:layout_width="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_notification_item">
+        <ImageView
+            android:id="@+id/notificationIconIV"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_notification_item"
-            >
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="12dp"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp">
-                <ImageView
-                    android:id="@+id/notificationIconIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="6dp"
-                    android:src="@drawable/icons_tabs_notify"
-                    android:contentDescription="@string/notifications" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="6dp"
+            android:src="@drawable/icons_tabs_notify"
+            android:contentDescription="@string/notifications" />
 
-                <TextView
-                    android:id="@+id/notificationTitleTV"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui_bold"
-                    android:singleLine="true"
-                    android:textColor="#385780"
-                    android:textSize="16sp"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="6dp"
-                    app:layout_constraintEnd_toStartOf="@+id/textView"
-                    app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{notification.title}"
-                    tools:text="@string/notification_title_placeholder"/>
+        <TextView
+            android:id="@+id/notificationTitleTV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:singleLine="true"
+            android:textColor="#385780"
+            android:textSize="16sp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="6dp"
+            app:layout_constraintEnd_toStartOf="@+id/textView"
+            app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{notification.title}"
+            tools:text="@string/notification_title_placeholder"/>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="14sp"
-                    android:textColor="#385780"
-                    android:lineSpacingExtra="2sp"
-                    android:layout_marginStart="@dimen/margin"
-                    app:layout_constraintTop_toBottomOf="@+id/notificationTitleTV"
-                    app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="6dp"
-                    android:singleLine="true"
-                    android:text="@{notification.content}"
-                    tools:text="@string/notification_content_placeholder"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textSize="14sp"
+            android:textColor="#385780"
+            android:lineSpacingExtra="2sp"
+            android:layout_marginStart="@dimen/margin"
+            app:layout_constraintTop_toBottomOf="@+id/notificationTitleTV"
+            app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="6dp"
+            android:singleLine="true"
+            android:text="@{notification.content}"
+            tools:text="@string/notification_content_placeholder"/>
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui"
-                    android:lineSpacingExtra="4sp"
-                    android:textColor="#112b46"
-                    android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@{notification.time}"
-                    tools:text="@string/notification_time_placeholder"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_regular"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#112b46"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@{notification.time}"
+            tools:text="@string/notification_time_placeholder"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

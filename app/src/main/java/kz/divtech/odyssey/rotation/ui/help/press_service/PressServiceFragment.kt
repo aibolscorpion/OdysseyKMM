@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
@@ -25,6 +27,9 @@ class PressServiceFragment : Fragment() {
             val action = PressServiceFragmentDirections.actionPressServiceFragmentToNewsDialog(it)
             findNavController().navigate(action)
         }
+
+        activity?.findViewById<TextView>(R.id.toolbarTitleTV)?.setText(R.string.press_service)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         return binding.root
     }

@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="7"
+    android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Пн" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Вт" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Ср" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Чт" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Пт" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Сб" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/pt_root_ui_bold"
+        android:textSize="13sp"
+        android:textColor="#748595"
+        android:letterSpacing="0.05"
+        android:lineSpacingExtra="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Вс" />
+
+</LinearLayout>

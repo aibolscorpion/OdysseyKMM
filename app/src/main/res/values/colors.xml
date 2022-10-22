@@ -31,4 +31,8 @@
     <color name="profile_description">#80385780</color>
     <color name="profile_menu_text">#15304D</color>
     <color name="bottom_line">#DEE1E6</color>
+    <color name="past_day">#4D1B344F</color>
+    <color name="today">#1262CB</color>
+    <color name="avatar_border">#15748595</color>
+    <color name="toolbar_bg">#2D4461</color>
 </resources>

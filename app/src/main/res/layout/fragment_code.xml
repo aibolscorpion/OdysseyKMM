@@ -158,7 +158,7 @@
 
         <include
             android:id="@+id/toolBar"
-            layout="@layout/layout_toolbar"
+            layout="@layout/layout_login_toolbar"
             />
 
     </FrameLayout>

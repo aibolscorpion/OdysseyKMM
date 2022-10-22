@@ -20,149 +20,141 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:cardCornerRadius="10dp"
+            app:cardUseCompatPadding="true"
             app:cardElevation="3dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="13dp"
                 android:paddingBottom="15dp"
                 android:paddingStart="18dp"
                 android:paddingEnd="@dimen/margin"
+                android:orientation="horizontal"
                 android:background="@drawable/bg_employee_info">
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/odysseyIdLL"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
-<!--                    <TextView-->
-<!--                        android:id="@+id/odysseyIdTV"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="@string/odyssey_id"-->
-<!--                        android:rotation="-90"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:textSize="13sp"-->
-<!--                        android:textColor="#c7d0db"-->
-<!--                        android:letterSpacing="0.33"-->
-<!--                        android:lineSpacingExtra="9sp"-->
-<!--                        />-->
-<!--                    <View-->
-<!--                        android:id="@+id/odysseyIdLineVw"-->
-<!--                        android:layout_width="1dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:background="#c8d1dc"-->
-<!--                        android:layout_marginStart="19dp"-->
-<!--                        />-->
-                </androidx.appcompat.widget.LinearLayoutCompat>
-                <TextView
-                    android:id="@+id/employeeNameTV"
+                    android:src="@drawable/icons_odyssey_id"
+                    android:layout_gravity="center_vertical" />
+                <View
+                    android:id="@+id/odysseyIdLineVw"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#c8d1dc"
+                    android:layout_marginStart="19dp"
+                    android:layout_marginEnd="18dp"
+                    />
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/profileNameTextStyle"
-                    app:layout_constrainedWidth="true"
-                    android:text="@string/employee_name_placeholder"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/odysseyIdLL"
-                    app:layout_constraintEnd_toEndOf="parent"/>
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/firstLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@+id/employeeNameTV"
-                    app:layout_constraintStart_toEndOf="@+id/odysseyIdLL"
-                    android:layout_marginTop="10dp">
-
+                    android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/tableNumberTV"
+                        android:id="@+id/employeeNameTV"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:text="@string/table_number"
+                        android:layout_height="wrap_content"
+                        style="@style/profileNameTextStyle"
+                        app:layout_constrainedWidth="true"
+                        android:text="@string/employee_name_placeholder"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:fontFamily="@font/pt_root_ui_medium"
-                        android:textSize="14sp"
-                        android:textColor="#748595"
-                        android:lineSpacingExtra="8sp"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
-
-                    <TextView
-                        android:id="@+id/companyNameTV"
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/firstLayout"
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:text="@string/company"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@+id/employeeNameTV"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:fontFamily="@font/pt_root_ui_medium"
-                        android:textSize="14sp"
-                        android:textColor="#748595"
-                        android:lineSpacingExtra="8sp"/>
+                        android:layout_marginTop="10dp">
 
-                    <TextView
-                        android:id="@+id/positionTV"
+                        <TextView
+                            android:id="@+id/tableNumberTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:text="@string/table_number"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:fontFamily="@font/pt_root_ui_medium"
+                            android:textSize="14sp"
+                            android:textColor="#748595"
+                            android:lineSpacingExtra="8sp"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/companyNameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:text="@string/company"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:fontFamily="@font/pt_root_ui_medium"
+                            android:textSize="14sp"
+                            android:textColor="#748595"
+                            android:lineSpacingExtra="8sp"/>
+
+                        <TextView
+                            android:id="@+id/positionTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:text="@string/position"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:fontFamily="@font/pt_root_ui_medium"
+                            android:textSize="14sp"
+                            android:textColor="#748595"
+                            android:lineSpacingExtra="8sp"/>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:text="@string/position"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:fontFamily="@font/pt_root_ui_medium"
-                        android:textSize="14sp"
-                        android:textColor="#748595"
-                        android:lineSpacingExtra="8sp"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/firstLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/employeeNameTV"
+                        app:layout_constraintHorizontal_bias="0.2">
 
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:letterSpacing="0.2"
+                            android:lineSpacingExtra="8sp"
+                            android:text="№00011"
+                            android:textColor="#15304d"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toEndOf="@+id/companyNameTV"
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/firstLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/employeeNameTV"
-                    app:layout_constraintHorizontal_bias="0.2">
+                            />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/pt_root_ui_bold"
-                        android:letterSpacing="0.2"
-                        android:lineSpacingExtra="8sp"
-                        android:text="№00011"
-                        android:textColor="#15304d"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/companyNameTV"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/pt_root_ui_medium"
+                            android:letterSpacing="-0.01"
+                            android:lineSpacingExtra="8sp"
+                            android:text="ТОО KazMinerals"
+                            android:textColor="#15304d"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toEndOf="@+id/tableNumberTV" />
 
-                        />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="22dp"
+                            android:fontFamily="@font/pt_root_ui_medium"
+                            android:letterSpacing="-0.01"
+                            android:lineSpacingExtra="8sp"
+                            android:text="@string/employee_position_placeholder"
+                            android:textColor="#15304d"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toEndOf="@+id/positionTV" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/pt_root_ui_medium"
-                        android:letterSpacing="-0.01"
-                        android:lineSpacingExtra="8sp"
-                        android:text="ТОО KazMinerals"
-                        android:textColor="#15304d"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/tableNumberTV" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="22dp"
-                        android:fontFamily="@font/pt_root_ui_medium"
-                        android:letterSpacing="-0.01"
-                        android:lineSpacingExtra="8sp"
-                        android:text="@string/employee_position_placeholder"
-                        android:textColor="#15304d"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/positionTV" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
