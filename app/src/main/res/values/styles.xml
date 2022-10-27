@@ -141,6 +141,12 @@
         <item name="android:letterSpacing">0.01</item>
     </style>
 
+    <style name="tab_text">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
     <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_terms_of_agreement_dialog</item>
     </style>
@@ -158,6 +164,8 @@
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/BottomSheet</item>
     </style>
+
+
 
 
 </resources>

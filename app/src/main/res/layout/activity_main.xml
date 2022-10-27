@@ -24,8 +24,7 @@
                 android:fontFamily="@font/pt_root_ui_bold"
                 android:textSize="17sp"
                 android:textColor="@color/white"
-                android:lineSpacingExtra="7sp"
-                tools:text="@string/main"/>
+                android:lineSpacingExtra="7sp"/>
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.fragment.app.FragmentContainerView
@@ -47,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:menu="@menu/menu"/>
+            app:menu="@menu/menu"
+            app:labelVisibilityMode="labeled"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

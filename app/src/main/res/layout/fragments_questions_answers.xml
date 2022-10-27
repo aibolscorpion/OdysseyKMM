@@ -45,7 +45,6 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/item_question_answer"
             android:layout_marginTop="4dp"
-            android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 

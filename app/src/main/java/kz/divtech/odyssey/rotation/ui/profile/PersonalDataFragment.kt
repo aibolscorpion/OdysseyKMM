@@ -22,7 +22,7 @@ class PersonalDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentPersonalDataBinding.inflate(inflater)
-        binding.genderRadioGroup.setOnCheckedChangeListener { group, checkedId ->
+        binding.genderRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.maleRadioButton){
                 changeRadioButtonBackground(binding.maleRadioButton, binding.femaleRadioButton)
             }else if(checkedId == R.id.femaleRadioButton){

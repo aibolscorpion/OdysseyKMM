@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="trip"
+            type="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="12dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="19sp"
+                    android:textColor="#1b344f"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="9sp"
+                    android:text="@{trip.title}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/firstIV"
+                    android:singleLine="true"
+                    tools:text="На вахту, 25 авг"/>
+
+                <ImageView
+                    android:id="@+id/firstIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/train_drawable"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/secondIV"
+                    />
+                <ImageView
+                    android:id="@+id/secondIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/train_drawable"
+                    android:layout_marginEnd="12dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/thirdIV"
+                    />
+                <ImageView
+                    android:id="@+id/thirdIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/train_drawable"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#748595"
+                android:lineSpacingExtra="2sp"
+                android:text="@{trip.description}"
+                tools:text="на 10 дней, в Актогай"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/bottom_sheet_line"
+                android:layout_marginTop="12dp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="11dp"
+                android:visibility="@{trip.ticketPurchased ? view.VISIBLE : view.GONE}">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/train_drawable"
+                        android:contentDescription="@string/trips"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="14sp"
+                        android:textColor="#15304d"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:layout_weight="1"
+                        android:text="Алматы-1 – Балхаш"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="4dp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="14sp"
+                        android:textColor="#15304d"
+                        android:lineSpacingExtra="8sp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="31 февр, 10:40 - 16:20"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/train_drawable"
+                        android:contentDescription="@string/trips"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="14sp"
+                        android:textColor="#15304d"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:layout_weight="1"
+                        android:text="Алматы-1 – Балхаш"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="4dp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="14sp"
+                        android:textColor="#15304d"
+                        android:lineSpacingExtra="8sp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:text="31 февр, 10:40 - 16:20"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#748595"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/tickets_are_not_purchased"
+                android:layout_marginTop="11dp"
+                android:visibility="@{trip.ticketPurchased ? view.GONE : view.VISIBLE}"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
