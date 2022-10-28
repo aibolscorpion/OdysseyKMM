@@ -20,7 +20,7 @@ class NewsAdapter(private val newsList : List<News>, private val onNewsClick : (
     override fun getItemCount() = newsList.size
 
     class ViewHolder(val binding: ItemNewsBinding,  val onNewsClick : (News) -> Unit) : RecyclerView.ViewHolder(binding.root) {
-        lateinit var currentNews : News
+        private lateinit var currentNews : News
         init {
             binding.newsLLC.setOnClickListener {
                 onNewsClick(currentNews)

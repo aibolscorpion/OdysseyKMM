@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 
 class ActiveTripsFragment : Fragment() {
@@ -16,7 +17,10 @@ class ActiveTripsFragment : Fragment() {
             Trip("Домой, 6 сен", "в Алматы"),
             Trip("На вахту, 17 сен", "на 10 дней, в Актогай", false),
             Trip("Домой,  27 сен", "В Алматы", false))
-        binding.activeTripsRV.adapter = TripsAdapter(tripsList)
+        binding.activeTripsRV.adapter = TripsAdapter(tripsList) { trip ->
+            val action = TripsFragmentDirections.actionTripsFragmentToTripDetailDialog(trip)
+            findNavController().navigate(action)
+        }
 
         return binding.root
     }

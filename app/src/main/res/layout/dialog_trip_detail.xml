@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+        <variable
+            name="trip"
+            type="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:paddingTop="20dp"
+            android:paddingBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#1b344f"
+                android:lineSpacingExtra="2sp"
+                android:text="Заявка №00056"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{trip.title}"
+                tools:text="Домой,  27 сен"
+                style="@style/loginTitleTextStyle"
+                android:textColor="@color/terms_of_agreement_title"
+                android:gravity="start"
+                android:layout_marginTop="4dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#748595"
+                android:lineSpacingExtra="2sp"
+                android:text="В Алматы. 8 ч 45 мин в пути"
+                android:layout_marginTop="4dp"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_ticket"
+                android:layout_marginTop="@dimen/margin"
+                />
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/layout_ticket_is_not_purchased"
+                android:layout_marginTop="20dp"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            android:src="@drawable/icons_tabs_close"
+            android:layout_gravity="top|end"
+            android:onClick="@{() -> listener.close() }"
+            />
+    </FrameLayout>
+</layout>

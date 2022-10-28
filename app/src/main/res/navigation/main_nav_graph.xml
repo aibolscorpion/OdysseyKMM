@@ -26,7 +26,11 @@
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
         android:label="@string/trips"
-        app:layout="@layout/fragment_trips"/>
+        app:layout="@layout/fragment_trips">
+        <action
+            android:id="@+id/action_tripsFragment_to_tripDetailDialog"
+            app:destination="@id/tripDetailDialog" />
+    </fragment>
     <fragment
         android:id="@+id/helpFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.HelpFragment"
@@ -136,4 +140,12 @@
         android:id="@+id/questionsAnswersFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.questions_answers.QuestionsAnswersFragment"
         android:label="@string/questions_and_answers" />
+    <dialog
+        android:id="@+id/tripDetailDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.TripDetailDialog"
+        android:label="TripDetailDialog" >
+        <argument
+            android:name="trip"
+            app:argType="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+    </dialog>
 </navigation>

@@ -107,7 +107,9 @@
     <string name="active_trips">Активные поездки</string>
     <string name="archive_trips">Архив поездок</string>
     <string name="my_trips">Мои поездки</string>
-    <string name="tickets_are_not_purchased">Билеты еще не оформлены</string>
+    <string name="tickets_are_not_purchased">Билеты еще не куплены</string>
+    <string name="tickets_are_not_purchased_2">Билеты еще не оформлены</string>
+    <string name="all_info_will_be_shown_after_purchasing">Когда координатор закупит и оформит билеты на данную поездку, отобразится вся необходимая информация.</string>
 
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
