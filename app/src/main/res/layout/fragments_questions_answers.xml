@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="25dp"
-        android:paddingBottom="25dp"
         android:paddingStart="@dimen/margin"
         android:paddingEnd="@dimen/margin"
         android:background="@color/main_bg"
@@ -26,25 +25,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:background="@drawable/bg_search_view"
-            app:searchIcon="@drawable/icons_tabs_search"
-            app:searchHintIcon="@drawable/icons_tabs_search"
             android:fontFamily="@font/pt_root_ui_medium"
             android:textSize="17sp"
             android:textColor="#B3748595"
             android:letterSpacing="0.01"
             android:lineSpacingExtra="7sp"
-            android:queryHint="@string/what_r_u_interested_in"
             app:queryHint="@string/what_r_u_interested_in"
             app:defaultQueryHint="@string/what_r_u_interested_in"
-            android:iconifiedByDefault="false"
-            app:iconifiedByDefault="false"/>
+            app:iconifiedByDefault="false"
+            app:searchIcon="@drawable/icons_tabs_search"
+            app:searchHintIcon="@drawable/icons_tabs_search"
+            app:queryBackground="@android:color/transparent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/questionsAnswersRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/item_question_answer"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 

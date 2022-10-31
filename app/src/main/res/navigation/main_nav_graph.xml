@@ -24,12 +24,15 @@
     </fragment>
     <fragment
         android:id="@+id/tripsFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.fragments.TripsFragment"
         android:label="@string/trips"
         app:layout="@layout/fragment_trips">
         <action
             android:id="@+id/action_tripsFragment_to_tripDetailDialog"
             app:destination="@id/tripDetailDialog" />
+        <action
+            android:id="@+id/action_tripsFragment_to_ticketsAreNotPurchasedDialog"
+            app:destination="@id/ticketsAreNotPurchasedDialog" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -142,10 +145,18 @@
         android:label="@string/questions_and_answers" />
     <dialog
         android:id="@+id/tripDetailDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.TripDetailDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TripDetailDialog"
         android:label="TripDetailDialog" >
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
+    </dialog>
+    <dialog
+        android:id="@+id/ticketsAreNotPurchasedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TicketsAreNotPurchasedDialog"
+        android:label="TicketsAreNotPurchasedDialog" >
+        <argument
+            android:name="trip"
+            app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
     </dialog>
 </navigation>

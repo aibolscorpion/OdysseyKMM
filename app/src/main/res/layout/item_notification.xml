@@ -14,8 +14,9 @@
         android:paddingBottom="12dp"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/bg_notification_item">
+
         <ImageView
             android:id="@+id/notificationIconIV"
             android:layout_width="wrap_content"

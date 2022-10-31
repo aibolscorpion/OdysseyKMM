@@ -33,6 +33,7 @@
             android:layout_marginTop="@dimen/margin"
             android:onClick="@{() -> documentsFragment.showWorkPermissionDialog()}"
             app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -135,6 +136,7 @@
             android:layout_marginTop="@dimen/margin"
             android:onClick="@{() -> documentsFragment.showIdDialog()}"
             app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -236,6 +238,7 @@
             android:layout_marginTop="@dimen/margin"
             android:onClick="@{() -> documentsFragment.showPassportDialog()}"
             app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -298,6 +301,7 @@
             android:layout_marginTop="@dimen/margin"
             android:onClick="@{() -> documentsFragment.showRecidencyPermitDialog()}"
             app:cardCornerRadius="8dp"
+            app:cardUseCompatPadding="true"
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

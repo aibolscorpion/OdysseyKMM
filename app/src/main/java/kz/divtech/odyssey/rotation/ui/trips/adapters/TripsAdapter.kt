@@ -1,9 +1,10 @@
-package kz.divtech.odyssey.rotation.ui.trips
+package kz.divtech.odyssey.rotation.ui.trips.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
+import kz.divtech.odyssey.rotation.ui.trips.models.Trip
 
 class TripsAdapter(private val tripList: List<Trip>, private val onTripClicked : (Trip) -> Unit) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {

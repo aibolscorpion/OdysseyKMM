@@ -147,6 +147,27 @@
         <item name="android:lineSpacingExtra">7sp</item>
     </style>
 
+    <style name="selected_question_title">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+        <item name="android:textColor">@color/terms_of_agreement_title</item>
+    </style>
+
+    <style name="unselected_question_title">
+        <item name="android:fontFamily">@font/pt_root_ui_medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineSpacingExtra">5sp</item>
+        <item name="android:textColor">#15304d</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="toolbarTitle">
+        <item name="android:fontFamily">@font/pt_root_ui_bold</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+    </style>
+
     <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_terms_of_agreement_dialog</item>
     </style>

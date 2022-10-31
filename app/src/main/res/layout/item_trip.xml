@@ -5,7 +5,7 @@
     <data>
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+            type="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
         <variable
             name="view"
             type="android.view.View" />

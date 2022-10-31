@@ -3,32 +3,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="25dp"
-        android:paddingStart="@dimen/margin"
-        android:paddingEnd="@dimen/margin"
-        android:background="@color/main_bg"
-        android:orientation="vertical">
+        android:background="@color/main_bg">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/mainTitleTextStyle"
-            android:text="@string/notifications"
-            android:singleLine="true"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/notificationRecyclerView"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_notification"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            />
+            android:paddingTop="25dp"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mainTitleTextStyle"
+                android:text="@string/notifications"
+                android:singleLine="true"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/notificationRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_notification"
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 </layout>

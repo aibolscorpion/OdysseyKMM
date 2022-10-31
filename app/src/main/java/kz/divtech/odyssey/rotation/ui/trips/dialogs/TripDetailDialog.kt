@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips
+package kz.divtech.odyssey.rotation.ui.trips.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

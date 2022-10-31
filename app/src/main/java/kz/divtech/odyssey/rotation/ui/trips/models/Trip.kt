@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips
+package kz.divtech.odyssey.rotation.ui.trips.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

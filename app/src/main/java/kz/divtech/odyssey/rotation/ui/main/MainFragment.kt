@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -37,8 +35,6 @@ class MainFragment : Fragment() {
         binding.calendarView.setup(currentMonth, currentMonth, firstDayOfWeek)
         binding.calendarView.scrollToMonth(currentMonth)
 
-        activity?.findViewById<TextView>(R.id.toolbarTitleTV)?.setText(R.string.main)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return binding.root
     }
 

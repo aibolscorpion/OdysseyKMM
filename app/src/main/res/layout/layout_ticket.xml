@@ -4,7 +4,7 @@
     <data>
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.ui.trips.Trip" />
+            type="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,31 +35,35 @@
                     android:id="@+id/departureIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icons_tabs_train"
+                    android:src="@drawable/icons_tabs_grey_train"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:contentDescription="@string/departure" />
 
                 <View
-                    android:layout_width="1dp"
+                    android:layout_width="2dp"
                     android:layout_height="0dp"
-                    android:background="@color/bottom_sheet_line"
+                    android:background="#4D2D4461"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintTop_toBottomOf="@+id/departureIV"
-                    app:layout_constraintBottom_toTopOf="@+id/destionationIV"
+                    app:layout_constraintBottom_toTopOf="@+id/destinationIV"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <ImageView
-                    android:id="@+id/destionationIV"
-                    android:layout_width="27dp"
-                    android:layout_height="23dp"
-                    android:src="@drawable/icons_tabs_train"
+                    android:id="@+id/destinationIV"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/icon_point_rotation"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.8" />
+                    app:layout_constraintVertical_bias="0.8"
+                    android:contentDescription="@string/destination" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <LinearLayout

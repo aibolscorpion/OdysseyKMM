@@ -8,24 +8,16 @@
         tools:context="kz.divtech.odyssey.rotation.ui.MainActivity"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/mainToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/actionBarSize"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:background="@color/toolbar_bg"
-            app:layout_constraintTop_toTopOf="parent">
-            <TextView
-                android:id="@+id/toolbarTitleTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="17sp"
-                android:textColor="@color/white"
-                android:lineSpacingExtra="7sp"/>
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleCentered="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white"
+            app:titleTextAppearance="@style/toolbarTitle" />
+
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainNavHostFragment"

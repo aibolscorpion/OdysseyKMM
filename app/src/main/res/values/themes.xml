@@ -16,6 +16,7 @@
     <style name="Theme.Main" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/bottom_sheet_btn</item>
         <item name="android:statusBarColor">@color/toolbar_bg</item>
+        <item name="colorAccent">@color/bottom_sheet_btn</item>
     </style>
 
 </resources>

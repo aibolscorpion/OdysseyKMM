@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips
+package kz.divtech.odyssey.rotation.ui.trips.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
