@@ -9,11 +9,7 @@ import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentBinding
 
 class DocumentsFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentDocumentBinding.inflate(inflater)
         binding.documentsFragment = this
 

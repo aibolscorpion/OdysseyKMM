@@ -8,29 +8,32 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
+import kz.divtech.odyssey.rotation.viewmodels.AuthViewModel
 
 class CodeFragment : Fragment(), OnFilledListener {
-    private lateinit var digitOneET : EditText
-    private lateinit var digitTwoET : EditText
-    private lateinit var digitThreeET : EditText
-    private lateinit var digitFourET : EditText
+    private val editTextList = ArrayList<EditText>()
     private lateinit var dataBinding : FragmentCodeBinding
     private var countDownTimer : CountDownTimer?= null
     private var countSmsBtnPress  = 1
+    private lateinit var viewModel : AuthViewModel
+    private lateinit var phoneNumber : String
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         dataBinding = FragmentCodeBinding.inflate(inflater)
         dataBinding.codeFragment = this
 
         val args = CodeFragmentArgs.fromBundle(requireArguments())
-        dataBinding.phoneNumber = args.phoneNumber
+        phoneNumber = args.phoneNumber
+        dataBinding.phoneNumber = phoneNumber
 
-        setEditTexts()
+        setupEditTexts()
 
         dataBinding.toolBar.setOnClickListener {
             backToPhoneNumberFragment()}
@@ -40,21 +43,33 @@ class CodeFragment : Fragment(), OnFilledListener {
         return dataBinding.root
     }
 
-    private fun setEditTexts(){
-        digitOneET = dataBinding.digitOneET
-        digitTwoET = dataBinding.digitTwoET
-        digitThreeET = dataBinding.digitThreeET
-        digitFourET = dataBinding.digitFourET
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        digitOneET.addTextChangedListener(GenericTextWatcher(digitOneET, digitTwoET, null))
-        digitTwoET.addTextChangedListener(GenericTextWatcher(digitTwoET, digitThreeET, null))
-        digitThreeET.addTextChangedListener(GenericTextWatcher(digitThreeET, digitFourET, null))
-        digitFourET.addTextChangedListener(GenericTextWatcher(digitFourET, null, this))
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        viewModel.message.observe(viewLifecycleOwner){ message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
 
-        digitOneET.setOnKeyListener(GenericKeyEvent(digitOneET, null))
-        digitTwoET.setOnKeyListener(GenericKeyEvent(digitTwoET, digitOneET))
-        digitThreeET.setOnKeyListener(GenericKeyEvent(digitThreeET, digitTwoET))
-        digitFourET.setOnKeyListener(GenericKeyEvent(digitFourET,digitThreeET))
+    }
+
+    private fun setupEditTexts(){
+        editTextList.add(dataBinding.digitOneET)
+        editTextList.add(dataBinding.digitTwoET)
+        editTextList.add(dataBinding.digitThreeET)
+        editTextList.add(dataBinding.digitFourET)
+
+        editTextList.forEachIndexed { index, editText ->
+            if(index < editTextList.size-1)
+                editText.addTextChangedListener(GenericTextWatcher(editText, editTextList[index+1], null))
+            else
+                editText.addTextChangedListener(GenericTextWatcher(editText, null, this))
+
+            if(index > 0)
+                editText.setOnKeyListener(GenericKeyEvent(editText, editTextList[index-1]))
+            else
+                editText.setOnKeyListener(GenericKeyEvent(editText, null))
+        }
     }
 
     private fun startTimer(){
@@ -76,15 +91,18 @@ class CodeFragment : Fragment(), OnFilledListener {
         }.start()
     }
 
-    fun openIINFragment(){
+    private fun openIINFragment(){
         val action = CodeFragmentDirections.actionCodeFragmentToIINFragment()
         findNavController().navigate(action)
     }
 
-    fun showTimer(){
+
+    fun sendSmsCodeAgain(){
         countSmsBtnPress+=1
         dataBinding.loginBtn.visibility = View.GONE
         dataBinding.resendSmsTimerTextView.visibility = View.VISIBLE
+
+        viewModel.sendSmsToPhone(null)
         startTimer()
     }
 
@@ -98,7 +116,7 @@ class CodeFragment : Fragment(), OnFilledListener {
     override fun onStart() {
         super.onStart()
 
-        showKeyboard(requireContext(), digitOneET)
+        showKeyboard(requireContext(), editTextList[0])
     }
 
     fun backToPhoneNumberFragment(){
@@ -107,15 +125,17 @@ class CodeFragment : Fragment(), OnFilledListener {
     }
 
     override fun onFilled() {
-        if(digitOneET.text.isNotEmpty() && digitTwoET.text.isNotEmpty()
-            && digitThreeET.text.isNotEmpty() && digitFourET.text.isNotEmpty()){
-            hideKeyboard(requireContext(), digitFourET)
-            val code = StringBuilder().append(digitOneET.text).append(digitTwoET.text).append(digitThreeET.text).append(digitFourET.text)
-            Toast.makeText(requireContext(), code, Toast.LENGTH_SHORT).show()
-            openIINFragment()
-        }else{
+        var oneOfEditTextIsEmpty = false
+        editTextList.forEach { if(it.text.isEmpty()) oneOfEditTextIsEmpty = true }
+
+        if(oneOfEditTextIsEmpty)
             Toast.makeText(requireContext(), R.string.fill_all_empty_fields, Toast.LENGTH_SHORT).show()
-            return
+        else{
+            hideKeyboard(requireContext(), editTextList[editTextList.size-1])
+            val code = StringBuilder()
+            editTextList.forEach {  code.append(it.text)}
+
+            viewModel.login(code.toString())
         }
     }
 
