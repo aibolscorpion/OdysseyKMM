@@ -1,9 +1,9 @@
 package kz.divtech.odyssey.rotation.utils
 
 import android.content.Context
-import kz.divtech.odyssey.rotation.App
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.BuildConfig
-import kz.divtech.odyssey.rotation.Config.AUTHORIZATION_VALUE_PREFIX
+import kz.divtech.odyssey.rotation.app.Config.AUTHORIZATION_VALUE_PREFIX
 
 
 class SessionManager {

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import kz.divtech.odyssey.rotation.Config
+import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
 
 class NotificationAdapter(private val notificationList: List<Notification>) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {

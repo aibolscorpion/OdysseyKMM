@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.ui.login.listener.DialogListener
 
 
-class EmployeeNotFoundDialog : BottomSheetDialogFragment(), DialogListener{
+class EmployeeNotFoundDialog : BottomSheetDialogFragment(), DialogListener {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

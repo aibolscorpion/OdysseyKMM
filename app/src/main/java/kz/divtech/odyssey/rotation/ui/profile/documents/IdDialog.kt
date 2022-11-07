@@ -13,7 +13,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class IdDialog : BottomSheetDialogFragment(), SaveListener, OnCloseListener{
+class IdDialog : BottomSheetDialogFragment(), SaveListener, OnCloseListener {
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

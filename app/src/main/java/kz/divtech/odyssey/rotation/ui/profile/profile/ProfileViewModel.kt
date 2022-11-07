@@ -2,7 +2,7 @@ package kz.divtech.odyssey.rotation.ui.profile.profile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kz.divtech.odyssey.rotation.api.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response

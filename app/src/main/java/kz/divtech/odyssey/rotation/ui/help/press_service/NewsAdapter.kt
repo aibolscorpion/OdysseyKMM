@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemNewsBinding
-import kz.divtech.odyssey.rotation.models.help.press_service.News
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.News
 
 class NewsAdapter(private val newsList : List<News>, private val onNewsClick : (News) -> Unit) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 

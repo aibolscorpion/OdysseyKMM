@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener{
+class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener {
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

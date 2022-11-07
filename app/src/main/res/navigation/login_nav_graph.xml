@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/phoneNumberFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.PhoneNumberFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.PhoneNumberFragment"
         app:layout="@layout/fragment_number"
         tools:layout="@layout/fragment_number"
         >
@@ -31,14 +31,14 @@
 
     <dialog
         android:id="@+id/termsOfAgreementDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.TermsOfAgreementDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.dialogs.TermsOfAgreementDialog"
         android:label="TermsOfAgreementDialog"
         app:layout="@layout/dialog_terms_of_agreement"
         tools:layout="@layout/dialog_terms_of_agreement"/>
 
     <dialog
         android:id="@+id/phoneNumberErrorDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.PhoneNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.dialogs.PhoneNumberErrorDialog"
         android:label="PhoneNumberErrorDialog"
         app:layout="@layout/dialog_phone_number_error"
         tools:layout="@layout/dialog_phone_number_error">
@@ -49,14 +49,14 @@
 
     <dialog
         android:id="@+id/contactSupportDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.ContactSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.dialogs.ContactSupportDialog"
         android:label="ContactSupportDialog"
         app:layout="@layout/dialog_contact_support"
         tools:layout="@layout/dialog_contact_support" />
 
     <dialog
         android:id="@+id/accountDeactivatedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.AccountDeactivatedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.dialogs.AccountDeactivatedDialog"
         android:label="AccountDeactivatedDialog"
         app:layout="@layout/dialog_account_deactivated"
         tools:layout="@layout/dialog_account_deactivated" >
@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/codeFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.code.CodeFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.code.CodeFragment"
         app:layout="@layout/fragment_code"
         tools:layout="@layout/fragment_code" >
         <argument

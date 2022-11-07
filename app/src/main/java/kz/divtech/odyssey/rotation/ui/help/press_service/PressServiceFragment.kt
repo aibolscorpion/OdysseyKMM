@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentPressServiceBinding
-import kz.divtech.odyssey.rotation.models.help.press_service.News
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.News
 
 class PressServiceFragment : Fragment() {
 

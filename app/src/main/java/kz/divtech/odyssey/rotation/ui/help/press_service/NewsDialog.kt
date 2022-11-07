@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogChosenNewsBinding
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class NewsDialog : BottomSheetDialogFragment(), OnCloseListener{
+class NewsDialog : BottomSheetDialogFragment(), OnCloseListener {
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

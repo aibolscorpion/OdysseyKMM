@@ -10,8 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogPhoneNumberAddedBinding
-import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
-import kz.divtech.odyssey.rotation.ui.login.phonenumber.PhoneNumberFragmentDirections
 
 
 class PhoneNumberAddedDialog : BottomSheetDialogFragment() {

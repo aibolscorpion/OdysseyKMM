@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 R.id.personalDataFragment, R.id.documentsFragment,
-                R.id.notificationFragment, R.id.questionsAnswersFragment,
+                R.id.notificationFragment, R.id.faqFragment,
                     R.id.pressServiceFragment-> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
             }
         }

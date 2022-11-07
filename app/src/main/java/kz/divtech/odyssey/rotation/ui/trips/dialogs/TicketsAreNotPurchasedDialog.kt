@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogTicketsAreNotPurchasedBindi
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class TicketsAreNotPurchasedDialog : BottomSheetDialogFragment(), OnCloseListener{
+class TicketsAreNotPurchasedDialog : BottomSheetDialogFragment(), OnCloseListener {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

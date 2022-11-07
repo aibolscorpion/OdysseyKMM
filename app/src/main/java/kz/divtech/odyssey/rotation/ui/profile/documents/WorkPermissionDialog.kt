@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogWorkPermissionBinding
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class WorkPermissionDialog : BottomSheetDialogFragment(), OnCloseListener{
+class WorkPermissionDialog : BottomSheetDialogFragment(), OnCloseListener {
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

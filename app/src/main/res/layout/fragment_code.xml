@@ -5,7 +5,7 @@
     <data>
         <variable
             name="codeFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.code.CodeFragment" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.code.CodeFragment" />
         <variable
             name="phoneNumber"
             type="String" />
