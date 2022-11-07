@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.help.press_service
+package kz.divtech.odyssey.rotation.models.help.press_service
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

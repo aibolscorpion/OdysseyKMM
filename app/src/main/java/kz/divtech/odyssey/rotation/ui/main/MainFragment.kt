@@ -39,23 +39,19 @@ class MainFragment : Fragment() {
     }
 
     fun openNotificationsFragment(){
-        val action = MainFragmentDirections.actionMainFragmentToNotificationFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_global_notificationFragment)
     }
 
     fun showCallSupportDialog(){
-        val action = MainFragmentDirections.actionMainFragmentToCallSupportDialog()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_global_callSupportDialog)
     }
 
     fun showWriteSupportDialog(){
-        val action = MainFragmentDirections.actionMainFragmentToWriteSupportDialog()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_global_writeSupportDialog)
     }
 
     fun openQuestionsAnswersFragment(){
-        val action = MainFragmentDirections.actionMainFragmentToQuestionsAnswersFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(R.id.action_global_questionsAnswersFragment)
     }
 
 }

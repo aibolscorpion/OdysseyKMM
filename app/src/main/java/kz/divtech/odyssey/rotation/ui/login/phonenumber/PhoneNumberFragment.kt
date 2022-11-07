@@ -12,8 +12,9 @@ import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNumberBinding
+import kz.divtech.odyssey.rotation.utils.SessionManager
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
-import kz.divtech.odyssey.rotation.viewmodels.AuthViewModel
+import kz.divtech.odyssey.rotation.viewmodels.login.AuthViewModel
 
 
 class PhoneNumberFragment : Fragment() {
@@ -23,6 +24,12 @@ class PhoneNumberFragment : Fragment() {
     private var extractedPhoneNumber: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+
+        if(SessionManager().isLoggedIn){
+            val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToMainActivity()
+            findNavController().navigate(action)
+        }
+
         dataBinding = FragmentNumberBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
 
@@ -87,7 +94,5 @@ class PhoneNumberFragment : Fragment() {
         val action = PhoneNumberFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog()
         findNavController().navigate(action)
     }
-
-
 
 }

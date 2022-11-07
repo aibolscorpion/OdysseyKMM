@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
@@ -8,25 +9,14 @@
         android:id="@+id/mainFragment"
         android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
         android:label="@string/main"
-        app:layout="@layout/activity_main">
-        <action
-            android:id="@+id/action_mainFragment_to_writeSupportDialog"
-            app:destination="@id/writeSupportDialog" />
-        <action
-            android:id="@+id/action_mainFragment_to_callSupportDialog"
-            app:destination="@id/callSupportDialog" />
-        <action
-            android:id="@+id/action_mainFragment_to_questionsAnswersFragment"
-            app:destination="@id/questionsAnswersFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
-    </fragment>
+        app:layout="@layout/activity_main"
+        tools:layout="@layout/activity_main"/>
     <fragment
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.fragments.TripsFragment"
         android:label="@string/trips"
-        app:layout="@layout/fragment_trips">
+        app:layout="@layout/fragment_trips"
+        tools:layout="@layout/fragment_trips">
         <action
             android:id="@+id/action_tripsFragment_to_tripDetailDialog"
             app:destination="@id/tripDetailDialog" />
@@ -38,25 +28,18 @@
         android:id="@+id/helpFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.HelpFragment"
         android:label="@string/help"
-        app:layout="@layout/fragment_help" >
-        <action
-            android:id="@+id/action_helpFragment_to_writeSupportDialog"
-            app:destination="@id/writeSupportDialog" />
-        <action
-            android:id="@+id/action_helpFragment_to_callSupportDialog"
-            app:destination="@id/callSupportDialog" />
+        app:layout="@layout/fragment_help"
+        tools:layout="@layout/fragment_help" >
         <action
             android:id="@+id/action_helpFragment_to_pressServiceFragment"
             app:destination="@id/pressServiceFragment" />
-        <action
-            android:id="@+id/action_helpFragment_to_questionsAnswersFragment"
-            app:destination="@id/questionsAnswersFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.profile.ProfileFragment"
         android:label="@string/profile"
-        app:layout="@layout/fragment_profile">
+        app:layout="@layout/fragment_profile"
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_termsOfAgreementDialog2"
             app:destination="@id/termsOfAgreementDialog" />
@@ -67,25 +50,33 @@
             android:id="@+id/action_profileFragment_to_personalDataFragment"
             app:destination="@id/personalDataFragment" />
         <action
-            android:id="@+id/action_profileFragment_to_notificationFragment"
-            app:destination="@id/notificationFragment" />
+            android:id="@+id/action_profileFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <dialog
         android:id="@+id/termsOfAgreementDialog"
         android:name="kz.divtech.odyssey.rotation.ui.login.phonenumber.dialogs.TermsOfAgreementDialog"
-        android:label="TermsOfAgreementDialog" />
+        android:label="TermsOfAgreementDialog"
+        android:layout="@layout/dialog_terms_of_agreement"
+        tools:layout="@layout/dialog_terms_of_agreement" />
     <dialog
         android:id="@+id/writeSupportDialog"
         android:name="kz.divtech.odyssey.rotation.ui.help.WriteSupportDialog"
-        android:label="WriteSupportDialog" />
+        android:label="WriteSupportDialog"
+        android:layout="@layout/dialog_write_support"
+        tools:layout="@layout/dialog_write_support" />
     <dialog
         android:id="@+id/callSupportDialog"
         android:name="kz.divtech.odyssey.rotation.ui.help.CallSupportDialog"
-        android:label="CallSupportDialog" />
+        android:label="CallSupportDialog"
+        android:layout="@layout/dialog_call_support"
+        tools:layout="@layout/dialog_call_support" />
     <fragment
         android:id="@+id/documentsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.DocumentsFragment"
-        android:label="@string/documents" >
+        android:label="@string/documents"
+        android:layout="@layout/fragment_document"
+        tools:layout="@layout/fragment_document" >
         <action
             android:id="@+id/action_documentsFragment_to_workPermissionDialog"
             app:destination="@id/workPermissionDialog" />
@@ -102,31 +93,45 @@
     <dialog
         android:id="@+id/idDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.IdDialog"
-        android:label="@string/id" />
+        android:label="@string/id"
+        android:layout="@layout/dialog_id"
+        tools:layout="@layout/dialog_id" />
     <dialog
         android:id="@+id/passportDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.PassportDialog"
-        android:label="@string/passport" />
+        android:label="@string/passport"
+        android:layout="@layout/dialog_passport"
+        tools:layout="@layout/dialog_passport" />
     <dialog
         android:id="@+id/workPermissionDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.WorkPermissionDialog"
-        android:label="@string/work_permission" />
+        android:label="@string/work_permission"
+        android:layout="@layout/dialog_work_permission"
+        tools:layout="@layout/dialog_work_permission" />
     <dialog
         android:id="@+id/recidencyPermitDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.RecidencyPermitDialog"
-        android:label="@string/residency_permit" />
+        android:label="@string/residency_permit"
+        android:layout="@layout/dialog_recidency_permit"
+        tools:layout="@layout/dialog_recidency_permit"/>
     <fragment
         android:id="@+id/personalDataFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.PersonalDataFragment"
-        android:label="@string/personal_data" />
+        android:label="@string/personal_data"
+        android:layout="@layout/fragment_personal_data"
+        tools:layout="@layout/fragment_personal_data"/>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment"
-        android:label="@string/notifications" />
+        android:label="@string/notifications"
+        android:layout="@layout/fragment_notification"
+        tools:layout="@layout/fragment_notification"/>
     <fragment
         android:id="@+id/pressServiceFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.press_service.PressServiceFragment"
-        android:label="@string/press_service" >
+        android:label="@string/press_service"
+        android:layout="@layout/fragment_press_service"
+        tools:layout="@layout/fragment_press_service" >
         <action
             android:id="@+id/action_pressServiceFragment_to_newsDialog"
             app:destination="@id/newsDialog" />
@@ -134,19 +139,25 @@
     <dialog
         android:id="@+id/newsDialog"
         android:name="kz.divtech.odyssey.rotation.ui.help.press_service.NewsDialog"
-        android:label="NewsDialog">
+        android:label="NewsDialog"
+        android:layout="@layout/dialog_chosen_news"
+        tools:layout="@layout/dialog_chosen_news">
         <argument
             android:name="news"
-            app:argType="kz.divtech.odyssey.rotation.ui.help.press_service.News" />
+            app:argType="kz.divtech.odyssey.rotation.models.help.press_service.News" />
     </dialog>
     <fragment
         android:id="@+id/questionsAnswersFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.help.questions_answers.QuestionsAnswersFragment"
-        android:label="@string/questions_and_answers" />
+        android:name="kz.divtech.odyssey.rotation.ui.help.questions_answers.FaqFragment"
+        android:label="@string/questions_and_answers"
+        android:layout="@layout/fragment_faq"
+        tools:layout="@layout/fragment_faq"/>
     <dialog
         android:id="@+id/tripDetailDialog"
         android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TripDetailDialog"
-        android:label="TripDetailDialog" >
+        android:label="TripDetailDialog"
+        android:layout="@layout/dialog_trip_detail"
+        tools:layout="@layout/dialog_trip_detail">
         <argument
             android:name="trip"
             app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
@@ -154,9 +165,29 @@
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
         android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TicketsAreNotPurchasedDialog"
-        android:label="TicketsAreNotPurchasedDialog" >
+        android:label="TicketsAreNotPurchasedDialog"
+        android:layout="@layout/dialog_tickets_are_not_purchased"
+        tools:layout="@layout/dialog_tickets_are_not_purchased">
         <argument
             android:name="trip"
             app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
     </dialog>
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="kz.divtech.odyssey.rotation.ui.login.LoginActivity"
+        android:label="LoginActivity"
+        android:layout="@layout/activity_login"
+        tools:layout="@layout/activity_login"/>
+    <action
+        android:id="@+id/action_global_callSupportDialog"
+        app:destination="@id/callSupportDialog" />
+    <action
+        android:id="@+id/action_global_writeSupportDialog"
+        app:destination="@id/writeSupportDialog" />
+    <action
+        android:id="@+id/action_global_notificationFragment"
+        app:destination="@id/notificationFragment" />
+    <action
+        android:id="@+id/action_global_questionsAnswersFragment"
+        app:destination="@id/questionsAnswersFragment" />
 </navigation>

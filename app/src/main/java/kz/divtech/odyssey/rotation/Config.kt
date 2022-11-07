@@ -8,5 +8,8 @@ object Config {
     const val BASE_URL = "https://tmp.ptravels.kz/api/"
     const val REQUEST_TYPE = "prod"
     const val COUNTRY_CODE = "7"
-    const val DEVICE_ID = "device_id"
+    const val DEVICE_ID_KEY = "deviceId"
+    const val DEVICE_ID_VALUE = "device_id"
+    const val AUTHORIZATION_KEY = "Authorization"
+    const val AUTHORIZATION_VALUE_PREFIX = "Bearer"
 }

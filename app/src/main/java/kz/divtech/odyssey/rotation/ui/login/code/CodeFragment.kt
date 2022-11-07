@@ -15,7 +15,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
-import kz.divtech.odyssey.rotation.viewmodels.AuthViewModel
+import kz.divtech.odyssey.rotation.viewmodels.login.AuthViewModel
 
 class CodeFragment : Fragment(), OnFilledListener {
     private val editTextList = ArrayList<EditText>()
@@ -47,10 +47,17 @@ class CodeFragment : Fragment(), OnFilledListener {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+
         viewModel.message.observe(viewLifecycleOwner){ message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){
+            if(it){
+                val action = CodeFragmentDirections.actionCodeFragmentToMainActivity()
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun setupEditTexts(){
@@ -124,19 +131,25 @@ class CodeFragment : Fragment(), OnFilledListener {
         findNavController().popBackStack()
     }
 
-    override fun onFilled() {
+    private fun checkIfAllEditTextsFilled(){
         var oneOfEditTextIsEmpty = false
         editTextList.forEach { if(it.text.isEmpty()) oneOfEditTextIsEmpty = true }
 
-        if(oneOfEditTextIsEmpty)
+        if(oneOfEditTextIsEmpty){
             Toast.makeText(requireContext(), R.string.fill_all_empty_fields, Toast.LENGTH_SHORT).show()
-        else{
-            hideKeyboard(requireContext(), editTextList[editTextList.size-1])
-            val code = StringBuilder()
-            editTextList.forEach {  code.append(it.text)}
-
-            viewModel.login(code.toString())
+            return
         }
+
+    }
+    override fun onFilled() {
+
+        checkIfAllEditTextsFilled()
+
+        hideKeyboard(requireContext(), editTextList[editTextList.size-1])
+        val code = StringBuilder()
+        editTextList.forEach {  code.append(it.text)}
+
+        viewModel.login(code.toString())
     }
 
 }

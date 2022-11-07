@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="questionsAnswers"
-            type="kz.divtech.odyssey.rotation.ui.help.questions_answers.QuestionsAnswers" />
+            name="faq"
+            type="kz.divtech.odyssey.rotation.models.help.faq.Faq" />
     </data>
 
     <LinearLayout
-        android:id="@+id/questionAnswersCV"
+        android:id="@+id/faqLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_card_view"
@@ -35,17 +35,17 @@
                 style="@style/unselected_question_title"
                 android:maxLines="2"
                 tools:text="@string/question_placeholder"
-                android:text="@{questionsAnswers.title}"
+                android:text="@{faq.question}"
                 android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/showContentIV"
                 android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:src="@drawable/icons_tabs_plus"
                 android:scaleType="center"
                 android:contentDescription="@string/open"
-                android:layout_gravity="end"/>
+                android:layout_gravity="end|center_vertical"/>
 
         </LinearLayout>
 
@@ -60,7 +60,7 @@
             android:lineSpacingExtra="7sp"
             android:layout_marginTop="12dp"
             tools:text="@string/answer_placeholder"
-            android:text="@{questionsAnswers.content}"
+            android:text="@{faq.answer}"
             android:visibility="gone"/>
 
     </LinearLayout>

@@ -14,8 +14,8 @@ class LoginActivity : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.loginNavHostFragment)
-        navController.popBackStack()
+
+        findNavController(R.id.loginNavHostFragment).popBackStack()
 
         return super.onSupportNavigateUp()
     }

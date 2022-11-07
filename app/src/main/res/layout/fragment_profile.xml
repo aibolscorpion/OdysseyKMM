@@ -4,7 +4,10 @@
     <data>
         <variable
             name="profileFragment"
-            type="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment" />
+            type="kz.divtech.odyssey.rotation.ui.profile.profile.ProfileFragment" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.profile.ProfileViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -363,6 +366,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
+            android:onClick="@{() -> viewModel.logout()}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

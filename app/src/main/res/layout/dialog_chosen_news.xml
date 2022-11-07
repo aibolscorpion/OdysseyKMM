@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
         <variable
             name="news"
-            type="kz.divtech.odyssey.rotation.ui.help.press_service.News" />
+            type="kz.divtech.odyssey.rotation.models.help.press_service.News" />
     </data>
     <ScrollView
         android:layout_width="match_parent"

@@ -8,19 +8,20 @@ import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.databinding.ItemQuestionAnswerBinding
+import kz.divtech.odyssey.rotation.databinding.ItemFaqBinding
+import kz.divtech.odyssey.rotation.models.help.faq.Faq
 
-class QuestionsAdapter(private val newsList : List<QuestionsAnswers>) : RecyclerView.Adapter<QuestionsAdapter.ViewHolder>() {
-
+class FaqAdapter : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
+    private val faqList = mutableListOf<Faq>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemQuestionAnswerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentQuestionAnswer = newsList[position]
-        holder.binding.questionsAnswers = currentQuestionAnswer
-        holder.binding.questionTitleLLC.setOnClickListener {
+        val currentFaq = faqList[position]
+        holder.binding.faq = currentFaq
+        holder.binding.faqLL.setOnClickListener {
             if (holder.binding.answerContentTV.isVisible) {
                 holder.binding.showContentIV.setImageResource(R.drawable.icons_tabs_plus)
                 holder.binding.answerContentTV.visibility = View.GONE
@@ -39,7 +40,13 @@ class QuestionsAdapter(private val newsList : List<QuestionsAnswers>) : Recycler
         }
     }
 
-    override fun getItemCount() = newsList.size
+    override fun getItemCount() = faqList.size
 
-    class ViewHolder(val binding: ItemQuestionAnswerBinding) : RecyclerView.ViewHolder(binding.root)
+    fun setList(list: List<Faq>){
+        faqList.clear()
+        faqList.addAll(list)
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder(val binding: ItemFaqBinding) : RecyclerView.ViewHolder(binding.root)
 }
