@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="ChangeNumberFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.change_phone.ChangePhoneNumberFragment" />
+            name="confirmDataFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.add_phone.AddPhoneNumberFragment" />
         <variable
             name="phoneNumber"
             type="String" />
@@ -16,7 +16,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +27,7 @@
             android:background="@drawable/bg_screen"
             >
 
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/titleLL"
                 android:layout_width="match_parent"
@@ -34,27 +35,28 @@
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL">
-
                 <TextView
                     android:id="@+id/titleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/change_number"
+                    android:text="@string/confirm_data"
                     style="@style/loginTitleTextStyle"
                     android:layout_gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <TextView
                     android:id="@+id/descriptionTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/do_you_want_to_change_iin"
+                    android:text="@string/found_employee_by_id"
                     style="@style/descriptionTextStyle"
+                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/titleTV"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_gravity="center"
                     android:layout_marginTop="9dp"
                     />
 
@@ -64,26 +66,26 @@
                     android:layout_height="wrap_content"
                     android:text="@string/change_iin"
                     style="@style/descriptionTextStyle"
+                    android:layout_gravity="center"
                     app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
                     android:textColor="#40bdff"
-                    android:onClick="@{()-> ChangeNumberFragment.backToSearchByIINFragment()}"
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <include
                 android:id="@+id/employeeInformationLL"
                 layout="@layout/layout_employee_info"
-                app:employee="@{employee}"
-                />
+                app:employee="@{employee}" />
+
             <FrameLayout
                 android:id="@+id/editTextFL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <EditText
                     android:id="@+id/phoneNumberET"
@@ -120,20 +122,20 @@
             </FrameLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/changePhoneNumberBtn"
+                android:id="@+id/addPhoneNumberBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 style="@style/buttonStyle"
-                android:text="@string/change_phone_number"
+                android:text="@string/add_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin"/>
+                android:layout_marginTop="@dimen/margin"
+                android:onClick="@{() -> confirmDataFragment.openMainActivity()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/toolBar"
             layout="@layout/layout_login_toolbar"
-            android:onClick="@{() -> ChangeNumberFragment.backToSearchByIINFragment()}"
             />
     </FrameLayout>
 </layout>

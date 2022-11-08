@@ -12,4 +12,5 @@ object Config {
     const val DEVICE_ID_VALUE = "device_id"
     const val AUTHORIZATION_KEY = "Authorization"
     const val AUTHORIZATION_VALUE_PREFIX = "Bearer"
+    const val IIN_LENGTH = 12
 }

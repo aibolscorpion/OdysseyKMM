@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="employee"
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/employeeInformationLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/editTextFL"
+        android:layout_marginBottom="16dp">
+
+        <View
+            android:id="@+id/lineOneVw"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line" />
+
+        <TextView
+            android:id="@+id/employeeNameTV"
+            style="@style/nameTextStyle"
+            android:gravity="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="@{@string/lastname_firstname_patronymic(employee.lastName, employee.firstName, employee.patronymic)}" />
+
+        <TextView
+            android:id="@+id/employeePositionTV"
+            style="@style/descriptionTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@{employee.position}" />
+
+        <View
+            android:id="@+id/lineTwoVw"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="13dp"
+            android:background="@color/line" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

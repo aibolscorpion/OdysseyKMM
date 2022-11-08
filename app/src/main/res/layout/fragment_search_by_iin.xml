@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="iinFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.search_by_iin.SearchIINFragment" />
+        <variable
+            name="phoneNumber"
+            type="String" />
+    </data>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="24dp"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:background="@drawable/bg_screen">
+
+
+            <TextView
+                android:id="@+id/titleTV"
+                style="@style/loginTitleTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/not_find_telephone_number"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFL"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/descriptionTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/enter_your_iin(phoneNumber)}"
+                style="@style/descriptionTextStyle"
+                app:layout_constraintTop_toBottomOf="@+id/titleTV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                />
+
+            <TextView
+                android:id="@+id/changePhoneNumberTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/change_number"
+                style="@style/descriptionTextStyle"
+                app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:textColor="#40bdff"
+                />
+
+            <FrameLayout
+                android:id="@+id/editTextFL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.43">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/iin"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="13sp"
+                    android:textColor="#62ebebeb"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="3sp"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin"
+                    android:paddingTop="4dp"
+                    />
+
+                <EditText
+                    android:id="@+id/iinET"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/pt_root_ui"
+                    android:hint="@string/iin_placeholder"
+                    android:inputType="number"
+                    android:maxLength="12"
+                    android:background="@drawable/bg_edit_text_layout"
+                    android:letterSpacing="0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:textColor="@color/white_two"
+                    android:textColorHint="@color/white_two"
+                    android:textSize="17sp"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="@dimen/margin"
+                    android:paddingBottom="8dp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/loginIINBtn"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="@string/login_with_iin"
+                style="@style/buttonStyle"
+                app:layout_constraintTop_toBottomOf="@+id/editTextFL"
+                android:layout_marginTop="@dimen/margin"
+                android:onClick="@{() -> iinFragment.loginByIIN()}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            layout="@layout/layout_login_toolbar"
+            android:onClick="@{() -> iinFragment.backToCodeFragment()}"
+            />
+    </FrameLayout>
+</layout>

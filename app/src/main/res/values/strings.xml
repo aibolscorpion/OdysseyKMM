@@ -50,12 +50,12 @@
 
     //Страница Войти По ИИН
     <string name="not_find_telephone_number">Номер не найден.\n Войти по ИИН</string>
-    <string name="enter_your_iin">Номер %1$d не найден. Пожалуйста, введите ваш ИИН.</string>
+    <string name="enter_your_iin">Номер %1$s не найден. Пожалуйста, введите ваш ИИН.</string>
     <string name="login_with_iin">Войти по ИИН</string>
     <string name="iin">ИИН</string>
     <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
 
-    //Страница подтвердите данные
+    //Страница Добавить номер
     <string name="confirm_data">Подтвердите данные</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
     <string name="employee_name_placeholder">Баталгазиев Руслан Владимирович</string>
@@ -66,6 +66,7 @@
     <string name="change_phone_number">Изменить номер телефона</string>
     <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
     <string name="change_iin">Изменить ИИН</string>
+    <string name="lastname_firstname_patronymic">%1$s %2$s %3$s</string>
 
     // Модалка сотрудник не найден
     <string name="employee_not_found">Сотрудник не найден</string>

@@ -1,10 +1,11 @@
 package kz.divtech.odyssey.rotation.data.remote
 
-import kz.divtech.odyssey.rotation.domain.model.authentication.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.domain.model.authentication.login.Login
-import kz.divtech.odyssey.rotation.domain.model.authentication.login.LoginResponse
-import kz.divtech.odyssey.rotation.domain.model.authentication.sendsms.PhoneNumber
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
+import kz.divtech.odyssey.rotation.domain.model.login.login.Login
+import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -19,7 +20,7 @@ interface ApiService {
     fun login(@Body login : Login): Call<LoginResponse>
 
     @GET("employees/get-employee-by-iin")
-    fun getEmployeeByIIN()
+    fun getEmployeeByIIN(@Query("iin") iin: String): Call<EmployeeData>
 
     @GET("employees/get-employee-by-phone")
     fun getEmployeeByPhone()

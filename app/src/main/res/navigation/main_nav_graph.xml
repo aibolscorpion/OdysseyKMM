@@ -55,7 +55,7 @@
     </fragment>
     <dialog
         android:id="@+id/termsOfAgreementDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.phonenumber.dialogs.TermsOfAgreementDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs.TermsOfAgreementDialog"
         android:label="TermsOfAgreementDialog"
         android:layout="@layout/dialog_terms_of_agreement"
         tools:layout="@layout/dialog_terms_of_agreement" />

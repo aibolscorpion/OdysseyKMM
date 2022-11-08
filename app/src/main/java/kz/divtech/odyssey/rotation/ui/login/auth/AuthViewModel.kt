@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.authentication.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.domain.model.authentication.login.Login
-import kz.divtech.odyssey.rotation.domain.model.authentication.login.LoginResponse
-import kz.divtech.odyssey.rotation.domain.model.authentication.sendsms.PhoneNumber
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
+import kz.divtech.odyssey.rotation.domain.model.login.login.Login
+import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
