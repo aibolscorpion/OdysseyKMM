@@ -19,23 +19,19 @@ import kz.divtech.odyssey.rotation.ui.login.auth.AuthViewModel
 
 class SendSmsFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
+    private var extractedPhoneNumber: String? = null
+
     private lateinit var dataBinding: FragmentSendSmsBinding
     private val viewModel  by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
-    private var extractedPhoneNumber: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        if(SessionManager().isLoggedIn){
-            findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())
-        }
+        if(SessionManager().isLoggedIn) openMainActivity()
 
         dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
 
         setupMaskedEditText()
-
-
-        openIINFragment("+7(778)554 43 72")
 
         return dataBinding.root
     }
@@ -43,6 +39,17 @@ class SendSmsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.isPhoneNumberFounded.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { it ->
+                if(it) openCodeFragment() else openIINFragment()
+            }
+        }
+
+        viewModel.message.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     override fun onStart() {
@@ -67,20 +74,17 @@ class SendSmsFragment : Fragment() {
 
 
     fun sendSmsToPhone(){
-        if(validatePhoneNumber()) {
+        if(phoneNumberFilled) {
             viewModel.sendSmsToPhone("${Config.COUNTRY_CODE}$extractedPhoneNumber")
-            openCodeFragment() 
         } else
             Toast.makeText(requireContext(), R.string.enter_phone_number_fully, Toast.LENGTH_SHORT).show()
     }
 
-    private fun validatePhoneNumber(): Boolean = phoneNumberFilled
-
     private fun openCodeFragment() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToCodeFragment(dataBinding.phoneNumberET.text.toString()))
 
-    private fun openIINFragment(phoneNumber: String) =
-        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToIINFragment(phoneNumber))
+    private fun openIINFragment() =
+        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToIINFragment(dataBinding.phoneNumberET.text.toString()))
 
     fun showTermsOfAgreementDialog() =
          findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
@@ -90,5 +94,7 @@ class SendSmsFragment : Fragment() {
 
     fun showAccountDeactivatedDialog() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog())
+
+    private fun openMainActivity() = findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())
 
 }

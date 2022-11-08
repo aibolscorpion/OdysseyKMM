@@ -117,8 +117,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
+            android:id="@+id/loginToolbar"
             layout="@layout/layout_login_toolbar"
-            android:onClick="@{() -> iinFragment.backToCodeFragment()}"
+            android:onClick="@{() -> iinFragment.backToSendSmsFragment()}"
             />
     </FrameLayout>
 </layout>

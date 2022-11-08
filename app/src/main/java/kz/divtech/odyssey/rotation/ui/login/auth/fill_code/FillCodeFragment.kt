@@ -46,8 +46,10 @@ class FillCodeFragment : Fragment(), OnFilledListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.message.observe(viewLifecycleOwner){ message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        viewModel.message.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let { message ->
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
         }
 
         viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){

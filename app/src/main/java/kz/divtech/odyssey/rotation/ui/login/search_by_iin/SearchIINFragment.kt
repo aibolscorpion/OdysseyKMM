@@ -30,10 +30,9 @@ class SearchIINFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeData.observe(viewLifecycleOwner) {
-            if(it.isPhoneNumber!!)
-                openChangePhoneNumberFragment(it)
-            else
-                openAddPhoneNumberFragment(it)
+            it?.getContentIfNotHandled()?.let { employee ->
+                if(employee.isPhoneNumber!!) openChangePhoneNumberFragment(employee) else openAddPhoneNumberFragment(employee)
+            }
         }
     }
 
@@ -49,7 +48,7 @@ class SearchIINFragment : Fragment() {
         findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
     }
 
-    fun backToCodeFragment(){
+    fun backToSendSmsFragment(){
         findNavController().popBackStack()
     }
 

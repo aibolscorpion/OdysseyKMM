@@ -4,11 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="confirmDataFragment"
+            name="AddPhoneNumberFragment"
             type="kz.divtech.odyssey.rotation.ui.login.add_phone.AddPhoneNumberFragment" />
-        <variable
-            name="phoneNumber"
-            type="String" />
         <variable
             name="employee"
             type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
@@ -16,7 +13,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,8 +21,7 @@
             android:layout_height="match_parent"
             android:paddingStart="@dimen/margin"
             android:paddingEnd="@dimen/margin"
-            android:background="@drawable/bg_screen"
-            >
+            android:background="@drawable/bg_screen">
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -72,6 +68,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
                     android:textColor="#40bdff"
+                    android:onClick="@{()-> AddPhoneNumberFragment.backToSearchByIINFragment()}"
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -129,13 +126,14 @@
                 android:text="@string/add_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
                 android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> confirmDataFragment.openMainActivity()}"/>
+                android:onClick="@{() -> AddPhoneNumberFragment.openMainActivity()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/toolBar"
             layout="@layout/layout_login_toolbar"
+            android:onClick="@{()-> AddPhoneNumberFragment.backToSearchByIINFragment()}"
             />
     </FrameLayout>
 </layout>

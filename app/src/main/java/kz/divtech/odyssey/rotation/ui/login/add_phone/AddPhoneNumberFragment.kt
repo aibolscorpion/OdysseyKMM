@@ -11,9 +11,9 @@ import kz.divtech.odyssey.rotation.databinding.FragmentAddPhoneBinding
 class AddPhoneNumberFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = FragmentAddPhoneBinding.inflate(inflater)
-        binding.confirmDataFragment = this
 
+        val binding = FragmentAddPhoneBinding.inflate(inflater)
+        binding.addPhoneNumberFragment = this
 
         val args = AddPhoneNumberFragmentArgs.fromBundle(requireArguments())
         binding.employee = args.employee
@@ -22,4 +22,6 @@ class AddPhoneNumberFragment : Fragment() {
     }
 
     fun openMainActivity() = findNavController().navigate(AddPhoneNumberFragmentDirections.actionGlobalMainActivity())
+
+    fun backToSearchByIINFragment() = findNavController().popBackStack()
 }

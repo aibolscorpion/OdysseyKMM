@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="employee"
@@ -27,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="11dp"
-            android:text="@{@string/lastname_firstname_patronymic(employee.lastName, employee.firstName, employee.patronymic)}" />
+            android:text="@{@string/lastname_firstname_patronymic(employee.lastName, employee.firstName, employee.patronymic)}"
+            tools:text="@string/employee_name_placeholder" />
 
         <TextView
             android:id="@+id/employeePositionTV"
@@ -35,7 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="@{employee.position}" />
+            android:text="@{employee.position}"
+            tools:text="@string/employee_position_placeholder" />
 
         <View
             android:id="@+id/lineTwoVw"

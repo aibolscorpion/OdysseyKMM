@@ -7,9 +7,6 @@
             name="ChangeNumberFragment"
             type="kz.divtech.odyssey.rotation.ui.login.change_phone.ChangePhoneNumberFragment" />
         <variable
-            name="phoneNumber"
-            type="String" />
-        <variable
             name="employee"
             type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
     </data>
