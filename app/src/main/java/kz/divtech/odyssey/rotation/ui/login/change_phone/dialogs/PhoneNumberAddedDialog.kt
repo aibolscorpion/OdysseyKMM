@@ -17,18 +17,13 @@ class PhoneNumberAddedDialog : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogPhoneNumberAddedBinding.inflate(inflater)
         dataBinding.phoneNumberAddedDialog = this
         return dataBinding.root
     }
 
-    fun goToLoginPage(){
+    fun goToLoginPage() =
         findNavController().navigate(PhoneNumberAddedDialogDirections.actionPhoneNumberAddedDialogToPhoneNumberFragment())
-    }
 
 }

@@ -17,11 +17,7 @@ class TicketsAreNotPurchasedDialog : BottomSheetDialogFragment(), OnCloseListene
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val dataBinding  = DialogTicketsAreNotPurchasedBinding.inflate(inflater)
         dataBinding.listener = this
 

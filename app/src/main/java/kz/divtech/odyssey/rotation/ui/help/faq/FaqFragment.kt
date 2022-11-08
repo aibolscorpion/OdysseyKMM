@@ -27,7 +27,5 @@ class FaqFragment : Fragment() {
         viewModel.faqList.observe(viewLifecycleOwner) {
             faqAdapter.setList(it)
         }
-
     }
-
 }

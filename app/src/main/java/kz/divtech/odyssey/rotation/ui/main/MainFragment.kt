@@ -38,20 +38,12 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-    fun openNotificationsFragment(){
-        findNavController().navigate(R.id.action_global_notificationFragment)
-    }
+    fun openNotificationsFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 
-    fun showCallSupportDialog(){
-        findNavController().navigate(R.id.action_global_callSupportDialog)
-    }
+    fun showCallSupportDialog() = findNavController().navigate(R.id.action_global_callSupportDialog)
 
-    fun showWriteSupportDialog(){
-        findNavController().navigate(R.id.action_global_writeSupportDialog)
-    }
+    fun showWriteSupportDialog() = findNavController().navigate(R.id.action_global_writeSupportDialog)
 
-    fun openQuestionsAnswersFragment(){
-        findNavController().navigate(R.id.action_global_questionsAnswersFragment)
-    }
+    fun openQuestionsAnswersFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
 
 }

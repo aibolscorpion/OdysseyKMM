@@ -18,19 +18,13 @@ class ApplicationSentDialog : BottomSheetDialogFragment(), DialogListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogApplicationSentBinding.inflate(inflater)
         dataBinding.listener = this
         return dataBinding.root
     }
 
-    override fun contact() {
-        findNavController().navigate(ApplicationSentDialogDirections.actionGlobalContactSupportDialog())
-    }
+    override fun contact() = findNavController().navigate(ApplicationSentDialogDirections.actionGlobalContactSupportDialog())
 
     override fun close(){
         dismiss()

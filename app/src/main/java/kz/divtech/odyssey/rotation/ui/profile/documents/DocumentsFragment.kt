@@ -16,26 +16,16 @@ class DocumentsFragment : Fragment() {
         return binding.root
     }
 
-    fun showWorkPermissionDialog(){
-        val action = DocumentsFragmentDirections.actionDocumentsFragmentToWorkPermissionDialog()
-        findNavController().navigate(action)
-    }
+    fun showWorkPermissionDialog() =
+        findNavController().navigate(DocumentsFragmentDirections.actionDocumentsFragmentToWorkPermissionDialog())
 
-    fun showIdDialog(){
-        val action = DocumentsFragmentDirections.actionDocumentsFragmentToIdDialog()
-        findNavController().navigate(action)
+    fun showIdDialog() =
+        findNavController().navigate(DocumentsFragmentDirections.actionDocumentsFragmentToIdDialog())
 
-    }
+    fun showPassportDialog() =
+        findNavController().navigate(DocumentsFragmentDirections.actionDocumentsFragmentToPassportDialog())
 
-    fun showPassportDialog(){
-        val action = DocumentsFragmentDirections.actionDocumentsFragmentToPassportDialog()
-        findNavController().navigate(action)
-
-    }
-
-    fun showRecidencyPermitDialog(){
-        val action = DocumentsFragmentDirections.actionDocumentsFragmentToRecidencyPermitDialog()
-        findNavController().navigate(action)
-    }
+    fun showRecidencyPermitDialog() =
+        findNavController().navigate(DocumentsFragmentDirections.actionDocumentsFragmentToRecidencyPermitDialog())
 
 }

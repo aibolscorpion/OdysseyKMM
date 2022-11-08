@@ -18,11 +18,7 @@ class IdDialog : BottomSheetDialogFragment(), SaveListener, OnCloseListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogIdBinding.inflate(inflater)
         dataBinding.closeListener = this
         dataBinding.saveListener = this

@@ -76,24 +76,19 @@ class SendSmsFragment : Fragment() {
 
     private fun validatePhoneNumber(): Boolean = phoneNumberFilled
 
-    private fun openCodeFragment(){
+    private fun openCodeFragment() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToCodeFragment(dataBinding.phoneNumberET.text.toString()))
-    }
 
-    private fun openIINFragment(phoneNumber: String){
+    private fun openIINFragment(phoneNumber: String) =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToIINFragment(phoneNumber))
-    }
 
-    fun showTermsOfAgreementDialog(){
+    fun showTermsOfAgreementDialog() =
          findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
-    }
 
-    fun showErrorDialog(){
+    fun showErrorDialog() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToPhoneNumberErrorDialog())
-    }
 
-    fun showAccountDeactivatedDialog(){
+    fun showAccountDeactivatedDialog() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog())
-    }
 
 }

@@ -14,24 +14,15 @@ class HelpFragment : Fragment() {
         val binding = FragmentHelpBinding.inflate(inflater)
         binding.helpFragment = this
 
-
         return binding.root
     }
 
-    fun writeSupport(){
-        findNavController().navigate(R.id.action_global_writeSupportDialog)
-    }
+    fun writeSupport() = findNavController().navigate(R.id.action_global_writeSupportDialog)
 
-    fun callSupport(){
-        findNavController().navigate(R.id.action_global_callSupportDialog)
-    }
+    fun callSupport() = findNavController().navigate(R.id.action_global_callSupportDialog)
 
-    fun openQAFragment(){
-        findNavController().navigate(R.id.action_global_questionsAnswersFragment)
-    }
+    fun openQAFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
 
-    fun openPressServiceFragment(){
-        val action = HelpFragmentDirections.actionHelpFragmentToPressServiceFragment()
-        findNavController().navigate(action)
-    }
+    fun openPressServiceFragment() =
+        findNavController().navigate(HelpFragmentDirections.actionHelpFragmentToPressServiceFragment())
 }

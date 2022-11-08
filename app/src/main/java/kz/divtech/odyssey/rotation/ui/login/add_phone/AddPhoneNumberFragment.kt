@@ -21,7 +21,5 @@ class AddPhoneNumberFragment : Fragment() {
         return binding.root
     }
 
-    fun openMainActivity(){
-        findNavController().navigate(AddPhoneNumberFragmentDirections.actionGlobalMainActivity())
-    }
+    fun openMainActivity() = findNavController().navigate(AddPhoneNumberFragmentDirections.actionGlobalMainActivity())
 }

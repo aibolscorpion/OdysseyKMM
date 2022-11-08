@@ -17,11 +17,7 @@ class CallSupportDialog : BottomSheetDialogFragment(), DialogListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogCallSupportBinding.inflate(inflater)
         dataBinding.listener = this
 

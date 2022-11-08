@@ -20,20 +20,15 @@ class ChangePhoneNumberFragment : Fragment() {
         return binding.root
     }
 
-    fun showApplicationSentDialog(){
+    fun showApplicationSentDialog() =
         findNavController().navigate(ChangePhoneNumberFragmentDirections.actionChangeNumberFragmentToApplicationSentDialog())
-    }
 
-    fun showPhoneNumberAddedDialog(){
+    fun showPhoneNumberAddedDialog() =
         findNavController().navigate(ChangePhoneNumberFragmentDirections.actionChangeNumberFragmentToPhoneNumberAddedDialog())
-    }
 
-    fun showErrorDialog(){
+    fun showErrorDialog() =
         findNavController().navigate(ChangePhoneNumberFragmentDirections.actionChangeNumberFragmentToChangeNumberErrorDialog())
-    }
 
-    fun backToSearchByIINFragment(){
-        findNavController().popBackStack()
-    }
+    fun backToSearchByIINFragment() = findNavController().popBackStack()
 
 }

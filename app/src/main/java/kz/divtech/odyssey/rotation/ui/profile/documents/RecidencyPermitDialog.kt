@@ -18,11 +18,7 @@ class RecidencyPermitDialog : BottomSheetDialogFragment(), SaveListener, OnClose
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogRecidencyPermitBinding.inflate(inflater)
         dataBinding.closeListener = this
         dataBinding.saveListener = this
@@ -31,7 +27,6 @@ class RecidencyPermitDialog : BottomSheetDialogFragment(), SaveListener, OnClose
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             dataBinding.issueAuthoritySpinner.adapter = adapter
         }
-
 
         return dataBinding.root
     }

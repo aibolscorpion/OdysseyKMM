@@ -17,11 +17,7 @@ class PassportDialog : BottomSheetDialogFragment(), SaveListener, OnCloseListene
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         val dataBinding  = DialogPassportBinding.inflate(inflater)
         dataBinding.closeListener = this
         dataBinding.saveListener = this

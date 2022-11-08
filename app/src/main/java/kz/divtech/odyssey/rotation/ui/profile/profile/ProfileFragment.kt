@@ -34,29 +34,19 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun showTermsOfAgreement(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog2()
-        findNavController().navigate(action)
-    }
+    fun showTermsOfAgreement() =
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog2())
 
-    fun openDocumentsFragment(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment()
-        findNavController().navigate(action)
-    }
+    fun openDocumentsFragment() =
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
 
-    fun openPersonalDataFragment(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment()
-        findNavController().navigate(action)
-    }
+    fun openPersonalDataFragment() =
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment())
 
-    fun openNotificationFragment(){
-        findNavController().navigate(R.id.action_global_notificationFragment)
-    }
+    fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 
-    private fun openLoginActivity(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToLoginActivity()
-        findNavController().navigate(action)
-    }
+    private fun openLoginActivity() =
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToLoginActivity())
 
     private fun logout(){
         SessionManager().clearAuthToken()
