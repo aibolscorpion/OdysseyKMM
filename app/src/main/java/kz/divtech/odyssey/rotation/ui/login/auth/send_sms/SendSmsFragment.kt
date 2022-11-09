@@ -14,7 +14,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.utils.SessionManager
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
-import kz.divtech.odyssey.rotation.ui.login.auth.AuthViewModel
+import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
 
 
 class SendSmsFragment : Fragment() {
@@ -22,7 +22,7 @@ class SendSmsFragment : Fragment() {
     private var extractedPhoneNumber: String? = null
 
     private lateinit var dataBinding: FragmentSendSmsBinding
-    private val viewModel  by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
+    private val viewModel  by lazy { ViewModelProvider(requireActivity())[AuthSharedViewModel::class.java] }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -40,8 +40,8 @@ class SendSmsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.isPhoneNumberFounded.observe(viewLifecycleOwner) {
-            it?.getContentIfNotHandled()?.let { it ->
-                if(it) openCodeFragment() else openIINFragment()
+            it?.getContentIfNotHandled()?.let { isPhoneNumberFounded ->
+                if(isPhoneNumberFounded) openCodeFragment() else openIINFragment()
             }
         }
 

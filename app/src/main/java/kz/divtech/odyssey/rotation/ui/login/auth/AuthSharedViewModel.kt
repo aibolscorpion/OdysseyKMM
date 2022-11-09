@@ -20,7 +20,7 @@ import timber.log.Timber
 import java.io.IOException
 
 
-open class AuthViewModel : ViewModel() {
+open class AuthSharedViewModel : ViewModel() {
     var authLogId: String? = null
     var phoneNumber: String? = null
 

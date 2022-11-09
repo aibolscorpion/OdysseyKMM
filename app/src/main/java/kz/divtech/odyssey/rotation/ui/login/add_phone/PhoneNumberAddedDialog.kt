@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.change_phone.dialogs
+package kz.divtech.odyssey.rotation.ui.login.add_phone
 
 import android.app.Dialog
 import android.os.Bundle

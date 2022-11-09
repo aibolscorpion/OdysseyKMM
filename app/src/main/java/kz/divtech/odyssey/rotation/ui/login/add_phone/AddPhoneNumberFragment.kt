@@ -21,7 +21,8 @@ class AddPhoneNumberFragment : Fragment() {
         return binding.root
     }
 
-    fun openMainActivity() = findNavController().navigate(AddPhoneNumberFragmentDirections.actionGlobalMainActivity())
+    fun showPhoneNumberAddedDialog() =
+        findNavController().navigate(AddPhoneNumberFragmentDirections.actionAddPhoneNumberToPhoneNumberAddedDialog())
 
     fun backToSearchByIINFragment() = findNavController().popBackStack()
 }

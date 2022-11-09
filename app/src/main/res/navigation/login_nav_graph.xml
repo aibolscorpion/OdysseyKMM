@@ -132,7 +132,7 @@
 
     <dialog
         android:id="@+id/phoneNumberAddedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.change_phone.dialogs.PhoneNumberAddedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.add_phone.PhoneNumberAddedDialog"
         android:label="PhoneNumberAddedDialog"
         app:layout="@layout/dialog_phone_number_added"
         tools:layout="@layout/dialog_phone_number_added">
@@ -156,6 +156,9 @@
         <argument
             android:name="employee"
             app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+        <action
+            android:id="@+id/action_addPhoneNumber_to_phoneNumberAddedDialog"
+            app:destination="@id/phoneNumberAddedDialog" />
     </fragment>
     <action
         android:id="@+id/action_global_mainActivity"

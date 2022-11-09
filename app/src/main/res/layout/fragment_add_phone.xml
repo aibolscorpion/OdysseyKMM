@@ -35,7 +35,7 @@
                     android:id="@+id/titleTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/confirm_data"
+                    android:text="@string/add_number"
                     style="@style/loginTitleTextStyle"
                     android:layout_gravity="center"
                     app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
@@ -125,8 +125,7 @@
                 style="@style/buttonStyle"
                 android:text="@string/add_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> AddPhoneNumberFragment.openMainActivity()}"/>
+                android:layout_marginTop="@dimen/margin" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

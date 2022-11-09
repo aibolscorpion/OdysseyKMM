@@ -16,6 +16,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 class SearchIINFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[SearchIINViewModel::class.java] }
     private lateinit var binding: FragmentSearchByIinBinding
+    private lateinit var iin: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSearchByIinBinding.inflate(inflater)
@@ -34,31 +35,36 @@ class SearchIINFragment : Fragment() {
                 if(employee.isPhoneNumber!!) openChangePhoneNumberFragment(employee) else openAddPhoneNumberFragment(employee)
             }
         }
-    }
+        viewModel.isEmployeeNotFounded.observe(viewLifecycleOwner){
+            it?.getContentIfNotHandled()?.let { isEmployeeFounded ->
+                if(isEmployeeFounded) showEmployeeNotFoundDialog()
+            }
+        }
 
-    private fun openAddPhoneNumberFragment(employee: Employee){
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToAddPhoneNumber(employee))
-    }
-
-    private fun openChangePhoneNumberFragment(employee: Employee){
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToChangeNumberFragment(employee))
-    }
-
-    private fun showEmployeeNotFoundDialog(iin: String){
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
-    }
-
-    fun backToSendSmsFragment(){
-        findNavController().popBackStack()
+        viewModel.employeeData
     }
 
     fun loginByIIN(){
-        val iinEditText = binding.iinET
-        val iin = iinEditText.text.toString()
+        iin = binding.iinET.text.toString()
         if(iin.length == Config.IIN_LENGTH)
             viewModel.searchByIIN(iin)
         else
-            Toast.makeText(requireContext(), R.string.fill_all_empty_fields, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.enter_iin_fully, Toast.LENGTH_SHORT).show()
     }
+
+    private fun openAddPhoneNumberFragment(employee: Employee) =
+        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToAddPhoneNumber(employee))
+
+
+    private fun openChangePhoneNumberFragment(employee: Employee) =
+        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToChangeNumberFragment(employee))
+
+
+    private fun showEmployeeNotFoundDialog() =
+        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
+
+
+    fun backToSendSmsFragment() = findNavController().popBackStack()
+
 
 }

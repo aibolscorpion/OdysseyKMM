@@ -10,6 +10,7 @@
     <string name="telephone">Телефон</string>
     <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
     <string name="phone_number_placeholder">+7 (</string>
+    <string name="enter_phone_number_fully">Введите номер телефона полностью</string>
 
     // Модалка Пользовательское соглашение
     <string name="terms_of_agreement">Пользовательское соглашение</string>
@@ -35,10 +36,9 @@
     <string name="operator_online">оператор онлайн</string>
     <string name="cancel">Отмена</string>
 
-    //Страница Ведение SMS кода
+    //Страница Ввода SMS кода
     <string name="enter_code">Введите код</string>
     <string name="code_was_sent_to_number">На номер %1$s отправлено SMS с кодом авторизации</string>
-    <string name="enter_phone_number_fully">Введите номер телефона полностью</string>
     <string name="zero">0</string>
     <string name="resend_sms">Выслать SMS повторно</string>
     <string name="resend_sms_with_seconds">Переотправить SMS: %1$s сек</string>
@@ -54,9 +54,10 @@
     <string name="login_with_iin">Войти по ИИН</string>
     <string name="iin">ИИН</string>
     <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
+    <string name="enter_iin_fully">Введите ИИН полностью</string>
 
     //Страница Добавить номер
-    <string name="confirm_data">Подтвердите данные</string>
+    <string name="add_number">Добавить номер</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
     <string name="employee_name_placeholder">Баталгазиев Руслан Владимирович</string>
     <string name="employee_position_placeholder">Старший бригадир</string>
@@ -70,7 +71,7 @@
 
     // Модалка сотрудник не найден
     <string name="employee_not_found">Сотрудник не найден</string>
-    <string name="employee_not_found_with_contents">Сотрудник с ИИН: 920911300248 не найден. Внимательно проверьте ваши данные и попробуйте снова.</string>
+    <string name="employee_not_found_with_contents">Сотрудник с ИИН: %1$s не найден. Внимательно проверьте ваши данные и попробуйте снова.</string>
 
     //Модалка заявка отправлена
     <string name="application_sent">Заявка отправлена</string>

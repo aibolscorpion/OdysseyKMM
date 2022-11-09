@@ -21,6 +21,9 @@ class EmployeeNotFoundDialog : BottomSheetDialogFragment(), DialogListener {
         val dataBinding  = kz.divtech.odyssey.rotation.databinding.DialogEmployeeNotFoundBinding.inflate(inflater)
         dataBinding.listener = this
 
+        val args = EmployeeNotFoundDialogArgs.fromBundle(requireArguments())
+        dataBinding.iin = args.iin
+
         return dataBinding.root
     }
 
@@ -28,8 +31,6 @@ class EmployeeNotFoundDialog : BottomSheetDialogFragment(), DialogListener {
         findNavController().navigate(EmployeeNotFoundDialogDirections.actionGlobalContactSupportDialog())
 
 
-    override fun close(){
-        dismiss()
-    }
+    override fun close() = dismiss()
 
 }

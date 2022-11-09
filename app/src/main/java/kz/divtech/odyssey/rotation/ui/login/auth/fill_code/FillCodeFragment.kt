@@ -15,14 +15,14 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
-import kz.divtech.odyssey.rotation.ui.login.auth.AuthViewModel
+import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
 
 class FillCodeFragment : Fragment(), OnFilledListener {
     private val editTextList = ArrayList<EditText>()
     private lateinit var dataBinding : FragmentFillCodeBinding
     private var countDownTimer : CountDownTimer?= null
     private var countSmsBtnPress  = 1
-    private val viewModel by lazy { ViewModelProvider(requireActivity())[AuthViewModel::class.java] }
+    private val viewModel by lazy { ViewModelProvider(requireActivity())[AuthSharedViewModel::class.java] }
     private lateinit var phoneNumber : String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
