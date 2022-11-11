@@ -75,15 +75,12 @@
         <action
             android:id="@+id/action_IINFragment_to_employeeNotFoundDialog"
             app:destination="@id/employeeNotFoundDialog" />
-        <action
-            android:id="@+id/action_IINFragment_to_changeNumberFragment"
-            app:destination="@id/changeNumberFragment" />
-        <action
-            android:id="@+id/action_IINFragment_to_addPhoneNumber"
-            app:destination="@id/addPhoneNumber" />
         <argument
             android:name="phoneNumber"
             app:argType="string" />
+        <action
+            android:id="@+id/action_IINFragment_to_updatePhoneNumber"
+            app:destination="@id/updatePhoneNumber" />
     </fragment>
 
     <dialog
@@ -97,26 +94,6 @@
             app:argType="string" />
     </dialog>
 
-    <fragment
-        android:id="@+id/changeNumberFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.change_phone.ChangePhoneNumberFragment"
-        android:label="ChangeNumberFragment"
-        app:layout="@layout/fragment_change_number"
-        tools:layout="@layout/fragment_change_number">
-        <action
-            android:id="@+id/action_changeNumberFragment_to_applicationSentDialog"
-            app:destination="@id/applicationSentDialog" />
-        <action
-            android:id="@+id/action_changeNumberFragment_to_phoneNumberAddedDialog"
-            app:destination="@id/phoneNumberAddedDialog" />
-        <action
-            android:id="@+id/action_changeNumberFragment_to_changeNumberErrorDialog"
-            app:destination="@id/changeNumberErrorDialog" />
-        <argument
-            android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
-    </fragment>
-
     <activity
         android:id="@+id/mainActivity"
         android:name="kz.divtech.odyssey.rotation.ui.MainActivity"
@@ -125,40 +102,48 @@
 
     <dialog
         android:id="@+id/applicationSentDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.change_phone.dialogs.ApplicationSentDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.dialogs.ApplicationSentDialog"
         android:label="ApplicationSentDialog"
         app:layout="@layout/dialog_application_sent"
-        tools:layout="@layout/dialog_application_sent" />
-
-    <dialog
-        android:id="@+id/phoneNumberAddedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.add_phone.PhoneNumberAddedDialog"
-        android:label="PhoneNumberAddedDialog"
-        app:layout="@layout/dialog_phone_number_added"
-        tools:layout="@layout/dialog_phone_number_added">
+        tools:layout="@layout/dialog_application_sent" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
         <action
-            android:id="@+id/action_phoneNumberAddedDialog_to_phoneNumberFragment"
-            app:destination="@id/phoneNumberFragment" />
+            android:id="@+id/action_applicationSentDialog_to_phoneNumberFragment"
+            app:destination="@id/phoneNumberFragment"
+            app:popUpTo="@id/phoneNumberFragment"
+            app:popUpToInclusive="true" />
     </dialog>
 
     <dialog
+        android:id="@+id/phoneNumberAddedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs.PhoneNumberAddedDialog"
+        android:label="PhoneNumberAddedDialog"
+        app:layout="@layout/dialog_phone_number_added"
+        tools:layout="@layout/dialog_phone_number_added"/>
+
+    <dialog
         android:id="@+id/changeNumberErrorDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.change_phone.dialogs.ChangeNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.dialogs.ChangeNumberErrorDialog"
         android:label="ChangeNumberErrorDialog"
         app:layout="@layout/dialog_change_number_error"
         tools:layout="@layout/dialog_change_number_error" />
     <fragment
-        android:id="@+id/addPhoneNumber"
-        android:name="kz.divtech.odyssey.rotation.ui.login.add_phone.AddPhoneNumberFragment"
-        android:label="AddPhoneNumber"
-        app:layout="@layout/fragment_add_phone"
-        tools:layout="@layout/fragment_add_phone">
+        android:id="@+id/updatePhoneNumber"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.UpdatePhoneNumberFragment"
+        android:label="updatePhoneNumber"
+        app:layout="@layout/fragment_update_phone"
+        tools:layout="@layout/fragment_update_phone">
         <argument
             android:name="employee"
             app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
         <action
-            android:id="@+id/action_addPhoneNumber_to_phoneNumberAddedDialog"
-            app:destination="@id/phoneNumberAddedDialog" />
+            android:id="@+id/action_addPhoneNumber_to_applicationSentDialog"
+            app:destination="@id/applicationSentDialog" />
+        <action
+            android:id="@+id/action_addPhoneNumber_to_changeNumberErrorDialog"
+            app:destination="@id/changeNumberErrorDialog" />
     </fragment>
     <action
         android:id="@+id/action_global_mainActivity"

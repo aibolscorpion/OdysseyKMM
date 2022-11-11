@@ -6,6 +6,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
+import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -23,13 +24,11 @@ interface ApiService {
     fun getEmployeeByIIN(@Query("iin") iin: String): Call<EmployeeData>
 
     @GET("employees/get-employee-by-phone")
-    fun getEmployeeByPhone()
+    fun getEmployeeByPhone(@Query("phone") phone: String): Call<EmployeeData>
 
     @POST("employees/update-phone")
-    fun updatePhoneNumber()
+    fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Call<ResponseBody>
 
-    @POST("employees/login")
-    fun updatePhoneNumberByIIN()
 
     //Trips
     @GET("employees/get-applications")

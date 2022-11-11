@@ -32,7 +32,7 @@ class SearchIINFragment : Fragment() {
 
         viewModel.employeeData.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { employee ->
-                if(employee.isPhoneNumber!!) openChangePhoneNumberFragment(employee) else openAddPhoneNumberFragment(employee)
+                openUpdatePhoneNumber(employee)
             }
         }
         viewModel.isEmployeeNotFounded.observe(viewLifecycleOwner){
@@ -52,13 +52,8 @@ class SearchIINFragment : Fragment() {
             Toast.makeText(requireContext(), R.string.enter_iin_fully, Toast.LENGTH_SHORT).show()
     }
 
-    private fun openAddPhoneNumberFragment(employee: Employee) =
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToAddPhoneNumber(employee))
-
-
-    private fun openChangePhoneNumberFragment(employee: Employee) =
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToChangeNumberFragment(employee))
-
+    private fun openUpdatePhoneNumber(employee: Employee) =
+        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToUpdatePhoneNumber(employee))
 
     private fun showEmployeeNotFoundDialog() =
         findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))

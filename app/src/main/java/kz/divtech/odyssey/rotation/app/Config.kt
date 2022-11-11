@@ -13,4 +13,6 @@ object Config {
     const val AUTHORIZATION_KEY = "Authorization"
     const val AUTHORIZATION_VALUE_PREFIX = "Bearer"
     const val IIN_LENGTH = 12
+    const val FIREBASE_TOKEN = "firebase_token"
+    const val KEY_DISMISS = "key_dismiss"
 }

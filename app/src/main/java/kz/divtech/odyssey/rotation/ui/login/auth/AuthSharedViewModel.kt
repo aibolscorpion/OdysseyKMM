@@ -9,6 +9,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.BadRequest
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login
 import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.TooManyRequest
+import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.utils.Event
@@ -20,18 +21,27 @@ import timber.log.Timber
 import java.io.IOException
 
 
-open class AuthSharedViewModel : ViewModel() {
+class AuthSharedViewModel : ViewModel() {
     var authLogId: String? = null
     var phoneNumber: String? = null
 
-    private val _message: MutableLiveData<Event<String>> = MutableLiveData()
+    private val _message = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = _message
+
+    private val _isPhoneNumberFounded = MutableLiveData<Event<Boolean>>()
+    val isPhoneNumberFounded: LiveData<Event<Boolean>> = _isPhoneNumberFounded
+
+    private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
+    val isEmployeeNotFounded : LiveData<Event<Boolean>> = _isEmployeeNotFounded
+
+    private val _employeeInfo = MutableLiveData<Event<EmployeeData>>()
+    val employeeInfo : LiveData<Event<EmployeeData>> = _employeeInfo
 
     private val _isSuccessfullyLoggedIn = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedIn : LiveData<Boolean> = _isSuccessfullyLoggedIn
 
-    private val _isPhoneNumberFounded: MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val isPhoneNumberFounded: LiveData<Event<Boolean>> = _isPhoneNumberFounded
+    private val _isErrorHappened = MutableLiveData<Event<Boolean>>()
+    val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
 
     fun sendSmsToPhone(phoneNumber: String?){
         if(phoneNumber == null && this.phoneNumber != null)
@@ -75,6 +85,7 @@ open class AuthSharedViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<CodeResponse>, t: Throwable) {
+                _isErrorHappened.postValue(Event(true))
             }
 
         })
@@ -94,8 +105,23 @@ open class AuthSharedViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Timber.d(call.toString())
+                _message.postValue(Event(t.message.toString()))
+            }
 
+        })
+    }
+
+    fun getEmployeeInfoByPhoneNumber(phoneNumber: String){
+        RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber).enqueue(object: Callback<EmployeeData>{
+            override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
+                if(response.code() == 200)
+                    _employeeInfo.postValue(Event(response.body()!!))
+                else if(response.code() == 400)
+                    _isEmployeeNotFounded.postValue(Event(true))
+            }
+
+            override fun onFailure(call: Call<EmployeeData>, t: Throwable) {
+                _isErrorHappened.postValue(Event(true))
             }
 
         })

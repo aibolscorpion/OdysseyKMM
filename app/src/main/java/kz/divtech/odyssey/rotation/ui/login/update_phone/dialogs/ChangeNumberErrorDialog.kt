@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.change_phone.dialogs
+package kz.divtech.odyssey.rotation.ui.login.update_phone.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -27,8 +27,6 @@ class ChangeNumberErrorDialog : BottomSheetDialogFragment(), DialogListener {
     override fun contact() =
         findNavController().navigate(ChangeNumberErrorDialogDirections.actionGlobalContactSupportDialog())
 
-    override fun close(){
-        dismiss()
-    }
+    override fun close() = dismiss()
 
 }

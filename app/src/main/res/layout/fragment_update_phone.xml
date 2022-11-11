@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="AddPhoneNumberFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.add_phone.AddPhoneNumberFragment" />
+            name="updatePhoneNumberFragment"
+            type="kz.divtech.odyssey.rotation.ui.login.update_phone.UpdatePhoneNumberFragment" />
         <variable
             name="employee"
             type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
@@ -41,7 +41,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/employeeInformationLL"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/descriptionTV"
@@ -68,14 +68,50 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
                     android:textColor="#40bdff"
-                    android:onClick="@{()-> AddPhoneNumberFragment.backToSearchByIINFragment()}"
+                    android:onClick="@{()-> updatePhoneNumberFragment.backToSearchByIINFragment()}"
                     />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <include
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/employeeInformationLL"
-                layout="@layout/layout_employee_info"
-                app:employee="@{employee}" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/editTextFL"
+                android:layout_marginBottom="16dp">
+
+                <View
+                    android:id="@+id/lineOneVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line" />
+
+                <TextView
+                    android:id="@+id/employeeNameTV"
+                    style="@style/nameTextStyle"
+                    android:gravity="start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="@{@string/lastname_firstname_patronymic(employee.lastName, employee.firstName, employee.patronymic)}"
+                    tools:text="@string/employee_name_placeholder" />
+
+                <TextView
+                    android:id="@+id/employeePositionTV"
+                    style="@style/descriptionTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="@{employee.position}"
+                    tools:text="@string/employee_position_placeholder" />
+
+                <View
+                    android:id="@+id/lineTwoVw"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@color/line" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <FrameLayout
                 android:id="@+id/editTextFL"
@@ -125,14 +161,15 @@
                 style="@style/buttonStyle"
                 android:text="@string/add_phone_number"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"
-                android:layout_marginTop="@dimen/margin" />
+                android:layout_marginTop="@dimen/margin"
+                android:onClick="@{() -> updatePhoneNumberFragment.updatePhoneNumber()}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/toolBar"
             layout="@layout/layout_login_toolbar"
-            android:onClick="@{()-> AddPhoneNumberFragment.backToSearchByIINFragment()}"
+            android:onClick="@{()-> updatePhoneNumberFragment.backToSearchByIINFragment()}"
             />
     </FrameLayout>
 </layout>

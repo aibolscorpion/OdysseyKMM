@@ -63,11 +63,14 @@
     <string name="employee_position_placeholder">Старший бригадир</string>
     <string name="add_phone_number">Добавить номер телефона</string>
 
-    //Страница Изменить номер
+    //Страница Обновить номер
     <string name="change_phone_number">Изменить номер телефона</string>
     <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
     <string name="change_iin">Изменить ИИН</string>
     <string name="lastname_firstname_patronymic">%1$s %2$s %3$s</string>
+    <string name="phone_number_added">Номер успешно добавлен</string>
+    <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
+    <string name="go_to_login_page">Перейти на страницу входа</string>
 
     // Модалка сотрудник не найден
     <string name="employee_not_found">Сотрудник не найден</string>
@@ -75,16 +78,13 @@
 
     //Модалка заявка отправлена
     <string name="application_sent">Заявка отправлена</string>
-    <string name="application_sent_content">Заявка на изменение номера телефона на +7 701 399 35 38 успешно отправлена. Обработка займет до 30 минут. После подтверждения Вы получите уведомление на Ваш телефон.</string>
+    <string name="application_sent_content">Заявка на изменение номера телефона на %1$s успешно отправлена. Обработка займет до 30 минут. После подтверждения Вы получите уведомление на Ваш телефон.</string>
     <string name="close_window">Закрыть окно</string>
 
-    //Модалка номер успешно добавлен
-    <string name="phone_number_added">Номер успешно добавлен</string>
-    <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
-    <string name="go_to_login_page">Перейти на страницу входа</string>
 
-    //Модалка ошибка добавления номера телефона
+    //Модалка ошибка обновление номера телефона
     <string name="change_number_error_content">Не удалось добавить номер телефона по указаному ИИН. Попробуйте снова либо обратитесь в службу поддержки.</string>
+    <string name="invalid_format_phone_number">Неверный формат номер телефона</string>
 
     -----------------------------------------------------------------------------------------------
     //Bottom Navigation Menu

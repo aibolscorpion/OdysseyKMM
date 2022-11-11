@@ -1,11 +1,10 @@
-package kz.divtech.odyssey.rotation.ui.login.add_phone
+package kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
@@ -22,8 +21,5 @@ class PhoneNumberAddedDialog : BottomSheetDialogFragment() {
         dataBinding.phoneNumberAddedDialog = this
         return dataBinding.root
     }
-
-    fun goToLoginPage() =
-        findNavController().navigate(PhoneNumberAddedDialogDirections.actionPhoneNumberAddedDialogToPhoneNumberFragment())
 
 }
