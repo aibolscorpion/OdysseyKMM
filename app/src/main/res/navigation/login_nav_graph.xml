@@ -54,7 +54,11 @@
         android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs.AccountDeactivatedDialog"
         android:label="AccountDeactivatedDialog"
         app:layout="@layout/dialog_account_deactivated"
-        tools:layout="@layout/dialog_account_deactivated" />
+        tools:layout="@layout/dialog_account_deactivated" >
+        <argument
+            android:name="employeeName"
+            app:argType="string" />
+    </dialog>
 
     <fragment
         android:id="@+id/codeFragment"
@@ -147,7 +151,8 @@
     </fragment>
     <action
         android:id="@+id/action_global_mainActivity"
-        app:destination="@id/mainActivity" />
+        app:destination="@id/mainActivity"
+        app:launchSingleTop="false" />
     <action
         android:id="@+id/action_global_contactSupportDialog"
         app:destination="@id/contactSupportDialog" />

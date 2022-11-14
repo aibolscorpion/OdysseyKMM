@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,6 +11,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentSearchByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class SearchIINFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[SearchIINViewModel::class.java] }
@@ -49,7 +49,7 @@ class SearchIINFragment : Fragment() {
         if(iin.length == Config.IIN_LENGTH)
             viewModel.searchByIIN(iin)
         else
-            Toast.makeText(requireContext(), R.string.enter_iin_fully, Toast.LENGTH_SHORT).show()
+            showErrorMessage(requireContext(), binding.searchByIINFL, getString(R.string.enter_iin_fully))
     }
 
     private fun openUpdatePhoneNumber(employee: Employee) =
@@ -60,6 +60,5 @@ class SearchIINFragment : Fragment() {
 
 
     fun backToSendSmsFragment() = findNavController().popBackStack()
-
 
 }

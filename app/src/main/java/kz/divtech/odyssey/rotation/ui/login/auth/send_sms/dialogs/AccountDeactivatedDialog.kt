@@ -21,6 +21,9 @@ class AccountDeactivatedDialog : BottomSheetDialogFragment(), DialogListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogAccountDeactivatedBinding.inflate(inflater)
         dataBinding.listener = this
+
+        dataBinding.employeeName = AccountDeactivatedDialogArgs.fromBundle(requireArguments()).employeeName
+
         return dataBinding.root
     }
 

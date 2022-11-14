@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="listener"
             type="kz.divtech.odyssey.rotation.ui.login.listener.DialogListener" />
+        <variable
+            name="employeeName"
+            type="java.lang.String" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -57,10 +60,11 @@
                     android:id="@+id/telegramContentTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_deactivated_content"
+                    android:text="@{@string/account_deactivated_content(employeeName)}"
                     android:layout_marginTop="@dimen/margin"
                     style="@style/bottomSheetContent"
                     app:layout_constraintTop_toBottomOf="@+id/accountDeactivatedTitleLL"
+                    tools:text="@string/account_deactivated_content"
                     />
                 <View
                     android:id="@+id/lineVw"

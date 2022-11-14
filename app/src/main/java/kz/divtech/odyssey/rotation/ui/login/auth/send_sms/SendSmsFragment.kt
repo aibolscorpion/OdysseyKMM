@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
@@ -17,6 +16,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.utils.SessionManager
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
+import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 
 class SendSmsFragment : Fragment() {
@@ -42,9 +42,9 @@ class SendSmsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeInfo.observe(viewLifecycleOwner){
-            it?.getContentIfNotHandled()?.let { employeeData ->
-                if(employeeData.data.employee?.status.equals(Constants.DEACTIVATED_EMPLOYEE))
-                    showAccountDeactivatedDialog()
+            it?.getContentIfNotHandled()?.let { employee ->
+                if(employee.status.equals(Constants.DEACTIVATED_EMPLOYEE))
+                    showAccountDeactivatedDialog("${employee.firstName} ${employee.patronymic}")
                 else
                     viewModel.sendSmsToPhone("${Config.COUNTRY_CODE}$extractedPhoneNumber")
             }
@@ -53,20 +53,19 @@ class SendSmsFragment : Fragment() {
         viewModel.isEmployeeNotFounded.observe(viewLifecycleOwner){
             it?.getContentIfNotHandled()?.let { isEmployeeNotFounded ->
                 if(isEmployeeNotFounded)
-                    viewModel.sendSmsToPhone("${Config.COUNTRY_CODE}$extractedPhoneNumber")
+                    openIINFragment()
             }
         }
 
-        viewModel.isPhoneNumberFounded.observe(viewLifecycleOwner) {
-            it?.getContentIfNotHandled()?.let { isPhoneNumberFounded ->
-                if(isPhoneNumberFounded) openCodeFragment()
-                else openIINFragment()
+        viewModel.smsCodeSent.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { smsCodeSent ->
+                if(smsCodeSent) openCodeFragment()
             }
         }
 
         viewModel.message.observe(viewLifecycleOwner){
             it.getContentIfNotHandled()?.let { message ->
-                showErrorMessage(message)
+                showErrorMessage(requireContext(), dataBinding.sendSmsCL, message)
             }
         }
 
@@ -103,22 +102,19 @@ class SendSmsFragment : Fragment() {
         if(phoneNumberFilled) {
             viewModel.getEmployeeInfoByPhoneNumber("${Config.COUNTRY_CODE}$extractedPhoneNumber")
         } else{
-            showErrorMessage(getString(R.string.enter_phone_number_fully))
+            showErrorMessage(requireContext(), dataBinding.sendSmsCL, getString(R.string.enter_phone_number_fully))
         }
-
     }
 
-    private fun showErrorMessage(message: String){
-        val snackBar = Snackbar.make(dataBinding.CL, message, Snackbar.LENGTH_LONG)
-        snackBar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.bottom_sheet_error_title))
-        snackBar.show()
-    }
+
 
     private fun openCodeFragment() =
-        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToCodeFragment(dataBinding.phoneNumberET.text.toString()))
+        findNavController().navigate(SendSmsFragmentDirections.
+        actionPhoneNumberFragmentToCodeFragment(dataBinding.phoneNumberET.text.toString()))
 
     private fun openIINFragment() =
-        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToIINFragment(dataBinding.phoneNumberET.text.toString()))
+        findNavController().navigate(SendSmsFragmentDirections.
+        actionPhoneNumberFragmentToIINFragment(dataBinding.phoneNumberET.text.toString()))
 
     fun showTermsOfAgreementDialog() =
          findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
@@ -126,9 +122,12 @@ class SendSmsFragment : Fragment() {
     private fun showErrorDialog() =
         findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToPhoneNumberErrorDialog())
 
-    private fun showAccountDeactivatedDialog() =
-        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog())
+    private fun showAccountDeactivatedDialog(employeeName: String) =
+        findNavController().navigate(SendSmsFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog(employeeName))
 
-    private fun openMainActivity() = findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())
+    private fun openMainActivity() {
+        findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())
+        (activity as AppCompatActivity).finish()
+    }
 
 }

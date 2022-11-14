@@ -11,6 +11,7 @@ android {
     dataBinding{
         enabled = true
     }
+
     defaultConfig {
         applicationId "kz.divtech.odyssey.rotation"
         minSdk 21
@@ -35,13 +36,6 @@ android {
         jvmTarget = '1.8'
     }
 }
-
-
-
-
-
-
-
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.9.0'
@@ -74,6 +68,5 @@ dependencies {
 
     //Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
-
 
 }

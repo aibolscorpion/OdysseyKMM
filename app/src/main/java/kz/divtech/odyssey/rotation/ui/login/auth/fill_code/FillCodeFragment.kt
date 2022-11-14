@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,12 +16,13 @@ import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
+import kz.divtech.odyssey.rotation.utils.Utils.getIntFromString
+import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class FillCodeFragment : Fragment(), OnFilledListener {
     private val editTextList = ArrayList<EditText>()
     private lateinit var dataBinding : FragmentFillCodeBinding
     private var countDownTimer : CountDownTimer?= null
-    private var countSmsBtnPress  = 1
     private val viewModel by lazy { ViewModelProvider(requireActivity())[AuthSharedViewModel::class.java] }
     private lateinit var phoneNumber : String
 
@@ -38,8 +39,7 @@ class FillCodeFragment : Fragment(), OnFilledListener {
         dataBinding.toolBar.setOnClickListener {
             backToPhoneNumberFragment()}
 
-        startTimer()
-
+        startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
         return dataBinding.root
     }
 
@@ -48,16 +48,25 @@ class FillCodeFragment : Fragment(), OnFilledListener {
 
         viewModel.message.observe(viewLifecycleOwner){
             it.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                showErrorMessage(requireContext(), dataBinding.fillCodeFL, message)
+                showContactSupportBtn()
+                startTimer(getIntFromString(message))
+            }
+        }
+
+        viewModel.smsCodeSent.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let { smsCodeSent ->
+                if(smsCodeSent)
+                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
             }
         }
 
         viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){
-            if(it){
-                findNavController().navigate(FillCodeFragmentDirections.actionGlobalMainActivity())
-            }
+            if(it)  openMainActivity()
         }
     }
+
+
 
     private fun setupEditTexts(){
         editTextList.add(dataBinding.digitOneET)
@@ -78,39 +87,32 @@ class FillCodeFragment : Fragment(), OnFilledListener {
         }
     }
 
-    private fun startTimer(){
-        countDownTimer = object : CountDownTimer(Config.COUNT_DOWN_TIMER_SECONDS, Config.COUNT_DOWN_INTERVAL) {
+    private fun startTimer(time: Int){
+        val longTime = time * 1000L
+        dataBinding.timerTextView.visibility = View.VISIBLE
+        dataBinding.loginBtn.visibility = View.INVISIBLE
+        countDownTimer = object : CountDownTimer(longTime, Config.COUNT_DOWN_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
                 dataBinding.seconds = (millisUntilFinished/1000).toString()
             }
 
             override fun onFinish() {
-//                openIINFragment()
-                if(countSmsBtnPress == Config.SMS_RECEIVE_ATTEMPT){
-                    showContactSupportBtn()
-                    return
-                }
-                dataBinding.resendSmsTimerTextView.visibility = View.GONE
+                dataBinding.timerTextView.visibility = View.GONE
                 dataBinding.loginBtn.visibility = View.VISIBLE
+                this@FillCodeFragment.hideContactSupportBtn()
             }
-
         }.start()
     }
 
-    fun sendSmsCodeAgain(){
-        countSmsBtnPress+=1
-        dataBinding.loginBtn.visibility = View.GONE
-        dataBinding.resendSmsTimerTextView.visibility = View.VISIBLE
+    fun sendSmsCodeAgain() =
+        viewModel.sendSmsToPhone()
 
-        viewModel.sendSmsToPhone(null)
-        startTimer()
+    private fun showContactSupportBtn(){
+        dataBinding.contactSupportLLC.visibility = View.VISIBLE
     }
 
-    fun showContactSupportBtn(){
-        dataBinding.resendSmsTimerTextView.visibility = View.GONE
-        dataBinding.loginBtn.visibility = View.GONE
-        dataBinding.contactSupportTV.visibility = View.VISIBLE
-        dataBinding.contactSupportBtn.visibility = View.VISIBLE
+    fun hideContactSupportBtn(){
+        dataBinding.contactSupportLLC.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -129,11 +131,12 @@ class FillCodeFragment : Fragment(), OnFilledListener {
         editTextList.forEach { if(it.text.isEmpty()) oneOfEditTextIsEmpty = true }
 
         if(oneOfEditTextIsEmpty){
-            Toast.makeText(requireContext(), R.string.fill_all_empty_fields, Toast.LENGTH_SHORT).show()
+            showErrorMessage(requireContext(), dataBinding.fillCodeFL, getString(R.string.fill_all_empty_fields))
             return
         }
 
     }
+
     override fun onFilled() {
 
         checkIfAllEditTextsFilled()
@@ -145,4 +148,10 @@ class FillCodeFragment : Fragment(), OnFilledListener {
         viewModel.login(code.toString())
     }
 
+    fun showContactSupportDialog() = findNavController().navigate(FillCodeFragmentDirections.actionGlobalContactSupportDialog())
+
+    private fun openMainActivity(){
+        findNavController().navigate(FillCodeFragmentDirections.actionGlobalMainActivity())
+        (activity as AppCompatActivity).finish()
+    }
 }

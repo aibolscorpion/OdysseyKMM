@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,6 +12,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
+import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
@@ -27,7 +27,7 @@ class UpdatePhoneNumberFragment : Fragment() {
 
         dataBinding.employee = employee
 
-        if(!employee.isPhoneNumber!!){
+        if(employee.isPhoneNumber!!){
             changeScreenToChangePhoneNumber()
         }
 
@@ -46,7 +46,7 @@ class UpdatePhoneNumberFragment : Fragment() {
                 showErrorDialog()
         }
         viewModel.message.observe(viewLifecycleOwner){ message ->
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, message)
         }
     }
 
@@ -70,7 +70,7 @@ class UpdatePhoneNumberFragment : Fragment() {
                 employee.iin, "${Config.COUNTRY_CODE}$extractedPhoneNumber", Config.FIREBASE_TOKEN)
             viewModel.updatePhoneNumber(request)
         } else
-            Toast.makeText(requireContext(), R.string.enter_phone_number_fully, Toast.LENGTH_SHORT).show()
+            showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))
     }
 
     private fun changeScreenToChangePhoneNumber(){

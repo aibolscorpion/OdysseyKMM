@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
+import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.login.login.BadRequest
-import kz.divtech.odyssey.rotation.domain.model.login.login.Login
-import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
-import kz.divtech.odyssey.rotation.domain.model.login.login.TooManyRequest
+import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
@@ -17,7 +16,6 @@ import kz.divtech.odyssey.rotation.utils.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 import java.io.IOException
 
 
@@ -28,14 +26,14 @@ class AuthSharedViewModel : ViewModel() {
     private val _message = MutableLiveData<Event<String>>()
     val message: LiveData<Event<String>> = _message
 
-    private val _isPhoneNumberFounded = MutableLiveData<Event<Boolean>>()
-    val isPhoneNumberFounded: LiveData<Event<Boolean>> = _isPhoneNumberFounded
+    private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
+    val smsCodeSent: LiveData<Event<Boolean>> = _smsCodeSent
 
     private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
     val isEmployeeNotFounded : LiveData<Event<Boolean>> = _isEmployeeNotFounded
 
-    private val _employeeInfo = MutableLiveData<Event<EmployeeData>>()
-    val employeeInfo : LiveData<Event<EmployeeData>> = _employeeInfo
+    private val _employeeInfo = MutableLiveData<Event<Employee>>()
+    val employeeInfo : LiveData<Event<Employee>> = _employeeInfo
 
     private val _isSuccessfullyLoggedIn = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedIn : LiveData<Boolean> = _isSuccessfullyLoggedIn
@@ -44,22 +42,22 @@ class AuthSharedViewModel : ViewModel() {
     val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
 
     fun sendSmsToPhone(phoneNumber: String?){
-        if(phoneNumber == null && this.phoneNumber != null)
-            requestSmsCode(this.phoneNumber!!)
-        else{
             requestSmsCode(phoneNumber!!)
             this.phoneNumber = phoneNumber
-        }
+    }
+
+    fun sendSmsToPhone(){
+        if(this.phoneNumber != null) requestSmsCode(this.phoneNumber!!)
     }
 
     private fun requestSmsCode(phoneNumber: String){
-        RetrofitClient.getApiService().sendSms(PhoneNumber(phoneNumber)).enqueue(object : Callback<CodeResponse>{
+        RetrofitClient.getApiService().sendSms(PhoneNumber(phoneNumber, Config.REQUEST_TYPE)).enqueue(object : Callback<CodeResponse>{
             override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
                 when(response.code()){
                     200 -> {
                         val codeResponse  = response.body()
                         authLogId = codeResponse?.data?.auth_log_id
-                        _isPhoneNumberFounded.postValue(Event(true))
+                        _smsCodeSent.postValue(Event(true))
                     }
                     400 -> {
                         lateinit var mError : BadRequest
@@ -67,8 +65,8 @@ class AuthSharedViewModel : ViewModel() {
                             mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(),BadRequest::class.java)
                         } catch (_: IOException) {}
                         when(mError.slug){
-                            "employee_not_found" -> _isPhoneNumberFounded.postValue(Event(false))
-                            "invalid_phone" -> _message.postValue(Event(mError.message!!))
+                            Constants.EMPLOYEE_NOT_FOUND -> _smsCodeSent.postValue(Event(false))
+                            Constants.INVALID_PHONE_NUMBER -> _message.postValue(Event(mError.message!!))
                         }
                     }
                     429 -> {
@@ -76,9 +74,7 @@ class AuthSharedViewModel : ViewModel() {
                         try {
                             mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(),TooManyRequest::class.java)
                         } catch (_: IOException) {}
-                        when(mError.type){
-                            "too_many_requests" -> _message.postValue(Event(mError.message!!))
-                        }
+                        _message.postValue(Event(mError.message!!))
                     }
 
                 }
@@ -97,15 +93,13 @@ class AuthSharedViewModel : ViewModel() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if(response.isSuccessful){
                     val loginResponse = response.body()
-                    Timber.d(loginResponse.toString())
                     SessionManager().saveAuthToken(loginResponse?.data?.token!!)
-                    _message.postValue(Event(loginResponse.message!!))
                     _isSuccessfullyLoggedIn.postValue(true)
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _message.postValue(Event(t.message.toString()))
+
             }
 
         })
@@ -115,7 +109,7 @@ class AuthSharedViewModel : ViewModel() {
         RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber).enqueue(object: Callback<EmployeeData>{
             override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
                 if(response.code() == 200)
-                    _employeeInfo.postValue(Event(response.body()!!))
+                    _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
                 else if(response.code() == 400)
                     _isEmployeeNotFounded.postValue(Event(true))
             }

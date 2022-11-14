@@ -22,11 +22,11 @@
     <string name="error_happened">Произошла ошибка</string>
     <string name="phone_number_error_content">При попытке войти в аккаунт, произошла непредвиденная ошибка. Пожалуйста, обратитесь в службу поддержки.</string>
     <string name="contact_support_btn">Обратиться в поддержку</string>
-    <string name="try_again">Попробывать снова</string>
+    <string name="try_again">Попробовать снова</string>
 
     //Модалка аккаунт деактивирован
     <string name="account_deactivated">Аккаунт деактивирован</string>
-    <string name="account_deactivated_content">Уважаемый Руслан Владимирович, ваш аккаунт был деактивирован вашим работодателем. Если у вас есть вопросы обратитесь в службу поддержки.</string>
+    <string name="account_deactivated_content">Уважаемый %1$s, ваш аккаунт был деактивирован вашим работодателем. Если у вас есть вопросы обратитесь в службу поддержки.</string>
 
     //Модалка Обратиться в поддержку
     <string name="call">Позвонить</string>
