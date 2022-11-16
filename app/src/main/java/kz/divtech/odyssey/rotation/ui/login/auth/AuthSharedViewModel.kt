@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
-import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
@@ -41,6 +40,9 @@ class AuthSharedViewModel : ViewModel() {
     private val _isErrorHappened = MutableLiveData<Event<Boolean>>()
     val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
 
+    private val _showProgressBar = MutableLiveData<Boolean>()
+    val showProgressBar: LiveData<Boolean> = _showProgressBar
+
     fun sendSmsToPhone(phoneNumber: String?){
             requestSmsCode(phoneNumber!!)
             this.phoneNumber = phoneNumber
@@ -51,7 +53,8 @@ class AuthSharedViewModel : ViewModel() {
     }
 
     private fun requestSmsCode(phoneNumber: String){
-        RetrofitClient.getApiService().sendSms(PhoneNumber(phoneNumber, Config.REQUEST_TYPE)).enqueue(object : Callback<CodeResponse>{
+        _showProgressBar.postValue(true)
+        RetrofitClient.getApiService().sendSms(PhoneNumber(phoneNumber)).enqueue(object : Callback<CodeResponse>{
             override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
                 when(response.code()){
                     200 -> {
@@ -78,19 +81,23 @@ class AuthSharedViewModel : ViewModel() {
                     }
 
                 }
+                _showProgressBar.postValue(false)
             }
 
             override fun onFailure(call: Call<CodeResponse>, t: Throwable) {
                 _isErrorHappened.postValue(Event(true))
+                _showProgressBar.postValue(false)
             }
 
         })
     }
 
     fun login(code: String){
+        _showProgressBar.value = true
         val login = Login(phoneNumber, code, authLogId)
         RetrofitClient.getApiService().login(login).enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                _showProgressBar.postValue(false)
                 if(response.isSuccessful){
                     val loginResponse = response.body()
                     SessionManager().saveAuthToken(loginResponse?.data?.token!!)
@@ -99,15 +106,17 @@ class AuthSharedViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-
+                _showProgressBar.postValue(false)
             }
 
         })
     }
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){
+        _showProgressBar.postValue(true)
         RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber).enqueue(object: Callback<EmployeeData>{
             override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
+                _showProgressBar.postValue(false)
                 if(response.code() == 200)
                     _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
                 else if(response.code() == 400)
@@ -116,6 +125,7 @@ class AuthSharedViewModel : ViewModel() {
 
             override fun onFailure(call: Call<EmployeeData>, t: Throwable) {
                 _isErrorHappened.postValue(Event(true))
+                _showProgressBar.postValue(false)
             }
 
         })

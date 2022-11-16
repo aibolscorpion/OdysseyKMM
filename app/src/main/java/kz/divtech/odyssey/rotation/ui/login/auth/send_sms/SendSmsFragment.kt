@@ -1,6 +1,9 @@
 package kz.divtech.odyssey.rotation.ui.login.auth.send_sms
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.Selection
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +20,6 @@ import kz.divtech.odyssey.rotation.utils.SessionManager
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
 import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
-
 
 class SendSmsFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
@@ -59,13 +61,14 @@ class SendSmsFragment : Fragment() {
 
         viewModel.smsCodeSent.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { smsCodeSent ->
-                if(smsCodeSent) openCodeFragment()
+                if(smsCodeSent)
+                    openCodeFragment()
             }
         }
 
         viewModel.message.observe(viewLifecycleOwner){
             it.getContentIfNotHandled()?.let { message ->
-                showErrorMessage(requireContext(), dataBinding.sendSmsCL, message)
+                showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
             }
         }
 
@@ -73,6 +76,10 @@ class SendSmsFragment : Fragment() {
             it?.getContentIfNotHandled()?.let { isErrorHappened ->
                 if(isErrorHappened) showErrorDialog()
             }
+        }
+
+        viewModel.showProgressBar.observe(viewLifecycleOwner){ showProgressBar ->
+            dataBinding.sendSmsPB.visibility = if (showProgressBar) View.VISIBLE else View.GONE
         }
 
     }
@@ -84,12 +91,29 @@ class SendSmsFragment : Fragment() {
     }
 
     private fun setupMaskedEditText(){
+        val prefix = getString(R.string.phone_number_placeholder)
+
         val maskedETListener = MaskedTextChangedListener(
-            getString(R.string.phone_number_format),
-            true, dataBinding.phoneNumberET, null, object : MaskedTextChangedListener.ValueListener {
+        getString(R.string.phone_number_format),true, dataBinding.phoneNumberET,
+            object: TextWatcher{
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    if(!s.toString().startsWith(prefix)){
+                        dataBinding.phoneNumberET.setText(prefix)
+                        Selection.setSelection(dataBinding.phoneNumberET.text, dataBinding.phoneNumberET.text!!.length)
+                    }
+                }
+
+            }, object : MaskedTextChangedListener.ValueListener {
                 override fun onTextChanged(maskFilled: Boolean, extractedValue: String, formattedValue: String) {
                     phoneNumberFilled = maskFilled
                     extractedPhoneNumber = extractedValue
+
                 }
             })
 
@@ -102,7 +126,7 @@ class SendSmsFragment : Fragment() {
         if(phoneNumberFilled) {
             viewModel.getEmployeeInfoByPhoneNumber("${Config.COUNTRY_CODE}$extractedPhoneNumber")
         } else{
-            showErrorMessage(requireContext(), dataBinding.sendSmsCL, getString(R.string.enter_phone_number_fully))
+            showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.enter_phone_number_fully))
         }
     }
 

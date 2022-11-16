@@ -41,9 +41,9 @@
             android:id="@+id/faqRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/item_faq"
             android:layout_marginTop="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_faq"
             />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -13,6 +13,9 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    @GET("employees/get-employee-by-phone")
+    fun getEmployeeByPhone(@Query("phone") phone: String): Call<EmployeeData>
+
     //login
     @POST("employees/send-code-login")
     fun sendSms(@Body phone: PhoneNumber): Call<CodeResponse>
@@ -22,9 +25,6 @@ interface ApiService {
 
     @GET("employees/get-employee-by-iin")
     fun getEmployeeByIIN(@Query("iin") iin: String): Call<EmployeeData>
-
-    @GET("employees/get-employee-by-phone")
-    fun getEmployeeByPhone(@Query("phone") phone: String): Call<EmployeeData>
 
     @POST("employees/update-phone")
     fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Call<ResponseBody>

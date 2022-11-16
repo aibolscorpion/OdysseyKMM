@@ -34,9 +34,9 @@
                 android:layout_height="wrap_content"
                 style="@style/unselected_question_title"
                 android:maxLines="2"
-                tools:text="@string/question_placeholder"
                 android:text="@{faq.question}"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                tools:text="@sample/questions" />
 
             <ImageView
                 android:id="@+id/showContentIV"
@@ -59,9 +59,9 @@
             android:letterSpacing="0.01"
             android:lineSpacingExtra="7sp"
             android:layout_marginTop="12dp"
-            tools:text="@string/answer_placeholder"
             android:text="@{faq.answer}"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            tools:text="@sample/answers"/>
 
     </LinearLayout>
 </layout>
