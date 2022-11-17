@@ -3,7 +3,6 @@ package kz.divtech.odyssey.rotation.ui.login.auth
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
@@ -34,6 +33,9 @@ class SmsBroadcastReceiver() : BroadcastReceiver() {
                         }
                     }
                 }
+                CommonStatusCodes.TIMEOUT -> {
+                    otpListener?.onTimeout()
+                }
             }
 
         }
@@ -41,5 +43,6 @@ class SmsBroadcastReceiver() : BroadcastReceiver() {
 
     interface OTPReceiveListener {
         fun onOTPReceived(code: String?)
+        fun onTimeout()
     }
 }

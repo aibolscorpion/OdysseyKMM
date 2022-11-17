@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.data.remote
 
 import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.utils.SessionManager
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -16,8 +16,8 @@ object RetrofitClient {
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(Interceptor {
                 val request: Request = it.request().newBuilder()
-                        .addHeader(Config.DEVICE_ID_KEY, Config.DEVICE_ID_VALUE)
-                        .addHeader(Config.AUTHORIZATION_KEY, SessionManager().getTokenWithBearer())
+                        .addHeader(Config.DEVICE_ID_KEY, SharedPrefs().fetchDeviceId())
+                        .addHeader(Config.AUTHORIZATION_KEY, SharedPrefs().getTokenWithBearer())
                         .build()
                 it.proceed(request)
             })

@@ -47,6 +47,7 @@
     <string name="contact_support">Обратитесь к службе поддержки</string>
     <string name="back">Назад</string>
     <string name="fill_all_empty_fields">Заполните все поля</string>
+    <string name="sms_retrieve_broadcast_receiver_timeout">Время ожидания чтение смс кода истекло</string>
 
     //Страница Войти По ИИН
     <string name="not_find_telephone_number">Номер не найден.\n Войти по ИИН</string>

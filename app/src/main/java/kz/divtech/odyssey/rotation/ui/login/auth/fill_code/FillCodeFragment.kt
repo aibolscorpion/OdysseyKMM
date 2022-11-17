@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
@@ -55,11 +56,15 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.message.observe(viewLifecycleOwner){
-            it.getContentIfNotHandled()?.let { message ->
-                showErrorMessage(requireContext(), dataBinding.fillCodeFL, message)
-                showContactSupportBtn()
-                startTimer(getIntFromString(message))
+        viewModel.codeResponse.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let { codeResponse ->
+                when(codeResponse.type) {
+                    Constants.TOO_MANY_REQUEST -> {
+                        showContactSupportBtn()
+                        startTimer(getIntFromString(codeResponse.message!!))
+                    }
+                }
+                showErrorMessage(requireContext(), dataBinding.fillCodeFL, codeResponse.message!!)
             }
         }
 
@@ -183,6 +188,10 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
         code?.forEachIndexed { index, c ->
             editTextList[index].setText(c.toString())
         }
+    }
+
+    override fun onTimeout() {
+        showErrorMessage(requireContext(), dataBinding.fillCodeFL, getString(R.string.sms_retrieve_broadcast_receiver_timeout))
     }
 
 }

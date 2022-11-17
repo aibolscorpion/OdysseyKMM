@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.utils.Event
-import kz.divtech.odyssey.rotation.utils.SessionManager
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +42,9 @@ class AuthSharedViewModel : ViewModel() {
 
     private val _showProgressBar = MutableLiveData<Boolean>()
     val showProgressBar: LiveData<Boolean> = _showProgressBar
+
+    private val _codeResponse = MutableLiveData<Event<BadRequest>>()
+    val codeResponse: LiveData<Event<BadRequest>> = _codeResponse
 
     fun sendSmsToPhone(phoneNumber: String?){
             requestSmsCode(phoneNumber!!)
@@ -99,9 +102,11 @@ class AuthSharedViewModel : ViewModel() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 _showProgressBar.postValue(false)
                 if(response.isSuccessful){
-                    val loginResponse = response.body()
-                    SessionManager().saveAuthToken(loginResponse?.data?.token!!)
-                    _isSuccessfullyLoggedIn.postValue(true)
+                        val loginResponse = response.body()
+                        SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
+                        _isSuccessfullyLoggedIn.postValue(true)
+                }else{
+                    unsuccessfulResponse(response)
                 }
             }
 
@@ -110,6 +115,25 @@ class AuthSharedViewModel : ViewModel() {
             }
 
         })
+    }
+
+    fun unsuccessfulResponse(response: Response<LoginResponse>): BadRequest{
+        lateinit var mError : BadRequest
+        try {
+            mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(), BadRequest::class.java)
+        } catch (_: IOException) {}
+        when(response.code()){
+            400 -> {
+                when(mError.slug){
+                    Constants.INCORRECT_DATA -> _codeResponse.postValue(Event(mError))
+                }
+            }
+            429 -> {
+                _codeResponse.postValue(Event(mError))
+            }
+        }
+
+        return mError
     }
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){

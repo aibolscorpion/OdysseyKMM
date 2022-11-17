@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
-import kz.divtech.odyssey.rotation.utils.SessionManager
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class ProfileFragment : Fragment() {
     private lateinit var viewModel : ProfileViewModel
@@ -50,7 +50,7 @@ class ProfileFragment : Fragment() {
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToLoginActivity())
 
     private fun logout(){
-        SessionManager().clearAuthToken()
+        SharedPrefs().clearAuthToken()
         openLoginActivity()
         (activity as AppCompatActivity).finish()
     }

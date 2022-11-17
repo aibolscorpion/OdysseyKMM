@@ -16,7 +16,7 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
-import kz.divtech.odyssey.rotation.utils.SessionManager
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.AuthSharedViewModel
 import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
@@ -30,7 +30,7 @@ class SendSmsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        if(SessionManager().isLoggedIn) openMainActivity()
+        if(SharedPrefs().isLoggedIn) openMainActivity()
 
         dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
