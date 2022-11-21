@@ -4,30 +4,51 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
-import kz.divtech.odyssey.rotation.ui.trips.models.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.utils.Utils
 
-class TripsAdapter(private val tripList: List<Trip>, private val onTripClicked : (Trip) -> Unit) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
+class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
+    private val tripList = ArrayList<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TripViewHolder(binding, onTripClicked)
+        return TripViewHolder(binding, onTripListener)
     }
 
+    fun setTripList(trips: List<Trip>){
+        tripList.clear()
+        tripList.addAll(trips)
+        notifyDataSetChanged()
+    }
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         holder.bind(tripList[position])
     }
 
     override fun getItemCount(): Int  = tripList.size
 
-    class TripViewHolder(val binding : ItemTripBinding, private val onTripClicked : (Trip) -> Unit) : RecyclerView.ViewHolder(binding.root){
+    class TripViewHolder(val binding : ItemTripBinding, private val onTripListener: OnTripListener) : RecyclerView.ViewHolder(binding.root){
         private lateinit var currentTrip : Trip
+        private val adapter = SegmentAdapter()
+
         init {
+            binding.segmentsRV.adapter = adapter
             binding.root.setOnClickListener{
-                onTripClicked(currentTrip)
+                onTripListener.onTripClicked(currentTrip)
             }
         }
+
         fun bind(trip : Trip){
             currentTrip = trip
             binding.trip = trip
+            binding.status = Utils.getStatusByApplication(trip)
+
+            adapter.setSegmentList(currentTrip.segments!!)
         }
+
     }
+
+    interface OnTripListener {
+        fun onTripClicked(trip: Trip)
+    }
+
+
 }

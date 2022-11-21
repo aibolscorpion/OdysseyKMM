@@ -10,6 +10,9 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.ui.trips.ApplicationStatus
 
 object Utils {
     fun showKeyboard(context: Context, editText: EditText){
@@ -45,5 +48,66 @@ object Utils {
         snackBar.view.layoutParams = params
         snackBar.setBackgroundTint(ContextCompat.getColor(context, R.color.bottom_sheet_error_title))
         snackBar.show()
+    }
+
+    fun getStatusByApplication(trip: Trip): ApplicationStatus {
+        when(trip.status){
+
+            Constants.STATUS_OPENED ->{
+                if(trip.segments == null) {
+                    return ApplicationStatus.OPENED_WITHOUT_DETAILS
+                }else{
+                    val list = ArrayList<String>()
+                    trip.segments.forEachIndexed{ _, segment ->
+                        if(segment.status.equals(Constants.STATUS_OPENED)){
+                            if(segment.active_process.equals(Constants.WATCHING)){
+                                list.add(Constants.APP_STATUS_ON_THE_WAITING_LIST)
+                            }else if(segment.active_process == null){
+                                list.add(Constants.STATUS_OPENED)
+                            }
+                        }
+
+                        if(list.contains(Constants.STATUS_OPENED) && list.contains(Constants.APP_STATUS_ON_THE_WAITING_LIST)){
+                            return ApplicationStatus.OPENED_WITH_DETAILS_AND_OPENED_ON_THE_WAITING_LIST
+                        }else if(list.contains(Constants.STATUS_OPENED)){
+                            return ApplicationStatus.OPENED_WITH_DETAILS
+                        }else if(list.contains(Constants.APP_STATUS_ON_THE_WAITING_LIST)){
+                            return ApplicationStatus.OPENED_ON_THE_WAITING_LIST
+                        }
+                    }
+                }
+            }
+
+            Constants.APP_STATUS_PARTLY -> {
+                val list = ArrayList<String>()
+                trip.segments?.forEachIndexed{ _, segment ->
+                    if(segment.status.equals(Constants.APP_STATUS_ISSUED)){
+                        list.add(Constants.APP_STATUS_ISSUED)
+                    }else if(segment.status.equals(Constants.STATUS_OPENED) && segment.active_process.equals(Constants.WATCHING)){
+                        list.add(Constants.APP_STATUS_ON_THE_WAITING_LIST)
+                    }else if(segment.status.equals(Constants.STATUS_OPENED)){
+                        list.add(Constants.STATUS_OPENED)
+                    }
+                }
+                if(list.contains(Constants.APP_STATUS_ISSUED) && list.contains(Constants.STATUS_OPENED)){
+                    return ApplicationStatus.PARTLY_ISSUED_AND_OPENED
+                }else if(list.contains(Constants.APP_STATUS_ISSUED) && list.contains(Constants.APP_STATUS_ON_THE_WAITING_LIST)){
+                    return ApplicationStatus.PARTLY_ISSUED_AND_OPENED_ON_THE_WAITING_LIST
+                }
+            }
+
+            Constants.APP_STATUS_RETURNED -> {
+                trip.segments?.forEachIndexed { index, segment ->
+                    if (segment.status == Constants.APP_STATUS_ISSUED) {
+                        return ApplicationStatus.RETURNED_PARTLY
+                    } else if (index == trip.segments.size - 1) {
+                        return ApplicationStatus.RETURNED_FULLY
+                    }
+                }
+            }
+
+            Constants.APP_STATUS_ISSUED -> return ApplicationStatus.ISSUED
+        }
+        return ApplicationStatus.OPENED_WITHOUT_DETAILS
     }
 }

@@ -160,7 +160,7 @@
         tools:layout="@layout/dialog_trip_detail">
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
@@ -170,7 +170,7 @@
         tools:layout="@layout/dialog_tickets_are_not_purchased">
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.ui.trips.models.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
     </dialog>
     <activity
         android:id="@+id/loginActivity"

@@ -5,29 +5,41 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.ViewModelProvider
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
-import kz.divtech.odyssey.rotation.ui.trips.models.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.trips.adapters.TripsAdapter
 
-class ActiveTripsFragment : Fragment() {
+class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
+    val viewModel by lazy { ViewModelProvider(this)[TripsViewModel::class.java]}
+    val adapter = TripsAdapter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentActiveTripsBinding.inflate(inflater)
 
-        val tripsList = mutableListOf(
-            Trip("На вахту, 25 авг", "на 10 дней, в Актогай"),
-            Trip("Домой, 6 сен", "в Алматы"),
-            Trip("На вахту, 17 сен", "на 10 дней, в Актогай", false),
-            Trip("Домой,  27 сен", "В Алматы", false)
-        )
-        binding.activeTripsRV.adapter = TripsAdapter(tripsList) { trip ->
-            val action = if(trip.isTicketPurchased) TripsFragmentDirections.actionTripsFragmentToTripDetailDialog(trip)
-                            else TripsFragmentDirections.actionTripsFragmentToTicketsAreNotPurchasedDialog(trip)
-            findNavController().navigate(action)
+        binding.activeTripsRV.adapter = adapter
+        viewModel.tripsMutableLiveData.observe(viewLifecycleOwner) { trips ->
+            adapter.setTripList(trips.data?.data!!)
         }
 
+        viewModel.visibility.observe(viewLifecycleOwner){ visibility ->
+            binding.visibility = visibility
+        }
+
+        viewModel.getTrips()
+
+
         return binding.root
+    }
+
+    override fun onTripClicked(trip: Trip) {
+//        val action = if(trip.isTicketPurchased){
+//            TripsFragmentDirections.actionTripsFragmentToTripDetailDialog(trip)
+//        }
+//        else {
+//            TripsFragmentDirections.actionTripsFragmentToTicketsAreNotPurchasedDialog(trip)
+//        }
+//        findNavController().navigate(action)
     }
 
 }

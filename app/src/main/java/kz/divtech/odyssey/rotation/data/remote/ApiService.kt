@@ -7,6 +7,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
+import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
@@ -32,7 +33,7 @@ interface ApiService {
 
     //Trips
     @GET("employees/get-applications")
-    fun getTrips()
+    fun getTrips(): Call<Data>
 
     //FAQ
     @GET("faqs")
@@ -52,7 +53,7 @@ interface ApiService {
     @GET("employees/info")
     fun getEmployeeInfo()
 
-    //Update Data
+    //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("update/data")
     fun updateData()
 

@@ -30,9 +30,12 @@
     <color name="gray">#748595</color>
     <color name="profile_description">#80385780</color>
     <color name="profile_menu_text">#15304D</color>
+    <color name="grey_text_view">#8015304D</color>
     <color name="bottom_line">#DEE1E6</color>
     <color name="past_day">#4D1B344F</color>
     <color name="today">#1262CB</color>
     <color name="avatar_border">#15748595</color>
     <color name="toolbar_bg">#2D4461</color>
+    <color name="on_the_waiting_list_bg">#ffbe6b</color>
+    <color name="opened">#c5cad1</color>
 </resources>

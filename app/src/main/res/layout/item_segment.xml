@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="segments"
+            type="kz.divtech.odyssey.rotation.domain.model.trips.Segment" />
+    </data>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:contentDescription="@string/trips"
+                app:loadFromUrl="@{segments.icon}"
+                tools:src="@mipmap/new_avia_logo_bundle"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#15304d"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="8sp"
+                android:layout_weight="0.5"
+                app:segmentStatus="@{segments.status}"
+                app:depStationName="@{segments.train.dep_station_name}"
+                app:arrStationName="@{segments.train.arr_station_name}"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                tools:text="НУРЛЫ-ЖОЛ - Караганды"
+                android:maxLines="2"
+                android:textAllCaps="false"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#15304d"
+                android:lineSpacingExtra="8sp"
+                android:layout_weight="0.5"
+                android:gravity="end"
+                android:singleLine="true"
+                android:textAllCaps="false"
+                app:segmentStatus="@{segments.status}"
+                app:depDateTime="@{segments.train.dep_date_time}"
+                app:arrDateTime="@{segments.train.arr_date_time}"
+                tools:text="31 февр, 10:40 - 16:20" />
+        </LinearLayout>
+</layout>
