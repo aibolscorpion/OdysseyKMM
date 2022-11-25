@@ -106,7 +106,20 @@ class AuthSharedViewModel : ViewModel() {
                         SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
                         _isSuccessfullyLoggedIn.postValue(true)
                 }else{
-                    unsuccessfulResponse(response)
+                    lateinit var mError : BadRequest
+                    try {
+                        mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(), BadRequest::class.java)
+                    } catch (_: IOException) {}
+                    when(response.code()){
+                        400 -> {
+                            when(mError.slug){
+                                Constants.INCORRECT_DATA -> _codeResponse.postValue(Event(mError))
+                            }
+                        }
+                        429 -> {
+                            _codeResponse.postValue(Event(mError))
+                        }
+                    }
                 }
             }
 
@@ -115,25 +128,6 @@ class AuthSharedViewModel : ViewModel() {
             }
 
         })
-    }
-
-    fun unsuccessfulResponse(response: Response<LoginResponse>): BadRequest{
-        lateinit var mError : BadRequest
-        try {
-            mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(), BadRequest::class.java)
-        } catch (_: IOException) {}
-        when(response.code()){
-            400 -> {
-                when(mError.slug){
-                    Constants.INCORRECT_DATA -> _codeResponse.postValue(Event(mError))
-                }
-            }
-            429 -> {
-                _codeResponse.postValue(Event(mError))
-            }
-        }
-
-        return mError
     }
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){

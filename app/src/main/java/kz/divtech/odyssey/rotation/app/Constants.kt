@@ -11,11 +11,11 @@ object Constants {
     const val DAY = "day"
     const val NIGHT = "night"
     const val STATUS_OPENED = "opened"
-    const val APP_STATUS_PARTLY = "partly"
-    const val APP_STATUS_RETURNED = "returned"
-    const val APP_STATUS_ISSUED = "issued"
-    const val APP_STATUS_ON_THE_WAITING_LIST = "on_the_waiting_list"
+    const val STATUS_PARTLY = "partly"
+    const val STATUS_RETURNED = "returned"
+    const val STATUS_ISSUED = "issued"
     const val WATCHING = "watching"
+    const val RETRY_AFTER = "Retry-After"
 
 
 }

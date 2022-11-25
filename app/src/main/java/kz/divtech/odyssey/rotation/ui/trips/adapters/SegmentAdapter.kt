@@ -21,9 +21,9 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
 
     override fun getItemCount() = listOfSegments.size
 
-    fun setSegmentList(segmentList: List<Segment>){
+    fun setSegmentList(segmentList: List<Segment>?){
         listOfSegments.clear()
-        listOfSegments.addAll(segmentList)
+        segmentList?.let { listOfSegments.addAll(it) }
         notifyDataSetChanged()
     }
 

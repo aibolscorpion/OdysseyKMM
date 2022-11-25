@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.utils.Utils
 
 class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
     private val tripList = ArrayList<Trip>()
@@ -39,9 +38,8 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
         fun bind(trip : Trip){
             currentTrip = trip
             binding.trip = trip
-            binding.status = Utils.getStatusByApplication(trip)
 
-            adapter.setSegmentList(currentTrip.segments!!)
+            adapter.setSegmentList(currentTrip.segments)
         }
 
     }

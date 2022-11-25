@@ -14,7 +14,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Пн" />
+        android:text="@string/monday" />
 
     <TextView
         android:layout_width="0dp"
@@ -26,7 +26,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Вт" />
+        android:text="@string/tuesday" />
 
     <TextView
         android:layout_width="0dp"
@@ -38,7 +38,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Ср" />
+        android:text="@string/wednesday" />
 
     <TextView
         android:layout_width="0dp"
@@ -50,7 +50,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Чт" />
+        android:text="@string/thursday" />
 
     <TextView
         android:layout_width="0dp"
@@ -62,7 +62,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Пт" />
+        android:text="@string/friday" />
 
     <TextView
         android:layout_width="0dp"
@@ -74,7 +74,7 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Сб" />
+        android:text="@string/saturday" />
 
     <TextView
         android:layout_width="0dp"
@@ -86,6 +86,6 @@
         android:lineSpacingExtra="3sp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Вс" />
+        android:text="@string/sunday" />
 
 </LinearLayout>

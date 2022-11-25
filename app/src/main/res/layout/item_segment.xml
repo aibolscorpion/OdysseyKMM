@@ -5,6 +5,9 @@
         <variable
             name="segments"
             type="kz.divtech.odyssey.rotation.domain.model.trips.Segment" />
+        <variable
+            name="constants"
+            type="kz.divtech.odyssey.rotation.app.Constants" />
     </data>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,12 +18,11 @@
             android:layout_marginTop="8dp">
 
             <ImageView
-                android:layout_width="22dp"
-                android:layout_height="22dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:contentDescription="@string/trips"
                 app:loadFromUrl="@{segments.icon}"
-                tools:src="@mipmap/new_avia_logo_bundle"
-                />
+                tools:src="@mipmap/new_avia_logo_bundle" />
 
             <TextView
                 android:layout_width="0dp"
@@ -29,31 +31,46 @@
                 android:textSize="14sp"
                 android:textColor="#15304d"
                 android:letterSpacing="-0.01"
-                android:lineSpacingExtra="8sp"
+                android:lineSpacingExtra="4sp"
                 android:layout_weight="0.5"
                 app:segmentStatus="@{segments.status}"
                 app:depStationName="@{segments.train.dep_station_name}"
                 app:arrStationName="@{segments.train.arr_station_name}"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="4dp"
-                tools:text="НУРЛЫ-ЖОЛ - Караганды"
                 android:maxLines="2"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                tools:text="Нурлы - Жол - Караганды"/>
 
-            <TextView
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#15304d"
-                android:lineSpacingExtra="8sp"
-                android:layout_weight="0.5"
-                android:gravity="end"
-                android:singleLine="true"
-                android:textAllCaps="false"
-                app:segmentStatus="@{segments.status}"
-                app:depDateTime="@{segments.train.dep_date_time}"
-                app:arrDateTime="@{segments.train.arr_date_time}"
-                tools:text="31 февр, 10:40 - 16:20" />
+                android:orientation="horizontal"
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#15304d"
+                    android:lineSpacingExtra="8sp"
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:textAllCaps="false"
+                    app:segmentStatus="@{segments.status}"
+                    app:depDateTime="@{segments.train.dep_date_time}"
+                    app:arrDateTime="@{segments.train.arr_date_time}"
+                    android:layout_marginEnd="6dp"
+                    tools:text="31 февр, 10:40 - 16:20" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/icon_tabs_on_waiting_list"
+                    android:layout_gravity="center_vertical"
+                    android:visibility="@{segments.active_process.equals(constants.WATCHING)}"
+                    tools:visibility="visible"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 </layout>

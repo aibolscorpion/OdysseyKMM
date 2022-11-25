@@ -6,7 +6,7 @@
     <string name="login">Войти в аккаунт</string>
     <string name="telephone_number_linked_to_odyssey_id">По номеру телефона привязанному к Odyssey ID</string>
     <string name="enter">Войти</string>
-    <string name="terms_of_service_and_user_agreement">Авторизируясь вы автоматически соглашаетесь с <font color="#40BDFF"> правилами сервиса и пользовательским соглашением</font> сервиса Odyssey Rotation</string>
+    <string name="terms_of_service_and_user_agreement">Авторизируясь вы автоматически соглашаетесь с <font color="#40BDFF"> правилами сервиса</font> и <font color="#40BDFF">пользовательским соглашением</font> сервиса Odyssey Rotation</string>
     <string name="telephone">Телефон</string>
     <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
     <string name="phone_number_placeholder">+7 (</string>
@@ -105,6 +105,19 @@
     <string name="read">Прочитать</string>
     <string name="questions_answers">вопрос/ответ</string>
 
+    <string name="monday">Пн</string>
+    <string name="tuesday">Вт</string>
+    <string name="wednesday">Ср</string>
+    <string name="thursday">Чт</string>
+    <string name="friday">Пт</string>
+    <string name="saturday">Сб</string>
+    <string name="sunday">Вс</string>
+
+
+    <string name="day_of_week_placeholder">Пятница</string>
+    <string name="day_of_month_placeholder">25</string>
+    <string name="month_placeholder">Ноября</string>
+
     -----------------------------------------------------------------------------------------------
     //Страница Поездки
     <string name="active_trips">Активные поездки</string>
@@ -126,13 +139,15 @@
     //Разные статусы
     <string name="opened_without_details_desc">Маршрут не известен, билеты еще не оформлены.</string>
     <string name="opened_with_details_desc">Билеты еще не оформлены</string>
-    <string name="opened_on_the_waiting_list_desc">Поездка находится в листе ожидания. Тайм-лимит оформления: до 5 фев, 19:00</string>
-    <string name="opened_with_details_and_opened_on_the_waiting_list_desc">Часть билетов находятся в листе ожидания. Тайм-лимит оформления: до 5 фев, 19:00</string>
-    <string name="partly_issued_and_opened_desc">Поездка оформлена частично.</string>
-    <string name="partly_issued_and_opened_on_the_waiting_list_desc">Часть билетов оформлены, а другая находится в листе ожидания. Тайм-лимит оформления: до 5 фев, 19:00</string>
+    <string name="opened_on_the_waiting_list_desc">Поездка находится в листе ожидания. Тайм-лимит оформления: до %1$s</string>
     <string name="returned_fully_desc">Поездка была отменена, по причине: %1$s. Дата отмены: %2$s.</string>
-    <string name="returned_partly_desc">Часть билетов были оформлены.Часть билетов были отменены, по причине: РВД +5 дней. Инициатор: Айтуаров Алмат. Дата отмены: 13 янв 2021, в 19:20.</string>
-    <string name="issued_desc"> </string>
+
+    <string name="opened_more_than_one_segment">Часть билетов еще не оформлены</string>
+    <string name="on_the_waiting_list_more_than_one_segment">Часть билетов находятся в листе ожидания. Тайм-лимит оформления: до %1$s</string>
+    <string name="returned_more_than_one_segment">Часть билетов были отменены по причине: %1$s. Дата отмены: %2$s.</string>
+    <string name="issued_more_than_one_segment">Часть билетов оформлены</string>
+
+    <string name="issued_partly">Поездка оформлена частично</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

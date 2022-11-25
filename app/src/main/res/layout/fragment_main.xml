@@ -2,11 +2,25 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
         <variable
             name="mainFragment"
             type="kz.divtech.odyssey.rotation.ui.main.MainFragment" />
+
+        <variable
+            name="dayOfWeek"
+            type="String" />
+
+        <variable
+            name="dayOfMonth"
+            type="String" />
+
+        <variable
+            name="month"
+            type="String" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:layout_gravity="center">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -90,7 +105,9 @@
                             android:lineSpacingExtra="3sp"
                             android:gravity="center_horizontal"
                             android:textAllCaps="true"
-                            android:text="вторник"/>
+                            android:text="@{dayOfWeek}"
+                            tools:text="@string/day_of_week_placeholder" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -99,7 +116,9 @@
                             android:textColor="#1262cb"
                             android:letterSpacing="0.04"
                             android:gravity="center_horizontal"
-                            android:text="18"/>
+                            android:text="@{dayOfMonth}"
+                            tools:text="@string/day_of_month_placeholder" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -110,7 +129,9 @@
                             android:lineSpacingExtra="3sp"
                             android:gravity="center_horizontal"
                             android:textAllCaps="true"
-                            android:text="декабря"/>
+                            android:text="@{month}"
+                            tools:text="@string/month_placeholder" />
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
                     <View
                         android:layout_width="1dp"
@@ -158,6 +179,7 @@
                 tools:listitem="@layout/item_notification"
                 tools:itemCount="3"
                 />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"

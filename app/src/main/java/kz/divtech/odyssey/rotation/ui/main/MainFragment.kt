@@ -15,10 +15,13 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationList
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
+import java.time.LocalDate
+import java.time.format.TextStyle
 import java.util.*
 
 
 class MainFragment : Fragment() {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = FragmentMainBinding.inflate(inflater)
         binding.mainFragment = this
@@ -35,7 +38,21 @@ class MainFragment : Fragment() {
         binding.calendarView.setup(currentMonth, currentMonth, firstDayOfWeek)
         binding.calendarView.scrollToMonth(currentMonth)
 
+        setCurrentDate(binding)
+
         return binding.root
+
+    }
+
+    private fun setCurrentDate(binding: FragmentMainBinding){
+        val currentDate = LocalDate.now()
+        val dayOfWeek = currentDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
+        val dayOfMonth = currentDate.dayOfMonth.toString()
+        val month = currentDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
+
+        binding.dayOfWeek = dayOfWeek
+        binding.dayOfMonth = dayOfMonth
+        binding.month = month
     }
 
     fun openNotificationsFragment() = findNavController().navigate(R.id.action_global_notificationFragment)

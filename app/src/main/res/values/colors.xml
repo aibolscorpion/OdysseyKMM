@@ -36,6 +36,8 @@
     <color name="today">#1262CB</color>
     <color name="avatar_border">#15748595</color>
     <color name="toolbar_bg">#2D4461</color>
-    <color name="on_the_waiting_list_bg">#ffbe6b</color>
-    <color name="opened">#c5cad1</color>
+    <color name="on_the_waiting_list_bg">#FFBE6B</color>
+    <color name="opened_bg">#C5CAD1</color>
+    <color name="issued_bg">#00B688</color>
+    <color name="returned_bg">#FF4242</color>
 </resources>
