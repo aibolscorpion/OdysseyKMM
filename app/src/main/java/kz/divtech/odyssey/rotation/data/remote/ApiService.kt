@@ -3,7 +3,6 @@ package kz.divtech.odyssey.rotation.data.remote
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login
 import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
-import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
@@ -14,12 +13,15 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    @GET("user-agreement")
+    fun getUserAgreement(): Call<ResponseBody>
+
     @GET("employees/get-employee-by-phone")
     fun getEmployeeByPhone(@Query("phone") phone: String): Call<EmployeeData>
 
     //login
     @POST("employees/send-code-login")
-    fun sendSms(@Body phone: PhoneNumber): Call<CodeResponse>
+    fun sendSms(@Body phone: HashMap<String, String>): Call<CodeResponse>
 
     @POST("employees/login")
     fun login(@Body login : Login): Call<LoginResponse>

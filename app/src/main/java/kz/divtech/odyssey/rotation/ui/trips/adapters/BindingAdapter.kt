@@ -6,7 +6,6 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import android.text.Html
-import android.text.Spanned
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -125,9 +124,8 @@ object BindingAdapter {
 
         val text = App.appContext.resources.
             getString(R.string.dep_arrival_time, formattedDepDate, formattedDepTime, formattedArrString)
-        val styledText: Spanned? = getSpannedText(text)
         setTextViewBySegmentStatus(textView, segmentStatus)
-        textView.text = styledText
+        setSpannedText(textView, text)
     }
 
     @BindingAdapter("tripDescIcon")
@@ -343,12 +341,14 @@ object BindingAdapter {
     }
 
 
-
-    private fun getSpannedText(text: String?): Spanned? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
-        } else {
-            Html.fromHtml(text)
+    @BindingAdapter("htmlText")
+    @JvmStatic fun setSpannedText(textView: TextView, text: String?){
+        if(text != null){
+            textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(text)
+            }
         }
     }
 

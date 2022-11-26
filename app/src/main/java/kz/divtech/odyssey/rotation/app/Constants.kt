@@ -16,6 +16,7 @@ object Constants {
     const val STATUS_ISSUED = "issued"
     const val WATCHING = "watching"
     const val RETRY_AFTER = "Retry-After"
+    const val PHONE = "phone"
 
 
 }

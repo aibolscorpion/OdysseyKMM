@@ -9,7 +9,6 @@ import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.domain.model.login.sendsms.PhoneNumber
 import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import retrofit2.Call
@@ -40,11 +39,13 @@ class AuthSharedViewModel : ViewModel() {
     private val _isErrorHappened = MutableLiveData<Event<Boolean>>()
     val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
 
-    private val _showProgressBar = MutableLiveData<Boolean>()
+    private val _showProgressBar = MutableLiveData(false)
     val showProgressBar: LiveData<Boolean> = _showProgressBar
 
     private val _codeResponse = MutableLiveData<Event<BadRequest>>()
     val codeResponse: LiveData<Event<BadRequest>> = _codeResponse
+
+    private val phoneHashMap = HashMap<String, String>()
 
     fun sendSmsToPhone(phoneNumber: String?){
             requestSmsCode(phoneNumber!!)
@@ -56,8 +57,9 @@ class AuthSharedViewModel : ViewModel() {
     }
 
     private fun requestSmsCode(phoneNumber: String){
-        _showProgressBar.postValue(true)
-        RetrofitClient.getApiService().sendSms(PhoneNumber(phoneNumber)).enqueue(object : Callback<CodeResponse>{
+        _showProgressBar.value = true
+        phoneHashMap[Constants.PHONE] = phoneNumber
+        RetrofitClient.getApiService().sendSms(phoneHashMap).enqueue(object : Callback<CodeResponse>{
             override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
                 when(response.code()){
                     200 -> {
