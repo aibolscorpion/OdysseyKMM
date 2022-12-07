@@ -29,7 +29,7 @@
                 android:paddingTop="24dp"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
-                android:paddingBottom="@dimen/two_times_margin">
+                android:paddingBottom="@dimen/margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -37,7 +37,8 @@
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="22sp"
                     android:textColor="#1b344f"
-                    android:text="@{trip.direction}"
+                    app:direction="@{trip.direction}"
+                    app:date="@{trip.date}"
                     tools:text="Домой,  27 сен"
                     />
 
@@ -48,21 +49,18 @@
                     android:textSize="14sp"
                     android:textColor="#748595"
                     android:lineSpacingExtra="2sp"
-                    android:text="@{trip.end_station}"
-                    tools:text="В Алматы. 8 ч 45 мин в пути"
+                    android:text="@{@string/to_end_station(trip.end_station)}"
+                    tools:text="В Алматы"
                     android:layout_marginTop="4dp"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/bottom_sheet_line"
-                    android:layout_marginTop="@dimen/margin"/>
 
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/layout_ticket_is_not_purchased"
+                    app:trip="@{trip}"
                     android:layout_marginTop="24dp"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

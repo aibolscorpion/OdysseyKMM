@@ -10,7 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class TermsOfAgreementViewModel: ViewModel(){
-    val content = ObservableField<String>()
+    val content: ObservableField<String> = ObservableField("")
     val progressVisibility = ObservableBoolean(true)
 
     fun getUserAgreement(){

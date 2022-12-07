@@ -14,7 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="6dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin">
 
@@ -43,6 +44,7 @@
                     android:lineSpacingExtra="9sp"
                     android:layout_gravity="center_vertical"
                     app:direction="@{trip.direction}"
+                    app:date="@{trip.date}"
                     android:layout_weight="0.6"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +59,15 @@
                     android:orientation="horizontal"
                     android:layout_weight="0.4"
                     android:gravity="end">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_gravity="center"
+                        android:visibility="@{trip.is_extra()}"
+                        android:src="@drawable/icons_tabs_extra_trip"
+                        android:contentDescription="@string/extra_application" />
 
                     <ImageView
                         android:id="@+id/shiftIV"
@@ -110,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_segment"
+                    tools:listitem="@layout/item_segment_short"
                     tools:itemCount="2"/>
 
             </LinearLayout>
@@ -119,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="@{trip.status.equals(constants.STATUS_ISSUED) ? false : true}"
+                app:descVisibility="@{trip}"
                 android:layout_marginTop="12dp">
 
                 <View
@@ -148,9 +159,9 @@
                         android:textStyle="normal"
                         android:textSize="14sp"
                         android:textColor="#748595"
-                        app:trip="@{trip}"
+                        app:tripDescription="@{trip}"
                         android:lineSpacingExtra="2sp"
-                        tools:text="@string/tickets_are_not_purchased"/>
+                        tools:text="@string/opened_with_details_desc"/>
 
                 </LinearLayout>
             </LinearLayout>

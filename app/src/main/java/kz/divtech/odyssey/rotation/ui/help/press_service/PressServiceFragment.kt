@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentPressServiceBinding
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.News
+import kz.divtech.odyssey.rotation.utils.Utils.addItemDecorationWithoutLastDivider
 
 class PressServiceFragment : Fragment() {
 
@@ -27,6 +28,7 @@ class PressServiceFragment : Fragment() {
             val action = PressServiceFragmentDirections.actionPressServiceFragmentToNewsDialog(it)
             findNavController().navigate(action)
         }
+        binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
 
         return binding.root
     }

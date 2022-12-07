@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.dialogs
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,21 +8,22 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.databinding.DialogTicketsAreNotPurchasedBinding
 import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener {
-    override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
+class TicketsAreNotPurchasedDialog : BottomSheetDialogFragment(), OnCloseListener {
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        val dataBinding  = kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding.inflate(inflater)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val dataBinding  = DialogTicketsAreNotPurchasedBinding.inflate(inflater)
         dataBinding.listener = this
 
-        val args = TripDetailDialogArgs.fromBundle(requireArguments())
-        val trip = args.trip
-        dataBinding.trip = trip
+        val args = TicketsAreNotPurchasedDialogArgs.fromBundle(requireArguments())
+        dataBinding.trip = args.trip
+
         return dataBinding.root
     }
 

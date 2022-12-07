@@ -1,17 +1,18 @@
-package kz.divtech.odyssey.rotation.ui.trips.adapters
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import kz.divtech.odyssey.rotation.databinding.ItemSegmentBinding
+import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 
 class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
     private val listOfSegments = ArrayList<Segment>()
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SegmentViewHolder {
-        val binding = ItemSegmentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemSegmentShortBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return SegmentViewHolder(binding)
     }
 
@@ -27,6 +28,6 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class SegmentViewHolder(val binding: ItemSegmentBinding) : ViewHolder(binding.root)
+    class SegmentViewHolder(val binding: ItemSegmentShortBinding) : ViewHolder(binding.root)
 
 }

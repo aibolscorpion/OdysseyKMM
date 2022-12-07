@@ -9,13 +9,15 @@
             type="kz.divtech.odyssey.rotation.ui.profile.documents.SaveListener" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent">
+
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -203,5 +205,5 @@
                 android:onClick="@{() -> closeListener.close() }"
                 />
         </FrameLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

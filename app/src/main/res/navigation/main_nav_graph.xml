@@ -13,7 +13,7 @@
         tools:layout="@layout/activity_main"/>
     <fragment
         android:id="@+id/tripsFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.fragments.TripsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
         android:label="@string/trips"
         app:layout="@layout/fragment_trips"
         tools:layout="@layout/fragment_trips">
@@ -154,7 +154,7 @@
         tools:layout="@layout/fragment_faq"/>
     <dialog
         android:id="@+id/tripDetailDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TripDetailDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialog"
         android:label="TripDetailDialog"
         android:layout="@layout/dialog_trip_detail"
         tools:layout="@layout/dialog_trip_detail">
@@ -164,7 +164,7 @@
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.dialogs.TicketsAreNotPurchasedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.TicketsAreNotPurchasedDialog"
         android:label="TicketsAreNotPurchasedDialog"
         android:layout="@layout/dialog_tickets_are_not_purchased"
         tools:layout="@layout/dialog_tickets_are_not_purchased">

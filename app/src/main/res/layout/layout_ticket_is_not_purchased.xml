@@ -1,28 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/pt_root_ui_bold"
-        android:textSize="17sp"
-        android:textColor="#1b344f"
-        android:letterSpacing="0.01"
-        android:lineSpacingExtra="3sp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/tickets_are_not_purchased"/>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="trip"
+            type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+    </data>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/pt_root_ui_medium"
-        android:textSize="15sp"
-        android:textColor="#801b3652"
-        android:letterSpacing="0.01"
-        android:lineSpacingExtra="5sp"
-        android:layout_marginTop="12dp"
-        android:gravity="center_horizontal"
-        android:text="@string/all_info_will_be_shown_after_purchasing"/>
-</LinearLayout>
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin"
+        app:descVisibility="@{trip}" >
+
+        <View
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/bottom_sheet_line"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="6dp"
+            app:tripDescIcon="@{trip}"
+            app:layout_constraintEnd_toStartOf="@id/descTitleTV"
+            app:layout_constraintTop_toTopOf="@id/descTitleTV"
+            app:layout_constraintBottom_toBottomOf="@id/descTitleTV"
+            tools:src="@drawable/icon_tabs_on_waiting_list" />
+
+        <TextView
+            android:id="@+id/descTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:textColor="#1b344f"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="3sp"
+            android:gravity="center"
+            app:tripDescriptionTitle="@{trip}"
+            tools:text="@string/tickets_are_not_purchased"
+            app:layout_constraintTop_toBottomOf="@id/bottomView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textSize="15sp"
+            android:textColor="#801b3652"
+            android:letterSpacing="0.01"
+            android:lineSpacingExtra="5sp"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            app:tripDescription="@{trip}"
+            tools:text="@string/all_info_will_be_shown_after_purchasing"
+            app:layout_constraintTop_toBottomOf="@id/descTitleTV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

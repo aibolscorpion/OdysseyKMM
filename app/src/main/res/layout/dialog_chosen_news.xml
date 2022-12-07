@@ -10,7 +10,7 @@
             name="news"
             type="kz.divtech.odyssey.rotation.domain.model.help.press_service.News" />
     </data>
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -79,5 +79,5 @@
                 />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

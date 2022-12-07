@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pt_root_ui_medium"
                 android:textSize="14sp"
-                android:textColor="#15304d"
+                android:textColor="@color/profile_menu_text"
                 android:letterSpacing="-0.01"
                 android:lineSpacingExtra="4sp"
                 android:layout_weight="0.5"
@@ -39,7 +39,7 @@
                 android:layout_marginStart="4dp"
                 android:maxLines="2"
                 android:textAllCaps="false"
-                tools:text="Нурлы - Жол - Караганды"/>
+                tools:text="Нурлы - Жол - Караганды" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="0dp"
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="14sp"
-                    android:textColor="#15304d"
+                    android:textColor="@color/profile_menu_text"
                     android:lineSpacingExtra="8sp"
                     android:gravity="end"
                     android:layout_weight="1"
@@ -70,7 +70,7 @@
                     android:src="@drawable/icon_tabs_on_waiting_list"
                     android:layout_gravity="center_vertical"
                     android:visibility="@{segments.active_process.equals(constants.WATCHING)}"
-                    tools:visibility="visible"/>
+                    tools:visibility="visible" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </LinearLayout>
 </layout>
