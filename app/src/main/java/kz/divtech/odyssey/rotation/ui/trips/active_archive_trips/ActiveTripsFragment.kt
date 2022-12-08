@@ -1,28 +1,26 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
-import kz.divtech.odyssey.rotation.ui.trips.TripsViewModel
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.TripsAdapter
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
-    val viewModel by lazy { ViewModelProvider(requireActivity())[TripsViewModel::class.java]}
     val adapter = TripsAdapter(this)
-
     companion object {
-        fun newInstance(tripType: Int): ActiveTripsFragment{
+        fun newInstance(tripList: ArrayList<Trip>): ActiveTripsFragment{
             val tripsFragment = ActiveTripsFragment()
-            tripsFragment.arguments = bundleOf(Constants.TRIP_TYPE to tripType)
+            val bundle = Bundle()
+            bundle.putParcelableArrayList(Constants.TRIP_LIST, tripList)
+            tripsFragment.arguments  = bundle
             return tripsFragment
         }
     }
@@ -37,11 +35,12 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        when(arguments?.getInt(Constants.TRIP_TYPE)){
-            Constants.ACTIVE_TRIPS -> adapter.setTripList(viewModel.activeTrips)
-            Constants.ARCHIVE_TRIPS -> adapter.setTripList(viewModel.archiveTrips)
+        val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arguments?.getParcelableArrayList(Constants.TRIP_LIST, Trip::class.java)
+        } else {
+            arguments?.getParcelableArrayList(Constants.TRIP_LIST)
         }
+        adapter.setTripList(list!!)
     }
 
     override fun onTripClicked(trip: Trip) {

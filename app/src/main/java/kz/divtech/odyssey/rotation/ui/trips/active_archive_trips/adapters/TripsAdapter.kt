@@ -9,7 +9,6 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
 class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
     private val oldTripList = ArrayList<Trip>()
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TripViewHolder(binding, onTripListener)
@@ -35,6 +34,9 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
 
         init {
             binding.segmentsRV.adapter = adapter
+            binding.touchOverlay.setOnClickListener{
+                onTripListener.onTripClicked(currentTrip)
+            }
             binding.root.setOnClickListener{
                 onTripListener.onTripClicked(currentTrip)
             }

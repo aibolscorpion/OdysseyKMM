@@ -17,9 +17,7 @@ object Constants {
     const val WATCHING = "watching"
     const val RETRY_AFTER = "Retry-After"
     const val PHONE = "phone"
-    const val TRIP_TYPE = "tripType"
-    const val ARCHIVE_TRIPS = 0
-    const val ACTIVE_TRIPS = 1
+    const val TRIP_LIST = "trip_list"
 
 
 }

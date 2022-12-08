@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.app
 
 object Config {
+    const val DATABASE_NAME = "odyssey_rotation"
     const val COUNT_DOWN_TIMER_SECONDS = 60
     const val COUNT_DOWN_INTERVAL = 1000L
     const val NOTIFICATION_LIMIT_SIZE = 10

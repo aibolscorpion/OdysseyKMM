@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentTripsBinding
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFragment
 
 class TripsFragment : Fragment() {
-    private val tripsViewModel by lazy { ViewModelProvider(requireActivity())[TripsViewModel::class.java]}
+    private val tripsViewModel: TripsViewModel by viewModels {
+        TripsViewModel.TripsViewModelFactory((requireActivity().application as
+            App).repository)
+    }
+
     lateinit var binding : FragmentTripsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
@@ -36,8 +40,8 @@ class TripsFragment : Fragment() {
 
     private fun setupViewPager(){
         val adapter = ViewPagerAdapter(this)
-        adapter.addFragment(ActiveTripsFragment.newInstance(Constants.ACTIVE_TRIPS), getString(R.string.active_trips))
-        adapter.addFragment(ActiveTripsFragment.newInstance(Constants.ARCHIVE_TRIPS), getString(R.string.archive_trips))
+        adapter.addFragment(ActiveTripsFragment.newInstance(tripsViewModel.activeTrips), getString(R.string.active_trips))
+        adapter.addFragment(ActiveTripsFragment.newInstance(tripsViewModel.archiveTrips), getString(R.string.archive_trips))
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager){ tab, position ->
