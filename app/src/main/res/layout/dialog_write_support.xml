@@ -2,9 +2,14 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+
         <variable
-            name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.help.contact_support.WriteSupportDialog" />
+
+        <variable
+            name="contactSupport"
+            type="kz.divtech.odyssey.rotation.ui.help.contact_support.ContactSupport" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -38,7 +43,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:onClick="@{() -> contactSupport.writeSupportOnWhatsapp(thisDialog)}">
 
                     <View
                         android:layout_width="match_parent"
@@ -89,7 +95,8 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> contactSupport.writeSupportOnTelegram(thisDialog)}">
 
                     <ImageView
                         android:id="@+id/telegramIconImgVw"
@@ -143,7 +150,7 @@
             android:text="@string/cancel"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="20dp"
-            android:onClick="@{() -> listener.close()}"/>
+            android:onClick="@{() -> thisDialog.dismiss()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

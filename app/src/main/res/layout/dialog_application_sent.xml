@@ -59,8 +59,8 @@
                 style="@style/bottomSheetBtn"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
-                android:onClick="@{()-> listener.contact()}"
-                />
+                android:onClick="@{()-> listener.contact()}" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
 

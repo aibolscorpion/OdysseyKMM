@@ -118,6 +118,8 @@
     <string name="day_of_month_placeholder">25</string>
     <string name="month_placeholder">Ноября</string>
 
+    <string name="you_dont_have_whatsapp">У вас не установлено WhatsApp !</string>
+    <string name="you_dont_have_telegram">У вас не установлено Telegram !</string>
     -----------------------------------------------------------------------------------------------
     //Страница Поездки
     <string name="active_trips">Активные поездки</string>
@@ -162,6 +164,9 @@
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
     <string name="download_ticket">Скачать билет: %1$s - %2$s</string>
+    <string name="ticket_not_found">Билет не найден</string>
+    <string name="no_app_for_view_pdf">У вас нет приложения для открытия pdf файла</string>
+    <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>
     <string name="train_transfer">Пересадка, %1$d ч. %2$d мин.</string>
     <string name="price">Стоимость</string>
     <string name="ticket_position_number">ЖД билет №%1$d</string>
