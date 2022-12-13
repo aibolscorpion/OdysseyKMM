@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
+import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.TripsAdapter
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
@@ -44,12 +44,11 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     }
 
     override fun onTripClicked(trip: Trip) {
-        val action = if(trip.segments == null){
-            TripsFragmentDirections.actionTripsFragmentToTicketsAreNotPurchasedDialog(trip)
+        if(trip.segments == null){
+            findNavController().navigate(MainFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
         }else {
-            TripsFragmentDirections.actionTripsFragmentToTripDetailDialog(trip)
+            findNavController().navigate(MainFragmentDirections.actionGlobalTripDetailDialog(trip))
         }
-        findNavController().navigate(action)
     }
 
 

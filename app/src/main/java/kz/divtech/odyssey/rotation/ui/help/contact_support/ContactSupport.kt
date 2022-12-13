@@ -19,7 +19,7 @@ object ContactSupport {
     fun writeSupportOnWhatsapp(fragment: Fragment){
         val uri = Uri.parse("${Config.WHATSAPP}${Config.SUPPORT_WHATSAPP_NUMBER}")
         val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.setPackage(Config.WHATSAPP_PACKAGE_NAME)
+        intent.`package` = Config.WHATSAPP_PACKAGE_NAME
         try{
             fragment.startActivity(intent)
         }catch (e: ActivityNotFoundException){

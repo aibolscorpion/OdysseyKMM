@@ -61,11 +61,15 @@ object Utils {
     }
 
     fun formatByGivenPattern(dateTime: String?, pattern: String): String{
-        val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
-        val parsedDateTime = LocalDateTime.parse(dateTime, serverDateTimeFormat)
+        var returnString = ""
+        if(dateTime != null){
+            val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
+            val parsedDateTime = LocalDateTime.parse(dateTime, serverDateTimeFormat)
 
-        val format = DateTimeFormatter.ofPattern(pattern)
-        return parsedDateTime.format(format)
+            val format = DateTimeFormatter.ofPattern(pattern)
+            returnString = parsedDateTime.format(format)
+        }
+        return returnString
     }
 
     fun getLocalDateTimeByPattern(serverDateTime: String): LocalDateTime{

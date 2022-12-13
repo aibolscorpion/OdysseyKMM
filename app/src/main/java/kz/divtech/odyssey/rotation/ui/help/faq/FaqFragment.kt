@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 
 class FaqFragment : Fragment() {
     lateinit var binding : FragmentFaqBinding
+    private val viewModel: FaqViewModel by viewModels()
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFaqBinding.inflate(inflater)
+        binding.viewModel = viewModel
 
         return binding.root
     }
@@ -20,7 +22,6 @@ class FaqFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val faqAdapter = FaqAdapter()
-        val viewModel = ViewModelProvider(this)[FaqViewModel::class.java]
         viewModel.getFaqList()
 
         binding.faqRecyclerView.adapter = faqAdapter

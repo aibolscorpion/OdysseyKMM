@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.trips
 
-import androidx.databinding.ObservableBoolean
+import android.view.View
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
@@ -20,21 +21,21 @@ class TripsViewModel(private val repository: ApplicationsRepository) : ViewModel
     val activeTrips = ArrayList<Trip>()
     val archiveTrips = ArrayList<Trip>()
 
-    val visibility = ObservableBoolean()
+    val visibility = ObservableInt(View.GONE)
 
 
     fun getTrips(){
-            visibility.set(true)
+            visibility.set(View.VISIBLE)
             RetrofitClient.getApiService().getTrips().enqueue(object: Callback<Data> {
                 override fun onResponse(call: Call<Data>, response: Response<Data>) {
-                    visibility.set(false)
+                    visibility.set(View.GONE)
                     if(response.isSuccessful){
                         _tripsMutableLiveData.postValue(response.body())
                     }
                 }
 
                 override fun onFailure(call: Call<Data>, t: Throwable) {
-                    visibility.set(false)
+                    visibility.set(View.GONE)
                 }
 
             })

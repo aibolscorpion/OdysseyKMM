@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import androidx.databinding.BindingAdapter
-import androidx.databinding.BindingConversion
 import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
@@ -54,9 +53,8 @@ object BindingAdapter {
     }
 
     @BindingAdapter("trip")
-    @JvmStatic fun setApplicationStatusIcon(imageView: ImageView, trip: Trip){
-        when(trip.status){
-
+    @JvmStatic fun setApplicationStatusIcon(imageView: ImageView, trip: Trip?){
+        when(trip?.status){
             Constants.STATUS_OPENED -> {
                 if(trip.segments == null){
                     imageView.setImageResource(R.drawable.icons_tabs_opened_without_details)
@@ -177,44 +175,46 @@ object BindingAdapter {
         }
     }
 
-    @BindingConversion
-    @JvmStatic fun booleanToVisibility(boolean: Boolean) : Int{
-        return if(boolean) View.VISIBLE else View.GONE
-    }
-
     @BindingAdapter("loadFromUrl")
     @JvmStatic fun ImageView.setSrc(imgUrl: String?){
-        Glide.with(this.context).load(imgUrl).into(this)
+        if(imgUrl != null){
+            Glide.with(this.context).load(imgUrl).into(this)
+        }
     }
 
-
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
-    @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String, arrStationName: String){
-        val depArrStationNames = App.appContext.getString(R.string.dep_arrival_station_name,
-            properCase(depStationName), properCase(arrStationName)
-        )
+    @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String?, arrStationName: String?){
+        if(depStationName != null && arrStationName != null){
+            val depArrStationNames = App.appContext.getString(R.string.dep_arrival_station_name,
+                properCase(depStationName), properCase(arrStationName)
+            )
 
-        setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
-        textView.text = depArrStationNames
+            setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
+            textView.text = depArrStationNames
+        }
     }
 
     @BindingAdapter("segmentStatus", "depDateTime",  "arrDateTime")
     @JvmStatic fun formatTime(textView: TextView, segmentStatus: String, depDateTime: String?, arrDateTime: String?){
-        val formattedDepTime = Utils.formatByGivenPattern(depDateTime, Utils.HOUR_MINUTE_PATTERN)
-        val formattedArrTime = Utils.formatByGivenPattern(arrDateTime,  Utils.HOUR_MINUTE_PATTERN)
+        if(depDateTime != null && arrDateTime != null){
+            val formattedDepTime = Utils.formatByGivenPattern(depDateTime, Utils.HOUR_MINUTE_PATTERN)
+            val formattedArrTime = Utils.formatByGivenPattern(arrDateTime,  Utils.HOUR_MINUTE_PATTERN)
 
-        val text = App.appContext.resources.
+            val text = App.appContext.resources.
             getString(R.string.dep_arrival_time, formattedDepTime, formattedArrTime)
-        setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
-        setSpannedText(textView, text)
+            setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
+            setSpannedText(textView, text)
+        }
     }
 
     @BindingAdapter("segmentStatus", "depDateTime")
-    @JvmStatic fun formatDate(textView: TextView, segmentStatus: String, depDateTime: String?){
-        val formattedDepDate = Utils.formatByGivenPattern(depDateTime, Utils.DAY_MONTH_DAY_OF_WEEK_PATTERN)
+    @JvmStatic fun formatDate(textView: TextView, segmentStatus: String?, depDateTime: String?){
+        if(segmentStatus != null && depDateTime != null){
+            val formattedDepDate = Utils.formatByGivenPattern(depDateTime, Utils.DAY_MONTH_DAY_OF_WEEK_PATTERN)
 
-        setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
-        setSpannedText(textView, formattedDepDate)
+            setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
+            setSpannedText(textView, formattedDepDate)
+        }
     }
 
     private fun setPaintFlagsAndColorBySegmentStatus(textView: TextView, segmentStatus: String){
@@ -256,10 +256,10 @@ object BindingAdapter {
     }
 
     @BindingAdapter("descVisibility")
-    @JvmStatic fun setDescVisibility(viewGroup: ViewGroup, trip: Trip){
+    @JvmStatic fun setDescVisibility(viewGroup: ViewGroup, trip: Trip?){
         val statusSet = HashSet<SegmentStatus>()
-        if(trip.status.equals(Constants.STATUS_ISSUED)){
-            trip.segments?.forEach { segment ->
+        if(trip?.status.equals(Constants.STATUS_ISSUED)){
+            trip?.segments?.forEach { segment ->
                 when(segment.status){
                     Constants.STATUS_ISSUED -> statusSet.add(SegmentStatus.ISSUED)
                     Constants.STATUS_RETURNED -> statusSet.add(SegmentStatus.RETURNED)
@@ -267,16 +267,16 @@ object BindingAdapter {
             }
         }
         viewGroup.visibility = if(statusSet.size == 1 && statusSet.contains(SegmentStatus.ISSUED)
-            && !trip.is_extra!!)
+            && !trip?.is_extra!!)
                 View.GONE else View.VISIBLE
     }
 
     @BindingAdapter("tripDescIcon")
-    @JvmStatic fun setTripDescriptionIcon(imageView: ImageView, trip: Trip){
+    @JvmStatic fun setTripDescriptionIcon(imageView: ImageView, trip: Trip?){
         val statusSet = HashSet<SegmentStatus>()
 
         statusSet.apply {
-            trip.segments?.forEachIndexed { _, segment ->
+            trip?.segments?.forEachIndexed { _, segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED ->
                         if(segment.active_process.equals(Constants.WATCHING)){
@@ -304,9 +304,9 @@ object BindingAdapter {
     }
 
     @BindingAdapter("tripDescriptionTitle")
-    @JvmStatic fun setDescriptionTitle(textView: TextView, trip: Trip){
+    @JvmStatic fun setDescriptionTitle(textView: TextView, trip: Trip?){
         val context = textView.context
-        val title = when(trip.status){
+        val title = when(trip?.status){
             Constants.STATUS_OPENED -> context.getString(R.string.status_opened_description_title)
             Constants.STATUS_RETURNED -> context.getString(R.string.status_returned_description_title)
             Constants.STATUS_PARTLY -> context.getString(R.string.status_partly_description_title)
@@ -317,12 +317,12 @@ object BindingAdapter {
     }
 
     @BindingAdapter("tripDescription")
-    @JvmStatic fun setDescription(textView: TextView, trip: Trip){
+    @JvmStatic fun setDescription(textView: TextView, trip: Trip?){
         val strBuilder = StringBuilder()
-        if(trip.is_extra!!){
+        if (trip != null && trip.is_extra!!) {
             strBuilder.append(App.appContext.getString(R.string.extra_application))
         }
-        when(trip.status){
+        when(trip?.status){
             Constants.STATUS_OPENED -> {
                 if(trip.segments == null){
                     strBuilder.append(App.appContext.getString(R.string.opened_without_details_desc))

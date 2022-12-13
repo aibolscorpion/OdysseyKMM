@@ -9,6 +9,9 @@
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.app.Constants" />
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,7 +66,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:src="@drawable/icon_tabs_on_waiting_list"
-                    android:visibility="@{segments.active_process.equals(constants.WATCHING)}"
+                    android:visibility="@{segments.active_process.equals(constants.WATCHING) ? view.VISIBLE : view.GONE}"
                     android:layout_marginEnd="5dp"
                     tools:visibility="visible" />
 

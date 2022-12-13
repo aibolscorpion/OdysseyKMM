@@ -1,5 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.login.auth
 
+import android.view.View
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -39,8 +41,7 @@ class AuthSharedViewModel : ViewModel() {
     private val _isErrorHappened = MutableLiveData<Event<Boolean>>()
     val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
 
-    private val _showProgressBar = MutableLiveData(false)
-    val showProgressBar: LiveData<Boolean> = _showProgressBar
+    val pBarVisibility = ObservableInt(View.GONE)
 
     private val _codeResponse = MutableLiveData<Event<BadRequest>>()
     val codeResponse: LiveData<Event<BadRequest>> = _codeResponse
@@ -57,10 +58,11 @@ class AuthSharedViewModel : ViewModel() {
     }
 
     private fun requestSmsCode(phoneNumber: String){
-        _showProgressBar.value = true
+        pBarVisibility.set(View.VISIBLE)
         phoneHashMap[Constants.PHONE] = phoneNumber
         RetrofitClient.getApiService().sendSms(phoneHashMap).enqueue(object : Callback<CodeResponse>{
             override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
+                pBarVisibility.set(View.GONE)
                 when(response.code()){
                     200 -> {
                         val codeResponse  = response.body()
@@ -86,23 +88,22 @@ class AuthSharedViewModel : ViewModel() {
                     }
 
                 }
-                _showProgressBar.postValue(false)
             }
 
             override fun onFailure(call: Call<CodeResponse>, t: Throwable) {
                 _isErrorHappened.postValue(Event(true))
-                _showProgressBar.postValue(false)
+                pBarVisibility.set(View.GONE)
             }
 
         })
     }
 
     fun login(code: String){
-        _showProgressBar.value = true
+        pBarVisibility.set(View.VISIBLE)
         val login = Login(phoneNumber, code, authLogId)
         RetrofitClient.getApiService().login(login).enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                _showProgressBar.postValue(false)
+                pBarVisibility.set(View.GONE)
                 if(response.isSuccessful){
                         val loginResponse = response.body()
                         SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
@@ -126,17 +127,17 @@ class AuthSharedViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _showProgressBar.postValue(false)
+                pBarVisibility.set(View.GONE)
             }
 
         })
     }
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){
-        _showProgressBar.postValue(true)
+        pBarVisibility.set(View.VISIBLE)
         RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber).enqueue(object: Callback<EmployeeData>{
             override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
-                _showProgressBar.postValue(false)
+                pBarVisibility.set(View.GONE)
                 if(response.code() == 200)
                     _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
                 else if(response.code() == 400)
@@ -145,7 +146,7 @@ class AuthSharedViewModel : ViewModel() {
 
             override fun onFailure(call: Call<EmployeeData>, t: Throwable) {
                 _isErrorHappened.postValue(Event(true))
-                _showProgressBar.postValue(false)
+                pBarVisibility.set(View.GONE)
             }
 
         })

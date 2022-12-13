@@ -34,6 +34,7 @@ class SendSmsFragment : Fragment() {
 
         dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
+        dataBinding.viewModel = viewModel
 
         setupMaskedEditText()
 
@@ -76,10 +77,6 @@ class SendSmsFragment : Fragment() {
             it?.getContentIfNotHandled()?.let { isErrorHappened ->
                 if(isErrorHappened) showErrorDialog()
             }
-        }
-
-        viewModel.showProgressBar.observe(viewLifecycleOwner){ showProgressBar ->
-            dataBinding.sendSmsPB.visibility = if (showProgressBar) View.VISIBLE else View.GONE
         }
 
     }

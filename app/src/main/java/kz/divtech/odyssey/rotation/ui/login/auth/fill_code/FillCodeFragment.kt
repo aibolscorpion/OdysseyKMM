@@ -75,8 +75,10 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
             }
         }
 
-        viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){
-            if(it)  openMainActivity()
+        viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){ loggedIn ->
+            if(loggedIn) {
+                openMainActivity()
+            }
         }
     }
 
