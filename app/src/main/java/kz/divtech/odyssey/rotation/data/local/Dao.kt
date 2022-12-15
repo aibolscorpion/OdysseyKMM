@@ -14,7 +14,7 @@ interface Dao {
     @Query("SELECT * FROM data")
     fun getAllApplications(): Flow<Data>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllApplications(vararg data: Data)
 
     @Delete
@@ -23,7 +23,7 @@ interface Dao {
     @Query("SELECT * FROM employee")
     fun getEmployeeInfo(): Flow<Employee>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEmployeeInfo(vararg employee: Employee)
 
     @Delete

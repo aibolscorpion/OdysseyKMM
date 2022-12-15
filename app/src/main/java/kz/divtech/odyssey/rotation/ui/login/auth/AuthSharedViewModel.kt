@@ -5,6 +5,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
@@ -60,6 +61,7 @@ class AuthSharedViewModel(val repository: ApplicationsRepository) : ViewModel() 
     private fun requestSmsCode(phoneNumber: String){
         pBarVisibility.set(View.VISIBLE)
         phoneHashMap[Constants.PHONE] = phoneNumber
+        phoneHashMap[Config.REQUEST_TYPE] = Constants.TEST
         RetrofitClient.getApiService().sendSms(phoneHashMap).enqueue(object : Callback<CodeResponse>{
             override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
                 pBarVisibility.set(View.GONE)

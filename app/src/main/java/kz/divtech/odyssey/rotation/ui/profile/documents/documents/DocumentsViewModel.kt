@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.profile.Documents
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback

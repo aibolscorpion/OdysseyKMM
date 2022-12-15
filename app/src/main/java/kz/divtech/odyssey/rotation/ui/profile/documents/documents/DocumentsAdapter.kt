@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemDocumentBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.Document
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 
 class DocumentsAdapter(val listener: DocumentClickListener) :
     RecyclerView.Adapter<DocumentsAdapter.DocumentViewHolder>() {

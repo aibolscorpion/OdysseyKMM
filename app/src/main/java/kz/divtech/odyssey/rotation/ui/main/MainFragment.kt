@@ -11,12 +11,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationList
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.SegmentAdapter
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
+import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -61,8 +63,10 @@ class MainFragment : Fragment(){
 
     private fun getEmployeeInfo(){
         viewModel.employee.observe(viewLifecycleOwner){ employee ->
-            binding.employeeNameTV.text = getString(R.string.employee_name,employee.lastName,
-                employee.firstName, employee.patronymic)
+
+            binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
+                append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
+                appendWithoutNull(employee.patronymic)
             binding.employeeOrgTV.text = employee.orgName
         }
     }
@@ -90,7 +94,6 @@ class MainFragment : Fragment(){
             binding.trip = nearestTrip
             segmentAdapter.setSegmentList(trip?.segments)
         }
-
     }
 
     fun onTripClicked(trip: Trip?) {

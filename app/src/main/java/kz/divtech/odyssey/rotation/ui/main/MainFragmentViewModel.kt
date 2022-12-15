@@ -7,7 +7,6 @@ import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.domain.model.trips.Trips
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import retrofit2.Call
@@ -27,36 +26,40 @@ class MainFragmentViewModel(private val repository: ApplicationsRepository) : Vi
         }
     }
 
-    private val _nearestTripMutableLiveData = MutableLiveData<Trip>()
-    val nearestTripLiveData: LiveData<Trip> = _nearestTripMutableLiveData
+    private val _nearestTripMutableLiveData = MutableLiveData<Trip?>()
+    val nearestTripLiveData: LiveData<Trip?> = _nearestTripMutableLiveData
+    val nearestTripVisibility = ObservableInt(View.VISIBLE)
+
     private val today = LocalDate.now()
 
-
-    val visibility = ObservableInt(View.GONE)
+    val pBarVisibility = ObservableInt(View.GONE)
 
     val employee: LiveData<Employee> = repository.employeeInfo.asLiveData()
 
     fun getTrips(){
-        visibility.set(View.VISIBLE)
+        pBarVisibility.set(View.VISIBLE)
         RetrofitClient.getApiService().getTrips().enqueue(object: Callback<Data> {
             override fun onResponse(call: Call<Data>, response: Response<Data>) {
-                visibility.set(View.GONE)
+                pBarVisibility.set(View.GONE)
+                val trips = response.body()?.data?.data
                 if(response.isSuccessful){
-                    val trips = response.body()?.data!!
-                    findNearestTrip(trips)
+                    if(trips == null || trips.isEmpty()){
+                        nearestTripVisibility.set(View.GONE)
+                    }else{
+                        findNearestTrip(trips)
+                    }
                 }
             }
 
             override fun onFailure(call: Call<Data>, t: Throwable) {
-                visibility.set(View.GONE)
+                pBarVisibility.set(View.GONE)
             }
-
         })
     }
 
-    fun findNearestTrip(trips: Trips){
+    fun findNearestTrip(trips: List<Trip>){
         run loop@{
-            trips.data?.forEach{ trip ->
+            trips.forEach{ trip ->
                 val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isAfter(today)) {
                     _nearestTripMutableLiveData.postValue(trip)

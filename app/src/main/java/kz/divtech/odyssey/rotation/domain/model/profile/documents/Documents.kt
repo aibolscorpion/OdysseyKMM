@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.model.profile
+package kz.divtech.odyssey.rotation.domain.model.profile.documents
 
 import androidx.room.Entity
 

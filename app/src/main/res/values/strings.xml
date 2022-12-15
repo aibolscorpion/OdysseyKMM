@@ -96,8 +96,6 @@
 
     -----------------------------------------------------------------------------------------------
     //Страница Главная
-    <string name="employee_name">%1$s %2$s %3$s</string>
-
     <string name="see_all_notifications">Смотреть все уведомления</string>
     <string name="help_24_7">Помощь 24/7</string>
     <string name="nearest_trip">Ближайшая поездка</string>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.Document
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
     private val viewModel : DocumentsViewModel by viewModels()

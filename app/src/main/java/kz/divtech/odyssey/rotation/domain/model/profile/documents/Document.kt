@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.model.profile
+package kz.divtech.odyssey.rotation.domain.model.profile.documents
 
 data class Document(
     val created_at: String?,

@@ -6,7 +6,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.domain.model.profile.Documents
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
 import retrofit2.Call

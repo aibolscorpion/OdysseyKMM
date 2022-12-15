@@ -10,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels(){
@@ -30,8 +32,9 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            binding.employeeNameTV.text = getString(R.string.employee_name, employee.lastName,
-                employee.firstName, employee.patronymic)
+            binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
+                append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
+                appendWithoutNull(employee.patronymic)
             binding.employeeTableNumberTV.text = employee.number
             binding.employeeOrgNameTV.text = employee.orgName
             binding.employeePositionTV.text = employee.position

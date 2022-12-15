@@ -205,7 +205,8 @@
                     android:letterSpacing="-0.01"
                     android:lineSpacingExtra="5sp"
                     android:layout_marginTop="24dp"
-                    android:text="@string/nearest_trip"/>
+                    android:text="@string/nearest_trip"
+                    android:visibility="@{viewModel.nearestTripVisibility}"/>
 
                 <include
                     android:id="@+id/nearestTrip"
@@ -214,6 +215,7 @@
                     layout="@layout/item_trip"
                     android:layout_marginTop="12dp"
                     app:trip="@{trip}"
+                    android:visibility="@{viewModel.nearestTripVisibility}"
                     android:onClick="@{() -> mainFragment.onTripClicked(trip)}" />
 
                 <TextView
@@ -385,7 +387,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="@{viewModel.visibility}"
+            android:visibility="@{viewModel.PBarVisibility}"
             tools:visibility="gone" />
     </FrameLayout>
 </layout>

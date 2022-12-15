@@ -3,7 +3,7 @@
     <data>
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.Document" />
+            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
     </data>
 
     <androidx.cardview.widget.CardView

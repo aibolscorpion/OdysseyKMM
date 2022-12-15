@@ -6,7 +6,7 @@ object Config {
     const val COUNT_DOWN_INTERVAL = 1000L
     const val NOTIFICATION_LIMIT_SIZE = 10
     const val BASE_URL = "https://tmp.ptravels.kz/api/"
-    const val REQUEST_TYPE = "test"
+    const val REQUEST_TYPE = "type"
     const val COUNTRY_CODE = "7"
     const val DEVICE_ID_KEY = "deviceId"
     const val AUTHORIZATION_KEY = "Authorization"
