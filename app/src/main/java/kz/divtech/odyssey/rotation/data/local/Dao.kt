@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
 @androidx.room.Dao
@@ -18,5 +19,14 @@ interface Dao {
 
     @Delete
     suspend fun deleteAllApplications(data: Data)
+
+    @Query("SELECT * FROM employee")
+    fun getEmployeeInfo(): Flow<Employee>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertEmployeeInfo(vararg employee: Employee)
+
+    @Delete
+    suspend fun deleteEmployeeInfo(employee: Employee)
 
 }

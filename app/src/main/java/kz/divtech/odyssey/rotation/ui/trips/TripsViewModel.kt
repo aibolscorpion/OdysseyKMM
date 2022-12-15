@@ -67,7 +67,7 @@ class TripsViewModel(private val repository: ApplicationsRepository) : ViewModel
     val allTripsFromDatabase: LiveData<Data> = repository.allApplications.asLiveData()
 
     fun insert(data: Data) = viewModelScope.launch {
-        repository.insert(data)
+        repository.insertApplications(data)
     }
 
 

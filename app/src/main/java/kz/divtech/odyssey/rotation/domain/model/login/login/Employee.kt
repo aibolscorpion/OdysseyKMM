@@ -1,11 +1,14 @@
 package kz.divtech.odyssey.rotation.domain.model.login.login
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Entity
 @Parcelize
-data class Employee(val id: Int?, @SerializedName("first_name") val firstName: String?,
+data class Employee(@PrimaryKey val id: Int?, @SerializedName("first_name") val firstName: String?,
                     @SerializedName("last_name") val lastName: String?, val patronymic: String?,
                     @SerializedName("first_name_en") val firstNameEn: String?,
                     @SerializedName("last_name_en") val lastNameEn: String?, val iin: String?,val position: String?,

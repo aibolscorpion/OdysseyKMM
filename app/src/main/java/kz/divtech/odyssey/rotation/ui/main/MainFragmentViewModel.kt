@@ -2,30 +2,39 @@ package kz.divtech.odyssey.rotation.ui.main
 
 import android.view.View
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.Trips
+import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 
-class MainFragmentViewModel : ViewModel() {
+class MainFragmentViewModel(private val repository: ApplicationsRepository) : ViewModel() {
+
+    class MainViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(MainFragmentViewModel::class.java)){
+                @Suppress("UNCHECKED_CAST")
+                return MainFragmentViewModel(repository) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
+
     private val _nearestTripMutableLiveData = MutableLiveData<Trip>()
     val nearestTripLiveData: LiveData<Trip> = _nearestTripMutableLiveData
     private val today = LocalDate.now()
 
-    val name: String = "Aibol"
-    val surname: String = "Onggarov"
-    val patronymic: String = "Turekhanovich"
-    val orgName: String = "Test Organization"
 
     val visibility = ObservableInt(View.GONE)
+
+    val employee: LiveData<Employee> = repository.employeeInfo.asLiveData()
 
     fun getTrips(){
         visibility.set(View.VISIBLE)

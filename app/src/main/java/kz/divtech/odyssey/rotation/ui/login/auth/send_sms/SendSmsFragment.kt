@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
@@ -26,7 +27,8 @@ class SendSmsFragment : Fragment() {
     private var extractedPhoneNumber: String? = null
 
     private lateinit var dataBinding: FragmentSendSmsBinding
-    private val viewModel  by lazy { ViewModelProvider(requireActivity())[AuthSharedViewModel::class.java] }
+    private lateinit var viewModel: AuthSharedViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -34,6 +36,10 @@ class SendSmsFragment : Fragment() {
 
         dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
+
+        val viewModelFactory = AuthSharedViewModel.AuthSharedViewModelFactory((
+                requireActivity().application as App).repository)
+        viewModel = ViewModelProvider(requireActivity(),viewModelFactory)[AuthSharedViewModel::class.java]
         dataBinding.viewModel = viewModel
 
         setupMaskedEditText()

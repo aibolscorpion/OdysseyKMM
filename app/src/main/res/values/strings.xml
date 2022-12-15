@@ -60,7 +60,7 @@
     //Страница Добавить номер
     <string name="add_number">Добавить номер</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
-    <string name="employee_name_placeholder">Баталгазиев Руслан Владимирович</string>
+    <string name="employee_name_placeholder">Байжанов Нуржан Байжанулы</string>
     <string name="employee_position_placeholder">Старший бригадир</string>
     <string name="add_phone_number">Добавить номер телефона</string>
 

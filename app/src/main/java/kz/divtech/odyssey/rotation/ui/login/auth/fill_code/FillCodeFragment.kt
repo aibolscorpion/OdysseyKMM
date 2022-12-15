@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
@@ -27,7 +28,8 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
     private val editTextList = ArrayList<EditText>()
     private lateinit var dataBinding : FragmentFillCodeBinding
     private var countDownTimer : CountDownTimer?= null
-    private val viewModel by lazy { ViewModelProvider(requireActivity())[AuthSharedViewModel::class.java] }
+    private lateinit var viewModel: AuthSharedViewModel
+
     private lateinit var phoneNumber : String
     private lateinit var smsReceiver: SmsBroadcastReceiver
 
@@ -56,6 +58,11 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val viewModelFactory = AuthSharedViewModel.AuthSharedViewModelFactory((
+                requireActivity().application as App).repository)
+        viewModel = ViewModelProvider(requireActivity(), viewModelFactory)[AuthSharedViewModel::class.java]
+
         viewModel.codeResponse.observe(viewLifecycleOwner){
             it.getContentIfNotHandled()?.let { codeResponse ->
                 when(codeResponse.type) {
@@ -75,9 +82,11 @@ class FillCodeFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPR
             }
         }
 
-        viewModel.isSuccessfullyLoggedIn.observe(viewLifecycleOwner){ loggedIn ->
-            if(loggedIn) {
-                openMainActivity()
+        viewModel.loggedIn.observe(viewLifecycleOwner){ loggedIn ->
+            loggedIn.getContentIfNotHandled()?.let {
+                if(it){
+                    openMainActivity()
+                }
             }
         }
     }

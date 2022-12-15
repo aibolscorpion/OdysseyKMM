@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
@@ -24,7 +25,9 @@ import java.util.*
 
 
 class MainFragment : Fragment(){
-    val viewModel : MainFragmentViewModel by viewModels()
+    val viewModel : MainFragmentViewModel by viewModels(){
+        MainFragmentViewModel.MainViewModelFactory((requireActivity().application as App).repository)
+    }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null
 
@@ -43,15 +46,25 @@ class MainFragment : Fragment(){
                 RequestOptions.bitmapTransform(
                     RoundedCornersTransformation(requireContext(), 18, 2, "#15748595", 10)
                 )).into(binding.avatarIV)
-        setCalendar()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getEmployeeInfo()
+        setCalendar()
         setNotifications()
         setNearestTrip()
+    }
+
+    private fun getEmployeeInfo(){
+        viewModel.employee.observe(viewLifecycleOwner){ employee ->
+            binding.employeeNameTV.text = getString(R.string.employee_name,employee.lastName,
+                employee.firstName, employee.patronymic)
+            binding.employeeOrgTV.text = employee.orgName
+        }
     }
 
     private fun setCalendar(){

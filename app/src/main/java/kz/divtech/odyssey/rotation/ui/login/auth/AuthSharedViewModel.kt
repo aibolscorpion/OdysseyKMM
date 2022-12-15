@@ -2,15 +2,15 @@ package kz.divtech.odyssey.rotation.ui.login.auth
 
 import android.view.View
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
+import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import retrofit2.Call
@@ -19,7 +19,7 @@ import retrofit2.Response
 import java.io.IOException
 
 
-class AuthSharedViewModel : ViewModel() {
+class AuthSharedViewModel(val repository: ApplicationsRepository) : ViewModel() {
     var authLogId: String? = null
     var phoneNumber: String? = null
 
@@ -35,8 +35,8 @@ class AuthSharedViewModel : ViewModel() {
     private val _employeeInfo = MutableLiveData<Event<Employee>>()
     val employeeInfo : LiveData<Event<Employee>> = _employeeInfo
 
-    private val _isSuccessfullyLoggedIn = MutableLiveData<Boolean>()
-    val isSuccessfullyLoggedIn : LiveData<Boolean> = _isSuccessfullyLoggedIn
+    private val _loggedIn = MutableLiveData<Event<Boolean>>()
+    val loggedIn : LiveData<Event<Boolean>> = _loggedIn
 
     private val _isErrorHappened = MutableLiveData<Event<Boolean>>()
     val isErrorHappened: LiveData<Event<Boolean>> = _isErrorHappened
@@ -105,9 +105,10 @@ class AuthSharedViewModel : ViewModel() {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 pBarVisibility.set(View.GONE)
                 if(response.isSuccessful){
-                        val loginResponse = response.body()
-                        SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
-                        _isSuccessfullyLoggedIn.postValue(true)
+                    val loginResponse = response.body()
+                    _loggedIn.postValue(Event(true))
+                    SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
+                    loginResponse.data.employee.let { insert(it) }
                 }else{
                     lateinit var mError : BadRequest
                     try {
@@ -152,4 +153,17 @@ class AuthSharedViewModel : ViewModel() {
         })
     }
 
+    class AuthSharedViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(AuthSharedViewModel::class.java)){
+                @Suppress("UNCHECKED_CAST")
+                return AuthSharedViewModel(repository) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        }
+    }
+
+    fun insert(employee: Employee) = viewModelScope.launch {
+        repository.insertEmployee(employee)
+    }
 }
