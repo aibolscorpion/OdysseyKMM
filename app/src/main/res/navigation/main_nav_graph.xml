@@ -71,48 +71,33 @@
         android:layout="@layout/fragment_document"
         tools:layout="@layout/fragment_document" >
         <action
-            android:id="@+id/action_documentsFragment_to_workPermissionDialog"
-            app:destination="@id/workPermissionDialog" />
-        <action
-            android:id="@+id/action_documentsFragment_to_idDialog"
-            app:destination="@id/idDialog" />
-        <action
-            android:id="@+id/action_documentsFragment_to_passportDialog"
-            app:destination="@id/passportDialog" />
-        <action
-            android:id="@+id/action_documentsFragment_to_recidencyPermitDialog"
-            app:destination="@id/recidencyPermitDialog" />
+            android:id="@+id/action_documentsFragment_to_documentDialog"
+            app:destination="@id/documentDialog" />
     </fragment>
     <dialog
-        android:id="@+id/idDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.documents.IdDialog"
+        android:id="@+id/documentDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog"
         android:label="@string/id"
         android:layout="@layout/dialog_id"
-        tools:layout="@layout/dialog_id" />
-    <dialog
-        android:id="@+id/passportDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.documents.PassportDialog"
-        android:label="@string/passport"
-        android:layout="@layout/dialog_passport"
-        tools:layout="@layout/dialog_passport" />
-    <dialog
-        android:id="@+id/workPermissionDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.documents.WorkPermissionDialog"
-        android:label="@string/work_permission"
-        android:layout="@layout/dialog_work_permission"
-        tools:layout="@layout/dialog_work_permission" />
-    <dialog
-        android:id="@+id/recidencyPermitDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.documents.RecidencyPermitDialog"
-        android:label="@string/residency_permit"
-        android:layout="@layout/dialog_recidency_permit"
-        tools:layout="@layout/dialog_recidency_permit"/>
+        tools:layout="@layout/dialog_id" >
+        <argument
+            android:name="document"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+        <argument
+            android:name="employee"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee"
+            app:nullable="true" />
+    </dialog>
     <fragment
         android:id="@+id/personalDataFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.PersonalDataFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.PersonalDataFragment"
         android:label="@string/personal_data"
         android:layout="@layout/fragment_personal_data"
-        tools:layout="@layout/fragment_personal_data"/>
+        tools:layout="@layout/fragment_personal_data">
+        <argument
+            android:name="employee"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+    </fragment>
     <fragment
         android:id="@+id/notificationFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment"

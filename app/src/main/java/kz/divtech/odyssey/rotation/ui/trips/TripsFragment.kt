@@ -31,7 +31,6 @@ class TripsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tripsViewModel.getTrips()
         tripsViewModel.tripsLiveData.observe(viewLifecycleOwner) {
             tripsViewModel.compareTripDatesWithToday()
             setupViewPager()

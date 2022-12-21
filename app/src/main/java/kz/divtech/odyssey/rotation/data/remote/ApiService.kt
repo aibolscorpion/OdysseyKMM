@@ -4,8 +4,10 @@ import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login
 import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
@@ -57,15 +59,15 @@ interface ApiService {
     fun getEmployeeInfo()
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
-    @POST("update/data")
-    fun updateData()
+    @POST("employees/update-data")
+    fun updateData(@Body employee: Employee): Call<ResponseBody>
 
     //Documents
     @GET("employees/get-documents")
     fun getDocuments(): Call<Documents>
 
     @POST("employees/update-document")
-    fun updateDocument()
+    fun updateDocument(@Body document: Document): Call<ResponseBody>
 
     //Notifications
     @GET("notifications")

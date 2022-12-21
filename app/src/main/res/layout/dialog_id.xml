@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="closeListener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="documentDialog"
+            type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog" />
         <variable
-            name="saveListener"
-            type="kz.divtech.odyssey.rotation.ui.profile.documents.SaveListener" />
+            name="employee"
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+        <variable
+            name="document"
+            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -23,26 +31,27 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
+                android:paddingEnd="@dimen/margin"
                 android:paddingBottom="@dimen/two_times_margin">
 
                 <TextView
+                    style="@style/mainTitleTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/id"
-                    style="@style/mainTitleTextStyle"
-                    />
+                    android:text="@string/id" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
+                    android:layout_marginTop="13dp"
                     android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="15sp"
-                    android:textColor="@color/bottom_sheet_content"
                     android:letterSpacing="0.01"
                     android:lineSpacingExtra="7sp"
-                    android:layout_marginTop="13dp"
-                    android:text="@string/be_careful_when_filling_data"/>
+                    android:text="@string/be_careful_when_filling_data"
+                    android:textColor="@color/bottom_sheet_content"
+                    android:textSize="15sp" />
+
                 <TextView
                     style="@style/keyTextStyle2"
                     android:layout_width="wrap_content"
@@ -51,13 +60,13 @@
                     android:text="@string/name" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/uneditable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:text="@string/name_placeholder"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
+                    android:text="@{employee.firstName}"
+                    tools:text="@string/name_placeholder" />
 
 
                 <TextView
@@ -68,13 +77,13 @@
                     android:text="@string/surname" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/uneditable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/surname_placeholder"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
+                    android:text="@{employee.lastName}"
+                    tools:text="@string/surname_placeholder" />
 
                 <TextView
                     style="@style/keyTextStyle2"
@@ -84,13 +93,13 @@
                     android:text="@string/father_name" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/uneditable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/father_name_placeholder"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
+                    android:text="@{employee.patronymic}"
+                    tools:text="@string/father_name_placeholder" />
 
                 <TextView
                     style="@style/keyTextStyle2"
@@ -100,13 +109,13 @@
                     android:text="@string/date_of_birth" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/uneditable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/date_of_birth_placeholder"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
+                    app:birthDate="@{employee.birthDate}"
+                    tools:text="@string/date_of_birth_placeholder" />
 
 
                 <TextView
@@ -117,93 +126,43 @@
                     android:text="@string/iin" />
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    style="@style/uneditable_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/iin_value"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
-                <TextView
-                    style="@style/keyTextStyle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/document_number" />
+                    android:text="@{employee.iin}"
+                    tools:text="@string/iin_value" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/document_number_placeholder"
-                    android:backgroundTint="@color/bottom_sheet_line"
-                    style="@style/profileMenuTextStyle"
-                    />
-                <TextView
-                    style="@style/keyTextStyle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/issue_date" />
+                <include
+                    layout="@layout/layout_document"
+                    app:document="@{document}" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/issue_date_placeholder"
-                    style="@style/profileMenuTextStyle"
-                    android:background="@drawable/bg_date_edit_text"
-                    />
-
-                <TextView
-                    style="@style/keyTextStyle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/expire_date" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/issue_date_placeholder"
-                    style="@style/profileMenuTextStyle"
-                    android:background="@drawable/bg_date_edit_text"
-                    />
-
-                <TextView
-                    style="@style/keyTextStyle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/issue_authority" />
-
-                <androidx.appcompat.widget.AppCompatSpinner
-                    android:id="@+id/issueAuthoritySpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="7dp"
-                    style="@style/profileMenuTextStyle"
-                    android:background="@drawable/bg_spinner"
-                    />
                 <androidx.appcompat.widget.AppCompatButton
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_gravity="bottom"
-                    android:text="@string/save"
                     android:layout_marginTop="@dimen/margin"
-                    android:onClick="@{() -> saveListener.onSave()}"
-                    />
+                    android:onClick="@{() -> viewModel.updateDocument(document)}"
+                    android:text="@string/save" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="center"
                 android:src="@drawable/icons_tabs_close"
                 android:layout_gravity="top|end"
-                android:onClick="@{() -> closeListener.close() }"
-                />
+                android:onClick="@{() -> documentDialog.close() }" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.PBarVisibility}" />
+
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

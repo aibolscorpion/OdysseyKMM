@@ -1,13 +1,17 @@
 package kz.divtech.odyssey.rotation.domain.model.profile.documents
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Document(
     val created_at: String?,
     val employee_id: Int?,
-    val expire_date: Any?,
+    var expire_date: String?,
     val id: Int?,
-    val issue_by: String?,
-    val issue_date: String?,
-    val number: String?,
+    var issue_by: String?,
+    var issue_date: String?,
+    var number: String?,
     val type: String?,
     val updated_at: String?
-)
+): Parcelable

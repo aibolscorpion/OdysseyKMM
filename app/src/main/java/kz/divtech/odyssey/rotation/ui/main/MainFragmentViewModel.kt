@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.main
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
@@ -36,6 +37,10 @@ class MainFragmentViewModel(private val repository: ApplicationsRepository) : Vi
 
     val employee: LiveData<Employee> = repository.employeeInfo.asLiveData()
 
+    fun insertTrips(data: Data) = viewModelScope.launch {
+            repository.insertApplications(data)
+    }
+
     fun getTrips(){
         pBarVisibility.set(View.VISIBLE)
         RetrofitClient.getApiService().getTrips().enqueue(object: Callback<Data> {
@@ -46,6 +51,7 @@ class MainFragmentViewModel(private val repository: ApplicationsRepository) : Vi
                     if(trips == null || trips.isEmpty()){
                         nearestTripVisibility.set(View.GONE)
                     }else{
+                        insertTrips(response.body()!!)
                         findNearestTrip(trips)
                     }
                 }

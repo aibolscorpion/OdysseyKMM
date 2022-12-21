@@ -20,6 +20,11 @@ object Constants {
     const val TRIP_LIST = "trip_list"
     const val TEST = "test"
     const val SPACE = " "
+    const val ID_CARD = "id-card"
+    const val PASSPORT = "passport"
+    const val RESIDENCE = "residence"
+    const val MALE = "male"
+    const val FEMALE = "female"
 
 
 }

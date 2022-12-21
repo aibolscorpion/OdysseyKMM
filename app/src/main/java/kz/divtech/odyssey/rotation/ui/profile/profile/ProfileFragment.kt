@@ -12,10 +12,12 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
+import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
+    var currentEmployee: Employee? = null
     private val viewModel: ProfileViewModel by viewModels(){
         ProfileViewModel.ProfileViewModelFactory((activity?.application as App).repository)
     }
@@ -32,6 +34,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
+            currentEmployee = employee
             binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
                 append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
                 appendWithoutNull(employee.patronymic)
@@ -54,8 +57,10 @@ class ProfileFragment : Fragment() {
     fun openDocumentsFragment() =
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
 
-    fun openPersonalDataFragment() =
-        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment())
+    fun openPersonalDataFragment(){
+        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment(currentEmployee!!)
+        findNavController().navigate(action)
+    }
 
     fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 

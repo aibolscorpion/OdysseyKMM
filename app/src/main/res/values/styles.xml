@@ -104,6 +104,16 @@
         <item name="android:gravity">start</item>
     </style>
 
+    <style name="uneditable_text">
+        <item name="android:fontFamily">@font/pt_root_ui_medium</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:focusable">false</item>
+        <item name="android:clickable">false</item>
+        <item name="android:cursorVisible">false</item>
+    </style>
 
     <style name="profileMenuTextStyle">
         <item name="android:fontFamily">@font/pt_root_ui_medium</item>
@@ -176,6 +186,18 @@
     <style name="TermsOfAgreementBottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
         <item name="bottomSheetStyle">@style/TermsOfAgreementBottomSheet</item>
+        <item name="colorAccent">@color/bottom_sheet_btn</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/AppTheme.Alert.Button.Positive</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/AppTheme.Alert.Button.Negative</item>
+
+    </style>
+
+    <style name="AppTheme.Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/bottom_sheet_btn</item>
+    </style>
+
+    <style name="AppTheme.Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/bottom_sheet_btn</item>
     </style>
 
     <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">

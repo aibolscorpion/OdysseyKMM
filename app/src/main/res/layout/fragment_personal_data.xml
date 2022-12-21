@@ -1,261 +1,324 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="employee"
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+        <variable
+            name="personalDataFragment"
+            type="kz.divtech.odyssey.rotation.ui.profile.personal_data.PersonalDataFragment" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.personal_data.PersonalDataViewModel" />
+    </data>
 
-    <ScrollView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_bg"
+                android:orientation="vertical"
+                android:paddingTop="25dp"
+                android:paddingBottom="23dp">
+
+                <TextView
+                    android:id="@+id/documentsTV"
+                    style="@style/mainTitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/personal_data"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="9dp"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/documentsTV"
+                    android:layout_marginTop="@dimen/margin">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingTop="24dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="24dp">
+
+                        <TextView
+                            android:id="@+id/mainInformationTV"
+                            style="@style/mainTitle2TextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/main_information" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/name" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.firstName}"
+                            tools:text="@string/name_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/surname" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.lastName}"
+                            tools:text="@string/surname_placeholder" />
+
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/father_name" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.patronymic}"
+                            tools:text="@string/father_name_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/name_latin" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.firstNameEn}"
+                            tools:text="@string/name_en_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/surname_latin" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.lastNameEn}"
+                            tools:text="@string/surname_en_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/date_of_birth" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/dateOfBirthEditText"
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="7dp"
+                            android:background="@drawable/bg_date_edit_text"
+                            android:focusable="false"
+                            app:birthDate="@={employee.birthDate}"
+                            tools:text="@string/date_of_birth_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/gender" />
+
+                        <RadioGroup
+                            android:id="@+id/genderRadioGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:orientation="horizontal"
+                            app:maleButton="@{maleRadioButton}"
+                            app:femaleButton="@{femaleRadioButton}"
+                            app:gender="@={employee.gender}" >
+
+                            <RadioButton
+                                android:id="@+id/maleRadioButton"
+                                style="@style/profileMenuTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="24dp"
+                                android:button="@android:color/transparent"
+                                android:paddingStart="4dp"
+                                android:paddingEnd="4dp"
+                                android:text="@string/male" />
+
+                            <RadioButton
+                                android:id="@+id/femaleRadioButton"
+                                style="@style/profileMenuTextStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="24dp"
+                                android:layout_marginStart="@dimen/margin"
+                                android:button="@android:color/transparent"
+                                android:paddingStart="4dp"
+                                android:paddingEnd="4dp"
+                                android:text="@string/female" />
+
+                        </RadioGroup>
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/iin" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:inputType="number"
+                            android:text="@={employee.iin}"
+                            tools:text="@string/iin_value" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/citizenship" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            style="@style/profileMenuTextStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            android:text="@={employee.countryName}"
+                            tools:text="@string/kazakhstan" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/contactInfoCV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView2"
+                    android:layout_marginTop="12dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="16dp"
+                        android:paddingTop="24dp"
+                        android:paddingEnd="16dp"
+                        android:paddingBottom="24dp">
+
+                        <TextView
+                            style="@style/mainTitle2TextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/contact_data" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/telephone" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="@={employee.phone}"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            style="@style/profileMenuTextStyle"
+                            tools:text="@string/phone_placeholder" />
+
+                        <TextView
+                            style="@style/keyTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/email" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="@={employee.email}"
+                            android:backgroundTint="@color/bottom_sheet_line"
+                            style="@style/profileMenuTextStyle" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    style="@style/buttonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_height"
+                    android:layout_gravity="bottom"
+                    android:text="@string/save"
+                    app:layout_constraintTop_toBottomOf="@+id/contactInfoCV"
+                    android:onClick="@{() -> viewModel.updatePersonalData(employee)}"
+                    android:layout_marginBottom="23dp"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+        <ProgressBar
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/main_bg"
-            android:orientation="vertical"
-            android:paddingTop="25dp"
-            android:paddingBottom="23dp">
-
-            <TextView
-                android:id="@+id/documentsTV"
-                style="@style/mainTitleTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/personal_data"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="9dp"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/documentsTV"
-                android:layout_marginTop="@dimen/margin">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="24dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="24dp">
-
-                    <TextView
-                        android:id="@+id/mainInformationTV"
-                        style="@style/mainTitle2TextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/main_information" />
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/name" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/name_placeholder"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/surname" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/surname_placeholder"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/father_name" />
-
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/father_name_placeholder"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/date_of_birth"
-                        android:layout_marginTop="20dp"/>
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/date_of_birth_placeholder"
-                        style="@style/profileMenuTextStyle"
-                        android:background="@drawable/bg_date_edit_text"
-                        />
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/gender" />
-
-                    <RadioGroup
-                        android:id="@+id/genderRadioGroup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="7dp"
-                        >
-                        <RadioButton
-                            android:id="@+id/maleRadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="24dp"
-                            android:text="@string/male"
-                            style="@style/profileMenuTextStyle"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
-                            android:button="@android:color/transparent"/>
-                        <RadioButton
-                            android:id="@+id/femaleRadioButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="24dp"
-                            android:text="@string/female"
-                            style="@style/profileMenuTextStyle"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
-                            android:layout_marginStart="@dimen/margin"
-                            android:button="@android:color/transparent"
-                            />
-                    </RadioGroup>
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/iin" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/iin_value"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/citizenship"
-                        android:layout_marginTop="20dp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/countriesSpinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_marginTop="7dp"
-                        style="@style/profileMenuTextStyle"
-                        android:background="@drawable/bg_spinner"
-                        />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/contactInfoCV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cardView2"
-                android:layout_marginTop="12dp">
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="16dp"
-                    android:paddingTop="24dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="24dp">
-
-                    <TextView
-                        style="@style/mainTitle2TextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/contact_data" />
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/telephone" />
-
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:text="@string/phone_placeholder"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-                    <TextView
-                        style="@style/keyTextStyle2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/email" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
-                        android:backgroundTint="@color/bottom_sheet_line"
-                        style="@style/profileMenuTextStyle"
-                        />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.appcompat.widget.AppCompatButton
-                style="@style/buttonStyle"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/button_height"
-                android:layout_gravity="bottom"
-                android:text="@string/save"
-                app:layout_constraintTop_toBottomOf="@+id/contactInfoCV"
-                android:layout_marginBottom="23dp"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.PBarVisibility}"/>
+    </FrameLayout>
 </layout>
