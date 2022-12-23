@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="emptyData"
+            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin" >
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@{emptyData.icon}"
+            tools:src="@drawable/icon_travel" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:fontFamily="@font/pt_root_ui"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/gray"
+            android:letterSpacing="-0.01"
+            android:layout_marginTop="24dp"
+            android:lineSpacingExtra="5sp"
+            android:gravity="center_horizontal"
+            android:text="@{emptyData.title}"
+            tools:text="Нет активных поездок"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/bottom_sheet_content"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center_horizontal"
+            android:text="@{emptyData.content}"
+            tools:text="Новые поездки отобразяться здесь когда они будут назначены"/>
+
+    </LinearLayout>
+
+</layout>

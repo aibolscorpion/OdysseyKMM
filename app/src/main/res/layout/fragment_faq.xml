@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.help.faq.FaqViewModel" />
+        <variable
+            name="emptyData"
+            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
 
     <FrameLayout
@@ -55,6 +58,13 @@
                 tools:listitem="@layout/item_faq" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <include
+            android:id="@+id/noFAQ"
+            layout="@layout/layout_empty_data"
+            app:emptyData="@{emptyData.FAQ}"
+            android:visibility="gone" />
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -8,19 +8,34 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
 class ApplicationsRepository(private val dao : Dao) {
 
-    val allApplications: Flow<Data> = dao.getAllApplications()
-
-    val employeeInfo: Flow<Employee> = dao.getEmployeeInfo()
+    val data: Flow<Data> = dao.getData()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insertApplications(data: Data) {
-        dao.insertAllApplications(data)
+    suspend fun insertData(data: Data) {
+        dao.insertData(data)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteData(){
+        dao.deleteData()
+    }
+
+    val employee: Flow<Employee> = dao.getEmployee()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertEmployee(employeeInfo: Employee){
-        dao.insertEmployeeInfo(employeeInfo)
+        dao.insertEmployee(employeeInfo)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun deleteEmployee(){
+        dao.deleteEmployee()
+    }
+
+
+
 }

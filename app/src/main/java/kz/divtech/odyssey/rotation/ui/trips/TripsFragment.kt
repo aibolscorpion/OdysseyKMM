@@ -39,8 +39,8 @@ class TripsFragment : Fragment() {
 
     private fun setupViewPager(){
         val adapter = ViewPagerAdapter(this)
-        adapter.addFragment(ActiveTripsFragment.newInstance(tripsViewModel.activeTrips), getString(R.string.active_trips))
-        adapter.addFragment(ActiveTripsFragment.newInstance(tripsViewModel.archiveTrips), getString(R.string.archive_trips))
+        adapter.addFragment(ActiveTripsFragment.newInstance(true, tripsViewModel.activeTrips), getString(R.string.active_trips))
+        adapter.addFragment(ActiveTripsFragment.newInstance(false, tripsViewModel.archiveTrips), getString(R.string.archive_trips))
         binding.viewPager.adapter = adapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager){ tab, position ->

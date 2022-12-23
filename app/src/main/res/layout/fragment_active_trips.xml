@@ -2,6 +2,9 @@
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <variable
+            name="emptyData"
+            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,8 +20,13 @@
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
             android:clipToPadding="false"
-            tools:listitem="@layout/item_trip"/>
+            tools:listitem="@layout/item_trip" />
 
+        <include
+            android:id="@+id/noTrips"
+            layout="@layout/layout_empty_data"
+            app:emptyData="@{emptyData}"
+            android:visibility="gone" />
 
     </FrameLayout>
 </layout>

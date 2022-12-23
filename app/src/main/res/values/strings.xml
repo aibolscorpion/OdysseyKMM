@@ -138,6 +138,10 @@
     <string name="to_home">Домой, %1$s</string>
     <string name="trip">Поездка, %1$s</string>
     <string name="extra_application">Экстренная заявка. </string>
+    <string name="empty_active_trips_title">Нет активных поездок</string>
+    <string name="empty_active_trips_content">Новые поездки отобразяться здесь когда они будут назначены</string>
+    <string name="empty_archive_trips_title">У вас пока нет поездок</string>
+    <string name="empty_archive_trips_content">Здесь будет отображаться история ваших поездок</string>
 
     //Разные статусы
     <string name="opened_without_details_desc">Маршрут не известен, билеты еще не оформлены.</string>
@@ -194,6 +198,8 @@
     <string name="question_placeholder">Могу ли я сейчас оформить ЖД-билеты самостоятельно?</string>
     <string name="answer_placeholder">Возможность самостоятельно оформлять ЖД билеты и авиабилеты, появится в скором обновлении приложения Odyssey Rotation. Следите за новостями!</string>
     <string name="open">Открыть</string>
+    <string name="empty_faq_title">Вопросы не найдены</string>
+    <string name="empty_faq_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
 
     //Страница Пресс Служба
     <string name="find">Найти…</string>
@@ -202,7 +208,8 @@
 «Снижение смертности на дорогах – это приоритет транспортной политики. И на железной дороге у нас есть задача, чтобы с 450 человек в год мы стремились к нулю. У нас есть не просто абстрактное соглашение, а план мероприятий, подкрепленный деньгами», – добавил он.
 Смертность на автомобильных дорогах области в 2 раза больше: «У нас 6–7 лет назад было порядка 2 тыс. человек, погибших на дорогах, в этом году эта цифра должна быть на уровне 750–800 человек», – сказал А. Воробьев. Он отметил, что для этого в регионе разводят транспортные потоки, ремонтируют дороги, устанавливают освещение, камеры видеофиксации, лежачих полицейских. «Этот комплекс мер позволяет людям передвигаться с большей безопасностью и комфортом», – добавил он.</string>
     <string name="news_time_placeholder">вчера, в 13:40</string>
-
+    <string name="news_not_found_title">Новости не найдены</string>
+    <string name="news_not_found_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
 
 
     -----------------------------------------------------------------------------------------------
@@ -260,6 +267,8 @@
     <string name="issue_expire_date_placeholder">11.09.2017 – 11.09.2027, МВД РК</string>
     <string name="you_have_not_filled_passport_data">Вы еще не указали данные вашего паспорта. Нажмите, чтобы добавить</string>
     <string name="you_have_not_filled_residency_permit_data">Вы еще не указали данные вида на жительство. Нажмите, чтобы добавить</string>
+    <string name="documents_not_found_title">Документы не найдены</string>
+    <string name="documents_not_found_content">Мы не нашли ваших документов</string>
 
     //Модалка Разрешение на работу
     <string name="status">Статус</string>
@@ -285,5 +294,7 @@
     <string name="notification_title_placeholder">Смещение графика</string>
     <string name="notification_content_placeholder">Новый график: 18 апреля - 9 мая 202…</string>
     <string name="notification_time_placeholder">2 ч назад</string>
+    <string name="notifications_not_found_title">Уведомления не найдены</string>
+    <string name="notifications_not_found_content">У вас пока нет новых уведомлений</string>
 
 </resources>

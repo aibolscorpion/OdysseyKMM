@@ -9,6 +9,9 @@
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsViewModel" />
+        <variable
+            name="emptyData"
+            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
 
     <FrameLayout
@@ -44,6 +47,12 @@
                 tools:layout="@layout/item_document" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <include
+            android:id="@+id/noDocuments"
+            layout="@layout/layout_empty_data"
+            app:emptyData="@{emptyData.DOCUMENTS}"
+            android:visibility="gone" />
 
         <ProgressBar
             android:layout_width="wrap_content"

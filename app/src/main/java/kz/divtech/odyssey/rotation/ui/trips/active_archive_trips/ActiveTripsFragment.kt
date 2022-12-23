@@ -9,16 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
+import kz.divtech.odyssey.rotation.domain.model.main.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.TripsAdapter
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     val adapter = TripsAdapter(this)
+    lateinit var binding: FragmentActiveTripsBinding
     companion object {
-        fun newInstance(tripList: ArrayList<Trip>): ActiveTripsFragment{
+        fun newInstance(activeTrips: Boolean, tripList: ArrayList<Trip>): ActiveTripsFragment{
             val tripsFragment = ActiveTripsFragment()
             val bundle = Bundle()
+            bundle.putBoolean(Constants.ACTIVE_TRIPS, activeTrips)
             bundle.putParcelableArrayList(Constants.TRIP_LIST, tripList)
             tripsFragment.arguments  = bundle
             return tripsFragment
@@ -26,7 +29,7 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val binding = FragmentActiveTripsBinding.inflate(inflater)
+        binding = FragmentActiveTripsBinding.inflate(inflater)
 
         binding.activeTripsRV.adapter = adapter
 
@@ -35,12 +38,21 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val activeTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             arguments?.getParcelableArrayList(Constants.TRIP_LIST, Trip::class.java)
         } else {
             arguments?.getParcelableArrayList(Constants.TRIP_LIST)
         }
-        adapter.setTripList(list!!)
+
+        if(list != null && list.isNotEmpty()){
+            adapter.setTripList(list)
+        }else{
+            binding.noTrips.root.visibility = View.VISIBLE
+            binding.emptyData =
+                if(activeTrips == true) EmptyData.ACTIVE_TRIPS else EmptyData.ARCHIVE_TRIPS
+        }
     }
 
     override fun onTripClicked(trip: Trip) {

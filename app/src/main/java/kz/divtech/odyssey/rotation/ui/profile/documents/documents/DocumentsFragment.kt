@@ -38,8 +38,10 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
 
         viewModel.getAllDocuments()
         viewModel.documents.observe(viewLifecycleOwner){ documents ->
-            if(documents.documents != null){
+            if(documents.documents != null && documents.documents.isNotEmpty()){
                 adapter.setDocumentList(documents.documents)
+            }else{
+                binding.noDocuments.root.visibility = View.VISIBLE
             }
         }
     }

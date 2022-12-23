@@ -18,6 +18,7 @@ object Constants {
     const val RETRY_AFTER = "Retry-After"
     const val PHONE = "phone"
     const val TRIP_LIST = "trip_list"
+    const val ACTIVE_TRIPS = "active_trips"
     const val TEST = "test"
     const val SPACE = " "
     const val ID_CARD = "id-card"

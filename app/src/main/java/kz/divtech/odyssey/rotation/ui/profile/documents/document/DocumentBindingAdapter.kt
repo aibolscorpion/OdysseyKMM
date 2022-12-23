@@ -19,8 +19,8 @@ import java.time.format.DateTimeFormatter
 
 object DocumentBindingAdapter {
 
-    @BindingAdapter("app:gender", "maleButton", "femaleButton")
-    @JvmStatic fun setGender(gender: String, maleButton: RadioButton, femaleButton: RadioButton) {
+    @BindingAdapter("gender", "maleButton", "femaleButton")
+    @JvmStatic fun setGender(radioGroup: RadioGroup, gender: String, maleButton: RadioButton, femaleButton: RadioButton) {
         when(gender){
             Constants.MALE -> changeRadioButtonBackground(maleButton, femaleButton)
             Constants.FEMALE -> changeRadioButtonBackground(femaleButton, maleButton)
@@ -37,7 +37,7 @@ object DocumentBindingAdapter {
         return gender
     }
 
-    @BindingAdapter("app:genderAttrChanged")
+    @BindingAdapter("genderAttrChanged")
     @JvmStatic fun setGenderListener(radioGroup: RadioGroup, attrChange: InverseBindingListener) {
         val maleButton = (radioGroup.getChildAt(0) as RadioButton)
         val femaleButton = (radioGroup.getChildAt(1) as RadioButton)
@@ -83,7 +83,7 @@ object DocumentBindingAdapter {
         return editText.text.toString()
     }
 
-    @BindingAdapter("app:birthDateAttrChanged")
+    @BindingAdapter("birthDateAttrChanged")
     @JvmStatic fun setBirthDateListener(editText: EditText, attrChange: InverseBindingListener) {
         val todayDate = LocalDate.now()
         editText.setOnClickListener{
@@ -108,7 +108,7 @@ object DocumentBindingAdapter {
         return editText.text.toString()
     }
 
-    @BindingAdapter("app:issueDateAttrChanged")
+    @BindingAdapter("issueDateAttrChanged")
     @JvmStatic fun setIssueDateListener(editText: EditText, attrChange: InverseBindingListener) {
         val todayDate = LocalDate.now()
         editText.setOnClickListener{

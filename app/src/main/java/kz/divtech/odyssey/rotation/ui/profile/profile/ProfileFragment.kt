@@ -13,7 +13,6 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
@@ -34,20 +33,20 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            currentEmployee = employee
-            binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
+            if(employee != null){
+                currentEmployee = employee
+                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
                 append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
                 appendWithoutNull(employee.patronymic)
-            binding.employeeTableNumberTV.text = employee.number
-            binding.employeeOrgNameTV.text = employee.orgName
-            binding.employeePositionTV.text = employee.position
+                binding.employeeTableNumberTV.text = employee.number
+                binding.employeeOrgNameTV.text = employee.orgName
+                binding.employeePositionTV.text = employee.position
+            }
         }
 
         binding.viewModel = viewModel
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {
-            if (it) {
-                logout()
-            }
+            logout()
         }
     }
 
@@ -64,12 +63,13 @@ class ProfileFragment : Fragment() {
 
     fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 
-    private fun openLoginActivity() =
+    private fun goToLoginPage() {
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToLoginActivity())
+        (activity as AppCompatActivity).finish()
+    }
 
     private fun logout(){
-        SharedPrefs().clearAuthToken()
-        openLoginActivity()
-        (activity as AppCompatActivity).finish()
+        viewModel.deleteDataFromDB()
+        goToLoginPage()
     }
 }

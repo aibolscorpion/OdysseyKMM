@@ -9,8 +9,8 @@ import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
 
-class TripsViewModel(private val repository: ApplicationsRepository) : ViewModel() {
-    val tripsLiveData: LiveData<Data> = repository.allApplications.asLiveData()
+class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
+    val tripsLiveData: LiveData<Data> = repository.data.asLiveData()
     private val today = LocalDate.now()
     val activeTrips = ArrayList<Trip>()
     val archiveTrips = ArrayList<Trip>()
@@ -24,7 +24,7 @@ class TripsViewModel(private val repository: ApplicationsRepository) : ViewModel
             val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isBefore(today)) {
                     archiveTrips.add(trip)
-                }else {
+                }else if(tripDateTime.isAfter(today)) {
                     activeTrips.add(trip)
                 }
         }

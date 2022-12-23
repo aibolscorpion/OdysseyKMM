@@ -25,8 +25,13 @@ class FaqFragment : Fragment() {
         viewModel.getFaqList()
 
         binding.faqRecyclerView.adapter = faqAdapter
-        viewModel.faqList.observe(viewLifecycleOwner) {
-            faqAdapter.setList(it)
+        viewModel.faqList.observe(viewLifecycleOwner) { faqList ->
+            if(faqList != null && faqList.isNotEmpty()){
+                faqAdapter.setList(faqList)
+            }else{
+                binding.pressServiceSearchView.visibility = View.GONE
+                binding.noFAQ.root.visibility = View.VISIBLE
+            }
         }
     }
 }

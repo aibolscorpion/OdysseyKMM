@@ -35,7 +35,7 @@ class DocumentsViewModel(repository: ApplicationsRepository) : ViewModel() {
         })
     }
 
-    val employee: LiveData<Employee> = repository.employeeInfo.asLiveData()
+    val employee: LiveData<Employee> = repository.employee.asLiveData()
 
     class DocumentsViewModelFactory(val repository: ApplicationsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

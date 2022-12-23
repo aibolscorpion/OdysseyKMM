@@ -42,7 +42,7 @@ interface ApiService {
 
     //FAQ
     @GET("faqs")
-    fun getFAQs() : Call<ArrayList<Faq>>
+    fun getFAQs() : Call<List<Faq>>
 
     //Articles
     @GET("articles")

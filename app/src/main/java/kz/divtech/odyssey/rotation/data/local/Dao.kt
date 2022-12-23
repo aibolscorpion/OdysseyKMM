@@ -1,6 +1,5 @@
 package kz.divtech.odyssey.rotation.data.local
 
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -10,23 +9,24 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
 @androidx.room.Dao
 interface Dao {
-
+    //Applications
     @Query("SELECT * FROM data")
-    fun getAllApplications(): Flow<Data>
+    fun getData(): Flow<Data>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllApplications(vararg data: Data)
+    suspend fun insertData(data: Data)
 
-    @Delete
-    suspend fun deleteAllApplications(data: Data)
+    @Query("DELETE FROM data")
+    suspend fun deleteData()
 
+    //Employee
     @Query("SELECT * FROM employee")
-    fun getEmployeeInfo(): Flow<Employee>
+    fun getEmployee(): Flow<Employee>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEmployeeInfo(vararg employee: Employee)
+    suspend fun insertEmployee(employee: Employee)
 
-    @Delete
-    suspend fun deleteEmployeeInfo(employee: Employee)
+    @Query("DELETE FROM employee")
+    suspend fun deleteEmployee()
 
 }

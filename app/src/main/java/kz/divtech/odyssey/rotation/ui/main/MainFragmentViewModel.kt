@@ -35,10 +35,10 @@ class MainFragmentViewModel(private val repository: ApplicationsRepository) : Vi
 
     val pBarVisibility = ObservableInt(View.GONE)
 
-    val employee: LiveData<Employee> = repository.employeeInfo.asLiveData()
+    val employee: LiveData<Employee> = repository.employee.asLiveData()
 
     fun insertTrips(data: Data) = viewModelScope.launch {
-            repository.insertApplications(data)
+            repository.insertData(data)
     }
 
     fun getTrips(){
@@ -48,10 +48,10 @@ class MainFragmentViewModel(private val repository: ApplicationsRepository) : Vi
                 pBarVisibility.set(View.GONE)
                 val trips = response.body()?.data?.data
                 if(response.isSuccessful){
+                    insertTrips(response.body()!!)
                     if(trips == null || trips.isEmpty()){
                         nearestTripVisibility.set(View.GONE)
                     }else{
-                        insertTrips(response.body()!!)
                         findNearestTrip(trips)
                     }
                 }
