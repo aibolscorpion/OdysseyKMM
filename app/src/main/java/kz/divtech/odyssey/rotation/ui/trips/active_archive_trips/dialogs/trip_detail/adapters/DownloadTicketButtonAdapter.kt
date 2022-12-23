@@ -14,7 +14,7 @@ class DownloadTicketButtonAdapter(val downloadInterface: DownloadInterface) : Re
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         val binding = ItemDownloadTicketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TicketViewHolder(binding, downloadInterface)
+        return TicketViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
@@ -29,7 +29,7 @@ class DownloadTicketButtonAdapter(val downloadInterface: DownloadInterface) : Re
         notifyDataSetChanged()
     }
 
-    open class TicketViewHolder(val binding: ItemDownloadTicketBinding,val downloadInterface: DownloadInterface) : RecyclerView.ViewHolder(binding.root){
+    inner class TicketViewHolder(val binding: ItemDownloadTicketBinding) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(ticket: Ticket){
             binding.root.setOnClickListener{

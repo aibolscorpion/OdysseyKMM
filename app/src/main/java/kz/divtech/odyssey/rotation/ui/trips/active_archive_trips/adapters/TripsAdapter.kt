@@ -11,7 +11,7 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
     private val oldTripList = ArrayList<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TripViewHolder(binding, onTripListener)
+        return TripViewHolder(binding)
     }
 
     fun setTripList(newTripsList: List<Trip>){
@@ -28,7 +28,7 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
 
     override fun getItemCount(): Int  = oldTripList.size
 
-    class TripViewHolder (val binding : ItemTripBinding, private val onTripListener: OnTripListener) : RecyclerView.ViewHolder(binding.root){
+    inner class TripViewHolder (val binding : ItemTripBinding) : RecyclerView.ViewHolder(binding.root){
         private lateinit var currentTrip : Trip
         private val adapter = SegmentAdapter()
 
