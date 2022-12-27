@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import okhttp3.ResponseBody
 import retrofit2.Call

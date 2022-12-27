@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs.terms_of_agreement.TermsOfAgreementViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.terms_of_agreement.TermsOfAgreementViewModel" />
 
     </data>
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.fill_code
+package kz.divtech.odyssey.rotation.ui.login.auth.send_sms
 
 import android.view.KeyEvent
 import android.view.View

@@ -6,7 +6,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import okhttp3.ResponseBody
 import retrofit2.Call

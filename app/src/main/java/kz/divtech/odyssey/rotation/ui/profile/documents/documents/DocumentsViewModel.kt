@@ -3,7 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile.documents.documents
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository

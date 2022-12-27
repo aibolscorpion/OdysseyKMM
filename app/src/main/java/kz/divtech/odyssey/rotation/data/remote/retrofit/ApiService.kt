@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.data.remote
+package kz.divtech.odyssey.rotation.data.remote.retrofit
 
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login

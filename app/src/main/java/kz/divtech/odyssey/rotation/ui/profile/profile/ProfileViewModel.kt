@@ -2,7 +2,7 @@ package kz.divtech.odyssey.rotation.ui.profile.profile
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.SharedPrefs

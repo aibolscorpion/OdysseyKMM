@@ -1,10 +1,10 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.send_sms.dialogs.terms_of_agreement
+package kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.terms_of_agreement
 
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

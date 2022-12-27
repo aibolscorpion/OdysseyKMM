@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.data.remote
+package kz.divtech.odyssey.rotation.data.remote.result
 
 interface HttpResponse {
 

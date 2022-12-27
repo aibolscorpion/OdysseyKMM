@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.GsonBuilder
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.BadRequest
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData

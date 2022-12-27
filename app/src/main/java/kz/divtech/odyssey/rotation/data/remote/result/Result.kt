@@ -1,5 +1,5 @@
 @file:Suppress("unused")
-package kz.divtech.odyssey.rotation.data.remote
+package kz.divtech.odyssey.rotation.data.remote.result
 
 sealed class Result<out T> {
 
@@ -16,7 +16,7 @@ sealed class Result<out T> {
             override val statusCode: Int,
             override val statusMessage: String? = null,
             override val url: String? = null
-        ) : Success<T>(), kz.divtech.odyssey.rotation.data.remote.HttpResponse
+        ) : Success<T>(), kz.divtech.odyssey.rotation.data.remote.result.HttpResponse
 
         object Empty: Success<Nothing>(){
             override val value: Nothing get() = error("No value")
@@ -24,13 +24,15 @@ sealed class Result<out T> {
         }
 
     }
+
     sealed class Failure<E : Throwable>(open val error: E? = null) : Result<Nothing>() {
 
         override fun toString() = "Failure($error)"
 
         class Error(override val error: Throwable) : Failure<Throwable>(error)
 
-        class HttpError(override val error: HttpException) : Failure<HttpException>(), HttpResponse {
+        class HttpError(override val error: HttpException) : Failure<HttpException>(),
+            HttpResponse {
 
             override val statusCode: Int get() = error.statusCode
 

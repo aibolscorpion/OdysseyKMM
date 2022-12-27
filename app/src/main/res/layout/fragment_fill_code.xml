@@ -5,20 +5,23 @@
     <data>
         <variable
             name="codeFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.fill_code.FillCodeFragment" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.SendSmsFragment" />
+
         <variable
             name="phoneNumber"
             type="String" />
+
         <variable
             name="seconds"
             type="String" />
+
         <variable
-            name="view"
-            type="android.view.View" />
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.SendSmsViewModel" />
     </data>
 
     <FrameLayout
-        android:id="@+id/fillCodeFL"
+        android:id="@+id/sendSmsFL"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -163,6 +166,12 @@
         <include
             android:id="@+id/toolBar"
             layout="@layout/layout_login_toolbar" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.PBarVisibility}"/>
 
     </FrameLayout>
 </layout>

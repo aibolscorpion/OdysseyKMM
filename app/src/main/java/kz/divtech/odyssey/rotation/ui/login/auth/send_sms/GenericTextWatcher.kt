@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.fill_code
+package kz.divtech.odyssey.rotation.ui.login.auth.send_sms
 
 import android.text.Editable
 import android.text.TextWatcher

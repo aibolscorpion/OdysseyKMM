@@ -4,7 +4,7 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
