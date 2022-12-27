@@ -15,12 +15,10 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.SmsBroadcastReceiver
-import kz.divtech.odyssey.rotation.utils.Utils.getIntFromString
 import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
@@ -61,43 +59,30 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
         dataBinding.viewModel = viewModel
         viewModel.requestSmsCode(extractedPhoneNumber)
-        viewModel.tooManyRequest.observe(viewLifecycleOwner) { tooManyRequest ->
-            tooManyRequest.getContentIfNotHandled()?.let { codeResponse ->
-                when (codeResponse.type) {
-                    Constants.TOO_MANY_REQUEST -> {
-                        showContactSupportBtn()
-                        startTimer(getIntFromString(codeResponse.message!!))
-                        showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                            codeResponse.message
-                        )
-                    }
-                }
-            }
+
+        viewModel.secondsLiveData.observe(viewLifecycleOwner) { seconds ->
+            showContactSupportBtn()
+            startTimer(seconds)
+            showErrorMessage(requireContext(), dataBinding.sendSmsFL,
+                getString(R.string.too_many_request_message, seconds)
+            )
         }
 
-        viewModel.smsCodeSent.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { smsCodeSent ->
-                if (smsCodeSent)
-                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-            }
+        viewModel.smsCodeSent.observe(viewLifecycleOwner) { smsCodeSent ->
+            if (smsCodeSent)
+                startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
         }
 
         viewModel.loggedIn.observe(viewLifecycleOwner) { loggedIn ->
-            loggedIn.getContentIfNotHandled()?.let {
-                if (it) {
-                    openMainActivity()
-                }
+            if (loggedIn) {
+                openMainActivity()
             }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let { message ->
-                showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
-            }
+        viewModel.errorMessage.observe(viewLifecycleOwner) {  message ->
+            showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
         }
     }
-
-
 
     private fun setupEditTexts(){
         editTextList.add(dataBinding.digitOneET)

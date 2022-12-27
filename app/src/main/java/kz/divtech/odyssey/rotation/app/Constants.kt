@@ -2,8 +2,6 @@ package kz.divtech.odyssey.rotation.app
 
 object Constants {
     const val DEACTIVATED_EMPLOYEE = "dismissed"
-    const val INCORRECT_DATA = "incorrect_data"
-    const val TOO_MANY_REQUEST = "too_many_requests"
     const val TO_WORK = "to-work"
     const val TO_HOME = "to-home"
     const val DAY = "day"
@@ -23,6 +21,7 @@ object Constants {
     const val RESIDENCE = "residence"
     const val MALE = "male"
     const val FEMALE = "female"
+    const val RETRY_AFTER = "Retry-After"
 
     const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400

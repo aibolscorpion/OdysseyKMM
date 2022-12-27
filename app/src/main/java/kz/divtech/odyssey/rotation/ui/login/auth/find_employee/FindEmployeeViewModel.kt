@@ -30,10 +30,12 @@ class FindEmployeeViewModel : ViewModel() {
             Callback<EmployeeData> {
             override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
                 pBarVisibility.set(View.GONE)
-                if(response.code() == Constants.SUCCESS_CODE)
-                    _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
-                else if(response.code() == Constants.BAD_REQUEST_CODE)
-                    _isEmployeeNotFounded.postValue(Event(true))
+                when(response.code()){
+                    Constants.SUCCESS_CODE ->
+                        _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
+                    Constants.BAD_REQUEST_CODE ->
+                        _isEmployeeNotFounded.postValue(Event(true))
+                }
             }
 
             override fun onFailure(call: Call<EmployeeData>, t: Throwable) {

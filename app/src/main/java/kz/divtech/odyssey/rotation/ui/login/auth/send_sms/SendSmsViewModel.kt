@@ -3,35 +3,34 @@ package kz.divtech.odyssey.rotation.ui.login.auth.send_sms
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
-import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 
 class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
     var authLogId: String? = null
 
-    private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
-    val smsCodeSent: LiveData<Event<Boolean>> = _smsCodeSent
+    private val _smsCodeSent = MutableLiveData<Boolean>()
+    val smsCodeSent: LiveData<Boolean> = _smsCodeSent
 
-    private val _errorMessage = MutableLiveData<Event<String>>()
-    val errorMessage: LiveData<Event<String>> = _errorMessage
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> = _errorMessage
 
-    private val _loggedIn = MutableLiveData<Event<Boolean>>()
-    val loggedIn : LiveData<Event<Boolean>> = _loggedIn
+    private val _loggedIn = MutableLiveData<Boolean>()
+    val loggedIn : LiveData<Boolean> = _loggedIn
 
-    private val _tooManyRequest = MutableLiveData<Event<TooManyRequest>>()
-    val tooManyRequest: LiveData<Event<TooManyRequest>> = _tooManyRequest
+    private val _secondsMutableLiveData = MutableLiveData<Int>()
+    val secondsLiveData: LiveData<Int> = _secondsMutableLiveData
 
     val pBarVisibility = ObservableInt(View.GONE)
 
@@ -49,21 +48,17 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
                 when(response.code()){
                     Constants.SUCCESS_CODE -> {
                         authLogId = response.body()?.data?.auth_log_id
-                        _smsCodeSent.postValue(Event(true))
+                        _smsCodeSent.postValue(true)
                     }
                     Constants.TOO_MANY_REQUEST_CODE -> {
-                        lateinit var mError : TooManyRequest
-                        try {
-                            mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(),
-                                TooManyRequest::class.java)
-                        } catch (_: IOException) {}
-                        _tooManyRequest.postValue(Event(mError))
+                        val seconds = Integer.valueOf(response.headers()[Constants.RETRY_AFTER]!!)
+                        _secondsMutableLiveData.postValue(seconds)
                     }
                 }
             }
 
             override fun onFailure(call: Call<CodeResponse>, t: Throwable) {
-                _errorMessage.postValue(Event(t.message!!))
+                _errorMessage.postValue(t.message!!)
                 pBarVisibility.set(View.GONE)
             }
 
@@ -76,31 +71,29 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
         RetrofitClient.getApiService().login(login).enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 pBarVisibility.set(View.GONE)
-                if(response.isSuccessful){
-                    val loginResponse = response.body()
-                    _loggedIn.postValue(Event(true))
-                    SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
-                    loginResponse.data.employee.let { employee ->
-                        insertEmployeeToDB(employee)
+                when (response.code()) {
+                    Constants.SUCCESS_CODE -> {
+                        val loginResponse = response.body()
+                        _loggedIn.postValue(true)
+                        SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
+                        loginResponse.data.employee.let { employee -> insertEmployeeToDB(employee) }
                     }
-                }else{
-                    lateinit var mError : BadRequest
-                    try {
-                        mError = GsonBuilder().create().fromJson(response.errorBody()!!.string(), BadRequest::class.java)
-                    } catch (_: IOException) {}
-                    when(response.code()){
-                        Constants.BAD_REQUEST_CODE -> {
-                            _errorMessage.postValue(Event(mError.message!!))
-                        }
-                        Constants.TOO_MANY_REQUEST_CODE -> {
-                            _errorMessage.postValue(Event(mError.message!!))
-                        }
+                    Constants.BAD_REQUEST_CODE -> {
+                        _errorMessage.postValue(
+                            App.appContext.getString(R.string.filled_incorrect_code)
+                        )
+                    }
+                    Constants.TOO_MANY_REQUEST_CODE -> {
+                        val seconds = Integer.valueOf(response.headers()[Constants.RETRY_AFTER]!!)
+                        _errorMessage.postValue(
+                            App.appContext.getString(R.string.too_many_request_message, seconds)
+                        )
                     }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _errorMessage.postValue(Event(t.message!!))
+                _errorMessage.postValue(t.message!!)
                 pBarVisibility.set(View.GONE)
             }
 

@@ -39,19 +39,6 @@ object Utils {
 
     }
 
-    fun getIntFromString(message: String): Int{
-        val sB = StringBuilder()
-        message.forEach { char ->
-            try {
-                if(Integer.valueOf(char.toString()) in 0..9){
-                    sB.append(char)
-                }
-            }catch (_: NumberFormatException){
-            }
-        }
-        return Integer.valueOf(sB.toString())
-    }
-
     fun showErrorMessage(context: Context, view: View, message: String) {
         val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
         val params = snackBar.view.layoutParams as FrameLayout.LayoutParams
