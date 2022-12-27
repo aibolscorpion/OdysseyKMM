@@ -4,7 +4,6 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
-import android.os.Build
 import android.text.Html
 import android.view.View
 import android.view.ViewGroup
@@ -56,7 +55,7 @@ object BindingAdapter {
     @JvmStatic fun setApplicationStatusIcon(imageView: ImageView, trip: Trip?){
         when(trip?.status){
             Constants.STATUS_OPENED -> {
-                if(trip.segments == null){
+                if(trip.segments?.isEmpty()!!){
                     imageView.setImageResource(R.drawable.icons_tabs_opened_without_details)
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
@@ -240,11 +239,8 @@ object BindingAdapter {
 
     @BindingAdapter("htmlText")
     @JvmStatic fun setSpannedText(textView: TextView, text: String?){
-        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        textView.text =
             Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
-        } else {
-            Html.fromHtml(text)
-        }
     }
 
     private fun properCase(inputVal: String): String {
@@ -324,7 +320,7 @@ object BindingAdapter {
         }
         when(trip?.status){
             Constants.STATUS_OPENED -> {
-                if(trip.segments == null){
+                if(trip.segments?.isEmpty()!!){
                     strBuilder.append(App.appContext.getString(R.string.opened_without_details_desc))
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
