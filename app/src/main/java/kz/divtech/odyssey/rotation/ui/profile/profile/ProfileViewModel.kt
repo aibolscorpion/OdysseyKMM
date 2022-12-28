@@ -41,9 +41,9 @@ class ProfileViewModel(val repository: ApplicationsRepository): ViewModel() {
     val employeeLiveData: LiveData<Employee> = repository.employee.asLiveData()
 
     fun deleteDataFromDB() = viewModelScope.launch{
+            SharedPrefs().clearAuthToken()
             repository.deleteData()
             repository.deleteEmployee()
-            SharedPrefs().clearAuthToken()
         }
 
 }

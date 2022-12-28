@@ -59,7 +59,7 @@ object DocumentBindingAdapter {
         checkedRadioButton.background = AppCompatResources.getDrawable(App.appContext, R.drawable.bg_checked_radio_button)
         checkedRadioButton.setTextColor(ContextCompat.getColor(App.appContext, R.color.white))
         uncheckedRadioButton.background = AppCompatResources.getDrawable(App.appContext, R.drawable.bg_unchecked_radio_button)
-        uncheckedRadioButton.setTextColor(ContextCompat.getColor(App.appContext, R.color.profile_menu_text))
+        uncheckedRadioButton.setTextColor(ContextCompat.getColor(App.appContext, R.color.grey))
     }
 
 

@@ -13,7 +13,7 @@
 
         <variable
             name="seconds"
-            type="String" />
+            type="Long" />
 
         <variable
             name="viewModel"
@@ -122,8 +122,9 @@
                 style="@style/descriptionTextStyle"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@{@string/resend_sms_with_seconds(seconds)}"
-                tools:text="@string/resend_sms_with_seconds"
-                />
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="@string/resend_sms_with_seconds" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginBtn"

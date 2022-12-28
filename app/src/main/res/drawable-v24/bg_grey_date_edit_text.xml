@@ -3,7 +3,7 @@
     <item>
         <layer-list>
             <item android:drawable="@drawable/bottom_line" android:gravity="top" android:top="28dp"/>
-            <item android:drawable="@drawable/icons_tabs_calendar" android:gravity="top|end" android:right="8dp"/>
+            <item android:drawable="@drawable/icons_tabs_grey_calendar" android:gravity="top|end" android:right="8dp"/>
         </layer-list>
 
     </item>

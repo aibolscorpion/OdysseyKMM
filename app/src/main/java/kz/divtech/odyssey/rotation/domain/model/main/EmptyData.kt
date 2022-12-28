@@ -12,22 +12,22 @@ enum class EmptyData(val icon: Drawable, val title: String, val  content: String
 
     ARCHIVE_TRIPS(ContextCompat.getDrawable(App.appContext, R.drawable.icon_travel)!!,
         App.appContext.getString(R.string.empty_archive_trips_title),
-        App.appContext.getString(R.string.empty_active_trips_content)),
+        App.appContext.getString(R.string.empty_archive_trips_content)),
 
     FAQ(ContextCompat.getDrawable(App.appContext, R.drawable.icon_faq)!!,
         App.appContext.getString(R.string.empty_faq_title),
         App.appContext.getString(R.string.empty_faq_content)),
 
     NEWS(ContextCompat.getDrawable(App.appContext, R.drawable.icon_news)!!,
-        App.appContext.getString(R.string.news_not_found_title),
-        App.appContext.getString(R.string.news_not_found_content)),
+        App.appContext.getString(R.string.empty_news_title),
+        App.appContext.getString(R.string.empty_news_content)),
 
     NOTIFICATIONS(ContextCompat.getDrawable(App.appContext, R.drawable.icon_notifications)!!,
-        App.appContext.getString(R.string.notifications_not_found_title),
-        App.appContext.getString(R.string.notifications_not_found_content)),
+        App.appContext.getString(R.string.empty_notifications_title),
+        App.appContext.getString(R.string.empty_notifications_content)),
 
     DOCUMENTS(ContextCompat.getDrawable(App.appContext, R.drawable.icon_document)!!,
-        App.appContext.getString(R.string.documents_not_found_title),
-        App.appContext.getString(R.string.documents_not_found_content))
+        App.appContext.getString(R.string.empty_documents_title),
+        App.appContext.getString(R.string.empty_documents_content))
 
 }

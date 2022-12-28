@@ -37,10 +37,6 @@ object BindingAdapter {
     @BindingAdapter("shift")
     @JvmStatic fun setImageByShift(imageView: ImageView, shift: String?){
         when (shift) {
-            Constants.DAY -> {
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(R.drawable.icons_tabs_shift_day)
-            }
             Constants.NIGHT -> {
                 imageView.visibility = View.VISIBLE
                 imageView.setImageResource(R.drawable.icons_tabs_shift_night)
@@ -317,6 +313,7 @@ object BindingAdapter {
         val strBuilder = StringBuilder()
         if (trip != null && trip.is_extra!!) {
             strBuilder.append(App.appContext.getString(R.string.extra_application))
+            strBuilder.append(Constants.SPACE)
         }
         when(trip?.status){
             Constants.STATUS_OPENED -> {
@@ -377,7 +374,6 @@ object BindingAdapter {
                             statusSet.add(SegmentStatus.OPENED)
                             strBuilder.append(App.appContext.getString(R.string.opened_more_than_one_segment))
                         }
-                        addNextLine(strBuilder, index, trip.segments.size)
                     }
 
                     Constants.STATUS_RETURNED -> {
@@ -385,15 +381,14 @@ object BindingAdapter {
                         strBuilder.append(App.appContext.getString(R.string.returned_more_than_one_segment,
                             segment.closed_reason, Utils.formatByGivenPattern(segment.ticket?.returned_at, Utils.DEFAULT_PATTERN)
                         ))
-                        addNextLine(strBuilder, index, trip.segments.size)
                     }
 
                     Constants.STATUS_ISSUED -> {
                         statusSet.add(SegmentStatus.ISSUED)
                         strBuilder.append(App.appContext.getString(R.string.issued_more_than_one_segment))
-                        addNextLine(strBuilder, index, trip.segments.size)
                     }
                 }
+                strBuilder.append(Constants.SPACE)
             }
             if(statusSet.size == 1){
                 if(statusSet.contains(SegmentStatus.OPENED)) {
@@ -421,9 +416,6 @@ object BindingAdapter {
         return strBuilder.toString()
     }
 
-    private fun addNextLine(strBuilder: StringBuilder,index: Int, segmentSize: Int){
-        if(index != segmentSize-1) strBuilder.append("\n")
-    }
 
 
     @BindingAdapter("depArrDate")

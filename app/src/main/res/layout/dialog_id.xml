@@ -43,7 +43,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="13dp"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:letterSpacing="0.01"
@@ -142,10 +142,10 @@
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
-                    android:layout_gravity="bottom"
                     android:layout_marginTop="@dimen/margin"
-                    android:onClick="@{() -> viewModel.updateDocument(document)}"
+                    android:background="@drawable/bg_grey_button"
                     android:text="@string/save" />
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

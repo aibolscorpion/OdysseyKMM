@@ -25,7 +25,7 @@
             android:layout_marginTop="4dp"
             android:text="@={document.number}"
             android:backgroundTint="@color/bottom_sheet_line"
-            style="@style/profileMenuTextStyle"
+            style="@style/uneditable_text"
             android:inputType="number"
             tools:text="@string/document_number_placeholder"/>
 
@@ -41,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
-            app:issueDate="@={document.issue_date}"
-            style="@style/profileMenuTextStyle"
+            app:issueDate="@{document.issue_date}"
+            style="@style/uneditable_text"
             android:focusable="false"
-            android:background="@drawable/bg_date_edit_text"
+            android:background="@drawable/bg_grey_date_edit_text"
             tools:text="@string/issue_date_placeholder" />
 
         <TextView
@@ -59,10 +59,10 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
-            app:issueDate="@={document.expire_date}"
-            style="@style/profileMenuTextStyle"
+            app:issueDate="@{document.expire_date}"
+            style="@style/uneditable_text"
             android:focusable="false"
-            android:background="@drawable/bg_date_edit_text"
+            android:background="@drawable/bg_grey_date_edit_text"
             tools:text="@string/issue_date_placeholder" />
 
         <TextView
@@ -78,7 +78,7 @@
             android:layout_marginTop="4dp"
             android:text="@={document.issue_by}"
             android:backgroundTint="@color/bottom_sheet_line"
-            style="@style/profileMenuTextStyle"
+            style="@style/uneditable_text"
             tools:text="@string/issue_authority_placeholder"/>
 
     </LinearLayout>

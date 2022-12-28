@@ -33,6 +33,7 @@ class TripsFragment : Fragment() {
 
         tripsViewModel.tripsLiveData.observe(viewLifecycleOwner) {
             tripsViewModel.compareTripDatesWithToday()
+            tripsViewModel.sortTripsByDate()
             setupViewPager()
         }
     }

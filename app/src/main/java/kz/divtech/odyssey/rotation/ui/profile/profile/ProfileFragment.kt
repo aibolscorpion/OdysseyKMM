@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logout(){
-        viewModel.deleteDataFromDB()
         goToLoginPage()
+        viewModel.deleteDataFromDB()
     }
 }

@@ -36,7 +36,7 @@
                     style="@style/mainTitleTextStyle" />
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="15sp"
                     android:textColor="@color/bottom_sheet_content"
@@ -53,10 +53,9 @@
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
-                    android:layout_gravity="bottom"
+                    android:background="@drawable/bg_grey_button"
                     android:text="@string/save"
-                    android:layout_marginTop="@dimen/margin"
-                    android:onClick="@{() -> viewModel.updateDocument(document)}" />
+                    android:layout_marginTop="@dimen/margin" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

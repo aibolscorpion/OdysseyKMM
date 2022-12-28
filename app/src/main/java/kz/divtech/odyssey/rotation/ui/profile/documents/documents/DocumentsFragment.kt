@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.databinding.FragmentDocumentBinding
+import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 
@@ -17,9 +17,9 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
     private val viewModel : DocumentsViewModel by viewModels{
         DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).repository)
     }
-    private lateinit var binding: FragmentDocumentBinding
+    private lateinit var binding: FragmentDocumentsBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentDocumentBinding.inflate(inflater)
+        binding = FragmentDocumentsBinding.inflate(inflater)
         binding.documentsFragment = this
         binding.viewModel = viewModel
 

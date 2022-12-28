@@ -107,7 +107,7 @@
     <style name="uneditable_text">
         <item name="android:fontFamily">@font/pt_root_ui_medium</item>
         <item name="android:textSize">17sp</item>
-        <item name="android:textColor">@color/gray</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:letterSpacing">0.01</item>
         <item name="android:lineSpacingExtra">7sp</item>
         <item name="android:focusable">false</item>

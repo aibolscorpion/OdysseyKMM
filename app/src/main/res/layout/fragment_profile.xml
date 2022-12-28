@@ -356,7 +356,7 @@
             android:text="@string/logout"
             style="@style/bottomSheetBtn"
             android:lineSpacingExtra="-1sp"
-            android:textColor="@color/gray"
+            android:textColor="@color/grey"
             android:layout_marginBottom="@dimen/margin"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/margin"

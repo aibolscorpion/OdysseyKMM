@@ -27,7 +27,7 @@ import java.util.*
 
 
 class MainFragment : Fragment(){
-    val viewModel : MainFragmentViewModel by viewModels(){
+    val viewModel : MainFragmentViewModel by viewModels {
         MainFragmentViewModel.MainViewModelFactory((requireActivity().application as App).repository)
     }
     lateinit var binding : FragmentMainBinding
@@ -63,11 +63,12 @@ class MainFragment : Fragment(){
 
     private fun getEmployeeInfo(){
         viewModel.employee.observe(viewLifecycleOwner){ employee ->
-
-            binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
+            if(employee != null){
+                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
                 append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
                 appendWithoutNull(employee.patronymic)
-            binding.employeeOrgTV.text = employee.orgName
+                binding.employeeOrgTV.text = employee.orgName
+            }
         }
     }
 

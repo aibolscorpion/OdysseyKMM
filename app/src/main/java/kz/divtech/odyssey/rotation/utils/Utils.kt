@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,6 +46,7 @@ object Utils {
         params.width = ViewGroup.LayoutParams.WRAP_CONTENT
         params.gravity = Gravity.CENTER_HORIZONTAL or Gravity.TOP
         snackBar.view.layoutParams = params
+        snackBar.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_text).maxLines = 3
         snackBar.setBackgroundTint(ContextCompat.getColor(context, R.color.bottom_sheet_error_title))
         snackBar.show()
     }

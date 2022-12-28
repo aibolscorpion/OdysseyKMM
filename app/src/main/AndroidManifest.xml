@@ -17,7 +17,8 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Main">
+            android:theme="@style/Theme.Main"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -26,7 +27,8 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true"
-            android:theme="@style/Theme.Login">
+            android:theme="@style/Theme.Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

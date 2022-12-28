@@ -63,8 +63,8 @@
     <fragment
         android:id="@+id/codeFragment"
         android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.SendSmsFragment"
-        app:layout="@layout/fragment_fill_code"
-        tools:layout="@layout/fragment_fill_code" >
+        app:layout="@layout/fragment_send_sms"
+        tools:layout="@layout/fragment_send_sms" >
         <argument
             android:name="extracedPhoneNumber"
             app:argType="string" />

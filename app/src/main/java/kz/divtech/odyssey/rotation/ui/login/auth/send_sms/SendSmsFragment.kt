@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.databinding.FragmentFillCodeBinding
+import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.SmsBroadcastReceiver
@@ -23,18 +23,15 @@ import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
     private val editTextList = ArrayList<EditText>()
-    private lateinit var dataBinding : FragmentFillCodeBinding
+    private lateinit var dataBinding : FragmentSendSmsBinding
     private var gCountDownTimber : CountDownTimer?= null
-    private val viewModel: SendSmsViewModel by viewModels{
-        SendSmsViewModel.FillCodeViewModelFactory((requireActivity().application as App).repository)
-    }
-
+    private lateinit var viewModel: SendSmsViewModel
     private lateinit var phoneNumber : String
     private lateinit var extractedPhoneNumber: String
     private lateinit var smsReceiver: SmsBroadcastReceiver
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        dataBinding = FragmentFillCodeBinding.inflate(inflater)
+        dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.codeFragment = this
 
         val args = SendSmsFragmentArgs.fromBundle(requireArguments())
@@ -57,30 +54,42 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val factory = SendSmsViewModel.FillCodeViewModelFactory((requireActivity().application as App).repository)
+        viewModel = ViewModelProvider(requireActivity(), factory)[SendSmsViewModel::class.java]
+
         dataBinding.viewModel = viewModel
         viewModel.requestSmsCode(extractedPhoneNumber)
 
-        viewModel.secondsLiveData.observe(viewLifecycleOwner) { seconds ->
-            showContactSupportBtn()
-            startTimer(seconds)
-            showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                getString(R.string.too_many_request_message, seconds)
-            )
-        }
-
-        viewModel.smsCodeSent.observe(viewLifecycleOwner) { smsCodeSent ->
-            if (smsCodeSent)
-                startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-        }
-
-        viewModel.loggedIn.observe(viewLifecycleOwner) { loggedIn ->
-            if (loggedIn) {
-                openMainActivity()
+        viewModel.secondsLiveData.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { seconds ->
+                showContactSupportBtn()
+                startTimer(seconds)
+                showErrorMessage(requireContext(), dataBinding.sendSmsFL,
+                    getString(R.string.too_many_request_message, seconds)
+                )
             }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) {  message ->
-            showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
+        viewModel.smsCodeSent.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { smsCodeSent ->
+                if (smsCodeSent)
+                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+            }
+        }
+
+        viewModel.loggedIn.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { loggedIn ->
+                if (loggedIn) {
+                    openMainActivity()
+                }
+            }
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {  event ->
+            event.getContentIfNotHandled()?.let { message ->
+                showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
+            }
         }
     }
 
@@ -109,7 +118,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         dataBinding.loginBtn.visibility = View.INVISIBLE
         gCountDownTimber = object: CountDownTimer(longTime, Config.COUNT_DOWN_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
-                dataBinding.seconds = (millisUntilFinished/1000).toString()
+                dataBinding.seconds = millisUntilFinished/1000
             }
 
             override fun onFinish() {

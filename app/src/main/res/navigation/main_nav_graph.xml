@@ -68,8 +68,8 @@
         android:id="@+id/documentsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsFragment"
         android:label="@string/documents"
-        android:layout="@layout/fragment_document"
-        tools:layout="@layout/fragment_document" >
+        android:layout="@layout/fragment_documents"
+        tools:layout="@layout/fragment_documents" >
         <action
             android:id="@+id/action_documentsFragment_to_documentDialog"
             app:destination="@id/documentDialog" />

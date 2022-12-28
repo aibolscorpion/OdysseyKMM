@@ -70,7 +70,6 @@
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/shift"
                 app:shift="@{trip.shift}"
-                tools:src="@drawable/icons_tabs_shift_day"
                 app:layout_constraintTop_toTopOf="@id/tripStatusIV"
                 app:layout_constraintBottom_toBottomOf="@id/tripStatusIV"
                 app:layout_constraintEnd_toStartOf="@id/tripStatusIV" />

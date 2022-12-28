@@ -8,6 +8,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
+import kotlin.collections.ArrayList
 
 class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
     val tripsLiveData: LiveData<Data> = repository.data.asLiveData()
@@ -27,6 +28,19 @@ class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
                 }else if(tripDateTime.isAfter(today)) {
                     activeTrips.add(trip)
                 }
+        }
+    }
+
+    fun sortTripsByDate(){
+        if(activeTrips.isNotEmpty()){
+            activeTrips.sortBy { trip ->
+                Utils.getLocalDateByPattern(trip.date!!)
+            }
+        }
+        if(archiveTrips.isNotEmpty()){
+            archiveTrips.sortByDescending { trip ->
+                Utils.getLocalDateByPattern(trip.date!!)
+            }
         }
     }
 
