@@ -169,7 +169,7 @@
     <string name="train_number_dep_arr_station_names">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
-    <string name="download_ticket">Скачать билет: %1$s - %2$s</string>
+    <string name="download_ticket">Открыть билет: %1$s - %2$s</string>
     <string name="ticket_not_found">Билет не найден</string>
     <string name="no_app_for_view_pdf">У вас нет приложения для открытия pdf файла</string>
     <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>

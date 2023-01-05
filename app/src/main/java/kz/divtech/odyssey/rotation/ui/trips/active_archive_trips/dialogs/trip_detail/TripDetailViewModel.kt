@@ -7,6 +7,8 @@ import android.net.Uri
 import android.os.Environment
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
@@ -16,8 +18,13 @@ import java.io.File
 
 class TripDetailViewModel(val app: Application): AndroidViewModel(app) {
     var cityAndTimeInWay: ObservableField<String> = ObservableField("")
+    var currentTicket: Ticket? = null
 
-    var filePathAfterDownloads: String? = null
+    private val _fileMutableLiveData = MutableLiveData<File>()
+    val fileLiveData: LiveData<File> = _fileMutableLiveData
+
+    private val map = mutableMapOf<Long, File>()
+
     var downloadId: Long = 0
 
     fun setCityAndTotalTimeInWay(trip: Trip){
@@ -34,18 +41,40 @@ class TripDetailViewModel(val app: Application): AndroidViewModel(app) {
     }
 
 
-    fun downloadTicket(currentTicket: Ticket){
-        val pdfUrl = currentTicket.ticket_url!!
-        val fileNameWithExtension = "${currentTicket.dep_station_name} - ${currentTicket.arr_station_name}" +
-                Config.ticketFileExtension
-        filePathAfterDownloads = App.appContext.getString(R.string.app_name) + File.separator + fileNameWithExtension
+    fun openFileIfExists(currentTicket: Ticket) {
+        this.currentTicket = currentTicket
+        val file = getFile()
+        if(file.exists()){
+            _fileMutableLiveData.value = file
+        }else{
+            downloadTicket()
+        }
+    }
 
+    private fun downloadTicket(){
+        val pdfUrl = currentTicket?.ticket_url!!
         val downloadManager = App.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(pdfUrl))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filePathAfterDownloads)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, getFilePath())
         downloadId = downloadManager.enqueue(request)
+        map[downloadId] = getFile()
     }
 
+    fun getFileById(downloadId: Long): File{
+        return map[downloadId]!!
+    }
+
+    private fun getFile(): File{
+        return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS
+                + File.separator + getFilePath())
+    }
+
+    private fun getFilePath(): String{
+        val fileNameWithExtension = "${currentTicket?.id} " +
+                "${currentTicket?.dep_station_name} - ${currentTicket?.arr_station_name}" +
+                Config.ticketFileExtension
+        return App.appContext.getString(R.string.app_name) + File.separator + fileNameWithExtension
+    }
 
 }

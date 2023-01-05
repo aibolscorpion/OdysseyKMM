@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemDownloadTicketBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
 
@@ -30,12 +29,12 @@ class DownloadTicketButtonAdapter(val downloadInterface: DownloadInterface) : Re
     }
 
     inner class TicketViewHolder(val binding: ItemDownloadTicketBinding) : RecyclerView.ViewHolder(binding.root){
-
+        private val context = binding.root.context
         fun bind(ticket: Ticket){
             binding.root.setOnClickListener{
                 downloadInterface.onTicketClicked(ticket)
             }
-            binding.ticketName = App.appContext.getString(R.string.download_ticket,
+            binding.ticketName = context.getString(R.string.download_ticket,
                 ticket.dep_station_name, ticket.arr_station_name)
         }
 

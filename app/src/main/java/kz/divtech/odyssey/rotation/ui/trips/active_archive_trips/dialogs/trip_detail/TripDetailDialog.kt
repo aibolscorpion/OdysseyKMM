@@ -2,13 +2,8 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_d
 
 import android.app.Dialog
 import android.app.DownloadManager
-import android.content.ActivityNotFoundException
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +14,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
@@ -33,7 +27,6 @@ import java.io.File
 
 
 class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , DownloadTicketButtonAdapter.DownloadInterface {
-    private val DOWNLOAD_TICKET_LENGTH = 10000
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
     private val args: TripDetailDialogArgs by navArgs()
     internal val viewModel: TripDetailViewModel by viewModels()
@@ -52,6 +45,10 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
 
         requireActivity().registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
 
+        viewModel.fileLiveData.observe(this) { file ->
+            openFile(file)
+        }
+
         viewModel.setCityAndTotalTimeInWay(args.trip)
 
         dataBinding.listener = this
@@ -63,7 +60,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
         setDownloadButtonRV()
 
         dataBinding.trip
-        }
+    }
 
     private fun setSegmentFullRV(){
         val tripDetailAdapter = SegmentFullAdapter()
@@ -117,23 +114,21 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if(viewModel.downloadId == id){
-                Snackbar.make(dataBinding.coordinatorLayout, R.string.open_downloaded_ticket, DOWNLOAD_TICKET_LENGTH)
-                .setAction(android.R.string.ok) {
-                    openFile()
-                }
-                .show()
-
-            }
+            if(viewModel.downloadId == id){ openFileById(id) }
         }
     }
 
-    fun openFile() {
-        val file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-            viewModel.filePathAfterDownloads!!)
+
+    fun openFileById(downloadId : Long){
+        val file = viewModel.getFileById(downloadId)
+        openFile(file)
+    }
+
+    private fun openFile(file: File){
         if(file.exists()){
-            val fileURI = FileProvider.getUriForFile(App.appContext, App.appContext.packageName+
-                    ".provider", file)
+            val fileURI = FileProvider.getUriForFile(
+                App.appContext, App.appContext.packageName+
+                        ".provider", file)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -144,14 +139,11 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
             }catch (e: ActivityNotFoundException){
                 Toast.makeText(requireContext(), R.string.no_app_for_view_pdf, Toast.LENGTH_LONG).show()
             }
-        }else{
-            Toast.makeText(requireContext(), R.string.ticket_not_found, Toast.LENGTH_LONG).show()
         }
     }
 
-
     override fun onTicketClicked(currentTicket: Ticket) {
-        viewModel.downloadTicket(currentTicket)
+        viewModel.openFileIfExists(currentTicket)
     }
 
 }
