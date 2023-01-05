@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.help.press_service.article.ArticleViewModel" />
+        <variable
+            name="fullArticle"
+            type="kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="24dp"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:paddingBottom="@dimen/two_times_margin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/news_time_placeholder"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/closeIV"
+                        android:singleLine="true"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="12sp"
+                        android:textColor="#4D1B3652"
+                        android:textAllCaps="true"
+                        android:letterSpacing="0.01"
+                        android:text="@{fullArticle.published_on.toString()}"
+                        android:lineSpacingExtra="10sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/closeIV"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="center"
+                        android:src="@drawable/icons_tabs_close"
+                        android:layout_gravity="top|end"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:onClick="@{() -> listener.close() }" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/terms_of_agreement_title"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="24sp"
+                    android:gravity="start"
+                    android:text="@{fullArticle.title}"
+                    tools:text="@string/news_title_placeholder" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/news_content_placeholder"
+                    android:layout_marginTop="@dimen/two_times_margin"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="17sp"
+                    android:textColor="#748595"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="8sp"
+                    app:htmlText="@{fullArticle.content}"
+                    android:gravity="start" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.core.widget.NestedScrollView>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.PBarVisibility}" />
+
+    </FrameLayout>
+</layout>

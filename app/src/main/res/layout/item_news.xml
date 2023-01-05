@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="news"
-            type="kz.divtech.odyssey.rotation.domain.model.help.press_service.News" />
+            name="article"
+            type="kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/newsLLC"
+        android:id="@+id/articleLLC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pt_root_ui_bold"
                 android:textColor="#2d4461"
-                android:text="@{news.title}"
+                android:text="@{article.title}"
                 android:textSize="18sp"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="6sp"
@@ -48,7 +48,7 @@
                 android:layout_marginTop="8dp"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="7sp"
-                android:text="@{news.content}"
+                android:text="@{article.short_content}"
                 tools:text="@string/notification_content_placeholder"
                 android:maxLines="2"/>
 
@@ -62,10 +62,9 @@
                 android:textColor="#4D1B3652"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="10sp"
-                android:text="@{news.time}"
+                android:text="@{article.published_on}"
                 android:textAllCaps="true"
                 tools:text="@string/notification_time_placeholder"/>
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -4,6 +4,8 @@ import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login
 import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
@@ -46,10 +48,10 @@ interface ApiService {
 
     //Articles
     @GET("articles")
-    fun getArticles()
+    fun getArticles() : Call<News>
 
-    @GET("articles/id")
-    fun getSpecificArticleById()
+    @GET("articles/{id}")
+    fun getSpecificArticleById(@Path("id") articleId: Int) : Call<FullArticle>
 
     @POST("articles/269/mark-as-read")
     fun markAsReadArticleById()

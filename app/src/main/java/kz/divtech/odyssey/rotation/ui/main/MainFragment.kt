@@ -27,8 +27,8 @@ import java.util.*
 
 
 class MainFragment : Fragment(){
-    val viewModel : MainFragmentViewModel by viewModels {
-        MainFragmentViewModel.MainViewModelFactory((requireActivity().application as App).repository)
+    val viewModel : MainViewModel by viewModels {
+        MainViewModel.MainViewModelFactory((requireActivity().application as App).repository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null

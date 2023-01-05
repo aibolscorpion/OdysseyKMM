@@ -24,5 +24,5 @@ class HelpFragment : Fragment() {
     fun openQAFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
 
     fun openPressServiceFragment() =
-        findNavController().navigate(HelpFragmentDirections.actionHelpFragmentToPressServiceFragment())
+        findNavController().navigate(HelpFragmentDirections.actionHelpFragmentToNewsFragment())
 }

@@ -10,7 +10,8 @@
 
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.main.MainFragmentViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.main.MainViewModel" />
+
         <variable
             name="trip"
             type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.terms_of_agreement
+package kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement
 
 import android.app.Dialog
 import android.os.Bundle

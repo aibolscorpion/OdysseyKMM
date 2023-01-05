@@ -235,8 +235,9 @@ object BindingAdapter {
 
     @BindingAdapter("htmlText")
     @JvmStatic fun setSpannedText(textView: TextView, text: String?){
-        textView.text =
-            Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
+        if(text != null && text.isNotEmpty()){
+            textView.text = Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
+        }
     }
 
     private fun properCase(inputVal: String): String {

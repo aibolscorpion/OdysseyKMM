@@ -22,7 +22,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/pt_root_ui"
             android:textStyle="bold"
             android:textSize="17sp"
@@ -36,7 +36,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/pt_root_ui_medium"
             android:textStyle="normal"
             android:textSize="14sp"

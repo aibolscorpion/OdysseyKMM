@@ -6,10 +6,10 @@
     <data>
         <variable
             name="profileFragment"
-            type="kz.divtech.odyssey.rotation.ui.profile.profile.ProfileFragment" />
+            type="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment" />
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.profile.profile.ProfileViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.profile.ProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

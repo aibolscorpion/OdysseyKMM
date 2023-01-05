@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.profile.profile
+package kz.divtech.odyssey.rotation.ui.profile
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch

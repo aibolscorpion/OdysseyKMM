@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             when(destination.id){
                 R.id.personalDataFragment, R.id.documentsFragment,
                 R.id.notificationFragment, R.id.faqFragment,
-                    R.id.pressServiceFragment-> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
+                    R.id.newsFragment-> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
             }
         }
     }

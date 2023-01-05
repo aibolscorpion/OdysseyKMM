@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.profile.profile
+package kz.divtech.odyssey.rotation.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater

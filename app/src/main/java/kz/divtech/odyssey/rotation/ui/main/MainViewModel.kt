@@ -15,13 +15,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.LocalDate
 
-class MainFragmentViewModel(private val repository: ApplicationsRepository) : ViewModel() {
+class MainViewModel(private val repository: ApplicationsRepository) : ViewModel() {
 
     class MainViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(MainFragmentViewModel::class.java)){
+            if(modelClass.isAssignableFrom(MainViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return MainFragmentViewModel(repository) as T
+                return MainViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

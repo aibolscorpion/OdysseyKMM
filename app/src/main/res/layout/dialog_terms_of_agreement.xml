@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.terms_of_agreement.TermsOfAgreementViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsOfAgreementViewModel" />
 
     </data>
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,8 +29,7 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
                 android:layout_marginTop="@dimen/two_times_margin"
-                android:layout_marginBottom="@dimen/two_times_margin"
-                />
+                android:layout_marginBottom="@dimen/two_times_margin" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="50dp"
@@ -38,8 +37,7 @@
                 android:scaleType="center"
                 android:src="@drawable/icons_tabs_close"
                 android:layout_gravity="top|end"
-                android:onClick="@{() -> listener.close() }"
-                />
+                android:onClick="@{() -> listener.close() }" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
