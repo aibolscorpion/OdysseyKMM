@@ -28,8 +28,7 @@
                 android:orientation="vertical"
                 android:paddingTop="24dp"
                 android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin"
-                android:paddingBottom="@dimen/two_times_margin">
+                android:paddingEnd="@dimen/margin" >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

@@ -6,6 +6,9 @@
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsViewModel" />
+        <variable
+            name="emptyData"
+            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
 
     <FrameLayout
@@ -16,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="25dp"
-            android:paddingBottom="25dp"
             android:paddingStart="@dimen/margin"
             android:paddingEnd="@dimen/margin"
             android:background="@color/main_bg"
@@ -56,6 +58,11 @@
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+            <include
+                android:id="@+id/noNews"
+                layout="@layout/layout_empty_data"
+                app:emptyData="@{emptyData.NEWS}"
+                android:visibility="gone" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <ProgressBar
@@ -63,6 +70,7 @@
             android:layout_height="wrap_content"
             android:visibility="@{viewModel.PBarVisibility}"
             android:layout_gravity="center" />
+
     </FrameLayout>
 
 </layout>

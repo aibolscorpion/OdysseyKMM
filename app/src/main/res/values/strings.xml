@@ -212,8 +212,9 @@
     <string name="news_time_placeholder">вчера, в 13:40</string>
     <string name="empty_news_title">Новости не найдены</string>
     <string name="empty_news_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
-
-
+    <string name="today_at_time">СЕГОДНЯ, В %1$s</string>
+    <string name="yesterday_at_time">ВЧЕРА, В %1$s</string>
+    <string name="date_at_time">%1$s В %2$s</string>
     -----------------------------------------------------------------------------------------------
     //Страница Профиль
     <string name="my_profile">Мой профиль</string>

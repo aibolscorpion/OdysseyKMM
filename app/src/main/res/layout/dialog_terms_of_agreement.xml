@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
     <data>
         <variable
             name="listener"
@@ -11,25 +10,23 @@
             type="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsOfAgreementViewModel" />
 
     </data>
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.core.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <FrameLayout android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <TextView
+            <WebView
+                android:id="@+id/webView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:htmlText="@{viewModel.content}"
-                tools:text="@string/terms_of_agreement_content_placeholder"
-                android:gravity="start"
-                style="@style/bottomSheetContent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginTop="@dimen/two_times_margin"
-                android:layout_marginBottom="@dimen/two_times_margin" />
+                android:layout_marginTop="@dimen/two_times_margin" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="50dp"
@@ -40,6 +37,7 @@
                 android:onClick="@{() -> listener.close() }" />
 
             <ProgressBar
+                android:id="@+id/termsProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

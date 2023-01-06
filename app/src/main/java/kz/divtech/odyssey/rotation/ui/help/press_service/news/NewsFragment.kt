@@ -29,13 +29,18 @@ class NewsFragment : Fragment(), NewsListener {
         binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
 
         viewModel.newsLiveData.observe(viewLifecycleOwner){ news ->
-            adapter.setNews(news)
+            if(news != null && news.isNotEmpty()){
+                adapter.setNews(news)
+            }else{
+                binding.noNews.root.visibility = View.VISIBLE
+            }
         }
         viewModel.getAllNews()
 
     }
 
     override fun onNewsClick(articleId: Int) {
+        viewModel.markAsRead(articleId)
         val action = NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId)
         findNavController().navigate(action)
     }

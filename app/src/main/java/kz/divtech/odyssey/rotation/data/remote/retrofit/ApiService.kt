@@ -53,8 +53,8 @@ interface ApiService {
     @GET("articles/{id}")
     fun getSpecificArticleById(@Path("id") articleId: Int) : Call<FullArticle>
 
-    @POST("articles/269/mark-as-read")
-    fun markAsReadArticleById()
+    @POST("articles/{id}/mark-as-read")
+    fun markAsReadArticleById(@Path("id") articleId: Int): Call<ResponseBody>
 
     //EmployeeInfo
     @GET("employees/info")

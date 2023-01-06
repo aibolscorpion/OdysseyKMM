@@ -9,6 +9,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,20 @@ class NewsViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<News>, t: Throwable) {
+                pBarVisibility.set(View.GONE)
+            }
+
+        })
+    }
+
+    fun markAsRead(id: Int){
+        pBarVisibility.set(View.VISIBLE)
+        RetrofitClient.getApiService().markAsReadArticleById(id).enqueue(object: Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                pBarVisibility.set(View.GONE)
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 pBarVisibility.set(View.GONE)
             }
 
