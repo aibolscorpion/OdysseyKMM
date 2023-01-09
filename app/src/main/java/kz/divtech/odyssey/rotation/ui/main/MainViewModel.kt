@@ -10,9 +10,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 import java.time.LocalDate
 
 class MainViewModel(private val repository: ApplicationsRepository) : ViewModel() {
@@ -43,9 +41,9 @@ class MainViewModel(private val repository: ApplicationsRepository) : ViewModel(
 
     fun getTrips(){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getTrips().enqueue(object: Callback<Data> {
-            override fun onResponse(call: Call<Data>, response: Response<Data>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.getApiService().getTrips()
                 val trips = response.body()?.data?.data
                 if(response.isSuccessful){
                     insertTrips(response.body()!!)
@@ -55,12 +53,11 @@ class MainViewModel(private val repository: ApplicationsRepository) : ViewModel(
                         findNearestTrip(trips)
                     }
                 }
+            }catch (e : Exception){
+                Timber.e("exception - ${e.message}")
             }
-
-            override fun onFailure(call: Call<Data>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 
     fun findNearestTrip(trips: List<Trip>){

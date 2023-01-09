@@ -5,14 +5,12 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 
 class NewsViewModel : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
@@ -22,34 +20,30 @@ class NewsViewModel : ViewModel() {
 
     fun getAllNews(){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getArticles().enqueue(object: Callback<News>{
-            override fun onResponse(call: Call<News>, response: Response<News>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().getArticles()
                 when(response.code()){
                     Constants.SUCCESS_CODE -> {
                         _newsMutableLiveData.postValue(response.body()!!.data)
                     }
                 }
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
             }
-
-            override fun onFailure(call: Call<News>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 
     fun markAsRead(id: Int){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().markAsReadArticleById(id).enqueue(object: Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try{
+                RetrofitClient.getApiService().markAsReadArticleById(id)
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
             }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 }

@@ -26,6 +26,7 @@ object Constants {
     const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400
     const val UNAUTHORIZED_CODE = 401
+    const val UNPROCESSABLE_ENTITY_CODE = 422
     const val TOO_MANY_REQUEST_CODE = 429
 
 

@@ -3,14 +3,11 @@ package kz.divtech.odyssey.rotation.ui.login.auth.find_employee
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.utils.Event
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class FindEmployeeViewModel : ViewModel() {
     private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
@@ -26,24 +23,21 @@ class FindEmployeeViewModel : ViewModel() {
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber).enqueue(object:
-            Callback<EmployeeData> {
-            override fun onResponse(call: Call<EmployeeData>, response: Response<EmployeeData>) {
-                pBarVisibility.set(View.GONE)
-                when(response.code()){
-                    Constants.SUCCESS_CODE ->
-                        _employeeInfo.postValue(Event(response.body()?.data?.employee!!))
-                    Constants.BAD_REQUEST_CODE ->
-                        _isEmployeeNotFounded.postValue(Event(true))
+        viewModelScope.launch {
+            try {
+                val callResult = RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber)
+                if(callResult.code() == Constants.SUCCESS_CODE){
+                    _employeeInfo.postValue(Event(callResult.body()?.data?.employee!!))
+                }else if(callResult.code() == Constants.BAD_REQUEST_CODE){
+                    _isEmployeeNotFounded.postValue(Event(true))
                 }
-            }
-
-            override fun onFailure(call: Call<EmployeeData>, t: Throwable) {
+            }catch (e: Exception){
                 _isErrorHappened.postValue(Event(true))
-                pBarVisibility.set(View.GONE)
             }
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
+
 
 
 }

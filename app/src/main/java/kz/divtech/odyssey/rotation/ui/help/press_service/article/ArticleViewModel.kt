@@ -5,12 +5,12 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 
 class ArticleViewModel : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
@@ -20,21 +20,18 @@ class ArticleViewModel : ViewModel() {
 
     fun getArticleById(articleId: Int){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getSpecificArticleById(articleId).enqueue(object: Callback<FullArticle> {
-            override fun onResponse(call: Call<FullArticle>, response: Response<FullArticle>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().getSpecificArticleById(articleId)
                 when(response.code()){
                     Constants.SUCCESS_CODE -> {
                         _fullArticleMutableLiveData.postValue(response.body())
                     }
                 }
-
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
             }
-
-            override fun onFailure(call: Call<FullArticle>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 }

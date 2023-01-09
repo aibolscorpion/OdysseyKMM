@@ -14,6 +14,7 @@ class SharedPrefs() {
     private val editor = sharedPref.edit()
 
     val isLoggedIn = fetchToken().isNotEmpty()
+
     fun saveAuthToken(token : String){
         editor.putString(userToken, token)
         editor.apply()

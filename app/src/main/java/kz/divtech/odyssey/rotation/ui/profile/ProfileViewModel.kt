@@ -6,26 +6,16 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
 
 class ProfileViewModel(val repository: ApplicationsRepository): ViewModel() {
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
     fun logout(){
-        RetrofitClient.getApiService().logout().enqueue(object: retrofit2.Callback<ResponseBody> {
-
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                _isSuccessfullyLoggedOut.postValue(response.isSuccessful)
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                _isSuccessfullyLoggedOut.postValue(false)
-            }
-        })
-
+        viewModelScope.launch {
+            val callResult = RetrofitClient.getApiService().logout()
+            _isSuccessfullyLoggedOut.postValue(callResult.isSuccessful())
+        }
     }
 
     class ProfileViewModelFactory(val repository: ApplicationsRepository) : ViewModelProvider.Factory{

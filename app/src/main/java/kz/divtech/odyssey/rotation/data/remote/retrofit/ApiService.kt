@@ -13,48 +13,48 @@ import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
-import retrofit2.Call
 import retrofit2.http.*
+import retrofit2.Response
 
 interface ApiService {
 
     @GET("user-agreement")
-    fun getUserAgreement(): Call<ResponseBody>
+    suspend fun getUserAgreement(): Response<ResponseBody>
 
     @GET("employees/get-employee-by-phone")
-    fun getEmployeeByPhone(@Query("phone") phone: String): Call<EmployeeData>
+    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Response<EmployeeData>
 
     //login
     @POST("employees/send-code-login")
-    fun sendSms(@Body phone: HashMap<String, String>): Call<CodeResponse>
+    suspend fun sendSms(@Body phone: HashMap<String, String>): Response<CodeResponse>
 
     @POST("employees/login")
-    fun login(@Body login : Login): Call<LoginResponse>
+    suspend fun login(@Body login : Login): Response<LoginResponse>
 
     @GET("employees/get-employee-by-iin")
-    fun getEmployeeByIIN(@Query("iin") iin: String): Call<EmployeeData>
+    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Response<EmployeeData>
 
     @POST("employees/update-phone")
-    fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Call<ResponseBody>
+    suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Response<ResponseBody>
 
 
     //Trips
     @GET("employees/get-applications")
-    fun getTrips(): Call<Data>
+    suspend fun getTrips(): Response<Data>
 
     //FAQ
     @GET("faqs")
-    fun getFAQs() : Call<List<Faq>>
+    suspend fun getFAQs() : Response<List<Faq>>
 
     //Articles
     @GET("articles")
-    fun getArticles() : Call<News>
+    suspend fun getArticles() : Response<News>
 
     @GET("articles/{id}")
-    fun getSpecificArticleById(@Path("id") articleId: Int) : Call<FullArticle>
+    suspend fun getSpecificArticleById(@Path("id") articleId: Int) : Response<FullArticle>
 
     @POST("articles/{id}/mark-as-read")
-    fun markAsReadArticleById(@Path("id") articleId: Int): Call<ResponseBody>
+    suspend fun markAsReadArticleById(@Path("id") articleId: Int): Response<ResponseBody>
 
     //EmployeeInfo
     @GET("employees/info")
@@ -62,14 +62,14 @@ interface ApiService {
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("employees/update-data")
-    fun updateData(@Body employee: Employee): Call<ResponseBody>
+    suspend fun updateData(@Body employee: Employee): Response<ResponseBody>
 
     //Documents
     @GET("employees/get-documents")
-    fun getDocuments(): Call<Documents>
+    suspend fun getDocuments(): Response<Documents>
 
     @POST("employees/update-document")
-    fun updateDocument(@Body document: Document): Call<ResponseBody>
+    suspend fun updateDocument(@Body document: Document): Response<ResponseBody>
 
     //Notifications
     @GET("notifications")
@@ -80,7 +80,7 @@ interface ApiService {
 
     //Logout
     @POST("logout")
-    fun logout(): Call<ResponseBody>
+    suspend fun logout(): Response<ResponseBody>
 
     //DeviceInfo
     @POST("employees/fix")

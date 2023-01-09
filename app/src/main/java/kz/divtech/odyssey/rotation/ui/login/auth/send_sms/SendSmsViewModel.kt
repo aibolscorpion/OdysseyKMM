@@ -10,13 +10,9 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
-import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
 import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
     var authLogId: String? = null
@@ -42,10 +38,9 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
         phoneHashMap[Constants.PHONE] = phoneNumber
         phoneHashMap[Config.REQUEST_TYPE] = Constants.TEST
 
-        RetrofitClient.getApiService().sendSms(phoneHashMap).enqueue(object :
-            Callback<CodeResponse> {
-            override fun onResponse(call: Call<CodeResponse>, response: Response<CodeResponse>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try {
+                val response = RetrofitClient.getApiService().sendSms(phoneHashMap)
                 when(response.code()){
                     Constants.SUCCESS_CODE -> {
                         authLogId = response.body()?.data?.auth_log_id
@@ -56,22 +51,20 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
                         _secondsMutableLiveData.postValue(Event(seconds))
                     }
                 }
+            }catch (e: Exception){
+                _errorMessage.postValue(Event((e.message.toString())))
             }
-
-            override fun onFailure(call: Call<CodeResponse>, t: Throwable) {
-                _errorMessage.postValue(Event(t.message!!))
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 
     fun login(phoneNumber: String, code: String){
         pBarVisibility.set(View.VISIBLE)
         val login = Login(phoneNumber, code, authLogId)
-        RetrofitClient.getApiService().login(login).enqueue(object: Callback<LoginResponse> {
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                pBarVisibility.set(View.GONE)
+
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().login(login)
                 when (response.code()) {
                     Constants.SUCCESS_CODE -> {
                         val loginResponse = response.body()
@@ -88,18 +81,14 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
                         val seconds = Integer.valueOf(response.headers()[Constants.RETRY_AFTER]!!)
                         _errorMessage.postValue(
                             Event(App.appContext.getString(R.string.too_many_request_message, seconds))
-
                         )
                     }
                 }
+            }catch (e: Exception){
+                _errorMessage.postValue(Event(e.message!!))
             }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                _errorMessage.postValue(Event(t.message!!))
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 
     class FillCodeViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{

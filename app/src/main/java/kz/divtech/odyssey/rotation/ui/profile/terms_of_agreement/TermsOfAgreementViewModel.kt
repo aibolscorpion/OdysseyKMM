@@ -5,11 +5,10 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 
 class TermsOfAgreementViewModel: ViewModel(){
     private val _htmlMutableLiveData = MutableLiveData<String>()
@@ -19,19 +18,20 @@ class TermsOfAgreementViewModel: ViewModel(){
 
     fun getUserAgreement(){
         progressVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getUserAgreement().enqueue(object: Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().getUserAgreement()
                 if(response.isSuccessful){
-                    _htmlMutableLiveData.postValue(response.body()?.string())
+                    val value = response.body()?.string()
+                    _htmlMutableLiveData.postValue(value!!)
+                }else{
+                    progressVisibility.set(View.GONE)
                 }
-
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
                 progressVisibility.set(View.GONE)
             }
-
-        })
+        }
     }
 
 }

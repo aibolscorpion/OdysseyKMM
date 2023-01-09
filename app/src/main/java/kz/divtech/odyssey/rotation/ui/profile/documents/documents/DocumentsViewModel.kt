@@ -3,13 +3,12 @@ package kz.divtech.odyssey.rotation.ui.profile.documents.documents
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
-import retrofit2.Call
-import retrofit2.Response
-import javax.security.auth.callback.Callback
+import timber.log.Timber
 
 class DocumentsViewModel(repository: ApplicationsRepository) : ViewModel() {
 
@@ -20,19 +19,17 @@ class DocumentsViewModel(repository: ApplicationsRepository) : ViewModel() {
 
     fun getAllDocuments(){
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getDocuments().enqueue(object: Callback,
-            retrofit2.Callback<Documents> {
-            override fun onResponse(call: Call<Documents>, response: Response<Documents>) {
-                pBarVisibility.set(View.GONE)
-                    if(response.isSuccessful){
-                        _documents.postValue(response.body())
-                    }
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().getDocuments()
+                if(response.isSuccessful){
+                    _documents.postValue(response.body())
+                }
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
             }
-
-            override fun onFailure(call: Call<Documents>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-        })
+            pBarVisibility.set(View.GONE)
+        }
     }
 
     val employee: LiveData<Employee> = repository.employee.asLiveData()

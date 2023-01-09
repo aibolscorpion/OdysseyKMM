@@ -5,11 +5,11 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
 
 class FaqViewModel: ViewModel() {
     private val _faqList = MutableLiveData<List<Faq>>()
@@ -19,18 +19,17 @@ class FaqViewModel: ViewModel() {
 
     fun getFaqList() {
         pBarVisibility.set(View.VISIBLE)
-        RetrofitClient.getApiService().getFAQs().enqueue(object : Callback<List<Faq>>{
-            override fun onResponse(call: Call<List<Faq>>, response: Response<List<Faq>>) {
-                pBarVisibility.set(View.GONE)
+        viewModelScope.launch {
+            try{
+                val response = RetrofitClient.getApiService().getFAQs()
                 if(response.isSuccessful){
                     _faqList.postValue(response.body()!!)
                 }
+            }catch (e: Exception){
+                Timber.e("exception - ${e.message}")
             }
+            pBarVisibility.set(View.GONE)
+        }
 
-            override fun onFailure(call: Call<List<Faq>>, t: Throwable) {
-                pBarVisibility.set(View.GONE)
-            }
-
-        })
     }
 }
