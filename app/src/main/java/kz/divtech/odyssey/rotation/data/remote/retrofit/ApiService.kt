@@ -58,7 +58,7 @@ interface ApiService {
 
     //EmployeeInfo
     @GET("employees/info")
-    fun getEmployeeInfo()
+    fun getEmployeeInfo() : Response<Employee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("employees/update-data")

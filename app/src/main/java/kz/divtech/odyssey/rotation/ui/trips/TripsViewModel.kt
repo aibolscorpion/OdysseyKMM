@@ -1,23 +1,34 @@
 package kz.divtech.odyssey.rotation.ui.trips
 
+import android.annotation.SuppressLint
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
+import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 
-class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
-    val tripsLiveData: LiveData<Data> = repository.data.asLiveData()
+class TripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
+    val tripsLiveData = tripsRepository.trips.asLiveData()
     private val today = LocalDate.now()
     val activeTrips = ArrayList<Trip>()
     val archiveTrips = ArrayList<Trip>()
 
-    val visibility = ObservableInt(View.GONE)
+    val pBarVisibility = ObservableInt(View.GONE)
 
+    fun getTripsFromServer(){
+        pBarVisibility.set(View.VISIBLE)
+
+        viewModelScope.launch {
+            tripsRepository.getTripsFromServer()
+            pBarVisibility.set(View.GONE)
+        }
+    }
+
+    @SuppressLint("SuspiciousIndentation")
     fun compareTripDatesWithToday(){
         archiveTrips.clear()
         activeTrips.clear()
@@ -25,7 +36,8 @@ class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
             val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isBefore(today)) {
                     archiveTrips.add(trip)
-                }else if(tripDateTime.isAfter(today)) {
+                }
+                if(tripDateTime.isAfter(today)) {
                     activeTrips.add(trip)
                 }
         }
@@ -44,7 +56,7 @@ class TripsViewModel(repository: ApplicationsRepository) : ViewModel() {
         }
     }
 
-    class TripsViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
+    class TripsViewModelFactory(private val repository: TripsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(TripsViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")

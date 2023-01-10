@@ -11,13 +11,13 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Data
 interface Dao {
     //Applications
     @Query("SELECT * FROM data")
-    fun getData(): Flow<Data>
+    fun getTrips(): Flow<Data>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertData(data: Data)
+    suspend fun insertTrips(data: Data)
 
     @Query("DELETE FROM data")
-    suspend fun deleteData()
+    suspend fun deleteTrips()
 
     //Employee
     @Query("SELECT * FROM employee")

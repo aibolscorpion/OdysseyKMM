@@ -55,7 +55,8 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         super.onViewCreated(view, savedInstanceState)
 
 
-        val factory = SendSmsViewModel.FillCodeViewModelFactory((requireActivity().application as App).repository)
+        val factory = SendSmsViewModel.FillCodeViewModelFactory(
+            (requireActivity().application as App).employeeRepository)
         viewModel = ViewModelProvider(requireActivity(), factory)[SendSmsViewModel::class.java]
 
         dataBinding.viewModel = viewModel

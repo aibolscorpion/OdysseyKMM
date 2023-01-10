@@ -14,8 +14,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFrag
 
 class TripsFragment : Fragment() {
     private val tripsViewModel: TripsViewModel by viewModels {
-        TripsViewModel.TripsViewModelFactory((requireActivity().application as
-            App).repository)
+        TripsViewModel.TripsViewModelFactory((requireActivity().application as App).tripsRepository)
     }
 
     lateinit var binding : FragmentTripsBinding
@@ -30,6 +29,11 @@ class TripsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.swipeRefreshLayout.isRefreshing = false
+            tripsViewModel.getTripsFromServer()
+        }
 
         tripsViewModel.tripsLiveData.observe(viewLifecycleOwner) {
             tripsViewModel.compareTripDatesWithToday()

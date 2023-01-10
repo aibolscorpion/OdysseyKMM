@@ -15,7 +15,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
     private var currentEmployee: Employee? = null
     private val viewModel : DocumentsViewModel by viewModels{
-        DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).repository)
+        DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).employeeRepository)
     }
     private lateinit var binding: FragmentDocumentsBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -29,7 +29,7 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.employee.observe(viewLifecycleOwner){ employee ->
+        viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             currentEmployee = employee
         }
 

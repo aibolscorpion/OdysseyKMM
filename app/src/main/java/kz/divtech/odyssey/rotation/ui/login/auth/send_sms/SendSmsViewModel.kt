@@ -10,11 +10,11 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
-import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
+import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
-class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
+class SendSmsViewModel(private val employeeRepository: EmployeeRepository) : ViewModel() {
     var authLogId: String? = null
 
     private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
@@ -91,17 +91,19 @@ class SendSmsViewModel(val repository: ApplicationsRepository) : ViewModel() {
         }
     }
 
-    class FillCodeViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
+    class FillCodeViewModelFactory(private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(SendSmsViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return SendSmsViewModel(repository) as T
+                return SendSmsViewModel(employeeRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 
-    fun insertEmployeeToDB(employee: Employee) = viewModelScope.launch {
-        repository.insertEmployee(employee)
+    private fun insertEmployeeToDB(employee: Employee) {
+        viewModelScope.launch {
+            employeeRepository.insertEmployee(employee)
+        }
     }
 }

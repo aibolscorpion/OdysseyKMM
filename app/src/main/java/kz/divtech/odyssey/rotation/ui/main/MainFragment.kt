@@ -28,7 +28,8 @@ import java.util.*
 
 class MainFragment : Fragment(){
     val viewModel : MainViewModel by viewModels {
-        MainViewModel.MainViewModelFactory((requireActivity().application as App).repository)
+        MainViewModel.MainViewModelFactory((requireActivity().application as App).tripsRepository,
+            (requireActivity().application as App).employeeRepository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null
@@ -62,12 +63,14 @@ class MainFragment : Fragment(){
     }
 
     private fun getEmployeeInfo(){
-        viewModel.employee.observe(viewLifecycleOwner){ employee ->
+        viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             if(employee != null){
                 binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
                 append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
                 appendWithoutNull(employee.patronymic)
                 binding.employeeOrgTV.text = employee.orgName
+            }else{
+                viewModel.getEmployeeFromServer()
             }
         }
     }
@@ -89,7 +92,14 @@ class MainFragment : Fragment(){
         binding.nearestTrip.segmentsRV.adapter = segmentAdapter
         binding.nearestTrip.touchOverlay.setOnClickListener{ onTripClicked(nearestTrip) }
 
-        viewModel.getTrips()
+        viewModel.tripsLiveData.observe(viewLifecycleOwner){ data ->
+            if(data == null){
+                viewModel.getTripsFromServer()
+            }else{
+                viewModel.findNearestTrip(data.data.data!!)
+            }
+        }
+
         viewModel.nearestTripLiveData.observe(viewLifecycleOwner) { trip ->
             nearestTrip = trip
             binding.trip = nearestTrip

@@ -16,9 +16,10 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
-    var currentEmployee: Employee? = null
-    private val viewModel: ProfileViewModel by viewModels(){
-        ProfileViewModel.ProfileViewModelFactory((activity?.application as App).repository)
+    private var currentEmployee: Employee? = null
+    private val viewModel: ProfileViewModel by viewModels{
+        ProfileViewModel.ProfileViewModelFactory((activity?.application as App).tripsRepository,
+            (activity?.application as App).employeeRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {

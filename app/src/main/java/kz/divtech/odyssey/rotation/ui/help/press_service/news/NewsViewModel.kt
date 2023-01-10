@@ -20,6 +20,7 @@ class NewsViewModel : ViewModel() {
 
     fun getAllNews(){
         pBarVisibility.set(View.VISIBLE)
+
         viewModelScope.launch {
             try{
                 val response = RetrofitClient.getApiService().getArticles()

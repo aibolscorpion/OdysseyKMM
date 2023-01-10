@@ -13,6 +13,7 @@ import kz.divtech.odyssey.rotation.domain.model.main.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.TripsAdapter
+import kotlin.collections.ArrayList
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     val adapter = TripsAdapter(this)

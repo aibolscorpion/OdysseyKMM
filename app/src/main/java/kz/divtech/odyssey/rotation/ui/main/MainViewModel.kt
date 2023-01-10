@@ -4,58 +4,31 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.domain.repository.ApplicationsRepository
+import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
-import timber.log.Timber
 import java.time.LocalDate
 
-class MainViewModel(private val repository: ApplicationsRepository) : ViewModel() {
+class MainViewModel(private val tripsRepository: TripsRepository,
+                    private val employeeRepository: EmployeeRepository) : ViewModel() {
 
-    class MainViewModelFactory(private val repository: ApplicationsRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(MainViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
+    val tripsLiveData = tripsRepository.trips.asLiveData()
+    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
 
     private val _nearestTripMutableLiveData = MutableLiveData<Trip?>()
     val nearestTripLiveData: LiveData<Trip?> = _nearestTripMutableLiveData
-    val nearestTripVisibility = ObservableInt(View.VISIBLE)
+
+    val nearestTripVisibility = ObservableInt(View.GONE)
+    val pBarVisibility = ObservableInt(View.GONE)
 
     private val today = LocalDate.now()
 
-    val pBarVisibility = ObservableInt(View.GONE)
-
-    val employee: LiveData<Employee> = repository.employee.asLiveData()
-
-    fun insertTrips(data: Data) = viewModelScope.launch {
-            repository.insertData(data)
-    }
-
-    fun getTrips(){
+    fun getTripsFromServer(){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            try {
-                val response = RetrofitClient.getApiService().getTrips()
-                val trips = response.body()?.data?.data
-                if(response.isSuccessful){
-                    insertTrips(response.body()!!)
-                    if(trips == null || trips.isEmpty()){
-                        nearestTripVisibility.set(View.GONE)
-                    }else{
-                        findNearestTrip(trips)
-                    }
-                }
-            }catch (e : Exception){
-                Timber.e("exception - ${e.message}")
-            }
+            tripsRepository.getTripsFromServer()
             pBarVisibility.set(View.GONE)
         }
     }
@@ -66,9 +39,29 @@ class MainViewModel(private val repository: ApplicationsRepository) : ViewModel(
                 val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isAfter(today)) {
                     _nearestTripMutableLiveData.postValue(trip)
+                    nearestTripVisibility.set(View.VISIBLE)
                     return@loop
                 }
             }
+        }
+    }
+
+    fun getEmployeeFromServer(){
+        pBarVisibility.set(View.VISIBLE)
+        viewModelScope.launch {
+            employeeRepository.getEmployeeFromServer()
+            pBarVisibility.set(View.GONE)
+        }
+    }
+
+    class MainViewModelFactory(private val tripsRepository: TripsRepository,
+                               private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(MainViewModel::class.java)){
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(tripsRepository, employeeRepository) as T
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 
