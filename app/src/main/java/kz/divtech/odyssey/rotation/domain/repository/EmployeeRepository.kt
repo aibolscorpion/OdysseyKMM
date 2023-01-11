@@ -23,8 +23,6 @@ class EmployeeRepository(private val dao: Dao) {
         dao.deleteEmployee()
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
     suspend fun getEmployeeFromServer(){
         try{
             val response = RetrofitClient.getApiService().getEmployeeInfo()

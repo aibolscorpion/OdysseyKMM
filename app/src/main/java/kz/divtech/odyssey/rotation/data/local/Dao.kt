@@ -4,12 +4,13 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
 @androidx.room.Dao
 interface Dao {
-    //Applications
+    //Trips
     @Query("SELECT * FROM data")
     fun getTrips(): Flow<Data>
 
@@ -28,5 +29,15 @@ interface Dao {
 
     @Query("DELETE FROM employee")
     suspend fun deleteEmployee()
+
+    //FAQ
+    @Query("SELECT * FROM faq")
+    fun getFAQ(): Flow<List<Faq>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFAQ(faqList: List<Faq>)
+
+    @Query("DELETE FROM faq")
+    suspend fun deleteFAQ()
 
 }

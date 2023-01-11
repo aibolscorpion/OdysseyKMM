@@ -5,12 +5,14 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.domain.repository.FaqRepository
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class ProfileViewModel(
     private val tripsRepository: TripsRepository,
-    private val employeeRepository: EmployeeRepository): ViewModel() {
+    private val employeeRepository: EmployeeRepository,
+    private val faqRepository: FaqRepository): ViewModel() {
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
@@ -21,12 +23,14 @@ class ProfileViewModel(
         }
     }
 
-    class ProfileViewModelFactory(val tripsRepository: TripsRepository,
-                                  private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{
+    class ProfileViewModelFactory(
+        private val tripsRepository: TripsRepository,
+        private val employeeRepository: EmployeeRepository,
+        private val faqRepository: FaqRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return ProfileViewModel(tripsRepository, employeeRepository) as T
+                return ProfileViewModel(tripsRepository, employeeRepository, faqRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
@@ -38,6 +42,7 @@ class ProfileViewModel(
             SharedPrefs().clearAuthToken()
             tripsRepository.deleteTrips()
             employeeRepository.deleteEmployee()
+            faqRepository.deleteFaq()
         }
 
 }

@@ -2,34 +2,31 @@ package kz.divtech.odyssey.rotation.ui.help.faq
 
 import android.view.View
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
-import timber.log.Timber
+import kz.divtech.odyssey.rotation.domain.repository.FaqRepository
 
-class FaqViewModel: ViewModel() {
-    private val _faqList = MutableLiveData<List<Faq>>()
-    val faqList : LiveData<List<Faq>> = _faqList
+class FaqViewModel(val repository: FaqRepository): ViewModel() {
+    val faqLiveData : LiveData<List<Faq>> = repository.faqList.asLiveData()
 
     var pBarVisibility = ObservableInt(View.GONE)
 
-    fun getFaqList() {
+    fun getFaqListFromServer() {
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            try{
-                val response = RetrofitClient.getApiService().getFAQs()
-                if(response.isSuccessful){
-                    _faqList.postValue(response.body()!!)
-                }
-            }catch (e: Exception){
-                Timber.e("exception - ${e.message}")
-            }
+            repository.getFaqListFromServer()
             pBarVisibility.set(View.GONE)
         }
+    }
 
+    class FaqViewModelFactory(val repository: FaqRepository): ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(FaqViewModel::class.java)){
+                @Suppress("UNCHECKED_CAST")
+                return FaqViewModel(repository) as T
+            }
+            throw IllegalArgumentException("Unknown viewModel class")
+        }
     }
 }
