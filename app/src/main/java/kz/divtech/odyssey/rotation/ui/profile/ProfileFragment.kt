@@ -20,7 +20,8 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels{
         ProfileViewModel.ProfileViewModelFactory((activity?.application as App).tripsRepository,
             (activity?.application as App).employeeRepository,
-            (activity?.application as App).faqRepository)
+            (activity?.application as App).faqRepository,
+            (activity?.application as App).documentRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {

@@ -15,7 +15,8 @@ import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
     private var currentEmployee: Employee? = null
     private val viewModel : DocumentsViewModel by viewModels{
-        DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).employeeRepository)
+        DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).employeeRepository,
+            (activity?.application as App).documentRepository)
     }
     private lateinit var binding: FragmentDocumentsBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -36,11 +37,12 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
         val adapter = DocumentsAdapter(this)
         binding.documentRV.adapter = adapter
 
-        viewModel.getAllDocuments()
-        viewModel.documents.observe(viewLifecycleOwner){ documents ->
-            if(documents.documents != null && documents.documents.isNotEmpty()){
-                adapter.setDocumentList(documents.documents)
+        viewModel.documentsLiveData.observe(viewLifecycleOwner){ documents ->
+            if(documents.isNotEmpty()){
+                binding.noDocuments.root.visibility = View.GONE
+                adapter.setDocumentList(documents)
             }else{
+                viewModel.getAllDocumentsFromServer()
                 binding.noDocuments.root.visibility = View.VISIBLE
             }
         }

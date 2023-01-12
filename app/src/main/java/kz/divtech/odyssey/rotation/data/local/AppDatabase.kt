@@ -7,9 +7,11 @@ import androidx.room.RoomDatabase
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
-@Database(entities = [Data::class, Employee::class, Faq::class], version = 1, exportSchema = false)
+@Database(entities = [Data::class, Employee::class, Faq::class, Document::class],
+    version = 1, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dao() : Dao
