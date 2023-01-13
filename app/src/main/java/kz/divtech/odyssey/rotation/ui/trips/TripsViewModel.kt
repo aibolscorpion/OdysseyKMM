@@ -4,29 +4,19 @@ import android.annotation.SuppressLint
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 
-class TripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
+class TripsViewModel(tripsRepository: TripsRepository) : ViewModel() {
     val tripsLiveData = tripsRepository.trips.asLiveData()
     private val today = LocalDate.now()
     val activeTrips = ArrayList<Trip>()
     val archiveTrips = ArrayList<Trip>()
 
     val pBarVisibility = ObservableInt(View.GONE)
-
-    fun getTripsFromServer(){
-        pBarVisibility.set(View.VISIBLE)
-
-        viewModelScope.launch {
-            tripsRepository.getTripsFromServer()
-            pBarVisibility.set(View.GONE)
-        }
-    }
 
     @SuppressLint("SuspiciousIndentation")
     fun compareTripDatesWithToday(){

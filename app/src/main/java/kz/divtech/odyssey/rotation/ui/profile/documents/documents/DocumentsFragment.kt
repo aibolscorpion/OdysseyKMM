@@ -42,7 +42,7 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
                 binding.noDocuments.root.visibility = View.GONE
                 adapter.setDocumentList(documents)
             }else{
-                viewModel.getAllDocumentsFromServer()
+                viewModel.getDocumentsFromServer()
                 binding.noDocuments.root.visibility = View.VISIBLE
             }
         }

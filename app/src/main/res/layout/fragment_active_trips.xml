@@ -6,28 +6,38 @@
         <variable
             name="emptyData"
             type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_bg">
+        app:refreshing="@{viewModel.refreshing}"
+        app:onRefreshListener="@{()-> viewModel.getTripsFromServer()}">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activeTripsRV"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            android:clipToPadding="false"
-            tools:listitem="@layout/item_trip" />
+            android:background="@color/main_bg">
 
-        <include
-            android:id="@+id/noTrips"
-            layout="@layout/layout_empty_data"
-            app:emptyData="@{emptyData}"
-            android:visibility="gone" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activeTripsRV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_trip" />
 
-    </FrameLayout>
+            <include
+                android:id="@+id/noTrips"
+                layout="@layout/layout_empty_data"
+                app:emptyData="@{emptyData}"
+                android:visibility="gone" />
+
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

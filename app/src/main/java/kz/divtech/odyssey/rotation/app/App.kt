@@ -4,10 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
-import kz.divtech.odyssey.rotation.domain.repository.DocumentRepository
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.FaqRepository
-import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
+import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import timber.log.Timber
 import java.util.*
@@ -18,6 +15,7 @@ class App : Application() {
     val employeeRepository by lazy { EmployeeRepository(database.dao())}
     val faqRepository by lazy { FaqRepository(database.dao())}
     val documentRepository by lazy { DocumentRepository(database.dao())}
+    val newsRepository by lazy { NewsRepository(database.dao()) }
 
     companion object {
         lateinit var appContext : Context

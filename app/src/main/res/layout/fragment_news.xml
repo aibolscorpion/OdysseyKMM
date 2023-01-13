@@ -11,66 +11,73 @@
             type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
 
-    <FrameLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshing="@{viewModel.isRefreshing}"
+        app:onRefreshListener="@{() -> viewModel.refreshNews()}" >
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="25dp"
-            android:paddingStart="@dimen/margin"
-            android:paddingEnd="@dimen/margin"
-            android:background="@color/main_bg"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="25dp"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:background="@color/main_bg"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mainTitleTextStyle"
+                    android:text="@string/press_service"
+                    android:singleLine="true" />
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/pressServiceSearchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:background="@drawable/bg_search_view"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="17sp"
+                    android:textColor="#B3748595"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="7sp"
+                    app:queryHint="@string/find"
+                    app:defaultQueryHint="@string/find"
+                    app:iconifiedByDefault="false"
+                    app:searchIcon="@drawable/icons_tabs_search"
+                    app:searchHintIcon="@drawable/icons_tabs_search"
+                    app:queryBackground="@android:color/transparent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/newsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_news"
+                    android:layout_marginTop="@dimen/margin"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                <include
+                    android:id="@+id/noNews"
+                    layout="@layout/layout_empty_data"
+                    app:emptyData="@{emptyData.NEWS}"
+                    android:visibility="gone" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/mainTitleTextStyle"
-                android:text="@string/press_service"
-                android:singleLine="true" />
+                android:visibility="@{viewModel.PBarVisibility}"
+                android:layout_gravity="center" />
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/pressServiceSearchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:background="@drawable/bg_search_view"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="17sp"
-                android:textColor="#B3748595"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="7sp"
-                app:queryHint="@string/find"
-                app:defaultQueryHint="@string/find"
-                app:iconifiedByDefault="false"
-                app:searchIcon="@drawable/icons_tabs_search"
-                app:searchHintIcon="@drawable/icons_tabs_search"
-                app:queryBackground="@android:color/transparent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/newsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_news"
-                android:layout_marginTop="@dimen/margin"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <include
-                android:id="@+id/noNews"
-                layout="@layout/layout_empty_data"
-                app:emptyData="@{emptyData.NEWS}"
-                android:visibility="gone" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{viewModel.PBarVisibility}"
-            android:layout_gravity="center" />
-
-    </FrameLayout>
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

@@ -11,65 +11,72 @@
             type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
     </data>
 
-    <FrameLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:refreshing="@{viewModel.refreshing}"
+        app:onRefreshListener="@{() -> viewModel.refreshFaqList()}" >
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="25dp"
-            android:paddingStart="@dimen/margin"
-            android:paddingEnd="@dimen/margin"
-            android:background="@color/main_bg"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/mainTitleTextStyle"
-                android:text="@string/questions_and_answers"
-                android:singleLine="true"/>
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/pressServiceSearchView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:background="@drawable/bg_search_view"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="17sp"
-                android:textColor="#B3748595"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="7sp"
-                app:queryHint="@string/what_r_u_interested_in"
-                app:defaultQueryHint="@string/what_r_u_interested_in"
-                app:iconifiedByDefault="false"
-                app:searchIcon="@drawable/icons_tabs_search"
-                app:searchHintIcon="@drawable/icons_tabs_search"
-                app:queryBackground="@android:color/transparent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/faqRecyclerView"
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="12dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_faq" />
+                android:paddingTop="25dp"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:background="@color/main_bg"
+                android:orientation="vertical">
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/mainTitleTextStyle"
+                    android:text="@string/questions_and_answers"
+                    android:singleLine="true"/>
 
-        <include
-            android:id="@+id/noFAQ"
-            layout="@layout/layout_empty_data"
-            app:emptyData="@{emptyData.FAQ}"
-            android:visibility="gone" />
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/pressServiceSearchView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:background="@drawable/bg_search_view"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="17sp"
+                    android:textColor="#B3748595"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="7sp"
+                    app:queryHint="@string/what_r_u_interested_in"
+                    app:defaultQueryHint="@string/what_r_u_interested_in"
+                    app:iconifiedByDefault="false"
+                    app:searchIcon="@drawable/icons_tabs_search"
+                    app:searchHintIcon="@drawable/icons_tabs_search"
+                    app:queryBackground="@android:color/transparent"/>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{viewModel.pBarVisibility}"
-            tools:visibility="visible" />
-    </FrameLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/faqRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="12dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_faq" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <include
+                android:id="@+id/noFAQ"
+                layout="@layout/layout_empty_data"
+                app:emptyData="@{emptyData.FAQ}"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.pBarVisibility}"
+                tools:visibility="visible" />
+        </FrameLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

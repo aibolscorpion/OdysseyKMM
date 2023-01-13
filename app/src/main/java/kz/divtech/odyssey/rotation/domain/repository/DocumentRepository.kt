@@ -23,7 +23,7 @@ class DocumentRepository(private val dao: Dao){
         dao.deleteDocuments()
     }
 
-    suspend fun getAllDocumentFromServer(){
+    suspend fun getDocumentsFromServer(){
         try{
             val response = RetrofitClient.getApiService().getDocuments()
             if(response.isSuccessful){

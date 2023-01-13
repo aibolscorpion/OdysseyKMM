@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.main.EmptyData
@@ -17,7 +19,11 @@ import kotlin.collections.ArrayList
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     val adapter = TripsAdapter(this)
+    val viewModel: ActiveTripsViewModel by viewModels{
+        ActiveTripsViewModel.ActiveTripsViewModelFactory((activity?.application as App).tripsRepository)
+    }
     lateinit var binding: FragmentActiveTripsBinding
+
     companion object {
         fun newInstance(activeTrips: Boolean, tripList: ArrayList<Trip>): ActiveTripsFragment{
             val tripsFragment = ActiveTripsFragment()
@@ -32,6 +38,7 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentActiveTripsBinding.inflate(inflater)
 
+        binding.viewModel = viewModel
         binding.activeTripsRV.adapter = adapter
 
         return binding.root

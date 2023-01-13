@@ -15,10 +15,10 @@ class DocumentsViewModel(employeeRepository: EmployeeRepository,
 
     val pBarVisibility = ObservableInt(View.GONE)
 
-    fun getAllDocumentsFromServer(){
+    fun getDocumentsFromServer(){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            documentRepository.getAllDocumentFromServer()
+            documentRepository.getDocumentsFromServer()
             pBarVisibility.set(View.GONE)
         }
     }

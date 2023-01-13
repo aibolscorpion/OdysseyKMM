@@ -363,7 +363,7 @@ object BindingAdapter {
         val statusSet = HashSet<SegmentStatus>()
 
         if(trip.segments?.size!! > 1){
-            trip.segments.forEachIndexed { index, segment ->
+            trip.segments.forEach() { segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED -> {
                         if(segment.active_process.equals(Constants.WATCHING)){

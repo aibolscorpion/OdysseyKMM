@@ -1,34 +1,40 @@
 package kz.divtech.odyssey.rotation.ui.help.press_service.news
 
 import android.view.View
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
+import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
 import timber.log.Timber
 
-class NewsViewModel : ViewModel() {
+class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
+    val isRefreshing = ObservableBoolean()
     val pBarVisibility = ObservableInt(View.GONE)
-    
-    private val _newsMutableLiveData = MutableLiveData<List<Article>>()
-    val newsLiveData: LiveData<List<Article>> = _newsMutableLiveData
 
-    fun getAllNews(){
-        pBarVisibility.set(View.VISIBLE)
+    val newsLiveData = newsRepository.news.asLiveData()
 
+    fun refreshNews() =
         viewModelScope.launch {
+            isRefreshing.set(true)
+            newsRepository.getNewsFromServer()
+            isRefreshing.set(false)
+        }
+
+    fun getNewsFromServer() =
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
+            newsRepository.getNewsFromServer()
+            pBarVisibility.set(View.GONE)
+        }
+
+
+    fun markAsRead(id: Int){
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
             try{
-                val response = RetrofitClient.getApiService().getArticles()
-                when(response.code()){
-                    Constants.SUCCESS_CODE -> {
-                        _newsMutableLiveData.postValue(response.body()!!.data)
-                    }
-                }
+                RetrofitClient.getApiService().markAsReadArticleById(id)
             }catch (e: Exception){
                 Timber.e("exception - ${e.message}")
             }
@@ -36,15 +42,13 @@ class NewsViewModel : ViewModel() {
         }
     }
 
-    fun markAsRead(id: Int){
-        pBarVisibility.set(View.VISIBLE)
-        viewModelScope.launch {
-            try{
-                RetrofitClient.getApiService().markAsReadArticleById(id)
-            }catch (e: Exception){
-                Timber.e("exception - ${e.message}")
+    class ViewModelFactory(private val newsRepository: NewsRepository) : ViewModelProvider.Factory{
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            if(modelClass.isAssignableFrom(NewsViewModel::class.java)){
+                @Suppress("UNCHECKED_CAST")
+                return NewsViewModel(newsRepository) as T
             }
-            pBarVisibility.set(View.GONE)
+            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }

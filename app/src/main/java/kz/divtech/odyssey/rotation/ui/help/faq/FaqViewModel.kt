@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.help.faq
 
 import android.view.View
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
@@ -10,15 +11,23 @@ import kz.divtech.odyssey.rotation.domain.repository.FaqRepository
 class FaqViewModel(val repository: FaqRepository): ViewModel() {
     val faqLiveData : LiveData<List<Faq>> = repository.faqList.asLiveData()
 
-    var pBarVisibility = ObservableInt(View.GONE)
+    val refreshing = ObservableBoolean()
+    val pBarVisibility = ObservableInt(View.GONE)
 
-    fun getFaqListFromServer() {
-        pBarVisibility.set(View.VISIBLE)
+    fun getFaqListFromServer() =
         viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
             repository.getFaqListFromServer()
             pBarVisibility.set(View.GONE)
         }
-    }
+
+    fun refreshFaqList() =
+        viewModelScope.launch {
+            refreshing.set(true)
+            repository.getFaqListFromServer()
+            refreshing.set(false)
+        }
+
 
     class FaqViewModelFactory(val repository: FaqRepository): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

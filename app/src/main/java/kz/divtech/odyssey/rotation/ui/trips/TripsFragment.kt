@@ -30,11 +30,6 @@ class TripsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            binding.swipeRefreshLayout.isRefreshing = false
-            tripsViewModel.getTripsFromServer()
-        }
-
         tripsViewModel.tripsLiveData.observe(viewLifecycleOwner) {
             tripsViewModel.compareTripDatesWithToday()
             tripsViewModel.sortTripsByDate()

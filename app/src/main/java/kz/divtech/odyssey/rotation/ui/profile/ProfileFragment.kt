@@ -21,7 +21,8 @@ class ProfileFragment : Fragment() {
         ProfileViewModel.ProfileViewModelFactory((activity?.application as App).tripsRepository,
             (activity?.application as App).employeeRepository,
             (activity?.application as App).faqRepository,
-            (activity?.application as App).documentRepository)
+            (activity?.application as App).documentRepository,
+            (activity?.application as App).newsRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
@@ -54,7 +55,7 @@ class ProfileFragment : Fragment() {
     }
 
     fun showTermsOfAgreement() =
-        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog2())
+        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog())
 
     fun openDocumentsFragment() =
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())

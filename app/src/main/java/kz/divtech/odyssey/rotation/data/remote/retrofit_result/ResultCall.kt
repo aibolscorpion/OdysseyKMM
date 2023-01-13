@@ -26,6 +26,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
         override fun onResponse(call: Call<T>, response: Response<T>) {
             val result: Result<T>
             if (response.isSuccessful) {
+                @Suppress("UNCHECKED_CAST")
                 result = Result.Success.HttpResponse(
                     value = response.body() as T,
                     statusCode = response.code(),
