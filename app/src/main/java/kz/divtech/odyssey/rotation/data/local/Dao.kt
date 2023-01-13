@@ -5,6 +5,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
@@ -62,5 +63,13 @@ interface Dao {
     @Query("DELETE FROM news")
     suspend fun deleteNews()
 
+    //FullArticle
+    @Query("SELECT * FROM fullarticle WHERE id=:id")
+    fun getArticleById(id: Int) : Flow<FullArticle>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFullArticle(fullArticle: FullArticle)
+
+    @Query("DELETE FROM fullarticle")
+    suspend fun deleteFullArticles()
 }

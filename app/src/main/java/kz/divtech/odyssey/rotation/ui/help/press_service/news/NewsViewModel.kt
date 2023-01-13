@@ -5,9 +5,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
-import timber.log.Timber
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     val isRefreshing = ObservableBoolean()
@@ -28,19 +26,6 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             newsRepository.getNewsFromServer()
             pBarVisibility.set(View.GONE)
         }
-
-
-    fun markAsRead(id: Int){
-        viewModelScope.launch {
-            pBarVisibility.set(View.VISIBLE)
-            try{
-                RetrofitClient.getApiService().markAsReadArticleById(id)
-            }catch (e: Exception){
-                Timber.e("exception - ${e.message}")
-            }
-            pBarVisibility.set(View.GONE)
-        }
-    }
 
     class ViewModelFactory(private val newsRepository: NewsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -46,7 +46,6 @@ class NewsFragment : Fragment(), NewsListener {
     }
 
     override fun onNewsClick(articleId: Int) {
-        viewModel.markAsRead(articleId)
         val action = NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId)
         findNavController().navigate(action)
     }
