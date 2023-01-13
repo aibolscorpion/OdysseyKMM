@@ -7,7 +7,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.trips.Segment" />
         <variable
             name="segmentStatus"
-            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentStatus" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
@@ -18,7 +18,7 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentStatus
+import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.utils.Utils
 
 object BindingAdapter {

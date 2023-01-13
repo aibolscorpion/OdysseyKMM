@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.help.faq.FaqViewModel" />
         <variable
             name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
+            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

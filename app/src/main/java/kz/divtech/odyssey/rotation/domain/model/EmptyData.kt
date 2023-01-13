@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.model.main
+package kz.divtech.odyssey.rotation.domain.model
 
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat

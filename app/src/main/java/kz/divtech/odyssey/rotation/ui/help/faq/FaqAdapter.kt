@@ -6,20 +6,21 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.TextViewCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ItemFaqBinding
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 
 class FaqAdapter : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
-    private val faqList = mutableListOf<Faq>()
+    private val oldFaqList = mutableListOf<Faq>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentFaq = faqList[position]
+        val currentFaq = oldFaqList[position]
         holder.binding.faq = currentFaq
         holder.binding.faqLL.setOnClickListener {
             if (holder.binding.answerContentTV.isVisible) {
@@ -40,13 +41,17 @@ class FaqAdapter : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
         }
     }
 
-    override fun getItemCount() = faqList.size
+    override fun getItemCount() = oldFaqList.size
 
-    fun setList(list: List<Faq>){
-        faqList.clear()
-        faqList.addAll(list)
-        notifyDataSetChanged()
+    fun setList(newFaqList: List<Faq>){
+        val diffCallBack = FaqDiffCallBack(newFaqList, oldFaqList)
+        val diffResult = DiffUtil.calculateDiff(diffCallBack)
+        oldFaqList.clear()
+        oldFaqList.addAll(newFaqList)
+        diffResult.dispatchUpdatesTo(this)
     }
+
+
 
     class ViewHolder(val binding: ItemFaqBinding) : RecyclerView.ViewHolder(binding.root)
 }

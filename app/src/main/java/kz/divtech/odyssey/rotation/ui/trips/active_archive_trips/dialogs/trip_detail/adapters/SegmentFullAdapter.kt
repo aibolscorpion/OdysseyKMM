@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
-import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentStatus
+import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

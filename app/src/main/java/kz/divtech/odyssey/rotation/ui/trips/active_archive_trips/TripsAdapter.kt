@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
     }
 
     fun setTripList(newTripsList: List<Trip>){
-        val diffCallBack = TripsCallback(oldTripList, newTripsList)
+        val diffCallBack = TripsDiffCallBack(oldTripList, newTripsList)
         val diffResult = DiffUtil.calculateDiff(diffCallBack)
         oldTripList.clear()
         oldTripList.addAll(newTripsList)

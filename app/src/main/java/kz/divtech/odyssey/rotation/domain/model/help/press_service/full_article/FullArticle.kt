@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Tag
 import java.lang.reflect.Type
 
 @TypeConverters(PivotConverter::class, TagListConverter::class)
-@Entity
+@Entity(tableName = "full_article")
 data class FullArticle(
     val content: String?,
     val created_at: String?,

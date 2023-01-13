@@ -16,7 +16,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationList
-import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters.SegmentAdapter
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 import org.threeten.bp.YearMonth

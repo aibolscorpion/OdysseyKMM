@@ -21,11 +21,8 @@ class ArticleViewModel(private val articleRepository: ArticleRepository) : ViewM
 
     fun markArticleAsRead(id: Int) =
         viewModelScope.launch {
-            pBarVisibility.set(View.VISIBLE)
             articleRepository.markArticleAsRead(id)
-            pBarVisibility.set(View.GONE)
         }
-
 
     class ArticleViewModelFactory(private val articleRepository: ArticleRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

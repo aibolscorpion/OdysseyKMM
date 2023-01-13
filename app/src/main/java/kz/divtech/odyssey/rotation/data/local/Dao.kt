@@ -64,12 +64,12 @@ interface Dao {
     suspend fun deleteNews()
 
     //FullArticle
-    @Query("SELECT * FROM fullarticle WHERE id=:id")
+    @Query("SELECT * FROM full_article WHERE id=:id")
     fun getArticleById(id: Int) : Flow<FullArticle>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFullArticle(fullArticle: FullArticle)
 
-    @Query("DELETE FROM fullarticle")
+    @Query("DELETE FROM full_article")
     suspend fun deleteFullArticles()
 }

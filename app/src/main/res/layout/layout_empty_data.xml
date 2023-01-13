@@ -3,7 +3,7 @@
     <data>
         <variable
             name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.main.EmptyData" />
+            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.adapters
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
