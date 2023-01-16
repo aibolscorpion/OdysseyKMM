@@ -22,6 +22,7 @@ object Constants {
     const val MALE = "male"
     const val FEMALE = "female"
     const val RETRY_AFTER = "Retry-After"
+    const val TERMS_FILE_NAME = "TermsOfAgreement.html"
 
     const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400

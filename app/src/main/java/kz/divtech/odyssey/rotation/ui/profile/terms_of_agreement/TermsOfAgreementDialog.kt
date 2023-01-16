@@ -50,10 +50,20 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment(), OnCloseListener {
         }
 
         viewModel.htmlLiveData.observe(viewLifecycleOwner){ htmlText ->
-            dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
+            showData(htmlText)
         }
 
-        viewModel.getUserAgreement()
+        if(viewModel.getFile().exists()){
+            val htmlText = viewModel.getFile().readText()
+            showData(htmlText)
+        }else{
+            viewModel.getUserAgreementFromServer()
+        }
+
+    }
+
+    private fun showData(htmlText: String){
+        dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
     }
 
     override fun close(){

@@ -7,8 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import timber.log.Timber
+import java.io.File
 
 class TermsOfAgreementViewModel: ViewModel(){
     private val _htmlMutableLiveData = MutableLiveData<String>()
@@ -16,7 +19,7 @@ class TermsOfAgreementViewModel: ViewModel(){
 
     val progressVisibility = ObservableInt(View.GONE)
 
-    fun getUserAgreement(){
+    fun getUserAgreementFromServer(){
         progressVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             try{
@@ -24,6 +27,7 @@ class TermsOfAgreementViewModel: ViewModel(){
                 if(response.isSuccessful){
                     val value = response.body()?.string()
                     _htmlMutableLiveData.postValue(value!!)
+                    getFile().appendText(value)
                 }else{
                     progressVisibility.set(View.GONE)
                 }
@@ -33,5 +37,7 @@ class TermsOfAgreementViewModel: ViewModel(){
             }
         }
     }
+
+    fun getFile() = File(App.appContext.externalCacheDir, Constants.TERMS_FILE_NAME)
 
 }
