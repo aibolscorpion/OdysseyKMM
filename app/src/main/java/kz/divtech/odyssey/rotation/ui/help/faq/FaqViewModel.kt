@@ -28,6 +28,9 @@ class FaqViewModel(val repository: FaqRepository): ViewModel() {
             refreshing.set(false)
         }
 
+    fun searchFaqFromDB(searchQuery: String): LiveData<List<Faq>> =
+        repository.searchFaq(searchQuery).asLiveData()
+
 
     class FaqViewModelFactory(val repository: FaqRepository): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

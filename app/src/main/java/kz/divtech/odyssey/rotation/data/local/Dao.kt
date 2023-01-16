@@ -6,7 +6,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
@@ -43,6 +43,9 @@ interface Dao {
     @Query("DELETE FROM faq")
     suspend fun deleteFAQ()
 
+    @Query("SELECT * FROM faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%'")
+    fun searchFAQ(searchQuery: String) : Flow<List<Faq>>
+
     //Documents
     @Query("SELECT * FROM document")
     fun getDocuments() : Flow<List<Document>>
@@ -54,14 +57,18 @@ interface Dao {
     suspend fun deleteDocuments()
 
     //News
-    @Query("SELECT * FROM news")
-    fun getNews(): Flow<News>
+    @Query("SELECT * FROM article")
+    fun getNews(): Flow<List<Article>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNews(news: News)
+    suspend fun insertNews(articleList: List<Article>)
 
-    @Query("DELETE FROM news")
+    @Query("DELETE FROM article")
     suspend fun deleteNews()
+
+    @Query("SELECT * FROM article WHERE title LIKE '%'||:searchQuery||'%' OR" +
+            " short_content LIKE '%'||:searchQuery||'%'")
+    fun searchArticle(searchQuery: String): Flow<List<Article>>
 
     //FullArticle
     @Query("SELECT * FROM full_article WHERE id=:id")

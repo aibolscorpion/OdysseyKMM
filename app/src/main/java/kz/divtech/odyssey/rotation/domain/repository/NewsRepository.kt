@@ -5,18 +5,21 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import timber.log.Timber
 
 class NewsRepository(private val dao: Dao) {
 
-    val news: Flow<News> = dao.getNews()
+    val news: Flow<List<Article>> = dao.getNews()
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
-    suspend fun insertNews(news: News){
+    suspend fun insertNews(news: List<Article>){
         dao.insertNews(news)
     }
+
+    fun searchArticlesFromDB(searchQuery: String): Flow<List<Article>> = dao.searchArticle(searchQuery)
+
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
@@ -29,7 +32,9 @@ class NewsRepository(private val dao: Dao) {
             val response = RetrofitClient.getApiService().getArticles()
             when(response.code()){
                 Constants.SUCCESS_CODE -> {
-                    insertNews(response.body()!!)
+                    if(response.body()?.data!!.isNotEmpty()){
+                        insertNews(response.body()?.data!!)
+                    }
                 }
             }
         }catch (e: Exception){

@@ -1,9 +1,16 @@
 package kz.divtech.odyssey.rotation.domain.model.help.press_service.news
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+
+@TypeConverters(TagListConverter::class)
+@Entity
 data class Article(
-    val id: Int,
+    @PrimaryKey val id: Int,
     val is_important: Int?,
-    val pivot: Pivot?,
+    @Embedded val pivot: Pivot?,
     val published_on: String?,
     val read_on: String?,
     val short_content: String,

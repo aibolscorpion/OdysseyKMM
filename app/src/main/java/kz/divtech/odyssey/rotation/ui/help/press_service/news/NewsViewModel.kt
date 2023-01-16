@@ -5,6 +5,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
@@ -26,6 +27,9 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
             newsRepository.getNewsFromServer()
             pBarVisibility.set(View.GONE)
         }
+
+    fun searchNewsFromDB(searchQuery: String) : LiveData<List<Article>> =
+        newsRepository.searchArticlesFromDB(searchQuery).asLiveData()
 
     class ViewModelFactory(private val newsRepository: NewsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

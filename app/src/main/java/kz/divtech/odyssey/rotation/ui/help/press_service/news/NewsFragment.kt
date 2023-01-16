@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -32,16 +33,30 @@ class NewsFragment : Fragment(), NewsListener {
         binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
 
         viewModel.newsLiveData.observe(viewLifecycleOwner){ news ->
-            if(news != null){
-                if(news.data.isNotEmpty()){
-                    adapter.setNews(news.data)
-                }else{
-                    binding.noNews.root.visibility = View.VISIBLE
-                }
+            if(news.isNotEmpty()){
+                adapter.setNews(news)
+                binding.noNews.root.visibility = View.GONE
             }else{
                 viewModel.getNewsFromServer()
+                binding.noNews.root.visibility = View.VISIBLE
             }
         }
+
+        binding.newsSearchView.setOnQueryTextListener(object: OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let{
+                    viewModel.searchNewsFromDB(newText).observe(viewLifecycleOwner) { articleList ->
+                        adapter.setNews(articleList)
+                    }
+                }
+                return true
+            }
+
+        })
 
     }
 

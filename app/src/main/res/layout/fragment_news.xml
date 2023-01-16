@@ -38,7 +38,7 @@
                     android:singleLine="true" />
 
                 <androidx.appcompat.widget.SearchView
-                    android:id="@+id/pressServiceSearchView"
+                    android:id="@+id/newsSearchView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"

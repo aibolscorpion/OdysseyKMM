@@ -16,6 +16,10 @@ class FaqRepository(private val dao: Dao) {
         dao.insertFAQ(faq)
     }
 
+    fun searchFaq(searchQuery: String): Flow<List<Faq>> {
+        return dao.searchFAQ(searchQuery)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteFaq(){

@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 
 class FaqFragment : Fragment() {
     lateinit var binding : FragmentFaqBinding
-    private val viewModel: FaqViewModel by viewModels {
+    internal val viewModel: FaqViewModel by viewModels {
             FaqViewModel.FaqViewModelFactory((activity?.application as App).faqRepository)
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -27,16 +27,33 @@ class FaqFragment : Fragment() {
         val faqAdapter = FaqAdapter()
 
         binding.faqRecyclerView.adapter = faqAdapter
+
         viewModel.faqLiveData.observe(viewLifecycleOwner) { faqList ->
             if(faqList.isNotEmpty()){
-                binding.pressServiceSearchView.visibility = View.VISIBLE
+                binding.faqSearchView.visibility = View.VISIBLE
                 binding.noFAQ.root.visibility = View.GONE
                 faqAdapter.setList(faqList)
             }else{
                 viewModel.getFaqListFromServer()
-                binding.pressServiceSearchView.visibility = View.GONE
+                binding.faqSearchView.visibility = View.GONE
                 binding.noFAQ.root.visibility = View.VISIBLE
             }
         }
+
+        binding.faqSearchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    viewModel.searchFaqFromDB(it).observe(viewLifecycleOwner) { faqList ->
+                        faqAdapter.setList(faqList)
+                    }
+                }
+                return true
+            }
+
+        })
     }
 }
