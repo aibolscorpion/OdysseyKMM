@@ -8,14 +8,14 @@ import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
 class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Adapter<TripsAdapter.TripViewHolder>() {
-    private val oldTripList = ArrayList<Trip>()
+    private val oldTripList = mutableListOf<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TripViewHolder(binding)
     }
 
     fun setTripList(newTripsList: List<Trip>){
-        val diffCallBack = TripsDiffCallBack(oldTripList, newTripsList)
+        val diffCallBack = TripsDiffCallBack(newTripsList, oldTripList)
         val diffResult = DiffUtil.calculateDiff(diffCallBack)
         oldTripList.clear()
         oldTripList.addAll(newTripsList)
@@ -54,8 +54,5 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
     interface OnTripListener {
         fun onTripClicked(trip: Trip)
     }
-
-
-
 
 }

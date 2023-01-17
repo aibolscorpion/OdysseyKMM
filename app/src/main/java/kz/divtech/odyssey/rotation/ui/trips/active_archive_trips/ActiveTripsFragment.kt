@@ -1,12 +1,12 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
@@ -14,24 +14,23 @@ import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
-import kotlin.collections.ArrayList
+import kz.divtech.odyssey.rotation.ui.trips.TripsViewModel
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
+
     val adapter = TripsAdapter(this)
-    val viewModel: ActiveTripsViewModel by viewModels{
-        ActiveTripsViewModel.ActiveTripsViewModelFactory((activity?.application as App).tripsRepository)
+    val viewModel: TripsViewModel by viewModels{
+        TripsViewModel.TripsViewModelFactory((activity?.application as App).tripsRepository)
     }
     lateinit var binding: FragmentActiveTripsBinding
 
     companion object {
-        fun newInstance(activeTrips: Boolean, tripList: ArrayList<Trip>): ActiveTripsFragment{
-            val tripsFragment = ActiveTripsFragment()
-            val bundle = Bundle()
-            bundle.putBoolean(Constants.ACTIVE_TRIPS, activeTrips)
-            bundle.putParcelableArrayList(Constants.TRIP_LIST, tripList)
-            tripsFragment.arguments  = bundle
-            return tripsFragment
-        }
+        fun newInstance(activeTrips: Boolean) =
+            ActiveTripsFragment().apply{
+                val bundle = Bundle()
+                bundle.putBoolean(Constants.ACTIVE_TRIPS, activeTrips)
+                arguments  = bundle
+            }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,7 +38,6 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
 
         binding.viewModel = viewModel
         binding.activeTripsRV.adapter = adapter
-
         return binding.root
     }
 
@@ -47,18 +45,25 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
         super.onViewCreated(view, savedInstanceState)
 
         val activeTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        val list = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arguments?.getParcelableArrayList(Constants.TRIP_LIST, Trip::class.java)
-        } else {
-            arguments?.getParcelableArrayList(Constants.TRIP_LIST)
+        viewModel.tripsLiveData.observe(viewLifecycleOwner){ data ->
+            viewModel.divideIntoTwoParts(data.data.data!!)
         }
 
-        if(list != null && list.isNotEmpty()){
-            adapter.setTripList(list)
+        if(activeTrips!!){
+            observeLiveData(viewModel.activeTripsLiveData, EmptyData.ACTIVE_TRIPS)
         }else{
-            binding.noTrips.root.visibility = View.VISIBLE
-            binding.emptyData =
-                if(activeTrips == true) EmptyData.ACTIVE_TRIPS else EmptyData.ARCHIVE_TRIPS
+            observeLiveData(viewModel.archiveTripsLiveData, EmptyData.ARCHIVE_TRIPS)
+        }
+    }
+
+    private fun observeLiveData(liveData: LiveData<List<Trip>>, emptyData: EmptyData){
+        liveData.observe(viewLifecycleOwner) { list ->
+            if(list.isNotEmpty()){
+                adapter.setTripList(list)
+            }else{
+                binding.noTrips.root.visibility = View.VISIBLE
+                binding.emptyData = emptyData
+            }
         }
     }
 
@@ -68,6 +73,10 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
         }else {
             findNavController().navigate(MainFragmentDirections.actionGlobalTripDetailDialog(trip))
         }
+    }
+
+    init {
+        this.arguments = Bundle()
     }
 
 

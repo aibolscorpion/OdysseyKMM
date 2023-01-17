@@ -1,28 +1,43 @@
 package kz.divtech.odyssey.rotation.ui.trips
 
 import android.annotation.SuppressLint
-import android.view.View
-import androidx.databinding.ObservableInt
+import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
-import kotlin.collections.ArrayList
 
-class TripsViewModel(tripsRepository: TripsRepository) : ViewModel() {
+class TripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
     val tripsLiveData = tripsRepository.trips.asLiveData()
     private val today = LocalDate.now()
-    val activeTrips = ArrayList<Trip>()
-    val archiveTrips = ArrayList<Trip>()
 
-    val pBarVisibility = ObservableInt(View.GONE)
+    private val _activeTripsMutableLiveData = MutableLiveData<List<Trip>>()
+    val activeTripsLiveData: LiveData<List<Trip>> = _activeTripsMutableLiveData
+
+    private val _archiveTripsMutableLiveData = MutableLiveData<List<Trip>>()
+    val archiveTripsLiveData: LiveData<List<Trip>> = _archiveTripsMutableLiveData
+
+    private val activeTrips = mutableListOf<Trip>()
+    private val archiveTrips = mutableListOf<Trip>()
+
+    val refreshing = ObservableBoolean()
+
+    fun getTripsFromServer(){
+        refreshing.set(true)
+
+        viewModelScope.launch {
+            tripsRepository.getTripsFromServer()
+            refreshing.set(false)
+        }
+    }
 
     @SuppressLint("SuspiciousIndentation")
-    fun compareTripDatesWithToday(){
+    fun divideIntoTwoParts(tripList: List<Trip>){
         archiveTrips.clear()
         activeTrips.clear()
-        tripsLiveData.value?.data?.data?.forEach { trip ->
+        tripList.forEach { trip ->
             val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isBefore(today)) {
                     archiveTrips.add(trip)
@@ -31,9 +46,10 @@ class TripsViewModel(tripsRepository: TripsRepository) : ViewModel() {
                     activeTrips.add(trip)
                 }
         }
+        sortTrips()
     }
 
-    fun sortTripsByDate(){
+    private fun sortTrips(){
         if(activeTrips.isNotEmpty()){
             activeTrips.sortBy { trip ->
                 Utils.getLocalDateByPattern(trip.date!!)
@@ -44,6 +60,8 @@ class TripsViewModel(tripsRepository: TripsRepository) : ViewModel() {
                 Utils.getLocalDateByPattern(trip.date!!)
             }
         }
+        _activeTripsMutableLiveData.value = activeTrips
+        _archiveTripsMutableLiveData.value = archiveTrips
     }
 
     class TripsViewModelFactory(private val repository: TripsRepository) : ViewModelProvider.Factory{

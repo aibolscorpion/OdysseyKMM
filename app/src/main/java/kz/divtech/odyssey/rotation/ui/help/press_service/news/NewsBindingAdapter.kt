@@ -10,17 +10,19 @@ import java.time.LocalDate
 object NewsBindingAdapter {
 
     @BindingAdapter("publishedDate")
-    @JvmStatic fun setPublishedDate(textView: TextView, publishedDate: String){
-        val today = LocalDate.now()
-        val yesterday = today.minusDays(1)
+    @JvmStatic fun setPublishedDate(textView: TextView, publishedDate: String?){
+        publishedDate?.let {
+            val today = LocalDate.now()
+            val yesterday = today.minusDays(1)
 
-        val date = Utils.formatByGivenPattern(publishedDate, Utils.DAY_MONTH_PATTERN)
-        val time = Utils.formatByGivenPattern(publishedDate, Utils.HOUR_MINUTE_PATTERN)
+            val date = Utils.formatByGivenPattern(publishedDate, Utils.DAY_MONTH_PATTERN)
+            val time = Utils.formatByGivenPattern(publishedDate, Utils.HOUR_MINUTE_PATTERN)
 
-        textView.text = when(Utils.getLocalDateByPattern(publishedDate)){
-            today -> App.appContext.getString(R.string.today_at_time, time)
-            yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
-            else -> App.appContext.getString(R.string.date_at_time, date, time)
+            textView.text = when(Utils.getLocalDateByPattern(publishedDate)){
+                today -> App.appContext.getString(R.string.today_at_time, time)
+                yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
+                else -> App.appContext.getString(R.string.date_at_time, date, time)
+            }
         }
     }
 }
