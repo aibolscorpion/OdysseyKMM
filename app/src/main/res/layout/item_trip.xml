@@ -6,10 +6,12 @@
         <variable
             name="trip"
             type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
-
         <variable
             name="view"
             type="android.view.View" />
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripsAdapter.OnTripListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -19,7 +21,8 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin">
+        android:layout_marginEnd="@dimen/margin"
+        android:onClick="@{()-> listener.onTripClicked(trip)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/itemTripCL"
@@ -123,6 +126,7 @@
                 android:id="@+id/touch_overlay"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:onClick="@{()->listener.onTripClicked(trip)}"
                 app:layout_constraintTop_toTopOf="@+id/segmentsRV"
                 app:layout_constraintStart_toStartOf="@+id/segmentsRV"
                 app:layout_constraintEnd_toEndOf="@+id/segmentsRV"

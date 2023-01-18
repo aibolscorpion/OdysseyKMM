@@ -11,6 +11,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notifications
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -73,7 +74,7 @@ interface ApiService {
 
     //Notifications
     @GET("notifications")
-    fun getNotifications()
+    suspend fun getNotifications() : Response<Notifications>
 
     @GET("notifications/mark-as-read")
     fun markAsReadNotificationById()

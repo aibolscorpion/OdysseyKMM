@@ -9,6 +9,7 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 
 @androidx.room.Dao
@@ -79,4 +80,15 @@ interface Dao {
 
     @Query("DELETE FROM full_article")
     suspend fun deleteFullArticles()
+
+    //Notifications
+    @Query("SELECT * FROM notification")
+    fun getNotifications() : Flow<List<Notification>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNotifications(notificationList: List<Notification>)
+
+    @Query("DELETE FROM notification")
+    suspend fun deleteNotifications()
+
 }

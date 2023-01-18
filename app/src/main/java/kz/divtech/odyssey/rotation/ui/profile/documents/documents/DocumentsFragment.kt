@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 
-class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentClickListener {
+class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     private var currentEmployee: Employee? = null
     private val viewModel : DocumentsViewModel by viewModels{
         DocumentsViewModel.DocumentsViewModelFactory((activity?.application as App).employeeRepository,

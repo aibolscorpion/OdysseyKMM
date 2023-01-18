@@ -17,6 +17,7 @@ class App : Application() {
     val documentRepository by lazy { DocumentRepository(database.dao())}
     val newsRepository by lazy { NewsRepository(database.dao()) }
     val articleRepository by lazy { ArticleRepository(database.dao()) }
+    val notificationRepository by lazy { NotificationRepository(database.dao()) }
 
     companion object {
         lateinit var appContext : Context

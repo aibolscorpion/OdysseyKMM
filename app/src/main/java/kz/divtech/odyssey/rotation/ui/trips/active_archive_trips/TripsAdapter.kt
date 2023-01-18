@@ -11,6 +11,7 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
     private val oldTripList = mutableListOf<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
         val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.listener = onTripListener
         return TripViewHolder(binding)
     }
 
@@ -34,18 +35,11 @@ class TripsAdapter(private val onTripListener: OnTripListener) : RecyclerView.Ad
 
         init {
             binding.segmentsRV.adapter = adapter
-            binding.touchOverlay.setOnClickListener{
-                onTripListener.onTripClicked(currentTrip)
-            }
-            binding.root.setOnClickListener{
-                onTripListener.onTripClicked(currentTrip)
-            }
         }
 
         fun bind(trip : Trip){
-            currentTrip = trip
             binding.trip = trip
-
+            currentTrip = trip
             adapter.setSegmentList(currentTrip.segments)
         }
 

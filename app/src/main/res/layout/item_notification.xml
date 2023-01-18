@@ -5,7 +5,10 @@
     <data>
         <variable
             name="notification"
-            type="kz.divtech.odyssey.rotation.ui.profile.notification.Notification" />
+            type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationListener" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +18,8 @@
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/bg_notification_item">
+        android:background="@drawable/bg_notification_item"
+        android:onClick="@{()-> listener.onNotificationClicked(notification)}">
 
         <ImageView
             android:id="@+id/notificationIconIV"
@@ -40,7 +44,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{notification.title}"
+            android:text="@{notification.data.data.title}"
             tools:text="@string/notification_title_placeholder"/>
 
         <TextView
@@ -56,7 +60,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="6dp"
             android:singleLine="true"
-            android:text="@{notification.content}"
+            android:text="@{notification.data.data.content}"
             tools:text="@string/notification_content_placeholder"/>
 
         <TextView
@@ -69,7 +73,7 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{notification.time}"
+            android:text="@{notification.updated_at}"
             tools:text="@string/notification_time_placeholder"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

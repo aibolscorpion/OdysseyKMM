@@ -4,6 +4,9 @@
         <variable
             name="document"
             type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsAdapter.DocumentListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -15,7 +18,8 @@
         android:layout_marginBottom="6dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
-        app:cardCornerRadius="8dp">
+        android:onClick="@{()-> listener.onDocumentClicked(document)}"
+        app:cardCornerRadius="8dp" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,6 +41,7 @@
                     android:layout_height="wrap_content"
                     tools:text="@string/id"
                     style="@style/mainTitle2TextStyle"
+                    app:documentType="@{document.type}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
@@ -100,10 +105,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/profileMenuTextStyle"
-                    android:text="@string/expire_date_placeholder"
+                    app:issueDate="@{document.issue_date}"
+                    app:expireDate="@{document.expire_date}"
                     android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/expireDateTV"
-                    app:layout_constraintStart_toStartOf="@id/expireDateTV"/>
+                    app:layout_constraintStart_toStartOf="@id/expireDateTV"
+                    tools:text="@string/expire_date_placeholder" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -6,6 +6,9 @@
         <variable
             name="article"
             type="kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article" />
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsListener" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/articleLLC"
@@ -13,7 +16,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin"
         android:paddingBottom="12dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:onClick="@{()->listener.onNewsClick(article.id)}">
 
         <ImageView
             android:id="@+id/notificationIconIV"

@@ -2,7 +2,7 @@ package kz.divtech.odyssey.rotation.domain.model.profile.notifications
 
 data class Notifications(
     val current_page: Int,
-    val `data`: List<Data>,
+    val `data`: List<Notification>,
     val first_page_url: String,
     val from: Int,
     val last_page: Int,

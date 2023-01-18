@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemNewsBinding
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 
-class NewsAdapter(val newsListener: NewsListener) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
+class NewsAdapter(private val newsListener: NewsListener) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
     private val oldArticleList = mutableListOf<Article>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.listener = newsListener
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(oldArticleList[position])
+        holder.binding.article = oldArticleList[position]
     }
 
     override fun getItemCount() = oldArticleList.size
@@ -29,18 +30,7 @@ class NewsAdapter(val newsListener: NewsListener) : RecyclerView.Adapter<NewsAda
         diffResult.dispatchUpdatesTo(this)
     }
 
-    inner class ViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
-        private lateinit var currentArticle : Article
-        init {
-            binding.articleLLC.setOnClickListener {
-                newsListener.onNewsClick(currentArticle.id)
-            }
-        }
-        fun bind(article: Article){
-            currentArticle = article
-            binding.article = article
-        }
-    }
+    inner class ViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
 
 }
 

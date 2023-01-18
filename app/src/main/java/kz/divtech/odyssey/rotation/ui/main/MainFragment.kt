@@ -14,8 +14,6 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
-import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationList
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
@@ -58,7 +56,6 @@ class MainFragment : Fragment(){
 
         getEmployeeInfo()
         setCalendar()
-        setNotifications()
         setNearestTrip()
     }
 
@@ -81,10 +78,6 @@ class MainFragment : Fragment(){
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek
         binding.calendarView.setup(currentMonth, currentMonth, firstDayOfWeek)
         binding.calendarView.scrollToMonth(currentMonth)
-    }
-
-    private fun setNotifications(){
-        binding.notificationsRV.adapter = NotificationAdapter(NotificationList.getList().subList(0,3))
     }
 
     private fun setNearestTrip(){
