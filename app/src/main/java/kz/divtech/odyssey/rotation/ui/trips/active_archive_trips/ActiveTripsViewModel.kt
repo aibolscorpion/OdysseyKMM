@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.annotation.SuppressLint
 import androidx.databinding.ObservableBoolean
@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
 
-class TripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
+class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
     val tripsLiveData = tripsRepository.trips.asLiveData()
     private val today = LocalDate.now()
 
@@ -66,9 +66,9 @@ class TripsViewModel(private val tripsRepository: TripsRepository) : ViewModel()
 
     class TripsViewModelFactory(private val repository: TripsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(TripsViewModel::class.java)){
+            if(modelClass.isAssignableFrom(ActiveTripsViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return TripsViewModel(repository) as T
+                return ActiveTripsViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

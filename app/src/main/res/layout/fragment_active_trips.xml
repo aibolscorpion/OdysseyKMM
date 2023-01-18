@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.trips.TripsViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

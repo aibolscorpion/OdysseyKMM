@@ -14,13 +14,12 @@ import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
-import kz.divtech.odyssey.rotation.ui.trips.TripsViewModel
 
 class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
 
     val adapter = TripsAdapter(this)
-    val viewModel: TripsViewModel by viewModels{
-        TripsViewModel.TripsViewModelFactory((activity?.application as App).tripsRepository)
+    val viewModel: ActiveTripsViewModel by viewModels{
+        ActiveTripsViewModel.TripsViewModelFactory((activity?.application as App).tripsRepository)
     }
     lateinit var binding: FragmentActiveTripsBinding
 
