@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 
-class NotificationAdapter(val notificationListener: NotificationListener) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
+class NotificationAdapter(private val notificationListener: NotificationListener) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
     private val oldNotificationList = mutableListOf<Notification>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {

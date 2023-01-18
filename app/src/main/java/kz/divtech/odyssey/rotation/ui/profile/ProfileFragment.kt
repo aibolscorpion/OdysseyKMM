@@ -23,7 +23,8 @@ class ProfileFragment : Fragment() {
             (activity?.application as App).faqRepository,
             (activity?.application as App).documentRepository,
             (activity?.application as App).newsRepository,
-            (activity?.application as App).articleRepository)
+            (activity?.application as App).articleRepository,
+            (activity?.application as App).notificationRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {

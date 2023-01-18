@@ -13,7 +13,9 @@ class ProfileViewModel(
     private val faqRepository: FaqRepository,
     private val documentRepository: DocumentRepository,
     private val newsRepository: NewsRepository,
-    private val articleRepository: ArticleRepository): ViewModel() {
+    private val articleRepository: ArticleRepository,
+    private val notificationRepository: NotificationRepository): ViewModel() {
+
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
@@ -30,12 +32,14 @@ class ProfileViewModel(
         private val faqRepository: FaqRepository,
         private val documentRepository: DocumentRepository,
         private val newsRepository: NewsRepository,
-        private val articleRepository: ArticleRepository) : ViewModelProvider.Factory{
+        private val articleRepository: ArticleRepository,
+        private val notificationRepository: NotificationRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
                 return ProfileViewModel(tripsRepository, employeeRepository,
-                    faqRepository, documentRepository, newsRepository, articleRepository) as T
+                    faqRepository, documentRepository, newsRepository,
+                    articleRepository, notificationRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
@@ -51,6 +55,7 @@ class ProfileViewModel(
             documentRepository.deleteDocuments()
             newsRepository.deleteNews()
             articleRepository.deleteFullArticles()
+            notificationRepository.deleteNotifications()
         }
 
 }

@@ -174,4 +174,15 @@
     <action
         android:id="@+id/action_global_ticketsAreNotPurchasedDialog"
         app:destination="@id/ticketsAreNotPurchasedDialog" />
+    <dialog
+        android:id="@+id/notificationDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDialog"
+        android:label="NotificationDialog" >
+        <argument
+            android:name="notification"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_notificationDialog"
+        app:destination="@id/notificationDialog" />
 </navigation>

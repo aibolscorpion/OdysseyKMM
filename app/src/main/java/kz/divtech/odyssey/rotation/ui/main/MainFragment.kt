@@ -11,9 +11,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
+import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
@@ -24,10 +28,12 @@ import java.time.format.TextStyle
 import java.util.*
 
 
-class MainFragment : Fragment(){
+class MainFragment : Fragment(), NotificationListener{
     val viewModel : MainViewModel by viewModels {
-        MainViewModel.MainViewModelFactory((requireActivity().application as App).tripsRepository,
-            (requireActivity().application as App).employeeRepository)
+        MainViewModel.MainViewModelFactory(
+            (activity?.application as App).tripsRepository,
+            (activity?.application as App).employeeRepository,
+            (activity?.application as App).notificationRepository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null
@@ -56,6 +62,7 @@ class MainFragment : Fragment(){
 
         getEmployeeInfo()
         setCalendar()
+        setNotifications()
         setNearestTrip()
     }
 
@@ -100,6 +107,23 @@ class MainFragment : Fragment(){
         }
     }
 
+    private fun setNotifications(){
+        val adapter = NotificationAdapter(this)
+        binding.notificationsRV.adapter = adapter
+        viewModel.notificationsLiveData.observe(viewLifecycleOwner) { notificationList ->
+            if(notificationList.isNotEmpty()){
+                binding.showAllNotificationsBtn.visibility = View.VISIBLE
+                binding.noNotificationsTV.visibility = View.GONE
+                adapter.setNotificationList(
+                    notificationList.subList(0, Config.NOTIFICATION_LIMIT_SIZE_MAIN_SCREEN))
+            }else{
+                binding.showAllNotificationsBtn.visibility = View.GONE
+                binding.noNotificationsTV.visibility = View.VISIBLE
+                viewModel.getNotificationsFromServer()
+            }
+        }
+    }
+
     fun onTripClicked(trip: Trip?) {
         if (trip != null) {
             if(trip.segments == null){
@@ -118,5 +142,7 @@ class MainFragment : Fragment(){
 
     fun openQuestionsAnswersFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
 
+    override fun onNotificationClicked(notification: Notification) =
+        findNavController().navigate(MainFragmentDirections.actionGlobalNotificationDialog(notification))
 
 }

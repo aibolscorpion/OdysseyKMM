@@ -174,7 +174,18 @@
                     android:letterSpacing="-0.01"
                     android:lineSpacingExtra="5sp"
                     android:layout_marginTop="@dimen/margin"
-                    android:text="@string/notifications"/>
+                    android:text="@string/notifications" />
+
+                <TextView
+                    android:id="@+id/noNotificationsTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#801b3652"
+                    android:lineSpacingExtra="8sp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/you_do_not_have_notifications" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/notificationsRV"
@@ -183,22 +194,21 @@
                     android:layout_marginTop="8dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_notification"
-                    tools:itemCount="3"
-                    />
+                    tools:itemCount="3" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/showAllNotificationsBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="8dp"
                     style="@style/bottomSheetBtn"
                     android:stateListAnimator="@null"
                     android:text="@string/see_all_notifications"
-                    android:onClick="@{() -> mainFragment.openNotificationsFragment()}"
-                    />
+                    android:onClick="@{() -> mainFragment.openNotificationsFragment()}" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textStyle="bold"
                     android:textSize="17sp"
@@ -207,7 +217,7 @@
                     android:lineSpacingExtra="5sp"
                     android:layout_marginTop="24dp"
                     android:text="@string/nearest_trip"
-                    android:visibility="@{viewModel.nearestTripVisibility}"/>
+                    android:visibility="@{viewModel.nearestTripVisibility}" />
 
                 <include
                     android:id="@+id/nearestTrip"
@@ -220,8 +230,8 @@
                     android:onClick="@{() -> mainFragment.onTripClicked(trip)}" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="17sp"
                     android:textColor="@color/grey"
@@ -270,7 +280,7 @@
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/callSupportIV"
                             android:text="@string/call"
-                            android:layout_marginTop="@dimen/margin"/>
+                            android:layout_marginTop="@dimen/margin" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -280,7 +290,7 @@
                             android:lineSpacingExtra="3sp"
                             android:gravity="center"
                             app:layout_constraintTop_toBottomOf="@+id/callSupportTV"
-                            android:text="@string/to_support"/>
+                            android:text="@string/to_support" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
@@ -41,7 +42,7 @@ class NotificationFragment : Fragment(), NotificationListener{
 
     }
 
-    override fun onNotificationClicked(notification: Notification) {
-
-    }
+    override fun onNotificationClicked(notification: Notification) =
+        findNavController().navigate(
+            NotificationFragmentDirections.actionGlobalNotificationDialog(notification))
 }

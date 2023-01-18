@@ -23,6 +23,7 @@ object Config {
     const val TELEGRAM_PACKAGE_NAME ="org.telegram.messenger"
     const val TELEGRAM = "https://telegram.me/"
     const val SUPPORT_TELEGRAM_ID = "rus011rr"
+    const val NOTIFICATION_LIMIT_SIZE_MAIN_SCREEN = 3
 
 
 }

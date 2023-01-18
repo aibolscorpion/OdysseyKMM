@@ -99,6 +99,7 @@
     -----------------------------------------------------------------------------------------------
     //Страница Главная
     <string name="see_all_notifications">Смотреть все уведомления</string>
+    <string name="you_do_not_have_notifications">У вас пока нет новых уведомлений</string>
     <string name="help_24_7">Помощь 24/7</string>
     <string name="nearest_trip">Ближайшая поездка</string>
     <string name="to_support">в поддержку</string>
