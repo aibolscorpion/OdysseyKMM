@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
@@ -75,7 +77,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun logout(){
-        goToLoginPage()
-        viewModel.deleteDataFromDB()
+        lifecycleScope.launch{
+            viewModel.deleteAllDataAsync().await()
+            goToLoginPage()
+        }
     }
 }
