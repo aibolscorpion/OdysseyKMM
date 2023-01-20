@@ -19,14 +19,13 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
-import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.DownloadTicketButtonAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import java.io.File
 
 
-class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , DownloadTicketButtonAdapter.DownloadInterface {
+class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapter.DownloadInterface {
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
     private val args: TripDetailDialogArgs by navArgs()
     internal val viewModel: TripDetailViewModel by viewModels()
@@ -51,7 +50,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
 
         viewModel.setCityAndTotalTimeInWay(args.trip)
 
-        dataBinding.listener = this
+        dataBinding.thisDialog = this
         dataBinding.trip = args.trip
         dataBinding.viewModel = viewModel
 
@@ -105,10 +104,6 @@ class TripDetailDialog : BottomSheetDialogFragment(), OnCloseListener , Download
         super.onDestroy()
 
         requireActivity().unregisterReceiver(pdfDownloadedReceiver)
-    }
-
-    override fun close(){
-        dismiss()
     }
 
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){

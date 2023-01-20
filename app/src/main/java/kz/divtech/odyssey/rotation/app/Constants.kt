@@ -10,6 +10,7 @@ object Constants {
     const val STATUS_PARTLY = "partly"
     const val STATUS_RETURNED = "returned"
     const val STATUS_ISSUED = "issued"
+    const val STATUS_CANCELED = "canceled"
     const val WATCHING = "watching"
     const val PHONE = "phone"
     const val TRIP_LIST = "trip_list"

@@ -275,7 +275,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/notificationTV"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/notificationTV"
-                    android:contentDescription="@string/notifications" />
+                    android:contentDescription="@string/notification" />
 
                 <TextView
                     android:id="@+id/notificationTV"
@@ -284,7 +284,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="8dp"
                     style="@style/profileMenuTextStyle"
-                    android:text="@string/notifications"
+                    android:text="@string/notification"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/iconNotificationIV"
                     app:layout_constraintTop_toTopOf="parent" />

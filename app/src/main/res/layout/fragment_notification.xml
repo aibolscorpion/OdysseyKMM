@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/mainTitleTextStyle"
-                    android:text="@string/notifications"
+                    android:text="@string/notification"
                     android:singleLine="true" />
 
                 <androidx.recyclerview.widget.RecyclerView

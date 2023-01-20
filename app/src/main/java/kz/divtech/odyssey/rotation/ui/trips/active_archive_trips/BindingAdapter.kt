@@ -161,7 +161,7 @@ object BindingAdapter {
                 layerDrawable.setDrawableByLayerId(icon,
                     ContextCompat.getDrawable(App.appContext, R.drawable.icons_tabs_train))
             }
-            Constants.STATUS_RETURNED -> {
+            Constants.STATUS_CANCELED, Constants.STATUS_RETURNED -> {
                 statusSet.add(SegmentStatus.RETURNED)
                 iconBgLayerListItem.setColor(ContextCompat.getColor(App.appContext,R.color.returned_bg))
                 layerDrawable.setDrawableByLayerId(icon,
@@ -216,7 +216,7 @@ object BindingAdapter {
 
         textView.apply {
             when(segmentStatus){
-                Constants.STATUS_RETURNED -> {
+                Constants.STATUS_CANCELED, Constants.STATUS_RETURNED -> {
                     setTextColor(ContextCompat.getColor(App.appContext, R.color.grey_text_view))
                     paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                 }
@@ -256,6 +256,7 @@ object BindingAdapter {
                 when(segment.status){
                     Constants.STATUS_ISSUED -> statusSet.add(SegmentStatus.ISSUED)
                     Constants.STATUS_RETURNED -> statusSet.add(SegmentStatus.RETURNED)
+                    Constants.STATUS_CANCELED -> statusSet.add(SegmentStatus.CANCELED)
                 }
             }
         }
@@ -278,12 +279,15 @@ object BindingAdapter {
                     Constants.STATUS_RETURNED -> {
                         add(SegmentStatus.RETURNED)
                     }
+                    Constants.STATUS_CANCELED -> {
+                        add(SegmentStatus.CANCELED)
+                    }
                 }
             }
         }
 
         imageView.apply {
-            if(statusSet.contains(SegmentStatus.RETURNED)){
+            if(statusSet.contains(SegmentStatus.RETURNED) || statusSet.contains(SegmentStatus.CANCELED)){
                 visibility = View.VISIBLE
                 setImageResource(R.drawable.icon_canceled_16px_gray)
             }else if(statusSet.contains(SegmentStatus.ON_THE_WAITING_LIST)){
@@ -340,7 +344,7 @@ object BindingAdapter {
 
             Constants.STATUS_RETURNED -> {
                 if(trip.segments?.size  == 1){
-                    strBuilder.append(App.appContext.getString(R.string.returned_fully_desc,
+                    strBuilder.append(App.appContext.getString(R.string.returned_fully_one_segment_desc,
                         trip.segments[0].closed_reason,
                         Utils.formatByGivenPattern(trip.segments[0].ticket?.returned_at, Utils.DEFAULT_PATTERN)
                     ))
@@ -363,7 +367,7 @@ object BindingAdapter {
         val statusSet = HashSet<SegmentStatus>()
 
         if(trip.segments?.size!! > 1){
-            trip.segments.forEach() { segment ->
+            trip.segments.forEach{ segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED -> {
                         if(segment.active_process.equals(Constants.WATCHING)){
@@ -377,20 +381,20 @@ object BindingAdapter {
                         }
                     }
 
-                    Constants.STATUS_RETURNED -> {
-                        statusSet.add(SegmentStatus.RETURNED)
-                        strBuilder.append(App.appContext.getString(R.string.returned_more_than_one_segment,
-                            segment.closed_reason, Utils.formatByGivenPattern(segment.ticket?.returned_at, Utils.DEFAULT_PATTERN)
-                        ))
-                    }
-
                     Constants.STATUS_ISSUED -> {
                         statusSet.add(SegmentStatus.ISSUED)
                         strBuilder.append(App.appContext.getString(R.string.issued_more_than_one_segment))
                     }
+
+                    Constants.STATUS_CANCELED, Constants.STATUS_RETURNED -> {
+                        statusSet.add(SegmentStatus.RETURNED)
+                        strBuilder.append(App.appContext.getString(
+                            R.string.returned_more_than_one_segment, segment.closed_reason))
+                    }
                 }
                 strBuilder.append(Constants.SPACE)
             }
+
             if(statusSet.size == 1){
                 if(statusSet.contains(SegmentStatus.OPENED)) {
                     return App.appContext.getString(R.string.opened_with_details_desc)
@@ -401,10 +405,7 @@ object BindingAdapter {
                 )
                 }else if(statusSet.contains(SegmentStatus.RETURNED)){
                     return App.appContext.getString(
-                        R.string.returned_fully_desc,
-                        trip.segments[0].closed_reason,
-                        Utils.formatByGivenPattern(trip.segments[0].ticket?.returned_at, Utils.DEFAULT_PATTERN)
-                    )
+                        R.string.returned_fully_desc, trip.segments[0].closed_reason)
                 }else if(statusSet.contains(SegmentStatus.ISSUED)){
                     return ""
                 }

@@ -30,20 +30,19 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
-                android:paddingTop="28dp"
-                >
+                android:paddingTop="28dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/call_support_content"
-                style="@style/bottomSheetContent"
-                />
+                style="@style/bottomSheetContent" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/margin"
-                android:background="@color/bottom_sheet_line"
-                />
+                android:background="@color/bottom_sheet_line" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,7 +60,7 @@
             style="@style/bottomSheetBtn"
             android:text="@string/cancel"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/margin"
             android:onClick="@{()-> thisDialog.dismiss()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,6 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.login.listener
 
-interface DialogListener : OnCloseListener {
+interface DialogListener {
     fun contact()
-    override fun close()
+    fun close()
 }

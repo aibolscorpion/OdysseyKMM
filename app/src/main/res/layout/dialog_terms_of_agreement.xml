@@ -2,8 +2,8 @@
 <layout>
     <data>
         <variable
-            name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsOfAgreementDialog" />
 
         <variable
             name="viewModel"
@@ -34,7 +34,7 @@
                 android:scaleType="center"
                 android:src="@drawable/icons_tabs_close"
                 android:layout_gravity="top|end"
-                android:onClick="@{() -> listener.close() }" />
+                android:onClick="@{() -> thisDialog.dismiss() }" />
 
             <ProgressBar
                 android:id="@+id/termsProgressBar"

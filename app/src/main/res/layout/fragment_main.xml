@@ -174,7 +174,7 @@
                     android:letterSpacing="-0.01"
                     android:lineSpacingExtra="5sp"
                     android:layout_marginTop="@dimen/margin"
-                    android:text="@string/notifications" />
+                    android:text="@string/notification" />
 
                 <TextView
                     android:id="@+id/noNotificationsTV"

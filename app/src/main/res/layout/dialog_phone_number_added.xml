@@ -52,7 +52,7 @@
             style="@style/bottomSheetBtn"
             android:text="@android:string/ok"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="@dimen/margin"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

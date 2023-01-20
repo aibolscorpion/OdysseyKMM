@@ -21,8 +21,16 @@ class NotificationDialog : BottomSheetDialogFragment() {
                               savedInstanceState: Bundle?): View {
         val binding = DialogNotificationBinding.inflate(layoutInflater)
 
+        val args = NotificationDialogArgs.fromBundle(requireArguments())
+        binding.notification = args.notification
+        binding.thisDialog = this
 
         return binding.root
     }
+
+    fun learnMore(){
+
+    }
+
 
 }

@@ -11,10 +11,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
-import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class ArticleDialog : BottomSheetDialogFragment(), OnCloseListener {
+class ArticleDialog : BottomSheetDialogFragment() {
     val viewModel: ArticleViewModel by viewModels{
         ArticleViewModel.ArticleViewModelFactory((activity?.application as App).articleRepository)
     }
@@ -26,7 +25,7 @@ class ArticleDialog : BottomSheetDialogFragment(), OnCloseListener {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         dataBinding  = DialogArticleBinding.inflate(inflater)
-        dataBinding.listener = this
+        dataBinding.thisDialog = this
         dataBinding.viewModel = viewModel
 
         return dataBinding.root
@@ -45,11 +44,6 @@ class ArticleDialog : BottomSheetDialogFragment(), OnCloseListener {
                 viewModel.markArticleAsRead(articleId)
             }
         }
-
-    }
-
-    override fun close(){
-        dismiss()
     }
 
 }

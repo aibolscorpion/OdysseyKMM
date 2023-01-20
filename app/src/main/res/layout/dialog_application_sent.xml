@@ -53,12 +53,10 @@
                 />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
                 android:text="@string/contact_support_btn"
                 style="@style/bottomSheetBtn"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
                 android:onClick="@{()-> listener.contact()}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,7 +68,7 @@
             style="@style/bottomSheetBtn"
             android:text="@string/close_window"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/margin"
             android:onClick="@{() -> listener.close()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -48,43 +48,15 @@ class ProfileViewModel(
 
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
 
-    private fun deleteTripsAsync() = viewModelScope.async {
-        tripsRepository.deleteTrips()
-    }
-
-    private fun deleteEmployeeAsync() = viewModelScope.async {
-        employeeRepository.deleteEmployee()
-    }
-
-    private fun deleteFaqAsync() = viewModelScope.async {
-        faqRepository.deleteFaq()
-    }
-
-    private fun deleteDocumentsAsync() = viewModelScope.async {
-        documentRepository.deleteDocuments()
-    }
-
-    private fun deleteNewsAsync() = viewModelScope.async {
-        newsRepository.deleteNews()
-    }
-
-    private fun deleteFullArticlesAsync() = viewModelScope.async {
-        articleRepository.deleteFullArticles()
-    }
-
-    private fun deleteNotificationsAsync() = viewModelScope.async {
-        notificationRepository.deleteNotifications()
-    }
-
     fun deleteAllDataAsync() = viewModelScope.async{
         SharedPrefs().clearAuthToken()
-        val deleteTripsAsync = deleteTripsAsync()
-        val deleteEmployeeAsync = deleteEmployeeAsync()
-        val deleteFaqAsync = deleteFaqAsync()
-        val deleteDocumentsAsync = deleteDocumentsAsync()
-        val deleteNewsAsync = deleteNewsAsync()
-        val deleteFullArticlesAsync = deleteFullArticlesAsync()
-        val deleteNotificationsAsync = deleteNotificationsAsync()
+        val deleteTripsAsync = async { tripsRepository.deleteTrips() }
+        val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
+        val deleteFaqAsync = async { faqRepository.deleteFaq() }
+        val deleteDocumentsAsync = async { documentRepository.deleteDocuments() }
+        val deleteNewsAsync = async { newsRepository.deleteNews() }
+        val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
+        val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
 
         deleteTripsAsync.await()
         deleteEmployeeAsync.await()

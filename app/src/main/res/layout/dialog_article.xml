@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.help.press_service.article.ArticleDialog" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.help.press_service.article.ArticleViewModel" />
@@ -61,7 +61,7 @@
                         android:layout_gravity="top|end"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:onClick="@{() -> listener.close() }" />
+                        android:onClick="@{() -> thisDialog.dismiss() }" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

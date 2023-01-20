@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.TicketsAreNotPurchasedDialog" />
         <variable
             name="trip"
             type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="8dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,8 +40,7 @@
                     android:textColor="#1b344f"
                     app:direction="@{trip.direction}"
                     app:date="@{trip.date}"
-                    tools:text="Домой,  27 сен"
-                    />
+                    tools:text="Домой,  27 сен" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -70,8 +70,8 @@
             style="@style/bottomSheetBtn"
             android:text="@string/close"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
-            android:onClick="@{() -> listener.close()}"/>
+            android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{() -> thisDialog.dismiss()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

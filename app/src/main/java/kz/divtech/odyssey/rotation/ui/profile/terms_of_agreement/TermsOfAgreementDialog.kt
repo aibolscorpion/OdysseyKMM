@@ -14,10 +14,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
-import kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener
 
 
-class TermsOfAgreementDialog : BottomSheetDialogFragment(), OnCloseListener {
+class TermsOfAgreementDialog : BottomSheetDialogFragment() {
 
     val viewModel: TermsOfAgreementViewModel by lazy{ ViewModelProvider(this)[TermsOfAgreementViewModel::class.java] }
     lateinit var dataBinding: DialogTermsOfAgreementBinding
@@ -28,7 +27,7 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment(), OnCloseListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         dataBinding  = DialogTermsOfAgreementBinding.inflate(inflater)
-        dataBinding.listener = this
+        dataBinding.thisDialog = this
         dataBinding.viewModel = viewModel
         return dataBinding.root
     }
@@ -64,10 +63,6 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment(), OnCloseListener {
 
     private fun showData(htmlText: String){
         dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
-    }
-
-    override fun close(){
-        dismiss()
     }
 
 }

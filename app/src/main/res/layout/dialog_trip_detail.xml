@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.OnCloseListener" />
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialog" />
         <variable
             name="trip"
             type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
@@ -189,8 +189,7 @@
                 android:scaleType="center"
                 android:src="@drawable/icons_tabs_close"
                 android:layout_gravity="top|end"
-                android:onClick="@{() -> listener.close() }"
-                />
+                android:onClick="@{() -> thisDialog.dismiss() }" />
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

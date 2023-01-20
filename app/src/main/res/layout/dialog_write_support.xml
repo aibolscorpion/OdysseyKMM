@@ -149,7 +149,7 @@
             style="@style/bottomSheetBtn"
             android:text="@string/cancel"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/margin"
             android:onClick="@{() -> thisDialog.dismiss()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

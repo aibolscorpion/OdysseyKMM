@@ -66,6 +66,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     }
                 }
                 Constants.STATUS_RETURNED -> segmentStatus = SegmentStatus.RETURNED
+                Constants.STATUS_CANCELED -> segmentStatus = SegmentStatus.CANCELED
                 Constants.STATUS_ISSUED -> segmentStatus = SegmentStatus.ISSUED
             }
             return segmentStatus
@@ -91,7 +92,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                         R.drawable.icon_orange_point)
                 }
 
-                SegmentStatus.RETURNED -> {
+                SegmentStatus.CANCELED, SegmentStatus.RETURNED -> {
                     val textColor = App.appContext.getColor(R.color.returned_ticket_text)
                     val color = App.appContext.getColor(R.color.returned_bg)
                     setCarriageAndPlaceNumber(textColor, currentSegment.ticket?.car_number,

@@ -101,7 +101,7 @@
     <fragment
         android:id="@+id/notificationFragment"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment"
-        android:label="@string/notifications"
+        android:label="@string/notification"
         android:layout="@layout/fragment_notification"
         tools:layout="@layout/fragment_notification"/>
     <fragment

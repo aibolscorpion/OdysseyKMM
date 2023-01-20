@@ -29,38 +29,35 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
-                android:paddingTop="@dimen/two_times_margin"
-                >
+                android:paddingTop="@dimen/two_times_margin">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/employee_not_found"
-                style="@style/bottomSheetTitle"
-                />
-            <TextView
+                style="@style/bottomSheetTitle" />
+
+                <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 style="@style/bottomSheetContent"
                 android:text="@{@string/employee_not_found_with_contents(iin)}"
-                tools:text="@string/employee_not_found_with_contents"
-                />
-            <View
+                tools:text="@string/employee_not_found_with_contents" />
+
+                <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/two_times_margin"
-                android:background="@color/bottom_sheet_line"
-                />
+                android:background="@color/bottom_sheet_line" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
                 android:text="@string/contact_support_btn"
                 style="@style/bottomSheetBtn"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:onClick="@{()-> listener.contact()}"
-                />
+                android:onClick="@{()-> listener.contact()}" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
 
@@ -70,7 +67,7 @@
             style="@style/bottomSheetBtn"
             android:text="@string/try_again"
             android:layout_marginTop="12dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/margin"
             android:onClick="@{()-> listener.close()}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
