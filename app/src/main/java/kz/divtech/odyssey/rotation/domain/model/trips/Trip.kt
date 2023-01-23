@@ -1,9 +1,18 @@
 package kz.divtech.odyssey.rotation.domain.model.trips
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
+import java.lang.reflect.Type
 
+@TypeConverters(SegmentConverter::class)
+@Entity
 @Parcelize
 data class Trip(
     val booking_id: Int?,
@@ -18,7 +27,7 @@ data class Trip(
     val end_station_code: String?,
     val from_old: Boolean?,
     val group_application_id: Int?,
-    val id: Int,
+    @PrimaryKey val id: Int,
     val is_approved: Int?,
     val is_extra: Boolean?,
     val is_stored: Boolean?,
@@ -26,8 +35,8 @@ data class Trip(
     val old_id: Int?,
     val overtime: Int?,
     val product_key: String?,
-    val search_by: @RawValue Any?,
-    val segments: ArrayList<Segment>?,
+    val search_by: @RawValue String?,
+    val segments: List<Segment>?,
     var shift: String?,
     val start_hours: Int?,
     val start_station: String?,
@@ -36,3 +45,17 @@ data class Trip(
     val updated_at: String?,
     val user_id: Int?
 ) : Parcelable
+
+class SegmentConverter {
+    @TypeConverter
+    fun fromString(value: String?): List<Segment> {
+        val listType: Type = object : TypeToken<List<Segment>>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromData(data: List<Segment>): String {
+        val gson = Gson()
+        return gson.toJson(data)
+    }
+}

@@ -92,11 +92,11 @@ class MainFragment : Fragment(), NotificationListener{
         binding.nearestTrip.segmentsRV.adapter = segmentAdapter
         binding.nearestTrip.touchOverlay.setOnClickListener{ onTripClicked(nearestTrip) }
 
-        viewModel.tripsLiveData.observe(viewLifecycleOwner){ data ->
-            if(data == null){
+        viewModel.tripsLiveData.observe(viewLifecycleOwner){ tripList ->
+            if(tripList.isEmpty()){
                 viewModel.getTripsFromServer()
             }else{
-                viewModel.findNearestTrip(data.data.data!!)
+                viewModel.findNearestTrip(tripList)
             }
         }
 

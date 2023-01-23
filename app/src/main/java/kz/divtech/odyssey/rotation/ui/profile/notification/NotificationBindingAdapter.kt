@@ -7,29 +7,27 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.utils.Utils
 import java.time.LocalDate
-import java.time.LocalTime
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 object NotificationBindingAdapter {
 
     @BindingAdapter("updatedAt")
     @JvmStatic fun setUpdatedAt(textView: TextView, updatedAt: String?){
+        val currentLocalDateTime = LocalDateTime.now()
         val today = LocalDate.now()
         val yesterday = today.minusDays(1)
-        val currentLocalTime = LocalTime.now()
-
         val updatedLocalDateTime = Utils.getLocalDateTimeByPattern(updatedAt!!)
-        val updatedLocalDate = updatedLocalDateTime.toLocalDate()
-        val updatedLocalTime = updatedLocalDateTime.toLocalTime()
 
         val date = Utils.formatByGivenPattern(updatedAt, Utils.DAY_MONTH_PATTERN)
         val time = Utils.formatByGivenPattern(updatedAt, Utils.HOUR_MINUTE_PATTERN)
 
-        textView.text = when(updatedLocalDate){
+        textView.text = when(updatedLocalDateTime.toLocalDate()){
             today -> {
-                when(updatedLocalTime.hour){
-                    currentLocalTime.hour -> App.appContext.getString(R.string.minutes_before, updatedLocalTime.minute)
-                    currentLocalTime.hour-1-> App.appContext.getString(R.string.hours_before, 1)
-                    currentLocalTime.hour-2 -> App.appContext.getString(R.string.hours_before, 2)
+                when(val minutes = updatedLocalDateTime.until(currentLocalDateTime, ChronoUnit.MINUTES)) {
+                    in 0..60 -> App.appContext.getString(R.string.minutes_before, minutes)
+                    in 60..120 -> App.appContext.getString(R.string.hours_before, 1)
+                    in 120..180 -> App.appContext.getString(R.string.hours_before, 2)
                     else -> time
                 }
             }
@@ -53,7 +51,5 @@ object NotificationBindingAdapter {
         else
             App.appContext.getString(R.string.close)
     }
-
-
 
 }

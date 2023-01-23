@@ -45,7 +45,7 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
 
         val activeTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         viewModel.tripsLiveData.observe(viewLifecycleOwner){ data ->
-            viewModel.divideIntoTwoParts(data.data.data!!)
+            viewModel.divideIntoTwoParts(data)
         }
 
         if(activeTrips!!){

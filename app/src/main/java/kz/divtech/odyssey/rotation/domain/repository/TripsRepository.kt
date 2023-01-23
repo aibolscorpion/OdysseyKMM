@@ -4,17 +4,20 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import timber.log.Timber
 
 class TripsRepository(private val dao : Dao) {
 
-    val trips : Flow<Data> = dao.getTrips()
+    val trips : Flow<List<Trip>> = dao.getTrips()
+
+    fun getTripById(id: Int): Flow<Trip> = dao.getTripById(id)
+
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun insertTrips(data: Data) {
-        dao.insertTrips(data)
+    suspend fun insertTrips(trips: List<Trip>) {
+        dao.insertTrips(trips)
     }
 
     @Suppress("RedundantSuspendModifier")
@@ -29,7 +32,7 @@ class TripsRepository(private val dao : Dao) {
         try {
             val response = RetrofitClient.getApiService().getTrips()
             if(response.isSuccessful){
-                insertTrips(response.body()!!)
+                insertTrips(response.body()?.data?.data!!)
             }
         }catch (e : Exception){
             Timber.e("exception - ${e.message}")

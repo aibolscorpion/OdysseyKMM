@@ -13,7 +13,8 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 
 class NotificationFragment : Fragment(), NotificationListener{
     val viewModel: NotificationViewModel by viewModels {
-        NotificationViewModel.NotificationViewModelFactory((activity?.application as App).notificationRepository)
+        NotificationViewModel.NotificationViewModelFactory(
+            (activity?.application as App).notificationRepository)
     }
 
     lateinit var binding: FragmentNotificationBinding

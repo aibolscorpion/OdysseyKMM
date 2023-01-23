@@ -10,18 +10,21 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
 @androidx.room.Dao
 interface Dao {
     //Trips
-    @Query("SELECT * FROM data")
-    fun getTrips(): Flow<Data>
+    @Query("SELECT * FROM trip")
+    fun getTrips(): Flow<List<Trip>>
+
+    @Query("SELECT * FROM trip WHERE id=:id")
+    fun getTripById(id: Int): Flow<Trip>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrips(data: Data)
+    suspend fun insertTrips(data: List<Trip>)
 
-    @Query("DELETE FROM data")
+    @Query("DELETE FROM trip")
     suspend fun deleteTrips()
 
     //Employee

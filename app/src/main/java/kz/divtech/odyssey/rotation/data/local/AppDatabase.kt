@@ -11,9 +11,9 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
-@Database(entities = [Data::class, Employee::class, Faq::class, Document::class,
+@Database(entities = [Trip::class, Employee::class, Faq::class, Document::class,
     Article::class, FullArticle::class, Notification::class], version = 1, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {

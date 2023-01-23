@@ -7,6 +7,9 @@
         <variable
             name="thisDialog"
             type="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDialog" />
+        <variable
+            name="view"
+            type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -95,17 +98,20 @@
                     android:letterSpacing="0.01"
                     android:lineSpacingExtra="7sp"
                     app:layout_constraintTop_toBottomOf="@id/notificationTitleTV"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/learnMoreLL"
                     android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@{notification.data.data.content}"
                     tools:text="На вахту 25 мая, Алматы-2 – Актогай, на 23 мая, ср в 18:30."/>
 
                 <LinearLayout
+                    android:id="@+id/learnMoreLL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/notificationDescTV"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="12dp" >
+                    android:visibility="@{notification.data.data._important ? view.VISIBLE : view.GONE}"
+                    tools:visibility="visible">
 
                     <View
                         android:layout_width="match_parent"
@@ -117,7 +123,7 @@
                         android:layout_height="@dimen/button_height"
                         style="@style/bottomSheetBtn"
                         android:text="@string/learn_more"
-                        android:onClick="@{() -> thisDialog.learnMore()}"/>
+                        android:onClick="@{() -> thisDialog.learnMore(notification.data.data.application_id)}"/>
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
