@@ -77,7 +77,7 @@ interface ApiService {
     suspend fun getNotifications() : Response<Notifications>
 
     @GET("notifications/mark-as-read")
-    fun markAsReadNotificationById()
+    fun markAsReadNotificationById(id: String) : Response<ResponseBody>
 
     //Logout
     @POST("logout")

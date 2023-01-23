@@ -16,7 +16,9 @@ import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 
 class NotificationDialog : BottomSheetDialogFragment() {
     val viewModel: NotificationDViewModel by viewModels{
-        NotificationDViewModel.NotificationDViewModelFactory((activity?.application as App).tripsRepository)
+        NotificationDViewModel.NotificationDViewModelFactory(
+            (activity?.application as App).tripsRepository,
+            (activity?.application as App).notificationRepository)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -31,6 +33,9 @@ class NotificationDialog : BottomSheetDialogFragment() {
         val args = NotificationDialogArgs.fromBundle(requireArguments())
         binding.notification = args.notification
         binding.thisDialog = this
+        binding.viewModel = viewModel
+
+        viewModel.markNotificationAsRead(args.notification.id)
 
         return binding.root
     }

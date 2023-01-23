@@ -10,134 +10,147 @@
         <variable
             name="view"
             type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingStart="@dimen/margin"
-        android:paddingEnd="@dimen/margin"
-        android:paddingBottom="@dimen/margin">
+        android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="8dp">
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:paddingBottom="@dimen/margin">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp">
+                app:cardCornerRadius="8dp">
 
-                <ImageView
-                    android:id="@+id/notificationIV"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:src="@drawable/icons_tabs_extra_trip"/>
-
-                <TextView
-                    android:id="@+id/notificationTV"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui"
-                    android:textSize="13sp"
-                    android:textColor="#112b46"
-                    android:letterSpacing="0.01"
-                    android:lineSpacingExtra="3sp"
-                    android:layout_marginStart="5dp"
-                    app:layout_constraintStart_toEndOf="@id/notificationIV"
-                    app:layout_constraintTop_toTopOf="@id/notificationIV"
-                    app:layout_constraintBottom_toBottomOf="@id/notificationIV"
-                    app:layout_constraintEnd_toStartOf="@id/notificationTimeTV"
-                    app:isImportant="@{notification.data.data._important}"
-                    tools:text="@string/notification"/>
-
-                <TextView
-                    android:id="@+id/notificationTimeTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui"
-                    android:textSize="12sp"
-                    android:textColor="#112b46"
-                    android:lineSpacingExtra="4sp"
-                    app:layout_constraintTop_toTopOf="@id/notificationIV"
-                    app:layout_constraintBottom_toBottomOf="@id/notificationIV"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:updatedAt="@{notification.updated_at}"
-                    tools:text="5 мин назад"/>
-
-                <TextView
-                    android:id="@+id/notificationTitleTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui_bold"
-                    android:textSize="20sp"
-                    android:textColor="#112b46"
-                    android:lineSpacingExtra="4sp"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/notificationIV"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@{notification.data.data.title}"
-                    tools:text="Билеты отменен" />
-
-                <TextView
-                    android:id="@+id/notificationDescTV"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="15sp"
-                    android:textColor="#801b3652"
-                    android:letterSpacing="0.01"
-                    android:lineSpacingExtra="7sp"
-                    app:layout_constraintTop_toBottomOf="@id/notificationTitleTV"
-                    app:layout_constraintBottom_toTopOf="@id/learnMoreLL"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="@{notification.data.data.content}"
-                    tools:text="На вахту 25 мая, Алматы-2 – Актогай, на 23 мая, ср в 18:30."/>
+                    android:paddingTop="16dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp">
 
-                <LinearLayout
-                    android:id="@+id/learnMoreLL"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:orientation="vertical"
-                    android:visibility="@{notification.data.data._important ? view.VISIBLE : view.GONE}"
-                    tools:visibility="visible">
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/bottom_sheet_line" />
+                    <ImageView
+                        android:id="@+id/notificationIV"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:src="@drawable/icons_tabs_extra_trip"/>
 
                     <TextView
+                        android:id="@+id/notificationTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui"
+                        android:textSize="13sp"
+                        android:textColor="#112b46"
+                        android:letterSpacing="0.01"
+                        android:lineSpacingExtra="3sp"
+                        android:layout_marginStart="5dp"
+                        app:layout_constraintStart_toEndOf="@id/notificationIV"
+                        app:layout_constraintTop_toTopOf="@id/notificationIV"
+                        app:layout_constraintBottom_toBottomOf="@id/notificationIV"
+                        app:layout_constraintEnd_toStartOf="@id/notificationTimeTV"
+                        app:isImportant="@{notification.data.data._important}"
+                        tools:text="@string/notification"/>
+
+                    <TextView
+                        android:id="@+id/notificationTimeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui"
+                        android:textSize="12sp"
+                        android:textColor="#112b46"
+                        android:lineSpacingExtra="4sp"
+                        app:layout_constraintTop_toTopOf="@id/notificationIV"
+                        app:layout_constraintBottom_toBottomOf="@id/notificationIV"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:updatedAt="@{notification.updated_at}"
+                        tools:text="5 мин назад"/>
+
+                    <TextView
+                        android:id="@+id/notificationTitleTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_bold"
+                        android:textSize="20sp"
+                        android:textColor="#112b46"
+                        android:lineSpacingExtra="4sp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/notificationIV"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@{notification.data.data.title}"
+                        tools:text="Билеты отменен" />
+
+                    <TextView
+                        android:id="@+id/notificationDescTV"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/button_height"
-                        style="@style/bottomSheetBtn"
-                        android:text="@string/learn_more"
-                        android:onClick="@{() -> thisDialog.learnMore(notification.data.data.application_id)}"/>
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pt_root_ui_medium"
+                        android:textSize="15sp"
+                        android:textColor="#801b3652"
+                        android:letterSpacing="0.01"
+                        android:lineSpacingExtra="7sp"
+                        app:layout_constraintTop_toBottomOf="@id/notificationTitleTV"
+                        app:layout_constraintBottom_toTopOf="@id/learnMoreLL"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="@{notification.data.data.content}"
+                        tools:text="На вахту 25 мая, Алматы-2 – Актогай, на 23 мая, ср в 18:30."/>
 
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <LinearLayout
+                        android:id="@+id/learnMoreLL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:orientation="vertical"
+                        android:visibility="@{notification.data.data._important ? view.VISIBLE : view.GONE}"
+                        tools:visibility="visible">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height"
-            style="@style/bottomSheetBtn"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="@dimen/margin"
-            app:importantButtonText="@{notification.data.data._important}"
-            android:onClick="@{() -> thisDialog.dismiss()}"
-            tools:text="@string/close" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/bottom_sheet_line" />
 
-    </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/button_height"
+                            style="@style/bottomSheetBtn"
+                            android:text="@string/learn_more"
+                            android:onClick="@{() -> thisDialog.learnMore(notification.data.data.application_id)}"/>
+
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                style="@style/bottomSheetBtn"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="@dimen/margin"
+                app:importantButtonText="@{notification.data.data._important}"
+                android:onClick="@{() -> thisDialog.dismiss()}"
+                tools:text="@string/close" />
+
+        </LinearLayout>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.PBarVisibility}" />
+    </FrameLayout>
 </layout>

@@ -22,6 +22,14 @@ class NotificationRepository(private val dao: Dao) {
         dao.deleteNotifications()
     }
 
+    fun markNotificationAsRead(id: String){
+        try {
+            RetrofitClient.getApiService().markAsReadNotificationById(id)
+        }catch (e: Exception){
+            Timber.e("exception - $e")
+        }
+    }
+
     suspend fun getNotificationsFromServer(){
         try {
             val response = RetrofitClient.getApiService().getNotifications()
