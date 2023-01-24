@@ -59,7 +59,7 @@ interface ApiService {
 
     //EmployeeInfo
     @GET("employees/info")
-    fun getEmployeeInfo() : Response<Employee>
+    suspend fun getEmployeeInfo() : Response<Employee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("employees/update-data")
@@ -76,8 +76,8 @@ interface ApiService {
     @GET("notifications")
     suspend fun getNotifications() : Response<Notifications>
 
-    @GET("notifications/mark-as-read")
-    fun markAsReadNotificationById(id: String) : Response<ResponseBody>
+    @POST("notifications/mark-as-read")
+    suspend fun markAsReadNotificationById(@Body map: Map<String, String>) : Response<ResponseBody>
 
     //Logout
     @POST("logout")
@@ -85,6 +85,6 @@ interface ApiService {
 
     //DeviceInfo
     @POST("employees/fix")
-    fun saveDeviceInfo()
+    suspend fun saveDeviceInfo()
 
 }

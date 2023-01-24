@@ -78,7 +78,7 @@
                         app:layout_constraintTop_toTopOf="@id/notificationIV"
                         app:layout_constraintBottom_toBottomOf="@id/notificationIV"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:updatedAt="@{notification.updated_at}"
+                        app:updatedAt="@{notification.created_at}"
                         tools:text="5 мин назад"/>
 
                     <TextView

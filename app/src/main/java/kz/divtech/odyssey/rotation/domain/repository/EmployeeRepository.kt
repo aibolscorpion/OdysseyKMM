@@ -23,6 +23,14 @@ class EmployeeRepository(private val dao: Dao) {
         dao.deleteEmployee()
     }
 
+    suspend fun logoutFromServer(){
+        try{
+            RetrofitClient.getApiService().logout()
+        }catch (e: Exception){
+            Timber.e("exception $e")
+        }
+    }
+
     suspend fun getEmployeeFromServer(){
         try{
             val response = RetrofitClient.getApiService().getEmployeeInfo()

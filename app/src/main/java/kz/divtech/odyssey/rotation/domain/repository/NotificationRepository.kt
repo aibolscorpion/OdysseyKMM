@@ -22,9 +22,10 @@ class NotificationRepository(private val dao: Dao) {
         dao.deleteNotifications()
     }
 
-    fun markNotificationAsRead(id: String){
+    suspend fun markNotificationAsRead(id: String){
+        val map = mutableMapOf("notification_id" to id)
         try {
-            RetrofitClient.getApiService().markAsReadNotificationById(id)
+            RetrofitClient.getApiService().markAsReadNotificationById(map)
         }catch (e: Exception){
             Timber.e("exception - $e")
         }

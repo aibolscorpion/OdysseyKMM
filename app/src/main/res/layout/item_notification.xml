@@ -70,13 +70,12 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_root_ui_regular"
             android:lineSpacingExtra="4sp"
-            android:text="@{notification.updated_at}"
             android:textColor="#112b46"
             android:textSize="12sp"
             app:layout_constraintTop_toTopOf="@+id/notificationIconIV"
             app:layout_constraintBottom_toBottomOf="@+id/notificationIconIV"
             app:layout_constraintEnd_toEndOf="parent"
-            app:updatedAt="@{notification.updated_at}"
+            app:updatedAt="@{notification.created_at}"
             tools:text="@string/notification_time_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
