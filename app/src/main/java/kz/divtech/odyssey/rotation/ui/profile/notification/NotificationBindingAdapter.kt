@@ -5,7 +5,10 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -17,10 +20,10 @@ object NotificationBindingAdapter {
         val currentLocalDateTime = LocalDateTime.now()
         val today = LocalDate.now()
         val yesterday = today.minusDays(1)
-        val updatedLocalDateTime = Utils.getLocalDateTimeByPattern(updatedAt!!)
+        val updatedLocalDateTime = getLocalDateTimeByPattern(updatedAt!!)
 
-        val date = Utils.formatByGivenPattern(updatedAt, Utils.DAY_MONTH_PATTERN)
-        val time = Utils.formatByGivenPattern(updatedAt, Utils.HOUR_MINUTE_PATTERN)
+        val date = formatByGivenPattern(updatedAt, DAY_MONTH_PATTERN)
+        val time = formatByGivenPattern(updatedAt, HOUR_MINUTE_PATTERN)
 
         textView.text = when(updatedLocalDateTime.toLocalDate()){
             today -> {

@@ -19,14 +19,18 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
 
 object BindingAdapter {
 
     @BindingAdapter("direction","date")
     @JvmStatic fun setDirection(textView: TextView, direction: String?, date: String?) {
         val context = App.appContext
-        val dayMonth = Utils.formatByGivenPattern(date, Utils.DAY_MONTH_PATTERN)
+        val dayMonth = formatByGivenPattern(date, DAY_MONTH_PATTERN)
         textView.text = when (direction) {
             Constants.TO_WORK -> context.getString(R.string.to_work, dayMonth)
             Constants.TO_HOME -> context.getString(R.string.to_home, dayMonth)
@@ -192,8 +196,8 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depDateTime",  "arrDateTime")
     @JvmStatic fun formatTime(textView: TextView, segmentStatus: String, depDateTime: String?, arrDateTime: String?){
         if(depDateTime != null && arrDateTime != null){
-            val formattedDepTime = Utils.formatByGivenPattern(depDateTime, Utils.HOUR_MINUTE_PATTERN)
-            val formattedArrTime = Utils.formatByGivenPattern(arrDateTime,  Utils.HOUR_MINUTE_PATTERN)
+            val formattedDepTime = formatByGivenPattern(depDateTime, HOUR_MINUTE_PATTERN)
+            val formattedArrTime = formatByGivenPattern(arrDateTime,  HOUR_MINUTE_PATTERN)
 
             val text = App.appContext.resources.
             getString(R.string.dep_arrival_time, formattedDepTime, formattedArrTime)
@@ -205,7 +209,7 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depDateTime")
     @JvmStatic fun formatDate(textView: TextView, segmentStatus: String?, depDateTime: String?){
         if(segmentStatus != null && depDateTime != null){
-            val formattedDepDate = Utils.formatByGivenPattern(depDateTime, Utils.DAY_MONTH_DAY_OF_WEEK_PATTERN)
+            val formattedDepDate = formatByGivenPattern(depDateTime, DAY_MONTH_DAY_OF_WEEK_PATTERN)
 
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
             setSpannedText(textView, formattedDepDate)
@@ -328,7 +332,7 @@ object BindingAdapter {
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
                         trip.segments[0].active_process.equals(Constants.WATCHING)){
                         strBuilder.append(App.appContext.getString(R.string.opened_on_the_waiting_list_desc,
-                            Utils.formatByGivenPattern(trip.segments[0].watcher_time_limit, Utils.DEFAULT_PATTERN))
+                            formatByGivenPattern(trip.segments[0].watcher_time_limit, DEFAULT_PATTERN))
                         )
                     }else{
                         strBuilder.append(App.appContext.getString(R.string.opened_with_details_desc))
@@ -346,7 +350,7 @@ object BindingAdapter {
                 if(trip.segments?.size  == 1){
                     strBuilder.append(App.appContext.getString(R.string.returned_fully_one_segment_desc,
                         trip.segments[0].closed_reason,
-                        Utils.formatByGivenPattern(trip.segments[0].ticket?.returned_at, Utils.DEFAULT_PATTERN)
+                        formatByGivenPattern(trip.segments[0].ticket?.returned_at, DEFAULT_PATTERN)
                     ))
                 }else{
                     strBuilder.append(composeTextForMoreThanOneSeg(trip))
@@ -373,7 +377,7 @@ object BindingAdapter {
                         if(segment.active_process.equals(Constants.WATCHING)){
                             statusSet.add(SegmentStatus.ON_THE_WAITING_LIST)
                             strBuilder.append(App.appContext.getString(R.string.on_the_waiting_list_more_than_one_segment,
-                                Utils.formatByGivenPattern(segment.watcher_time_limit, Utils.DEFAULT_PATTERN)
+                                formatByGivenPattern(segment.watcher_time_limit, DEFAULT_PATTERN)
                             ))
                         }else{
                             statusSet.add(SegmentStatus.OPENED)
@@ -401,7 +405,7 @@ object BindingAdapter {
                 }else if(statusSet.contains(SegmentStatus.ON_THE_WAITING_LIST )) {
                     return App.appContext.getString(
                     R.string.opened_on_the_waiting_list_desc,
-                        Utils.formatByGivenPattern(trip.segments[0].watcher_time_limit, Utils.DEFAULT_PATTERN)
+                        formatByGivenPattern(trip.segments[0].watcher_time_limit, DEFAULT_PATTERN)
                 )
                 }else if(statusSet.contains(SegmentStatus.RETURNED)){
                     return App.appContext.getString(
@@ -422,12 +426,12 @@ object BindingAdapter {
 
     @BindingAdapter("depArrDate")
     @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String){
-        textView.text = Utils.formatByGivenPattern(dateTime, Utils.DAY_MONTH_DAY_OF_WEEK_PATTERN)
+        textView.text = formatByGivenPattern(dateTime, DAY_MONTH_DAY_OF_WEEK_PATTERN)
     }
 
     @BindingAdapter("depArrTime")
     @JvmStatic fun setDepArrTime(textView: TextView, dateTime: String){
-        textView.text = Utils.formatByGivenPattern(dateTime, Utils.HOUR_MINUTE_PATTERN)
+        textView.text = formatByGivenPattern(dateTime, HOUR_MINUTE_PATTERN)
     }
 
 

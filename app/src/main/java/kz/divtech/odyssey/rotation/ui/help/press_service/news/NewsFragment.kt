@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
-import kz.divtech.odyssey.rotation.utils.Utils.addItemDecorationWithoutLastDivider
+import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 
 class NewsFragment : Fragment(), NewsListener {
     val viewModel: NewsViewModel by viewModels{

@@ -16,9 +16,9 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
-import kz.divtech.odyssey.rotation.utils.Utils.hideKeyboard
-import kz.divtech.odyssey.rotation.utils.Utils.showKeyboard
 import kz.divtech.odyssey.rotation.ui.login.auth.SmsBroadcastReceiver
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideKeyboard
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {

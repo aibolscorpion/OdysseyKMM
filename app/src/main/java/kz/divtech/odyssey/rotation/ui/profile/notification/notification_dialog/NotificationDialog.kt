@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
@@ -15,6 +16,8 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 
 class NotificationDialog : BottomSheetDialogFragment() {
+    private val args by navArgs<NotificationDialogArgs>()
+
     val viewModel: NotificationDViewModel by viewModels{
         NotificationDViewModel.NotificationDViewModelFactory(
             (activity?.application as App).tripsRepository,
@@ -30,7 +33,6 @@ class NotificationDialog : BottomSheetDialogFragment() {
                               savedInstanceState: Bundle?): View {
         val binding = DialogNotificationBinding.inflate(layoutInflater)
 
-        val args = NotificationDialogArgs.fromBundle(requireArguments())
         binding.notification = args.notification
         binding.thisDialog = this
         binding.viewModel = viewModel
@@ -38,6 +40,12 @@ class NotificationDialog : BottomSheetDialogFragment() {
         viewModel.markNotificationAsRead(args.notification.id)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        isCancelable = !args.notification.data.data!!.is_important
     }
 
     fun learnMore(tripId: Int){
@@ -54,6 +62,5 @@ class NotificationDialog : BottomSheetDialogFragment() {
 
         }
     }
-
 
 }
