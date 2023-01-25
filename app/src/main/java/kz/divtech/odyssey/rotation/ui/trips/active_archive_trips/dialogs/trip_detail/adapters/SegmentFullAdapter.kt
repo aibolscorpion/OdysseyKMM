@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
@@ -137,8 +137,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
         }
 
         private fun calculateWaitingTime(segmentList: List<Segment>, position: Int): String{
-            val arrLocalDateTime = Utils.getLocalDateTimeByPattern(segmentList[position].train?.arr_date_time!!)
-            val depLocalDateTime = Utils.getLocalDateTimeByPattern(segmentList[position+1].train?.dep_date_time!!)
+            val arrLocalDateTime = getLocalDateTimeByPattern(segmentList[position].train?.arr_date_time!!)
+            val depLocalDateTime = getLocalDateTimeByPattern(segmentList[position+1].train?.dep_date_time!!)
             var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)
 
             val hours: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.HOURS)

@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ActivityLoginBinding
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         val dataBinding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
 
         SmsRetriever.getClient(this).startSmsRetriever().addOnFailureListener {  exception ->
-            Utils.showErrorMessage(this,dataBinding.root,  exception.message.toString())
+            showErrorMessage(this,dataBinding.root,  exception.message.toString())
         }
     }
 

@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentSearchByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
+import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 
 class SearchIINFragment : Fragment() {
     private val viewModel by lazy { ViewModelProvider(this)[SearchIINViewModel::class.java] }

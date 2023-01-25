@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.domain.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
 import java.time.LocalDate
 
 class MainViewModel(private val tripsRepository: TripsRepository,
@@ -40,7 +40,7 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     fun findNearestTrip(trips: List<Trip>){
         run loop@{
             trips.forEach{ trip ->
-                val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
+                val tripDateTime = getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isAfter(today)) {
                     _nearestTripMutableLiveData.postValue(trip)
                     nearestTripVisibility.set(View.VISIBLE)

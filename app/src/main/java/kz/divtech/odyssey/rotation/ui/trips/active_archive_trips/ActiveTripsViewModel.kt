@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
 import java.time.LocalDate
 
 class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
@@ -38,7 +38,7 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
         archiveTrips.clear()
         activeTrips.clear()
         tripList.forEach { trip ->
-            val tripDateTime = Utils.getLocalDateByPattern(trip.date!!)
+            val tripDateTime = getLocalDateByPattern(trip.date!!)
                 if(tripDateTime.isBefore(today)) {
                     archiveTrips.add(trip)
                 }
@@ -52,12 +52,12 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
     private fun sortTrips(){
         if(activeTrips.isNotEmpty()){
             activeTrips.sortBy { trip ->
-                Utils.getLocalDateByPattern(trip.date!!)
+                getLocalDateByPattern(trip.date!!)
             }
         }
         if(archiveTrips.isNotEmpty()){
             archiveTrips.sortByDescending { trip ->
-                Utils.getLocalDateByPattern(trip.date!!)
+                getLocalDateByPattern(trip.date!!)
             }
         }
         _activeTripsMutableLiveData.value = activeTrips

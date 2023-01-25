@@ -5,7 +5,8 @@ import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
 
 object DocumentBindingAdapter {
     @BindingAdapter("documentType")
@@ -20,8 +21,8 @@ object DocumentBindingAdapter {
 
     @BindingAdapter("issueDate","expireDate")
     @JvmStatic fun setIssueExpireDate(textView: TextView, issueDate: String?, expireDate: String?){
-        val formattedIssueDate = Utils.formatByGivenPattern(issueDate, Utils.DAY_MONTH_YEAR_PATTERN)
-        val formattedExpireDate = Utils.formatByGivenPattern(expireDate, Utils.DAY_MONTH_YEAR_PATTERN)
+        val formattedIssueDate = formatByGivenPattern(issueDate, DAY_MONTH_YEAR_PATTERN)
+        val formattedExpireDate = formatByGivenPattern(expireDate, DAY_MONTH_YEAR_PATTERN)
 
         textView.text = App.appContext.getString(R.string.dep_arrival_station_name,
             formattedIssueDate, formattedExpireDate)

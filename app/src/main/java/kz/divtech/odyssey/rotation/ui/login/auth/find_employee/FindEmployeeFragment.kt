@@ -16,9 +16,9 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
+import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
-import kz.divtech.odyssey.rotation.utils.Utils.showErrorMessage
 
 class FindEmployeeFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
