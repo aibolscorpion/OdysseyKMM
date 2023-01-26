@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.data.local
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
@@ -27,6 +28,12 @@ interface Dao {
     @Query("DELETE FROM trip")
     suspend fun deleteTrips()
 
+    @Transaction
+    suspend fun refreshTrips(data: List<Trip>){
+        deleteTrips()
+        insertTrips(data)
+    }
+
     //Employee
     @Query("SELECT * FROM employee")
     fun getEmployee(): Flow<Employee>
@@ -49,6 +56,12 @@ interface Dao {
 
     @Query("SELECT * FROM faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%'")
     fun searchFAQ(searchQuery: String) : Flow<List<Faq>>
+
+    @Transaction
+    suspend fun refreshFaq(faqList: List<Faq>){
+        deleteFAQ()
+        insertFAQ(faqList)
+    }
 
     //Documents
     @Query("SELECT * FROM document")
@@ -74,6 +87,12 @@ interface Dao {
             " short_content LIKE '%'||:searchQuery||'%'")
     fun searchArticle(searchQuery: String): Flow<List<Article>>
 
+    @Transaction
+    suspend fun refreshNews(articleList: List<Article>){
+        deleteNews()
+        insertNews(articleList)
+    }
+
     //FullArticle
     @Query("SELECT * FROM full_article WHERE id=:id")
     fun getArticleById(id: Int) : Flow<FullArticle>
@@ -93,5 +112,11 @@ interface Dao {
 
     @Query("DELETE FROM notification")
     suspend fun deleteNotifications()
+
+    @Transaction
+    suspend fun refreshNotifications(notificationList: List<Notification>){
+        deleteNotifications()
+        insertNotifications(notificationList)
+    }
 
 }

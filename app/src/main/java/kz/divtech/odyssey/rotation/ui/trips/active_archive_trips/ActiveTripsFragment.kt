@@ -58,11 +58,12 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     private fun observeLiveData(liveData: LiveData<List<Trip>>, emptyData: EmptyData){
         liveData.observe(viewLifecycleOwner) { list ->
             if(list.isNotEmpty()){
-                adapter.setTripList(list)
+                binding.noTrips.root.visibility = View.GONE
             }else{
                 binding.noTrips.root.visibility = View.VISIBLE
                 binding.emptyData = emptyData
             }
+            adapter.setTripList(list)
         }
     }
 

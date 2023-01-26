@@ -27,16 +27,19 @@ class NewsRepository(private val dao: Dao) {
         dao.deleteNews()
     }
 
+    @WorkerThread
+    @Suppress("RedundantSuspendModifier")
+    suspend fun refreshNews(news: List<Article>){
+        dao.refreshNews(news)
+    }
+
     suspend fun getNewsFromServer(){
         try{
             val response = RetrofitClient.getApiService().getArticles()
             val news = response.body()?.data
             when(response.code()){
                 Constants.SUCCESS_CODE -> {
-                    if(response.body()?.data!!.isNotEmpty()){
-                        deleteNews()
-                        insertNews(news!!)
-                    }
+                    refreshNews(news!!)
                 }
             }
         }catch (e: Exception){

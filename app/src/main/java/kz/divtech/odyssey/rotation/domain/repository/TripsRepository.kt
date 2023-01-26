@@ -26,6 +26,13 @@ class TripsRepository(private val dao : Dao) {
         dao.deleteTrips()
     }
 
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun refreshTrips(data: List<Trip>){
+        dao.refreshTrips(data)
+    }
+
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun getTripsFromServer(){
@@ -33,8 +40,7 @@ class TripsRepository(private val dao : Dao) {
             val response = RetrofitClient.getApiService().getTrips()
             val trips = response.body()?.data?.data
             if(response.isSuccessful){
-                deleteTrips()
-                insertTrips(trips!!)
+                refreshTrips(trips!!)
             }
         }catch (e : Exception){
             Timber.e("exception - ${e.message}")

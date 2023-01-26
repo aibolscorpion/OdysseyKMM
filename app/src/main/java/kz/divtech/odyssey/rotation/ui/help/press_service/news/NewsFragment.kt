@@ -34,12 +34,12 @@ class NewsFragment : Fragment(), NewsListener {
 
         viewModel.newsLiveData.observe(viewLifecycleOwner){ news ->
             if(news.isNotEmpty()){
-                adapter.setNews(news)
                 binding.noNews.root.visibility = View.GONE
             }else{
                 viewModel.getNewsFromServer()
                 binding.noNews.root.visibility = View.VISIBLE
             }
+            adapter.setNews(news)
         }
 
         binding.newsSearchView.setOnQueryTextListener(object: OnQueryTextListener{

@@ -32,12 +32,12 @@ class FaqFragment : Fragment() {
             if(faqList.isNotEmpty()){
                 binding.faqSearchView.visibility = View.VISIBLE
                 binding.noFAQ.root.visibility = View.GONE
-                faqAdapter.setList(faqList)
             }else{
                 viewModel.getFaqListFromServer()
                 binding.faqSearchView.visibility = View.GONE
                 binding.noFAQ.root.visibility = View.VISIBLE
             }
+            faqAdapter.setList(faqList)
         }
 
         binding.faqSearchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
