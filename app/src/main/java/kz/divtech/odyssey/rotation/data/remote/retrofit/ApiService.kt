@@ -74,7 +74,7 @@ interface ApiService {
 
     //Notifications
     @GET("notifications")
-    suspend fun getNotifications() : Response<Notifications>
+    suspend fun getNotifications(@Query("page") pageIndex: Int) : Response<Notifications>
 
     @POST("notifications/mark-as-read")
     suspend fun markAsReadNotificationById(@Body map: Map<String, String>) : Response<ResponseBody>

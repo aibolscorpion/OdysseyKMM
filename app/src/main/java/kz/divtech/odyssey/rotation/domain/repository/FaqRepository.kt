@@ -29,8 +29,10 @@ class FaqRepository(private val dao: Dao) {
     suspend fun getFaqListFromServer() {
         try{
             val response = RetrofitClient.getApiService().getFAQs()
+            val faqList = response.body()
             if(response.isSuccessful){
-                insertFaq(response.body()!!)
+                deleteFaq()
+                insertFaq(faqList!!)
             }
         }catch (e: Exception){
             Timber.e("exception - ${e.message}")

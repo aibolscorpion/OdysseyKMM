@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="notification"
+            type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+        <variable
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDialog" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin"
+        android:paddingBottom="@dimen/margin">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="24dp"
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:paddingBottom="@dimen/margin">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    tools:src="@drawable/icon_no_internet" />
+
+                <TextView
+                    android:id="@+id/notificationTitleTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="20sp"
+                    android:textColor="#112b46"
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@{notification.data.data.title}"
+                    tools:text="Нет подключения к интернету" />
+
+                <TextView
+                    android:id="@+id/notificationDescTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="#801b3652"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="7sp"
+                    android:layout_marginTop="12dp"
+                    android:text="@{notification.data.data.content}"
+                    tools:text="Не получается обновить данные: нет подключения к сети интернет. Попробуйте позже."/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            style="@style/bottomSheetBtn"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@string/close"
+            android:onClick="@{() -> thisDialog.dismiss()}"
+            tools:text="@string/close" />
+
+    </LinearLayout>
+</layout>

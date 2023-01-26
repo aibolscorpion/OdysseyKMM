@@ -1,10 +1,14 @@
 package kz.divtech.odyssey.rotation.ui.profile.notification
 
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
@@ -14,6 +18,36 @@ import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
 object NotificationBindingAdapter {
+
+    @BindingAdapter("notificationIcon")
+    @JvmStatic fun setNotificationIcon(imageView: ImageView, notificationType: String){
+        val typeArray = notificationType.split("\\")
+
+        val iconResource: Int = when(typeArray[typeArray.size-1]){
+            "TripStarted" -> R.drawable.drawable_trip_status_issued
+            "SegmentRemovedFromWaitingList" -> R.drawable.icon_removed_from_waiting_list
+            "SegmentAddedToWaitingList" -> R.drawable.icon_added_to_waiting_list
+            "SegmentHasPlaces" -> R.drawable.icon_places_found_waiting_list
+            "TicketReturned" -> R.drawable.drawable_trip_status_returned_fully
+            "SegmentIssued" -> R.drawable.icon_ticket_issued
+            "NewEmployeeScheduleShiftRecived" -> R.drawable.icon_schedule_shift
+            "DocumentExpiredInfo" -> R.drawable.icon_document_expired
+            "NewVacationRecived" -> R.drawable.icon_vacation
+            "NewDismissedRecived" -> R.drawable.icon_fired
+            "NewOvertimeRecived" -> R.drawable.icon_rvd
+            else -> R.drawable.icon_notifications
+        }
+        imageView.setImageResource(iconResource)
+    }
+
+
+    @BindingAdapter("isImportant")
+    @JvmStatic fun setIsImportant(textView: TextView, isImportant: Boolean){
+        textView.text = if(isImportant)
+            App.appContext.getString(R.string.important_notification)
+        else
+            App.appContext.getString(R.string.notification)
+    }
 
     @BindingAdapter("updatedAt")
     @JvmStatic fun setUpdatedAt(textView: TextView, updatedAt: String?){
@@ -39,12 +73,12 @@ object NotificationBindingAdapter {
         }
     }
 
-    @BindingAdapter("isImportant")
-    @JvmStatic fun setIsImportant(textView: TextView, isImportant: Boolean){
-        textView.text = if(isImportant)
-            App.appContext.getString(R.string.important_notification)
-        else
-            App.appContext.getString(R.string.notification)
+    @BindingAdapter("learnMoreVisibility")
+    @JvmStatic fun setLearnMoreVisibility(learnMoreLL: LinearLayout, notificationTypeGroup: String){
+        learnMoreLL.visibility = when(notificationTypeGroup){
+            Constants.NOTIFICATION_TYPE_TICKET, Constants.NOTIFICATION_TYPE_APPLICATION -> View.VISIBLE
+            else -> View.GONE
+        }
     }
 
     @BindingAdapter("importantButtonText")

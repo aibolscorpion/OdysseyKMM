@@ -25,6 +25,9 @@ object Constants {
     const val RETRY_AFTER = "Retry-After"
     const val TERMS_FILE_NAME = "TermsOfAgreement.html"
 
+    const val NOTIFICATION_TYPE_TICKET = "ticket"
+    const val NOTIFICATION_TYPE_APPLICATION = "application"
+
     const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400
     const val UNAUTHORIZED_CODE = 401

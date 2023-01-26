@@ -297,7 +297,7 @@
 
     //Страница Уведомления
     <string name="notification_title_placeholder">Смещение графика</string>
-    <string name="notification_content_placeholder">Новый график: 18 апреля - 9 мая 202…</string>
+    <string name="notification_content_placeholder">Новый график: 18 апреля - 9 мая 2022</string>
     <string name="notification_time_placeholder">2 ч назад</string>
     <string name="empty_notifications_title">Уведомления не найдены</string>
     <string name="empty_notifications_content">У вас пока нет новых уведомлений</string>

@@ -31,8 +31,10 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getTripsFromServer(){
         try {
             val response = RetrofitClient.getApiService().getTrips()
+            val trips = response.body()?.data?.data
             if(response.isSuccessful){
-                insertTrips(response.body()?.data?.data!!)
+                deleteTrips()
+                insertTrips(trips!!)
             }
         }catch (e : Exception){
             Timber.e("exception - ${e.message}")

@@ -23,13 +23,14 @@
 
         <ImageView
             android:id="@+id/notificationIconIV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="6dp"
-            android:src="@drawable/icons_tabs_notify"
-            android:contentDescription="@string/notification" />
+            android:layout_marginTop="10dp"
+            app:notificationIcon="@{notification.type}"
+            android:contentDescription="@string/notification"
+            tools:src="@drawable/icons_tabs_notify" />
 
         <TextView
             android:id="@+id/notificationTitleTV"
@@ -39,8 +40,8 @@
             android:singleLine="true"
             android:textColor="#385780"
             android:textSize="16sp"
-            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="6dp"
+            android:layout_marginStart="12dp"
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
             app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,6 @@
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/pt_root_ui_medium"
             android:lineSpacingExtra="2sp"
@@ -59,9 +59,9 @@
             android:text="@{notification.data.data.content}"
             android:textColor="#385780"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/notificationIconIV"
+            app:layout_constraintStart_toStartOf="@+id/notificationTitleTV"
             app:layout_constraintTop_toBottomOf="@+id/notificationTitleTV"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="@string/notification_content_placeholder" />
 
         <TextView
@@ -72,8 +72,7 @@
             android:lineSpacingExtra="4sp"
             android:textColor="#112b46"
             android:textSize="12sp"
-            app:layout_constraintTop_toTopOf="@+id/notificationIconIV"
-            app:layout_constraintBottom_toBottomOf="@+id/notificationIconIV"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:updatedAt="@{notification.created_at}"
             tools:text="@string/notification_time_placeholder" />

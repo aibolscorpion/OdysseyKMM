@@ -30,10 +30,12 @@ class NewsRepository(private val dao: Dao) {
     suspend fun getNewsFromServer(){
         try{
             val response = RetrofitClient.getApiService().getArticles()
+            val news = response.body()?.data
             when(response.code()){
                 Constants.SUCCESS_CODE -> {
                     if(response.body()?.data!!.isNotEmpty()){
-                        insertNews(response.body()?.data!!)
+                        deleteNews()
+                        insertNews(news!!)
                     }
                 }
             }
