@@ -32,7 +32,7 @@ class NotificationRepository(private val dao: Dao) {
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getNotificationsFromServer(): Flow<PagingData<Notification>>{
+    fun getPagingNotifications(): Flow<PagingData<Notification>>{
             return Pager(
                 config = PagingConfig(
                     pageSize = NETWORK_PAGE_SIZE,

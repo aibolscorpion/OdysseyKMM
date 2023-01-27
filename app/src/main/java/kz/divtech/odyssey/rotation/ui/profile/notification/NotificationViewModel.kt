@@ -16,7 +16,7 @@ class NotificationViewModel(private val notificationRepository: NotificationRepo
     val pBarVisibility = ObservableInt(View.GONE)
 
     fun getNotificationsFromServer(): Flow<PagingData<Notification>> {
-        return notificationRepository.getNotificationsFromServer()
+        return notificationRepository.getPagingNotifications()
             .cachedIn(viewModelScope)
     }
 
