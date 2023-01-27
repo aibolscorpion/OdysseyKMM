@@ -1,20 +1,20 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
 import androidx.annotation.WorkerThread
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationRemoteMediator
 import timber.log.Timber
 
-class NotificationRepository(private val dao: Dao) {
-    val notifications: Flow<List<Notification>> = dao.getNotifications()
+const val NETWORK_PAGE_SIZE = 10
 
-    @WorkerThread
-    @Suppress("RedundantSuspendModifier")
-    suspend fun insertNotifications(notificationList: List<Notification>){
-        dao.insertNotifications(notificationList)
-    }
+class NotificationRepository(private val dao: Dao) {
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
@@ -31,13 +31,17 @@ class NotificationRepository(private val dao: Dao) {
         }
     }
 
-    suspend fun getNotificationsFromServer(){
-        try {
-            val response = RetrofitClient.getApiService().getNotifications()
-            insertNotifications(response.body()?.data!!)
-        }catch (e: Exception){
-            Timber.e("exception - $e")
-        }
+    @OptIn(ExperimentalPagingApi::class)
+    fun getNotificationsFromServer(): Flow<PagingData<Notification>>{
+            return Pager(
+                config = PagingConfig(
+                    pageSize = NETWORK_PAGE_SIZE,
+                    enablePlaceholders = false,
+                    initialLoadSize = 20
+                ),
+                remoteMediator = NotificationRemoteMediator(dao),
+                pagingSourceFactory = { dao.getNotificationPagingSource() }
+            ).flow
     }
 
 }

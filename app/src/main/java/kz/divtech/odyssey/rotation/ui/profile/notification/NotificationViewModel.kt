@@ -1,37 +1,23 @@
 package kz.divtech.odyssey.rotation.ui.profile.notification
 
 import android.view.View
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.repository.NotificationRepository
 
 class NotificationViewModel(private val notificationRepository: NotificationRepository): ViewModel() {
-    val notificationsLiveData = notificationRepository.notifications.asLiveData()
 
     val pBarVisibility = ObservableInt(View.GONE)
-    val isRefreshing = ObservableBoolean()
 
-
-    fun getNotificationsFromServer(){
-        viewModelScope.launch {
-            pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationsFromServer()
-            pBarVisibility.set(View.GONE)
-        }
-    }
-
-
-    fun refreshNotifications(){
-        viewModelScope.launch {
-            isRefreshing.set(true)
-            notificationRepository.getNotificationsFromServer()
-            isRefreshing.set(false)
-        }
+    fun getNotificationsFromServer(): Flow<PagingData<Notification>> {
+        return notificationRepository.getNotificationsFromServer()
+            .cachedIn(viewModelScope)
     }
 
     class NotificationViewModelFactory(private val notificationRepository: NotificationRepository): ViewModelProvider.Factory{

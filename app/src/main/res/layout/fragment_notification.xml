@@ -4,18 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationViewModel" />
+            name="thisFragment"
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment" />
         <variable
             name="emptyData"
             type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationViewModel" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:onRefreshListener="@{() -> viewModel.refreshNotifications()}"
-        app:refreshing="@{viewModel.isRefreshing}" >
+        app:onRefreshListener="@{() -> thisFragment.refreshNotifications()}"
+        app:refreshing="@{thisFragment.isRefreshing}" >
 
         <FrameLayout
             android:layout_width="match_parent"

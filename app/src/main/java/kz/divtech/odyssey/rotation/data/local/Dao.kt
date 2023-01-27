@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.data.local
 
+import androidx.paging.PagingSource
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -105,7 +106,7 @@ interface Dao {
 
     //Notifications
     @Query("SELECT * FROM notification")
-    fun getNotifications() : Flow<List<Notification>>
+    fun getNotificationPagingSource() : PagingSource<Int, Notification>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotifications(notificationList: List<Notification>)
