@@ -16,6 +16,14 @@ const val NETWORK_PAGE_SIZE = 10
 
 class NotificationRepository(private val dao: Dao) {
 
+    val notifications: Flow<List<Notification>> = dao.getThreeNotifications()
+
+    @WorkerThread
+    @Suppress("RedundantSuspendModifier")
+    suspend fun refreshNotifications(notificationList: List<Notification>){
+        dao.refreshNotifications(notificationList)
+    }
+
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
     suspend fun deleteNotifications(){
@@ -31,17 +39,25 @@ class NotificationRepository(private val dao: Dao) {
         }
     }
 
+    suspend fun getNotificationsFromServer(){
+        try {
+            val response = RetrofitClient.getApiService().getNotifications(1)
+            val notifications = response.body()?.data!!
+            if(response.isSuccessful){
+                refreshNotifications(notifications)
+            }
+        }catch (e: Exception){
+            Timber.e("exception - $e")
+        }
+    }
+
     @OptIn(ExperimentalPagingApi::class)
     fun getPagingNotifications(): Flow<PagingData<Notification>>{
-            return Pager(
-                config = PagingConfig(
-                    pageSize = NETWORK_PAGE_SIZE,
-                    enablePlaceholders = false,
-                    initialLoadSize = 20
-                ),
-                remoteMediator = NotificationRemoteMediator(dao),
-                pagingSourceFactory = { dao.getNotificationPagingSource() }
-            ).flow
+        return Pager(
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            remoteMediator = NotificationRemoteMediator(dao),
+            pagingSourceFactory = { dao.getNotificationPagingSource() }
+        ).flow
     }
 
 }

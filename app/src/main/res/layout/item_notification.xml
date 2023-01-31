@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
         <variable
             name="listener"
-            type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationListener" />
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

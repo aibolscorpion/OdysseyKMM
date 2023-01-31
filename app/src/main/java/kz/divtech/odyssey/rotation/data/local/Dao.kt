@@ -108,6 +108,9 @@ interface Dao {
     @Query("SELECT * FROM notification")
     fun getNotificationPagingSource() : PagingSource<Int, Notification>
 
+    @Query("SELECT * FROM notification LIMIT 3")
+    fun getThreeNotifications(): Flow<List<Notification>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotifications(notificationList: List<Notification>)
 

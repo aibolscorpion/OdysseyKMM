@@ -14,8 +14,10 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
 
-class NotificationFragment : Fragment(), NotificationListener{
+class NotificationFragment : Fragment(), NotificationListener {
     val isRefreshing = ObservableBoolean()
     val viewModel: NotificationViewModel by viewModels {
         NotificationViewModel.NotificationViewModelFactory(
@@ -46,7 +48,7 @@ class NotificationFragment : Fragment(), NotificationListener{
 
     private fun collectUiState() {
         lifecycleScope.launch {
-            viewModel.getNotificationsFromServer().collectLatest { notifications ->
+            viewModel.getPagingNotifications().collectLatest { notifications ->
                 adapter?.submitData(notifications)
             }
         }

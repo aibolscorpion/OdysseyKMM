@@ -26,7 +26,7 @@ class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notificatio
                 LoadType.REFRESH -> dao.refreshNotifications(notifications)
                 else -> dao.insertNotifications(notifications)
             }
-            MediatorResult.Success(endOfPaginationReached = notifications.size < state.config.pageSize)
+            MediatorResult.Success(notifications.size < state.config.pageSize)
         }catch (e: Exception){
             MediatorResult.Error(e)
         }

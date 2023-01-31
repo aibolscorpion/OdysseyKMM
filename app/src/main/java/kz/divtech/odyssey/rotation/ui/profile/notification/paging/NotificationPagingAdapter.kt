@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.profile.notification
+package kz.divtech.odyssey.rotation.ui.profile.notification.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 
-class NotificationPagingAdapter(val listener: NotificationListener) : PagingDataAdapter<Notification, NotificationViewHolder>(NotificationCallBack()) {
+class NotificationPagingAdapter(val listener: NotificationListener) :
+    PagingDataAdapter<Notification, NotificationViewHolder>(NotificationPagingCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationViewHolder {
         val viewHolder = NotificationViewHolder(ItemNotificationBinding.inflate(

@@ -110,12 +110,11 @@ class MainFragment : Fragment(), NotificationListener{
     private fun setNotifications(){
         val adapter = NotificationAdapter(this)
         binding.notificationsRV.adapter = adapter
-        viewModel.notificationsLiveData.observe(viewLifecycleOwner) { notificationList ->
+        viewModel.threeNotifications.observe(viewLifecycleOwner) { notificationList ->
             if(notificationList.isNotEmpty()){
                 binding.showAllNotificationsBtn.visibility = View.VISIBLE
                 binding.noNotificationsTV.visibility = View.GONE
-                adapter.setNotificationList(
-                    notificationList.subList(0, Config.NOTIFICATION_LIMIT_SIZE_MAIN_SCREEN))
+                adapter.setNotificationList(notificationList)
             }else{
                 binding.showAllNotificationsBtn.visibility = View.GONE
                 binding.noNotificationsTV.visibility = View.VISIBLE
