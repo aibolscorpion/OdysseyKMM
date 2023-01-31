@@ -1,25 +1,15 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
 import androidx.annotation.WorkerThread
+import androidx.paging.*
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
-import timber.log.Timber
+import kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsRemoteMediator
 
 class NewsRepository(private val dao: Dao) {
 
-    val news: Flow<List<Article>> = dao.getNews()
-
-    @WorkerThread
-    @Suppress("RedundantSuspendModifier")
-    suspend fun insertNews(news: List<Article>){
-        dao.insertNews(news)
-    }
-
     fun searchArticlesFromDB(searchQuery: String): Flow<List<Article>> = dao.searchArticle(searchQuery)
-
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
@@ -27,24 +17,14 @@ class NewsRepository(private val dao: Dao) {
         dao.deleteNews()
     }
 
-    @WorkerThread
-    @Suppress("RedundantSuspendModifier")
-    suspend fun refreshNews(news: List<Article>){
-        dao.refreshNews(news)
-    }
 
-    suspend fun getNewsFromServer(){
-        try{
-            val response = RetrofitClient.getApiService().getArticles()
-            val news = response.body()?.data
-            when(response.code()){
-                Constants.SUCCESS_CODE -> {
-                    refreshNews(news!!)
-                }
-            }
-        }catch (e: Exception){
-            Timber.e("exception - ${e.message}")
-        }
+    @OptIn(ExperimentalPagingApi::class)
+    fun getPagingNews(): Flow<PagingData<Article>>{
+        return Pager(
+            config = PagingConfig(pageSize = 5, enablePlaceholders = false),
+            remoteMediator = NewsRemoteMediator(dao),
+            pagingSourceFactory = { dao.getNewsPagingSource() }
+        ).flow
     }
 
 }

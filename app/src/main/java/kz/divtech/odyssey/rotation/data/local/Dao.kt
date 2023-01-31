@@ -76,7 +76,7 @@ interface Dao {
 
     //News
     @Query("SELECT * FROM article")
-    fun getNews(): Flow<List<Article>>
+    fun getNewsPagingSource(): PagingSource<Int, Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNews(articleList: List<Article>)

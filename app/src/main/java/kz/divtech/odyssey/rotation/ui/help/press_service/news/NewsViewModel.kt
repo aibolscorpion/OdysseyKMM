@@ -1,35 +1,22 @@
 package kz.divtech.odyssey.rotation.ui.help.press_service.news
 
 import android.view.View
-import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import kotlinx.coroutines.launch
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
-    val isRefreshing = ObservableBoolean()
     val pBarVisibility = ObservableInt(View.GONE)
 
-    val newsLiveData = newsRepository.news.asLiveData()
+    fun getPagingNews(): Flow<PagingData<Article>> =
+        newsRepository.getPagingNews().cachedIn(viewModelScope)
 
-    fun refreshNews() =
-        viewModelScope.launch {
-            isRefreshing.set(true)
-            newsRepository.getNewsFromServer()
-            isRefreshing.set(false)
-        }
-
-    fun getNewsFromServer() =
-        viewModelScope.launch {
-            pBarVisibility.set(View.VISIBLE)
-            newsRepository.getNewsFromServer()
-            pBarVisibility.set(View.GONE)
-        }
-
-    fun searchNewsFromDB(searchQuery: String) : LiveData<List<Article>> =
-        newsRepository.searchArticlesFromDB(searchQuery).asLiveData()
+    fun searchNewsFromDB(searchQuery: String) : Flow<List<Article>> =
+        newsRepository.searchArticlesFromDB(searchQuery)
 
     class ViewModelFactory(private val newsRepository: NewsRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

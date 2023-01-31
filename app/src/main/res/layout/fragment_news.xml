@@ -9,13 +9,16 @@
         <variable
             name="emptyData"
             type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
+        <variable
+            name="thisFragment"
+            type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsFragment" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:refreshing="@{viewModel.isRefreshing}"
-        app:onRefreshListener="@{() -> viewModel.refreshNews()}" >
+        app:refreshing="@{thisFragment.isRefreshing}"
+        app:onRefreshListener="@{() -> thisFragment.refreshNews()}" >
 
         <FrameLayout
             android:layout_width="match_parent"

@@ -8,10 +8,10 @@ import androidx.room.TypeConverters
 @TypeConverters(TagListConverter::class)
 @Entity
 data class Article(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val is_important: Int?,
     @Embedded val pivot: Pivot?,
-    val published_on: String?,
+    @PrimaryKey val published_on: String,
     val read_on: String?,
     val short_content: String,
     val tags: List<Tag>,

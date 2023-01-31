@@ -49,7 +49,7 @@ interface ApiService {
 
     //Articles
     @GET("articles")
-    suspend fun getArticles() : Response<News>
+    suspend fun getArticles(@Query("page") pageIndex: Int) : Response<News>
 
     @GET("articles/{id}")
     suspend fun getSpecificArticleById(@Path("id") articleId: Int) : Response<FullArticle>

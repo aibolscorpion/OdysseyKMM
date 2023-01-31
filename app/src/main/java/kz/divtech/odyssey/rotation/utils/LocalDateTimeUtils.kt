@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 object LocalDateTimeUtils {
-    private const val SERVER_PATTERN = "yyyy-MM-dd HH:mm:ss"
+    const val SERVER_PATTERN = "yyyy-MM-dd HH:mm:ss"
     const val BIRTH_DATE_PATTERN = "yyyy-MM-dd"
     const val DEFAULT_PATTERN = "d MMM yyyy, HH:mm"
     const val DAY_MONTH_DAY_OF_WEEK_PATTERN = "d MMM EE"
