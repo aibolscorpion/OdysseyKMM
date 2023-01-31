@@ -3,14 +3,13 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
-class TripsDiffCallBack(private val newList: List<Trip>, private val oldList: List<Trip>) : DiffUtil.Callback(){
-    override fun getOldListSize(): Int = oldList.size
+class TripsDiffCallBack : DiffUtil.ItemCallback<Trip>(){
+    override fun areItemsTheSame(oldItem: Trip, newItem: Trip): Boolean {
+        return oldItem.id == newItem.id
+    }
 
-    override fun getNewListSize(): Int = newList.size
+    override fun areContentsTheSame(oldItem: Trip, newItem: Trip): Boolean {
+        return oldItem == newItem
+    }
 
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-         newList[newItemPosition].id == oldList[oldItemPosition].id
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-         newList[newItemPosition] == oldList[oldItemPosition]
 }

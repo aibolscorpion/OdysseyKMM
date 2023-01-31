@@ -4,10 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
@@ -15,9 +21,9 @@ import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 
-class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
-
-    val adapter = TripsAdapter(this)
+class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
+    val refreshing = ObservableBoolean()
+    val adapter: TripsPagingAdapter by lazy { TripsPagingAdapter(this) }
     val viewModel: ActiveTripsViewModel by viewModels{
         ActiveTripsViewModel.TripsViewModelFactory((activity?.application as App).tripsRepository)
     }
@@ -35,37 +41,75 @@ class ActiveTripsFragment : Fragment(), TripsAdapter.OnTripListener{
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentActiveTripsBinding.inflate(inflater)
 
-        binding.viewModel = viewModel
-        binding.activeTripsRV.adapter = adapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activeTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        viewModel.tripsLiveData.observe(viewLifecycleOwner){ data ->
-            viewModel.divideIntoTwoParts(data)
-        }
+        binding.thisFragment = this
 
-        if(activeTrips!!){
-            observeLiveData(viewModel.activeTripsLiveData, EmptyData.ACTIVE_TRIPS)
-        }else{
-            observeLiveData(viewModel.archiveTripsLiveData, EmptyData.ARCHIVE_TRIPS)
-        }
+        setupTripsPagingAdapter()
+        loadStates()
+
     }
 
-    private fun observeLiveData(liveData: LiveData<List<Trip>>, emptyData: EmptyData){
-        liveData.observe(viewLifecycleOwner) { list ->
-            if(list.isNotEmpty()){
-                binding.noTrips.root.visibility = View.GONE
+    private fun setupTripsPagingAdapter(){
+        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
+
+        binding.tripsRV.adapter = adapter
+        lifecycleScope.launch{
+            if(isActiveTrips!!){
+                viewModel.getActivePagingTrips().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
             }else{
-                binding.noTrips.root.visibility = View.VISIBLE
-                binding.emptyData = emptyData
+                viewModel.getArchivePagingTrips().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
             }
-            adapter.setTripList(list)
         }
     }
+
+    private fun loadStates(){
+        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collect{ loadState ->
+
+                val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.emptyData = if(isActiveTrips!!) EmptyData.ACTIVE_TRIPS else EmptyData.ARCHIVE_TRIPS
+                binding.emptyTrips.root.isVisible = isListEmpty
+
+                binding.tripsRV.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading
+                            || loadState.mediator?.refresh is LoadState.NotLoading
+
+                binding.tripsPBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+
+                binding.tripsRetryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error
+                        && adapter.itemCount == 0
+
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+
+                errorState?.let {
+                    Toast.makeText(requireContext(), errorState.error.toString(),
+                        Toast.LENGTH_LONG).show()
+                }
+
+            }
+        }
+    }
+
+    fun refreshTrips(){
+        refreshing.set(true)
+        adapter.refresh()
+        refreshing.set(false)
+    }
+
+
 
     override fun onTripClicked(trip: Trip) {
         if(trip.segments == null){

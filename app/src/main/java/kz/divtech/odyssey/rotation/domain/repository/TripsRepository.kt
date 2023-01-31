@@ -1,15 +1,17 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
 import androidx.annotation.WorkerThread
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import timber.log.Timber
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripRemoteMediator
+
 
 class TripsRepository(private val dao : Dao) {
-
-    val trips : Flow<List<Trip>> = dao.getTrips()
 
     fun getTripById(id: Int): Flow<Trip> = dao.getTripById(id)
 
@@ -33,18 +35,28 @@ class TripsRepository(private val dao : Dao) {
         dao.refreshTrips(data)
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getTripsFromServer(){
-        try {
-            val response = RetrofitClient.getApiService().getTrips()
-            val trips = response.body()?.data?.data
-            if(response.isSuccessful){
-                refreshTrips(trips!!)
-            }
-        }catch (e : Exception){
-            Timber.e("exception - ${e.message}")
-        }
+    suspend fun getActivePagingTrip(): Flow<PagingData<Trip>>{
+
+       return Pager(
+           config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+           remoteMediator = TripRemoteMediator(dao),
+           pagingSourceFactory = {dao.getActiveTrips()}
+       ).flow
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getArchivePagingTrip(): Flow<PagingData<Trip>>{
+
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            remoteMediator = TripRemoteMediator(dao),
+            pagingSourceFactory = {dao.getArchiveTrips()}
+        ).flow
     }
 
 }

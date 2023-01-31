@@ -1,7 +1,5 @@
 package kz.divtech.odyssey.rotation.ui.help.press_service.news
 
-import android.view.View
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -10,7 +8,6 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
-    val pBarVisibility = ObservableInt(View.GONE)
 
     fun getPagingNews(): Flow<PagingData<Article>> =
         newsRepository.getPagingNews().cachedIn(viewModelScope)

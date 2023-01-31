@@ -41,7 +41,7 @@ interface ApiService {
 
     //Trips
     @GET("employees/get-applications")
-    suspend fun getTrips(): Response<Data>
+    suspend fun getTrips(@Query("page") pageIndex: Int): Response<Data>
 
     //FAQ
     @GET("faqs")

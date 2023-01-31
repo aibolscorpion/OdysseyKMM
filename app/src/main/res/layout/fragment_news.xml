@@ -68,16 +68,28 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <include
-                    android:id="@+id/noNews"
+                    android:id="@+id/emptyNews"
                     layout="@layout/layout_empty_data"
                     app:emptyData="@{emptyData.NEWS}"
                     android:visibility="gone" />
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/newsRetryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_gravity="center"
+                style="@style/buttonStyle"
+                android:onClick="@{() -> thisFragment.adapter.retry()}"
+                android:padding="@dimen/margin"
+                tools:visibility="gone"
+                android:text="@string/retry" />
+
             <ProgressBar
+                android:id="@+id/newsPBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="@{viewModel.PBarVisibility}"
                 android:layout_gravity="center" />
 
         </FrameLayout>

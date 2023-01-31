@@ -7,15 +7,15 @@
             name="emptyData"
             type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
         <variable
-            name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsViewModel" />
+            name="thisFragment"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFragment" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:refreshing="@{viewModel.refreshing}"
-        app:onRefreshListener="@{()-> viewModel.getTripsFromServer()}">
+        app:refreshing="@{thisFragment.refreshing}"
+        app:onRefreshListener="@{()-> thisFragment.refreshTrips()}">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:background="@color/main_bg">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/activeTripsRV"
+                android:id="@+id/tripsRV"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -33,8 +33,25 @@
                 android:clipToPadding="false"
                 tools:listitem="@layout/item_trip" />
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/tripsRetryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                android:layout_gravity="center"
+                style="@style/buttonStyle"
+                android:padding="@dimen/margin"
+                android:onClick="@{() -> thisFragment.adapter.retry()}"
+                tools:visibility="gone"
+                android:text="@string/retry" />
+
+            <ProgressBar
+                android:id="@+id/tripsPBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
             <include
-                android:id="@+id/noTrips"
+                android:id="@+id/emptyTrips"
                 layout="@layout/layout_empty_data"
                 app:emptyData="@{emptyData}"
                 android:visibility="gone" />

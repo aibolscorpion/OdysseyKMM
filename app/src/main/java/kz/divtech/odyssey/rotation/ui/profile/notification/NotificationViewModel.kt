@@ -1,7 +1,5 @@
 package kz.divtech.odyssey.rotation.ui.profile.notification
 
-import android.view.View
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,8 +10,6 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 import kz.divtech.odyssey.rotation.domain.repository.NotificationRepository
 
 class NotificationViewModel(private val notificationRepository: NotificationRepository): ViewModel() {
-
-    val pBarVisibility = ObservableInt(View.GONE)
 
     fun getPagingNotifications(): Flow<PagingData<Notification>> {
         return notificationRepository.getPagingNotifications()

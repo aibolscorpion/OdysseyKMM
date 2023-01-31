@@ -307,5 +307,6 @@
     <string name="hours_before">%1$d ч. назад</string>
     <string name="minutes_before">%1$d мин. назад</string>
     <string name="trip_not_found_by_id">Поездка не найдена в Локальной Базе Данных</string>
+    <string name="retry">Повторить</string>
 
 </resources>

@@ -51,18 +51,28 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/notificationsRetryBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height"
+                style="@style/buttonStyle"
+                android:onClick="@{() -> thisFragment.adapter.retry()}"
+                android:layout_gravity="center"
+                android:text="@string/retry"
+                android:padding="@dimen/margin"
+                tools:visibility="gone" />
 
             <include
-                android:id="@+id/noNotifications"
+                android:id="@+id/emptyNotifications"
                 layout="@layout/layout_empty_data"
                 app:emptyData="@{emptyData.NOTIFICATIONS}"
                 android:visibility="gone" />
 
             <ProgressBar
+                android:id="@+id/notificationsPBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="@{viewModel.PBarVisibility}"
                 tools:visibility="visible" />
 
         </FrameLayout>

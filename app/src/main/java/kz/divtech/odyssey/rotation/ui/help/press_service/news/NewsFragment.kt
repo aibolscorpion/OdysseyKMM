@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,7 +22,6 @@ import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWitho
 
 class NewsFragment : Fragment(), NewsListener {
     val adapter: NewsPagingAdapter by lazy { NewsPagingAdapter(this) }
-
     val isRefreshing = ObservableBoolean()
     val viewModel: NewsViewModel by viewModels{
         NewsViewModel.ViewModelFactory((activity?.application as App).newsRepository)
@@ -38,15 +40,24 @@ class NewsFragment : Fragment(), NewsListener {
         super.onViewCreated(view, savedInstanceState)
 
         setNews()
+        setSearch()
+        loadState()
 
-//        viewModel.newsLiveData.observe(viewLifecycleOwner){ news ->
-//            if(news.isNotEmpty()){
-//                binding.noNews.root.visibility = View.GONE
-//            }else{
-//                binding.noNews.root.visibility = View.VISIBLE
-//            }
-//        }
+    }
 
+
+    private fun setNews(){
+        binding.newsRecyclerView.adapter = adapter
+        binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
+
+        lifecycleScope.launch{
+            viewModel.getPagingNews().collectLatest {  pagingData ->
+                adapter.submitData(pagingData)
+            }
+        }
+    }
+
+    private fun setSearch(){
         binding.newsSearchView.setOnQueryTextListener(object: OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -64,16 +75,34 @@ class NewsFragment : Fragment(), NewsListener {
             }
 
         })
-
     }
 
-    private fun setNews(){
-        binding.newsRecyclerView.adapter = adapter
-        binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
+    private fun loadState(){
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collect{ loadState ->
 
-        lifecycleScope.launch{
-            viewModel.getPagingNews().collectLatest {  pagingData ->
-                adapter.submitData(pagingData)
+                val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.emptyNews.root.isVisible = isListEmpty
+
+                binding.newsRecyclerView.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading
+                            || loadState.mediator?.refresh is LoadState.NotLoading
+
+                binding.newsPBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+
+                binding.newsRetryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error
+                        && adapter.itemCount == 0
+
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+
+                errorState?.let {
+                    Toast.makeText(requireContext(), errorState.error.toString(),
+                        Toast.LENGTH_LONG).show()
+                }
+
             }
         }
     }
@@ -83,6 +112,7 @@ class NewsFragment : Fragment(), NewsListener {
         adapter.refresh()
         isRefreshing.set(false)
     }
+
     override fun onNewsClick(articleId: Int) {
         val action = NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId)
         findNavController().navigate(action)

@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
@@ -23,9 +26,9 @@ class NotificationFragment : Fragment(), NotificationListener {
         NotificationViewModel.NotificationViewModelFactory(
             (activity?.application as App).notificationRepository)
     }
-
-    private var adapter: NotificationPagingAdapter? = null
+    val adapter: NotificationPagingAdapter by lazy { NotificationPagingAdapter(this) }
     lateinit var binding: FragmentNotificationBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         binding = FragmentNotificationBinding.inflate(inflater)
 
@@ -38,25 +41,56 @@ class NotificationFragment : Fragment(), NotificationListener {
         super.onViewCreated(view, savedInstanceState)
         initView()
         collectUiState()
-
+        loadState()
     }
 
     private fun initView() {
-        adapter = NotificationPagingAdapter(this)
+
         binding.notificationRecyclerView.adapter = adapter
     }
 
     private fun collectUiState() {
         lifecycleScope.launch {
             viewModel.getPagingNotifications().collectLatest { notifications ->
-                adapter?.submitData(notifications)
+                adapter.submitData(notifications)
+            }
+        }
+
+    }
+
+    private fun loadState(){
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collect{ loadState ->
+
+                val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
+                binding.emptyNotifications.root.isVisible = isListEmpty
+
+                binding.notificationRecyclerView.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading
+                            || loadState.mediator?.refresh is LoadState.NotLoading
+
+                binding.notificationsPBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+
+                binding.notificationsRetryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error
+                        && adapter.itemCount == 0
+
+                val errorState = loadState.source.append as? LoadState.Error
+                    ?: loadState.source.prepend as? LoadState.Error
+                    ?: loadState.append as? LoadState.Error
+                    ?: loadState.prepend as? LoadState.Error
+
+                errorState?.let {
+                    Toast.makeText(requireContext(), errorState.error.toString(),
+                        Toast.LENGTH_LONG).show()
+                }
+
             }
         }
     }
 
     fun refreshNotifications(){
         isRefreshing.set(true)
-        adapter?.refresh()
+        adapter.refresh()
         isRefreshing.set(false)
     }
 
