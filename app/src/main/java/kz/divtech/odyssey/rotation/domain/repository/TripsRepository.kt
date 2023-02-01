@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripRemoteMediator
+import kz.divtech.odyssey.rotation.domain.remotemediator.TripRemoteMediator
 import timber.log.Timber
 
 
@@ -54,7 +54,7 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getActivePagingTrip(): Flow<PagingData<Trip>>{
 
        return Pager(
-           config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+           config = PagingConfig(pageSize = 20, enablePlaceholders = true),
            remoteMediator = TripRemoteMediator(dao, "asc"),
            pagingSourceFactory = {dao.getActiveTrips()}
        ).flow
@@ -66,7 +66,7 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getArchivePagingTrip(): Flow<PagingData<Trip>>{
 
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            config = PagingConfig(pageSize = 20, enablePlaceholders = true),
             remoteMediator = TripRemoteMediator(dao, "desc"),
             pagingSourceFactory = {dao.getArchiveTrips()}
         ).flow

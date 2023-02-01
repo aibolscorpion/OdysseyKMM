@@ -20,10 +20,10 @@ import java.time.temporal.ChronoUnit
 object NotificationBindingAdapter {
 
     @BindingAdapter("notificationIcon")
-    @JvmStatic fun setNotificationIcon(imageView: ImageView, notificationType: String){
-        val typeArray = notificationType.split("\\")
+    @JvmStatic fun setNotificationIcon(imageView: ImageView, notificationType: String?){
+        val typeArray = notificationType?.split("\\")
 
-        val iconResource: Int = when(typeArray[typeArray.size-1]){
+        val iconResource: Int = when(typeArray?.get(typeArray.size-1)){
             "TripStarted" -> R.drawable.drawable_trip_status_issued
             "SegmentRemovedFromWaitingList" -> R.drawable.icon_removed_from_waiting_list
             "SegmentAddedToWaitingList" -> R.drawable.icon_added_to_waiting_list
@@ -42,8 +42,8 @@ object NotificationBindingAdapter {
 
 
     @BindingAdapter("isImportant")
-    @JvmStatic fun setIsImportant(textView: TextView, isImportant: Boolean){
-        textView.text = if(isImportant)
+    @JvmStatic fun setIsImportant(textView: TextView, isImportant: Boolean?){
+        textView.text = if(isImportant!!)
             App.appContext.getString(R.string.important_notification)
         else
             App.appContext.getString(R.string.notification)
@@ -54,27 +54,29 @@ object NotificationBindingAdapter {
         val currentLocalDateTime = LocalDateTime.now()
         val today = LocalDate.now()
         val yesterday = today.minusDays(1)
-        val updatedLocalDateTime = getLocalDateTimeByPattern(updatedAt!!)
+        val updatedLocalDateTime = updatedAt?.let { getLocalDateTimeByPattern(it) }
 
         val date = formatByGivenPattern(updatedAt, DAY_MONTH_PATTERN)
         val time = formatByGivenPattern(updatedAt, HOUR_MINUTE_PATTERN)
 
-        textView.text = when(updatedLocalDateTime.toLocalDate()){
-            today -> {
-                when(val minutes = updatedLocalDateTime.until(currentLocalDateTime, ChronoUnit.MINUTES)) {
-                    in 0..60 -> App.appContext.getString(R.string.minutes_before, minutes)
-                    in 60..120 -> App.appContext.getString(R.string.hours_before, 1)
-                    in 120..180 -> App.appContext.getString(R.string.hours_before, 2)
-                    else -> time
+        if (updatedLocalDateTime != null) {
+            textView.text = when(updatedLocalDateTime.toLocalDate()){
+                today -> {
+                    when(val minutes = updatedLocalDateTime.until(currentLocalDateTime, ChronoUnit.MINUTES)) {
+                        in 0..60 -> App.appContext.getString(R.string.minutes_before, minutes)
+                        in 60..120 -> App.appContext.getString(R.string.hours_before, 1)
+                        in 120..180 -> App.appContext.getString(R.string.hours_before, 2)
+                        else -> time
+                    }
                 }
+                yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
+                else -> App.appContext.getString(R.string.date_at_time, date, time)
             }
-            yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
-            else -> App.appContext.getString(R.string.date_at_time, date, time)
         }
     }
 
     @BindingAdapter("learnMoreVisibility")
-    @JvmStatic fun setLearnMoreVisibility(learnMoreLL: LinearLayout, notificationTypeGroup: String){
+    @JvmStatic fun setLearnMoreVisibility(learnMoreLL: LinearLayout, notificationTypeGroup: String?){
         learnMoreLL.visibility = when(notificationTypeGroup){
             Constants.NOTIFICATION_TYPE_TICKET, Constants.NOTIFICATION_TYPE_APPLICATION -> View.VISIBLE
             else -> View.GONE
@@ -82,8 +84,8 @@ object NotificationBindingAdapter {
     }
 
     @BindingAdapter("importantButtonText")
-    @JvmStatic fun setImportantButtonText(button: AppCompatButton, isImportant: Boolean){
-        button.text = if(isImportant)
+    @JvmStatic fun setImportantButtonText(button: AppCompatButton, isImportant: Boolean?){
+        button.text = if(isImportant!!)
             App.appContext.getString(R.string.important_button_text)
         else
             App.appContext.getString(R.string.close)

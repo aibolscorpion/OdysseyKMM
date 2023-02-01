@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.help.press_service.news
+package kz.divtech.odyssey.rotation.domain.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 
 @ExperimentalPagingApi
 class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() {
-    private var pageIndex = 1
+    private var pageIndex = 0
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Article>): MediatorResult {
 
         pageIndex = getPageIndex(loadType) ?:
@@ -35,5 +35,9 @@ class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() 
             LoadType.PREPEND -> null
             LoadType.APPEND -> ++pageIndex
         }
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.SKIP_INITIAL_REFRESH
     }
 }

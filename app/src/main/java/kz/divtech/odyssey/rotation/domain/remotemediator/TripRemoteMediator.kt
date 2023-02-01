@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
+package kz.divtech.odyssey.rotation.domain.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 @ExperimentalPagingApi
 class TripRemoteMediator(val dao: Dao, private val orderDir: String) : RemoteMediator<Int, Trip>() {
 
-    var pageIndex = 1
+    var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Trip>): MediatorResult {
         pageIndex = getPageIndex(loadType)?:
@@ -39,5 +39,9 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: String) : RemoteMed
             LoadType.PREPEND -> null
             LoadType.APPEND -> ++pageIndex
         }
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.SKIP_INITIAL_REFRESH
     }
 }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationRemoteMediator
+import kz.divtech.odyssey.rotation.domain.remotemediator.NotificationRemoteMediator
 import timber.log.Timber
 
 const val NETWORK_PAGE_SIZE = 10
@@ -57,7 +57,7 @@ class NotificationRepository(private val dao: Dao) {
     @OptIn(ExperimentalPagingApi::class)
     fun getPagingNotifications(): Flow<PagingData<Notification>>{
         return Pager(
-            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = false),
+            config = PagingConfig(pageSize = NETWORK_PAGE_SIZE, enablePlaceholders = true),
             remoteMediator = NotificationRemoteMediator(dao),
             pagingSourceFactory = { dao.getNotificationPagingSource() }
         ).flow

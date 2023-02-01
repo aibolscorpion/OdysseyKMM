@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.profile.notification
+package kz.divtech.odyssey.rotation.domain.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 @OptIn(ExperimentalPagingApi::class)
 class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notification>() {
 
-    private var pageIndex = 1
+    private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Notification>)
     : MediatorResult {
@@ -39,5 +39,9 @@ class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notificatio
             LoadType.PREPEND -> null
             LoadType.APPEND -> ++pageIndex
         }
+    }
+
+    override suspend fun initialize(): InitializeAction {
+        return InitializeAction.SKIP_INITIAL_REFRESH
     }
 }

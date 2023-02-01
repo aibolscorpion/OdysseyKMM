@@ -20,7 +20,7 @@ interface Dao {
     @Query("SELECT * FROM trip WHERE date < date('now') ORDER BY date DESC")
     fun getArchiveTrips() : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date > date('now')")
+    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC")
     fun getActiveTrips() :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
@@ -81,7 +81,7 @@ interface Dao {
     suspend fun deleteDocuments()
 
     //News
-    @Query("SELECT * FROM article")
+    @Query("SELECT * FROM article ORDER BY published_on DESC")
     fun getNewsPagingSource(): PagingSource<Int, Article>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -111,10 +111,10 @@ interface Dao {
     suspend fun deleteFullArticles()
 
     //Notifications
-    @Query("SELECT * FROM notification")
+    @Query("SELECT * FROM notification ORDER BY created_at DESC")
     fun getNotificationPagingSource() : PagingSource<Int, Notification>
 
-    @Query("SELECT * FROM notification LIMIT 3")
+    @Query("SELECT * FROM notification ORDER BY created_at DESC LIMIT 3")
     fun getThreeNotifications(): Flow<List<Notification>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
