@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import kz.divtech.odyssey.rotation.app.App
@@ -27,16 +28,11 @@ class FaqFragment : Fragment() {
         val faqAdapter = FaqAdapter()
 
         binding.faqRecyclerView.adapter = faqAdapter
+        viewModel.getFaqListFromServer()
 
         viewModel.faqLiveData.observe(viewLifecycleOwner) { faqList ->
-            if(faqList.isNotEmpty()){
-                binding.faqSearchView.visibility = View.VISIBLE
-                binding.emptyFaq.root.visibility = View.GONE
-            }else{
-                viewModel.getFaqListFromServer()
-                binding.faqSearchView.visibility = View.GONE
-                binding.emptyFaq.root.visibility = View.VISIBLE
-            }
+            binding.faqSearchView.isVisible = faqList.isNotEmpty()
+            binding.emptyFaq.root.isVisible = faqList.isEmpty()
             faqAdapter.setList(faqList)
         }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -37,14 +38,10 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
         val adapter = DocumentsAdapter(this)
         binding.documentRV.adapter = adapter
 
+        viewModel.getDocumentsFromServer()
         viewModel.documentsLiveData.observe(viewLifecycleOwner){ documents ->
-            if(documents.isNotEmpty()){
-                binding.emptyDocuments.root.visibility = View.GONE
-                adapter.setDocumentList(documents)
-            }else{
-                viewModel.getDocumentsFromServer()
-                binding.emptyDocuments.root.visibility = View.VISIBLE
-            }
+            binding.emptyDocuments.root.isVisible = documents.isEmpty()
+            adapter.setDocumentList(documents)
         }
     }
 

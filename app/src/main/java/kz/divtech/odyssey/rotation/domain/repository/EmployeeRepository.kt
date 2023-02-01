@@ -10,6 +10,7 @@ import timber.log.Timber
 class EmployeeRepository(private val dao: Dao) {
 
     val employee: Flow<Employee> = dao.getEmployee()
+    private var firstTime = true
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -33,9 +34,12 @@ class EmployeeRepository(private val dao: Dao) {
 
     suspend fun getEmployeeFromServer(){
         try{
-            val response = RetrofitClient.getApiService().getEmployeeInfo()
-            if(response.isSuccessful){
-                insertEmployee(response.body()!!)
+            if(firstTime){
+                firstTime = false
+                val response = RetrofitClient.getApiService().getEmployeeInfo()
+                if(response.isSuccessful){
+                    insertEmployee(response.body()!!)
+                }
             }
         }catch (e: Exception){
             Timber.e("exception - ${e.message}")

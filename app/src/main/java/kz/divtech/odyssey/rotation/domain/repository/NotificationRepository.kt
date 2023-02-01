@@ -15,8 +15,8 @@ import timber.log.Timber
 const val NETWORK_PAGE_SIZE = 10
 
 class NotificationRepository(private val dao: Dao) {
-
     val notifications: Flow<List<Notification>> = dao.getThreeNotifications()
+    private var firstTime = true
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
@@ -41,10 +41,13 @@ class NotificationRepository(private val dao: Dao) {
 
     suspend fun getNotificationsFromServer(){
         try {
-            val response = RetrofitClient.getApiService().getNotifications(1)
-            val notifications = response.body()?.data!!
-            if(response.isSuccessful){
-                refreshNotifications(notifications)
+            if(firstTime){
+                firstTime = false
+                val response = RetrofitClient.getApiService().getNotifications(1)
+                val notifications = response.body()?.data!!
+                if(response.isSuccessful){
+                    refreshNotifications(notifications)
+                }
             }
         }catch (e: Exception){
             Timber.e("exception - $e")

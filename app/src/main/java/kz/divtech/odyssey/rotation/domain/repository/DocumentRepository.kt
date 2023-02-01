@@ -10,6 +10,7 @@ import timber.log.Timber
 class DocumentRepository(private val dao: Dao){
 
     val documents : Flow<List<Document>> = dao.getDocuments()
+    private var firstTime = true
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")
@@ -25,9 +26,12 @@ class DocumentRepository(private val dao: Dao){
 
     suspend fun getDocumentsFromServer(){
         try{
-            val response = RetrofitClient.getApiService().getDocuments()
-            if(response.isSuccessful){
-                insertDocuments(response.body()!!.documents)
+            if(firstTime){
+                firstTime = false
+                val response = RetrofitClient.getApiService().getDocuments()
+                if(response.isSuccessful){
+                    insertDocuments(response.body()!!.documents)
+                }
             }
         }catch (e: Exception){
             Timber.e("exception - ${e.message}")

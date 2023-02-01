@@ -41,15 +41,16 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            if(employee != null){
-                currentEmployee = employee
-                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
-                append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
-                appendWithoutNull(employee.patronymic)
-                binding.employeeTableNumberTV.text = employee.number
-                binding.employeeOrgNameTV.text = employee.orgName
-                binding.employeePositionTV.text = employee.position
+            employee?.let { it ->
+                currentEmployee = it
+                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.lastName).
+                append(Constants.SPACE).appendWithoutNull(it.firstName).append(Constants.SPACE).
+                appendWithoutNull(it.patronymic)
+                binding.employeeTableNumberTV.text = it.number
+                binding.employeeOrgNameTV.text = it.orgName
+                binding.employeePositionTV.text = it.position
             }
+
         }
 
         binding.viewModel = viewModel

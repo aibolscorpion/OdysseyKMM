@@ -9,12 +9,7 @@ import timber.log.Timber
 
 class FaqRepository(private val dao: Dao) {
     val faqList: Flow<List<Faq>> = dao.getFAQ()
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insertFaq(faq: List<Faq>){
-        dao.insertFAQ(faq)
-    }
+    private var firstTime = true
 
     fun searchFaq(searchQuery: String): Flow<List<Faq>> {
         return dao.searchFAQ(searchQuery)
@@ -35,10 +30,13 @@ class FaqRepository(private val dao: Dao) {
 
     suspend fun getFaqListFromServer() {
         try{
-            val response = RetrofitClient.getApiService().getFAQs()
-            val faqList = response.body()
-            if(response.isSuccessful){
-                refreshFaq(faqList!!)
+            if(firstTime){
+                firstTime = false
+                val response = RetrofitClient.getApiService().getFAQs()
+                val faqList = response.body()
+                if(response.isSuccessful){
+                    refreshFaq(faqList!!)
+                }
             }
         }catch (e: Exception){
             Timber.e("exception - ${e.message}")

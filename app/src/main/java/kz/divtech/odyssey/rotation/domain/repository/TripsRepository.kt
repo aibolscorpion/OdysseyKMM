@@ -17,12 +17,7 @@ class TripsRepository(private val dao : Dao) {
 
     val nearestActiveTrip: Flow<Trip> = dao.getNearestActiveTrip()
     fun getTripById(id: Int): Flow<Trip> = dao.getTripById(id)
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun insertTrips(trips: List<Trip>) {
-        dao.insertTrips(trips)
-    }
+    private var isFirstTime = true
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -39,10 +34,13 @@ class TripsRepository(private val dao : Dao) {
 
     suspend fun getTripsFromFirstPage(){
         try {
-            val response = RetrofitClient.getApiService().getTrips(1, orderDir = "desc")
-            if(response.isSuccessful){
-                val trips = response.body()?.data?.data!!
-                insertTrips(trips)
+            if(isFirstTime){
+                isFirstTime = false
+                val response = RetrofitClient.getApiService().getTrips(1, orderDir = "desc")
+                if(response.isSuccessful){
+                    val trips = response.body()?.data?.data!!
+                    refreshTrips(trips)
+                }
             }
         }catch (e: Exception){
             Timber.i("exception - $e")

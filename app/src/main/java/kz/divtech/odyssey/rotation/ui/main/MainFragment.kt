@@ -65,17 +65,17 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         setCalendar()
         setNotifications()
         setNearestTrip()
+
     }
 
     private fun getEmployeeInfo(){
+        viewModel.getEmployeeFromServer()
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            if(employee != null){
-                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(employee.lastName).
-                append(Constants.SPACE).appendWithoutNull(employee.firstName).append(Constants.SPACE).
-                appendWithoutNull(employee.patronymic)
-                binding.employeeOrgTV.text = employee.orgName
-            }else{
-                viewModel.getEmployeeFromServer()
+            employee?.let { it ->
+                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.lastName).
+                append(Constants.SPACE).appendWithoutNull(it.firstName).append(Constants.SPACE).
+                appendWithoutNull(it.patronymic)
+                binding.employeeOrgTV.text = it.orgName
             }
         }
     }
@@ -92,6 +92,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         val segmentAdapter = SegmentAdapter()
         binding.nearestTripView.segmentsRV.adapter = segmentAdapter
 
+        viewModel.getTripsFromFirstPage()
+        
         viewModel.nearestActiveTrip.observe(viewLifecycleOwner) { trip ->
             if(trip != null){
                 binding.nearestTripTV.isVisible = true
@@ -102,7 +104,6 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
             }else{
                 binding.nearestTripTV.isVisible = false
                 binding.nearestTripView.root.isVisible = false
-                viewModel.getTripsFromFirstPage()
             }
         }
     }
@@ -112,16 +113,18 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     private fun setNotifications(){
         val adapter = NotificationAdapter(this)
         binding.notificationsRV.adapter = adapter
+
+        viewModel.getNotificationsFromServer()
+
         viewModel.threeNotifications.observe(viewLifecycleOwner) { notificationList ->
 
             binding.showAllNotificationsBtn.isVisible = notificationList.isNotEmpty()
             binding.emptyNotificationsTV.isVisible = notificationList.isEmpty()
 
-            if(notificationList.isNotEmpty()){
+            notificationList.isNotEmpty().let {
                 adapter.setNotificationList(notificationList)
-            }else{
-                viewModel.getNotificationsFromServer()
             }
+
         }
     }
 
