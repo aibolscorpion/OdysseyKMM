@@ -39,11 +39,11 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
 
         viewModel.documentsLiveData.observe(viewLifecycleOwner){ documents ->
             if(documents.isNotEmpty()){
-                binding.noDocuments.root.visibility = View.GONE
+                binding.emptyDocuments.root.visibility = View.GONE
                 adapter.setDocumentList(documents)
             }else{
                 viewModel.getDocumentsFromServer()
-                binding.noDocuments.root.visibility = View.VISIBLE
+                binding.emptyDocuments.root.visibility = View.VISIBLE
             }
         }
     }

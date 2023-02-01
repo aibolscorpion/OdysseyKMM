@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,14 +12,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
-import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationListener
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripsPagingAdapter
 import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 import org.threeten.bp.YearMonth
@@ -28,7 +29,7 @@ import java.time.format.TextStyle
 import java.util.*
 
 
-class MainFragment : Fragment(), NotificationListener{
+class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTripListener{
     val viewModel : MainViewModel by viewModels {
         MainViewModel.MainViewModelFactory(
             (activity?.application as App).tripsRepository,
@@ -43,11 +44,11 @@ class MainFragment : Fragment(), NotificationListener{
     val dayOfMonth = currentDate.dayOfMonth.toString()
     val month: String = currentDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMainBinding.inflate(inflater)
         binding.mainFragment = this
         binding.viewModel = viewModel
+        binding.listener = this
 
         Glide.with(this).load(R.mipmap.avatar_placeholder).apply(
                 RequestOptions.bitmapTransform(
@@ -89,42 +90,43 @@ class MainFragment : Fragment(), NotificationListener{
 
     private fun setNearestTrip(){
         val segmentAdapter = SegmentAdapter()
-        binding.nearestTrip.segmentsRV.adapter = segmentAdapter
-        binding.nearestTrip.touchOverlay.setOnClickListener{ onTripClicked(nearestTrip) }
+        binding.nearestTripView.segmentsRV.adapter = segmentAdapter
 
-        viewModel.tripsLiveData.observe(viewLifecycleOwner){ tripList ->
-            if(tripList.isEmpty()){
-                viewModel.getTripsFromServer()
+        viewModel.nearestActiveTrip.observe(viewLifecycleOwner) { trip ->
+            if(trip != null){
+                binding.nearestTripTV.isVisible = true
+                binding.nearestTripView.root.isVisible = true
+                nearestTrip = trip
+                binding.trip = nearestTrip
+                segmentAdapter.setSegmentList(trip.segments)
             }else{
-                viewModel.findNearestTrip(tripList)
+                binding.nearestTripTV.isVisible = false
+                binding.nearestTripView.root.isVisible = false
+                viewModel.getTripsFromFirstPage()
             }
         }
-
-        viewModel.nearestTripLiveData.observe(viewLifecycleOwner) { trip ->
-            nearestTrip = trip
-            binding.trip = nearestTrip
-            segmentAdapter.setSegmentList(trip?.segments)
-        }
     }
+
+
 
     private fun setNotifications(){
         val adapter = NotificationAdapter(this)
         binding.notificationsRV.adapter = adapter
         viewModel.threeNotifications.observe(viewLifecycleOwner) { notificationList ->
+
+            binding.showAllNotificationsBtn.isVisible = notificationList.isNotEmpty()
+            binding.emptyNotificationsTV.isVisible = notificationList.isEmpty()
+
             if(notificationList.isNotEmpty()){
-                binding.showAllNotificationsBtn.visibility = View.VISIBLE
-                binding.noNotificationsTV.visibility = View.GONE
                 adapter.setNotificationList(notificationList)
             }else{
-                binding.showAllNotificationsBtn.visibility = View.GONE
-                binding.noNotificationsTV.visibility = View.VISIBLE
                 viewModel.getNotificationsFromServer()
             }
         }
     }
 
-    fun onTripClicked(trip: Trip?) {
-        if (trip != null) {
+    override fun onTripClicked(trip: Trip) {
+        trip.let {
             if(trip.segments == null){
                 findNavController().navigate(MainFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
             }else {

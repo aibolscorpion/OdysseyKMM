@@ -31,11 +31,11 @@ class FaqFragment : Fragment() {
         viewModel.faqLiveData.observe(viewLifecycleOwner) { faqList ->
             if(faqList.isNotEmpty()){
                 binding.faqSearchView.visibility = View.VISIBLE
-                binding.noFAQ.root.visibility = View.GONE
+                binding.emptyFaq.root.visibility = View.GONE
             }else{
                 viewModel.getFaqListFromServer()
                 binding.faqSearchView.visibility = View.GONE
-                binding.noFAQ.root.visibility = View.VISIBLE
+                binding.emptyFaq.root.visibility = View.VISIBLE
             }
             faqAdapter.setList(faqList)
         }

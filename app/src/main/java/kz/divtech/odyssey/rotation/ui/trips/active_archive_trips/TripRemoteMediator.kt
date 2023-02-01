@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
 @ExperimentalPagingApi
-class TripRemoteMediator(val dao: Dao) : RemoteMediator<Int, Trip>() {
+class TripRemoteMediator(val dao: Dao, private val orderDir: String) : RemoteMediator<Int, Trip>() {
 
     var pageIndex = 1
 
@@ -18,7 +18,7 @@ class TripRemoteMediator(val dao: Dao) : RemoteMediator<Int, Trip>() {
             return MediatorResult.Success(true)
 
         return try{
-            val response = RetrofitClient.getApiService().getTrips(pageIndex)
+            val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir)
             val trips = response.body()?.data?.data!!
 
             when(loadType){

@@ -41,7 +41,9 @@ interface ApiService {
 
     //Trips
     @GET("employees/get-applications")
-    suspend fun getTrips(@Query("page") pageIndex: Int): Response<Data>
+    suspend fun getTrips(@Query("page") pageIndex: Int,
+                        @Query("order_by") orderBy: String = "date",
+                        @Query("order_dir") orderDir: String): Response<Data>
 
     //FAQ
     @GET("faqs")

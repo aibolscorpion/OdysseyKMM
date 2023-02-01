@@ -23,8 +23,8 @@ interface Dao {
     @Query("SELECT * FROM trip WHERE date > date('now')")
     fun getActiveTrips() :  PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date < date('now') LIMIT 1")
-    fun getNearestActiveTrip() :  PagingSource<Int, Trip>
+    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
+    fun getNearestActiveTrip() :  Flow<Trip>
 
     @Query("SELECT * FROM trip WHERE id=:id")
     fun getTripById(id: Int): Flow<Trip>

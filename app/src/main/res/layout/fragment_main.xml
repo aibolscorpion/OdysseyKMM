@@ -7,6 +7,10 @@
         <variable
             name="mainFragment"
             type="kz.divtech.odyssey.rotation.ui.main.MainFragment" />
+        
+        <variable
+            name="listener"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripsPagingAdapter.OnTripListener" />
 
         <variable
             name="viewModel"
@@ -177,7 +181,7 @@
                     android:text="@string/notification" />
 
                 <TextView
-                    android:id="@+id/noNotificationsTV"
+                    android:id="@+id/emptyNotificationsTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
@@ -207,6 +211,7 @@
                     android:onClick="@{() -> mainFragment.openNotificationsFragment()}" />
 
                 <TextView
+                    android:id="@+id/nearestTripTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_bold"
@@ -216,18 +221,16 @@
                     android:letterSpacing="-0.01"
                     android:lineSpacingExtra="5sp"
                     android:layout_marginTop="24dp"
-                    android:text="@string/nearest_trip"
-                    android:visibility="@{viewModel.nearestTripVisibility}" />
+                    android:text="@string/nearest_trip" />
 
                 <include
-                    android:id="@+id/nearestTrip"
+                    android:id="@+id/nearestTripView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     layout="@layout/item_trip"
                     android:layout_marginTop="12dp"
-                    app:trip="@{trip}"
-                    android:visibility="@{viewModel.nearestTripVisibility}"
-                    android:onClick="@{() -> mainFragment.onTripClicked(trip)}" />
+                    app:listener="@{listener}"
+                    app:trip="@{trip}" />
 
                 <TextView
                     android:layout_width="wrap_content"

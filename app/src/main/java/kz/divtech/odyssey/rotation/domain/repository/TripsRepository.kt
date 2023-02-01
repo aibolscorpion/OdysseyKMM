@@ -7,14 +7,16 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripRemoteMediator
+import timber.log.Timber
 
 
 class TripsRepository(private val dao : Dao) {
 
+    val nearestActiveTrip: Flow<Trip> = dao.getNearestActiveTrip()
     fun getTripById(id: Int): Flow<Trip> = dao.getTripById(id)
-
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -35,6 +37,19 @@ class TripsRepository(private val dao : Dao) {
         dao.refreshTrips(data)
     }
 
+    suspend fun getTripsFromFirstPage(){
+        try {
+            val response = RetrofitClient.getApiService().getTrips(1, orderDir = "desc")
+            if(response.isSuccessful){
+                val trips = response.body()?.data?.data!!
+                insertTrips(trips)
+            }
+        }catch (e: Exception){
+            Timber.i("exception - $e")
+        }
+
+    }
+
     @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -42,7 +57,7 @@ class TripsRepository(private val dao : Dao) {
 
        return Pager(
            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-           remoteMediator = TripRemoteMediator(dao),
+           remoteMediator = TripRemoteMediator(dao, "asc"),
            pagingSourceFactory = {dao.getActiveTrips()}
        ).flow
     }
@@ -54,7 +69,7 @@ class TripsRepository(private val dao : Dao) {
 
         return Pager(
             config = PagingConfig(pageSize = 20, enablePlaceholders = false),
-            remoteMediator = TripRemoteMediator(dao),
+            remoteMediator = TripRemoteMediator(dao, "desc"),
             pagingSourceFactory = {dao.getArchiveTrips()}
         ).flow
     }
