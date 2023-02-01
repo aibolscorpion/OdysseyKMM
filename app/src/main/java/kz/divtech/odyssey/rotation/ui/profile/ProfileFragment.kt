@@ -11,22 +11,23 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
     private var currentEmployee: Employee? = null
     private val viewModel: ProfileViewModel by viewModels{
-        ProfileViewModel.ProfileViewModelFactory((activity?.application as App).tripsRepository,
-            (activity?.application as App).employeeRepository,
-            (activity?.application as App).faqRepository,
-            (activity?.application as App).documentRepository,
-            (activity?.application as App).newsRepository,
-            (activity?.application as App).articleRepository,
-            (activity?.application as App).notificationRepository)
+        ProfileViewModel.ProfileViewModelFactory(
+            (activity as MainActivity).tripsRepository,
+            (activity as MainActivity).employeeRepository,
+            (activity as MainActivity).faqRepository,
+            (activity as MainActivity).documentRepository,
+            (activity as MainActivity).newsRepository,
+            (activity as MainActivity).articleRepository,
+            (activity as MainActivity).notificationRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {

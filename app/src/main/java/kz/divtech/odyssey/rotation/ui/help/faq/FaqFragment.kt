@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class FaqFragment : Fragment() {
     lateinit var binding : FragmentFaqBinding
     internal val viewModel: FaqViewModel by viewModels {
-            FaqViewModel.FaqViewModelFactory((activity?.application as App).faqRepository)
+            FaqViewModel.FaqViewModelFactory((activity as MainActivity).faqRepository)
     }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFaqBinding.inflate(inflater)

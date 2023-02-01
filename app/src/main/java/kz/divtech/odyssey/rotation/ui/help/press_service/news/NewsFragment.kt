@@ -16,15 +16,15 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 
 class NewsFragment : Fragment(), NewsListener {
     val adapter: NewsPagingAdapter by lazy { NewsPagingAdapter(this) }
     val isRefreshing = ObservableBoolean()
     val viewModel: NewsViewModel by viewModels{
-        NewsViewModel.ViewModelFactory((activity?.application as App).newsRepository)
+        NewsViewModel.ViewModelFactory((activity as MainActivity).newsRepository)
     }
     lateinit var binding: FragmentNewsBinding
 

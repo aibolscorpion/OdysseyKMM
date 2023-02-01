@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityLoginBinding
+import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 
 class LoginActivity : AppCompatActivity() {
+    private val database by lazy { AppDatabase.getDatabase(this) }
+    val employeeRepository by lazy { EmployeeRepository(database.dao()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

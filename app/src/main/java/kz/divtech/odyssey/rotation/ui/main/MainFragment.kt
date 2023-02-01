@@ -11,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
@@ -32,9 +32,9 @@ import java.util.*
 class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTripListener{
     val viewModel : MainViewModel by viewModels {
         MainViewModel.MainViewModelFactory(
-            (activity?.application as App).tripsRepository,
-            (activity?.application as App).employeeRepository,
-            (activity?.application as App).notificationRepository)
+            (activity as MainActivity).tripsRepository,
+            (activity as MainActivity).employeeRepository,
+            (activity as MainActivity).notificationRepository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null

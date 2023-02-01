@@ -9,13 +9,13 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 
 
 class ArticleDialog : BottomSheetDialogFragment() {
     val viewModel: ArticleViewModel by viewModels{
-        ArticleViewModel.ArticleViewModelFactory((activity?.application as App).articleRepository)
+        ArticleViewModel.ArticleViewModelFactory((activity as MainActivity).articleRepository)
     }
     lateinit var dataBinding: DialogArticleBinding
 

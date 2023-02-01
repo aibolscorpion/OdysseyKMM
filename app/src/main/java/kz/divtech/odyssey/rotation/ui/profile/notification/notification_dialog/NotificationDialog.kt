@@ -12,16 +12,16 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class NotificationDialog : BottomSheetDialogFragment() {
     private val args by navArgs<NotificationDialogArgs>()
 
     val viewModel: NotificationDViewModel by viewModels{
         NotificationDViewModel.NotificationDViewModelFactory(
-            (activity?.application as App).tripsRepository,
-            (activity?.application as App).notificationRepository)
+            (activity as MainActivity).tripsRepository,
+            (activity as MainActivity).notificationRepository)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme

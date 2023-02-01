@@ -14,9 +14,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
 
@@ -24,7 +24,7 @@ class NotificationFragment : Fragment(), NotificationListener {
     val isRefreshing = ObservableBoolean()
     val viewModel: NotificationViewModel by viewModels {
         NotificationViewModel.NotificationViewModelFactory(
-            (activity?.application as App).notificationRepository)
+            (activity as MainActivity).notificationRepository)
     }
     val adapter: NotificationPagingAdapter by lazy { NotificationPagingAdapter(this) }
     lateinit var binding: FragmentNotificationBinding

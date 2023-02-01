@@ -14,18 +14,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 
 class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
     val refreshing = ObservableBoolean()
     val adapter: TripsPagingAdapter by lazy { TripsPagingAdapter(this) }
     val viewModel: ActiveTripsViewModel by viewModels{
-        ActiveTripsViewModel.TripsViewModelFactory((activity?.application as App).tripsRepository)
+        ActiveTripsViewModel.TripsViewModelFactory((activity as MainActivity).tripsRepository)
     }
     lateinit var binding: FragmentActiveTripsBinding
 

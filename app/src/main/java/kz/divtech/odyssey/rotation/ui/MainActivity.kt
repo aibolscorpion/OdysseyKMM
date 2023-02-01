@@ -7,11 +7,22 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
+import kz.divtech.odyssey.rotation.domain.repository.*
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController : NavController
+
+    private val database by lazy { AppDatabase.getDatabase(this) }
+    val tripsRepository by lazy { TripsRepository(database.dao()) }
+    val employeeRepository by lazy { EmployeeRepository(database.dao()) }
+    val faqRepository by lazy { FaqRepository(database.dao()) }
+    val documentRepository by lazy { DocumentRepository(database.dao()) }
+    val newsRepository by lazy { NewsRepository(database.dao()) }
+    val articleRepository by lazy { ArticleRepository(database.dao()) }
+    val notificationRepository by lazy { NotificationRepository(database.dao()) }
 
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
