@@ -7,9 +7,10 @@ import androidx.paging.RemoteMediator
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 
 @ExperimentalPagingApi
-class TripRemoteMediator(val dao: Dao, private val orderDir: String) : RemoteMediator<Int, Trip>() {
+class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.OrderDir) : RemoteMediator<Int, Trip>() {
 
     var pageIndex = 0
 
@@ -18,9 +19,8 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: String) : RemoteMed
             return MediatorResult.Success(true)
 
         return try{
-            val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir)
+            val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir.value)
             val trips = response.body()?.data?.data!!
-
             when(loadType){
                 LoadType.REFRESH -> dao.refreshTrips(trips)
                 else -> dao.insertTrips(trips)

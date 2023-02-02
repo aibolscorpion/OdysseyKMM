@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
@@ -36,7 +37,7 @@ class TripsRepository(private val dao : Dao) {
         try {
             if(isFirstTime){
                 isFirstTime = false
-                val response = RetrofitClient.getApiService().getTrips(1, orderDir = "desc")
+                val response = RetrofitClient.getApiService().getTrips(1, orderDir = OrderDir.DESC.value)
                 if(response.isSuccessful){
                     val trips = response.body()?.data?.data!!
                     refreshTrips(trips)
@@ -54,8 +55,8 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getActivePagingTrip(): Flow<PagingData<Trip>>{
 
        return Pager(
-           config = PagingConfig(pageSize = 20, enablePlaceholders = true),
-           remoteMediator = TripRemoteMediator(dao, "asc"),
+           config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+           remoteMediator = TripRemoteMediator(dao, OrderDir.ASC),
            pagingSourceFactory = {dao.getActiveTrips()}
        ).flow
     }
@@ -66,10 +67,14 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getArchivePagingTrip(): Flow<PagingData<Trip>>{
 
         return Pager(
-            config = PagingConfig(pageSize = 20, enablePlaceholders = true),
-            remoteMediator = TripRemoteMediator(dao, "desc"),
+            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC),
             pagingSourceFactory = {dao.getArchiveTrips()}
         ).flow
+    }
+
+    enum class OrderDir(val value: String){
+        DESC("desc"), ASC("asc")
     }
 
 }

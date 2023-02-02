@@ -28,6 +28,10 @@ object Constants {
     const val NOTIFICATION_TYPE_TICKET = "ticket"
     const val NOTIFICATION_TYPE_APPLICATION = "application"
 
+    const val TRIPS_PAGE_SIZE = 20
+    const val NOTIFICATIONS_PAGE_SIZE = 10
+    const val NEWS_PAGE_SIZE = 5
+
     const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400
     const val UNAUTHORIZED_CODE = 401
