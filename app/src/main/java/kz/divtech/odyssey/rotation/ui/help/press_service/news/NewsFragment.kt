@@ -18,9 +18,12 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
+import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 
-class NewsFragment : Fragment(), NewsListener {
+class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     val adapter: NewsPagingAdapter by lazy { NewsPagingAdapter(this) }
     val isRefreshing = ObservableBoolean()
     val viewModel: NewsViewModel by viewModels{
@@ -47,7 +50,7 @@ class NewsFragment : Fragment(), NewsListener {
 
 
     private fun setNews(){
-        binding.newsRecyclerView.adapter = adapter
+        binding.newsRecyclerView.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
 
         lifecycleScope.launch{
@@ -79,7 +82,7 @@ class NewsFragment : Fragment(), NewsListener {
 
     private fun loadState(){
         lifecycleScope.launch {
-            adapter.loadStateFlow.collect{ loadState ->
+            adapter.loadStateFlow.collectLatest{ loadState ->
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
                 binding.emptyNews.root.isVisible = isListEmpty
@@ -116,6 +119,10 @@ class NewsFragment : Fragment(), NewsListener {
     override fun onNewsClick(articleId: Int) {
         val action = NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId)
         findNavController().navigate(action)
+    }
+
+    override fun onRetryClicked() {
+        adapter.retry()
     }
 
 }

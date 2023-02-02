@@ -10,7 +10,7 @@
         
         <variable
             name="listener"
-            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.TripsPagingAdapter.OnTripListener" />
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter.OnTripListener" />
 
         <variable
             name="viewModel"

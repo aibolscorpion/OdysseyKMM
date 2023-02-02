@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.help.press_service.news
+package kz.divtech.odyssey.rotation.ui.help.press_service.news.paging
 
 import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article

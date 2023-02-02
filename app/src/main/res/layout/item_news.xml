@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article" />
         <variable
             name="listener"
-            type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsListener" />
+            type="kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/articleLLC"

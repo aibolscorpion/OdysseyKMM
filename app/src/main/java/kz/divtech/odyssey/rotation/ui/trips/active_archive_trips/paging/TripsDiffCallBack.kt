@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging
 
 import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip

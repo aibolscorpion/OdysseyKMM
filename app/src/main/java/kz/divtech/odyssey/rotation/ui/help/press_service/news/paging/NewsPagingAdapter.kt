@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.help.press_service.news
+package kz.divtech.odyssey.rotation.ui.help.press_service.news.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import kz.divtech.odyssey.rotation.databinding.ItemNewsBinding
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 
 class NewsPagingAdapter(private val newsListener: NewsListener) : PagingDataAdapter<Article,
-        NewsPagingAdapter.ViewHolder>(NewsDiffCallBack()) {
+        NewsPagingAdapter.ViewHolder>(NewsDiffCallBack()){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -21,6 +21,7 @@ class NewsPagingAdapter(private val newsListener: NewsListener) : PagingDataAdap
     }
 
     inner class ViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
+
 }
 
 interface NewsListener{

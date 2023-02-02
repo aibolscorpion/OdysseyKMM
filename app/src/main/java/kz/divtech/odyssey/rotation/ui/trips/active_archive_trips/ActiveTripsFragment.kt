@@ -20,8 +20,10 @@ import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 
-class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
+class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback{
     val refreshing = ObservableBoolean()
     val adapter: TripsPagingAdapter by lazy { TripsPagingAdapter(this) }
     val viewModel: ActiveTripsViewModel by viewModels{
@@ -57,7 +59,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
     private fun setupTripsPagingAdapter(){
         val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
 
-        binding.tripsRV.adapter = adapter
+        binding.tripsRV.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         lifecycleScope.launch{
             if(isActiveTrips!!){
                 viewModel.getActivePagingTrips().collectLatest { pagingData ->
@@ -74,7 +76,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
     private fun loadStates(){
         val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch {
-            adapter.loadStateFlow.collect{ loadState ->
+            adapter.loadStateFlow.collectLatest{ loadState ->
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
                 binding.emptyData = if(isActiveTrips!!) EmptyData.ACTIVE_TRIPS else EmptyData.ARCHIVE_TRIPS
@@ -121,6 +123,10 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener{
 
     init {
         this.arguments = Bundle()
+    }
+
+    override fun onRetryClicked() {
+        adapter.retry()
     }
 
 

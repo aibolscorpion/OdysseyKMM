@@ -17,10 +17,11 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
 
-class NotificationFragment : Fragment(), NotificationListener {
+class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.RetryCallback {
     val isRefreshing = ObservableBoolean()
     val viewModel: NotificationViewModel by viewModels {
         NotificationViewModel.NotificationViewModelFactory(
@@ -39,17 +40,13 @@ class NotificationFragment : Fragment(), NotificationListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        collectUiState()
+        setupTripsPagingAdapter()
         loadState()
     }
 
-    private fun initView() {
 
-        binding.notificationRecyclerView.adapter = adapter
-    }
-
-    private fun collectUiState() {
+    private fun setupTripsPagingAdapter() {
+        binding.notificationRecyclerView.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         lifecycleScope.launch {
             viewModel.getPagingNotifications().collectLatest { notifications ->
                 adapter.submitData(notifications)
@@ -97,4 +94,8 @@ class NotificationFragment : Fragment(), NotificationListener {
     override fun onNotificationClicked(notification: Notification) =
         findNavController().navigate(
             NotificationFragmentDirections.actionGlobalNotificationDialog(notification))
+
+    override fun onRetryClicked() {
+        adapter.retry()
+    }
 }

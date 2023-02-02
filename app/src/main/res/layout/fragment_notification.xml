@@ -51,16 +51,15 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatButton
+            <ImageView
                 android:id="@+id/notificationsRetryBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/button_height"
-                style="@style/buttonStyle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_baseline_refresh_24"
                 android:onClick="@{() -> thisFragment.adapter.retry()}"
-                android:layout_gravity="center"
-                android:text="@string/retry"
-                android:padding="@dimen/margin"
-                tools:visibility="gone" />
+                android:layout_margin="@dimen/margin"
+                tools:visibility="gone"
+                android:layout_gravity="center" />
 
             <include
                 android:id="@+id/emptyNotifications"

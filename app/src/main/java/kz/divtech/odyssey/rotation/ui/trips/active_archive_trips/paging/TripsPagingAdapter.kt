@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
+package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,14 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 
-class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDataAdapter<Trip, TripsPagingAdapter.TripViewHolder>(TripsDiffCallBack()) {
-    private val oldTripList = mutableListOf<Trip>()
+class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDataAdapter<Trip, TripsPagingAdapter.TripViewHolder>(
+    TripsDiffCallBack()
+) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
-        val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemTripBinding.inflate(LayoutInflater.from(parent.context),
+            parent, false)
         binding.listener = onTripListener
         return TripViewHolder(binding)
     }
