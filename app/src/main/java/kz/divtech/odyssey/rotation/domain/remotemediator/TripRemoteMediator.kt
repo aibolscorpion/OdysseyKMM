@@ -11,8 +11,7 @@ import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 
 @ExperimentalPagingApi
 class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.OrderDir) : RemoteMediator<Int, Trip>() {
-
-    var pageIndex = 0
+    private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Trip>): MediatorResult {
         pageIndex = getPageIndex(loadType)?:
@@ -25,9 +24,7 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.Ord
                 LoadType.REFRESH -> dao.refreshTrips(trips)
                 else -> dao.insertTrips(trips)
             }
-
             MediatorResult.Success(trips.size < state.config.pageSize)
-
         }catch (e: Exception){
             MediatorResult.Error(e)
         }

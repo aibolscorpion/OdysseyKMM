@@ -11,6 +11,7 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 @ExperimentalPagingApi
 class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() {
     private var pageIndex = 0
+
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Article>): MediatorResult {
 
         pageIndex = getPageIndex(loadType) ?:

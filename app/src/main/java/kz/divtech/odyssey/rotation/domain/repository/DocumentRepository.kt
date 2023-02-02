@@ -27,10 +27,10 @@ class DocumentRepository(private val dao: Dao){
     suspend fun getDocumentsFromServer(){
         try{
             if(firstTime){
-                firstTime = false
                 val response = RetrofitClient.getApiService().getDocuments()
                 if(response.isSuccessful){
                     insertDocuments(response.body()!!.documents)
+                    firstTime = false
                 }
             }
         }catch (e: Exception){

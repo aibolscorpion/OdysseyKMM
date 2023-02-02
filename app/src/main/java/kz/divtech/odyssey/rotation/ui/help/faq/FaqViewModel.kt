@@ -17,14 +17,14 @@ class FaqViewModel(val repository: FaqRepository): ViewModel() {
     fun getFaqListFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            repository.getFaqListFromServer()
+            repository.getFaqListFromServer(isRefreshing = false)
             pBarVisibility.set(View.GONE)
         }
 
     fun refreshFaqList() =
         viewModelScope.launch {
             refreshing.set(true)
-            repository.getFaqListFromServer()
+            repository.getFaqListFromServer(isRefreshing = true)
             refreshing.set(false)
         }
 

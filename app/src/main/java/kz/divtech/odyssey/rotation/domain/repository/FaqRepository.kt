@@ -28,14 +28,14 @@ class FaqRepository(private val dao: Dao) {
         dao.refreshFaq(faqList)
     }
 
-    suspend fun getFaqListFromServer() {
+    suspend fun getFaqListFromServer(isRefreshing: Boolean) {
         try{
-            if(firstTime){
-                firstTime = false
+            if(firstTime || isRefreshing){
                 val response = RetrofitClient.getApiService().getFAQs()
                 val faqList = response.body()
                 if(response.isSuccessful){
                     refreshFaq(faqList!!)
+                    firstTime = false
                 }
             }
         }catch (e: Exception){

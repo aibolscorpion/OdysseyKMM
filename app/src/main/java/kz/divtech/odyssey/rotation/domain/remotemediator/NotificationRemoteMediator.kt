@@ -11,7 +11,6 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 
 @OptIn(ExperimentalPagingApi::class)
 class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notification>() {
-
     private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Notification>)

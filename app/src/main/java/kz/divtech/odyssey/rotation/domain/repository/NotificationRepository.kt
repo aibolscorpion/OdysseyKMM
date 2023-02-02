@@ -41,11 +41,11 @@ class NotificationRepository(private val dao: Dao) {
     suspend fun getNotificationsFromServer(){
         try {
             if(firstTime){
-                firstTime = false
                 val response = RetrofitClient.getApiService().getNotifications(1)
                 val notifications = response.body()?.data!!
                 if(response.isSuccessful){
                     refreshNotifications(notifications)
+                    firstTime = false
                 }
             }
         }catch (e: Exception){

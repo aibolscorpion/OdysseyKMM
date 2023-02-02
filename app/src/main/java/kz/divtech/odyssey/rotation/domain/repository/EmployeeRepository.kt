@@ -35,10 +35,10 @@ class EmployeeRepository(private val dao: Dao) {
     suspend fun getEmployeeFromServer(){
         try{
             if(firstTime){
-                firstTime = false
                 val response = RetrofitClient.getApiService().getEmployeeInfo()
                 if(response.isSuccessful){
                     insertEmployee(response.body()!!)
+                    firstTime = false
                 }
             }
         }catch (e: Exception){
