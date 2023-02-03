@@ -20,6 +20,8 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
     val nearestActiveTrip: LiveData<Trip> = tripsRepository.nearestActiveTrip.asLiveData()
 
+    fun sendDeviceInfo() =
+        viewModelScope.launch { employeeRepository.sendDeviceInfo() }
 
     fun getTripsFromFirstPage() =
         viewModelScope.launch {

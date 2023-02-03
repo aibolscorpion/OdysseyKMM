@@ -38,5 +38,6 @@ object Constants {
     const val UNPROCESSABLE_ENTITY_CODE = 422
     const val TOO_MANY_REQUEST_CODE = 429
 
+    const val ANDROID = "android"
 
 }

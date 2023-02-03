@@ -56,7 +56,7 @@ class TripsRepository(private val dao : Dao) {
 
        return Pager(
            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-           remoteMediator = TripRemoteMediator(dao, OrderDir.ASC),
+           remoteMediator = TripRemoteMediator(dao, OrderDir.ASC, isActive = true),
            pagingSourceFactory = {dao.getActiveTrips()}
        ).flow
     }
@@ -68,7 +68,7 @@ class TripsRepository(private val dao : Dao) {
 
         return Pager(
             config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = false),
             pagingSourceFactory = {dao.getArchiveTrips()}
         ).flow
     }

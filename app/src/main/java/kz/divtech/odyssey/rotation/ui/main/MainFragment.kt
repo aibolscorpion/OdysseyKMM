@@ -61,6 +61,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.sendDeviceInfo()
         getEmployeeInfo()
         setCalendar()
         setNotifications()

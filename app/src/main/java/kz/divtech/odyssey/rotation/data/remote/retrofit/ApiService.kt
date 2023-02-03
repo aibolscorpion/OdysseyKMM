@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.data.remote.retrofit
 
+import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.Login
 import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
@@ -37,7 +38,6 @@ interface ApiService {
 
     @POST("employees/update-phone")
     suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Response<ResponseBody>
-
 
     //Trips
     @GET("employees/get-applications")
@@ -87,6 +87,6 @@ interface ApiService {
 
     //DeviceInfo
     @POST("employees/fix")
-    suspend fun saveDeviceInfo()
+    suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Response<ResponseBody>
 
 }

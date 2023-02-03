@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "956079624629",
+    "project_id": "odysseyrotation",
+    "storage_bucket": "odysseyrotation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956079624629:android:7d7bfa6c47da8544b809fc",
+        "android_client_info": {
+          "package_name": "kz.divtech.odyssey.rotation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956079624629-uthvh5vmcs788s5ld4lii0odogqk3su7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kz.divtech.odyssey.rotation",
+            "certificate_hash": "98568da2e5bafcd406f09696a0437006c206ac21"
+          }
+        },
+        {
+          "client_id": "956079624629-pkl85diqb52nf5tc38qv7pufqcq9vqve.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdlNOmAalk36RrSiA-_T9-bJQ8NZDwhtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956079624629-pkl85diqb52nf5tc38qv7pufqcq9vqve.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

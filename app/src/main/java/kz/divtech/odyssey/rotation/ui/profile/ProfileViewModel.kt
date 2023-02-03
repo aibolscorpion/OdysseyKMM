@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile
 import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
@@ -48,7 +49,7 @@ class ProfileViewModel(
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
 
     fun deleteAllDataAsync() = viewModelScope.async{
-        SharedPrefs().clearAuthToken()
+        SharedPrefs.clearAuthToken(App.appContext)
         val deleteTripsAsync = async { tripsRepository.deleteTrips() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
         val deleteFaqAsync = async { faqRepository.deleteFaq() }

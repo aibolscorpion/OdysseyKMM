@@ -69,7 +69,7 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository) : Vie
                     Constants.SUCCESS_CODE -> {
                         val loginResponse = response.body()
                         _loggedIn.postValue(Event(true))
-                        SharedPrefs().saveAuthToken(loginResponse?.data?.token!!)
+                        SharedPrefs.saveAuthToken(loginResponse?.data?.token!!, App.appContext)
                         loginResponse.data.employee.let { employee -> insertEmployeeToDB(employee) }
                     }
                     Constants.BAD_REQUEST_CODE -> {

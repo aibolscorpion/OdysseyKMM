@@ -30,7 +30,7 @@ class FindEmployeeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        if(SharedPrefs().isLoggedIn) openMainActivity()
+        if(SharedPrefs.isLoggedIn(requireContext())) openMainActivity()
 
         dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this

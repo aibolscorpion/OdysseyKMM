@@ -3,14 +3,19 @@ package kz.divtech.odyssey.rotation.domain.repository
 import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants.ANDROID
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import timber.log.Timber
 
 class EmployeeRepository(private val dao: Dao) {
 
     val employee: Flow<Employee> = dao.getEmployee()
-    private var firstTime = true
+    private var firstTimeEmployee = true
+    private var firstTimeDeviceInfo = true
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -24,21 +29,14 @@ class EmployeeRepository(private val dao: Dao) {
         dao.deleteEmployee()
     }
 
-    suspend fun logoutFromServer(){
-        try{
-            RetrofitClient.getApiService().logout()
-        }catch (e: Exception){
-            Timber.e("exception $e")
-        }
-    }
 
     suspend fun getEmployeeFromServer(){
         try{
-            if(firstTime){
+            if(firstTimeEmployee){
                 val response = RetrofitClient.getApiService().getEmployeeInfo()
                 if(response.isSuccessful){
                     insertEmployee(response.body()!!)
-                    firstTime = false
+                    firstTimeEmployee = false
                 }
             }
         }catch (e: Exception){
@@ -46,5 +44,28 @@ class EmployeeRepository(private val dao: Dao) {
         }
     }
 
+
+    suspend fun sendDeviceInfo(){
+            val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
+            val deviceInfo = DeviceInfo(ANDROID, deviceType, SharedPrefs.fetchFirebaseToken(App.appContext))
+        try{
+            if(firstTimeDeviceInfo){
+                val response = RetrofitClient.getApiService().sendDeviceInfo(deviceInfo)
+                if(response.isSuccessful){
+                    firstTimeDeviceInfo = false
+                }
+            }
+        }catch (e: Exception){
+            Timber.i("exception - ${e.message}")
+        }
+    }
+
+    suspend fun logoutFromServer(){
+        try{
+            RetrofitClient.getApiService().logout()
+        }catch (e: Exception){
+            Timber.e("exception $e")
+        }
+    }
 
 }

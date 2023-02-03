@@ -20,10 +20,9 @@ class App : Application() {
         AndroidThreeTen.init(this)
         appContext = this
 
-        val sharedPrefs = SharedPrefs()
-        if(sharedPrefs.fetchDeviceId().isEmpty()) {
+        if(SharedPrefs.fetchDeviceId(this).isEmpty()) {
             val userId = UUID.randomUUID().toString()
-            sharedPrefs.saveDeviceId(userId)
+            SharedPrefs.saveDeviceId(userId, this)
         }
     }
 

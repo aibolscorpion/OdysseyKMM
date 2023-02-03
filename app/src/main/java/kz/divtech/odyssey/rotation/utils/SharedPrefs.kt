@@ -1,43 +1,61 @@
 package kz.divtech.odyssey.rotation.utils
 
 import android.content.Context
+import android.content.SharedPreferences
 import kz.divtech.odyssey.rotation.BuildConfig
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Config.AUTHORIZATION_VALUE_PREFIX
 
 
-class SharedPrefs() {
-    val context = App.appContext
-    private val userToken = "user_token"
-    private val sharedPref = context.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE)
-    private val editor = sharedPref.edit()
+object SharedPrefs {
 
-    val isLoggedIn = fetchToken().isNotEmpty()
 
-    fun saveAuthToken(token : String){
-        editor.putString(userToken, token)
-        editor.apply()
+    private const val USER_TOKEN = "user_token"
+    private const val FIREBASE_TOKEN = "firebase_token"
+
+    fun isLoggedIn(context: Context) = fetchToken(context).isNotEmpty()
+
+    private fun getSharedPrefs(context: Context): SharedPreferences {
+        return context.getSharedPreferences(BuildConfig.APPLICATION_ID,
+            Context.MODE_PRIVATE)
     }
 
-    private fun fetchToken() = sharedPref.getString(userToken, "")!!
+    private fun getSharedPrefsEditor(context: Context): SharedPreferences.Editor{
+        return getSharedPrefs(context).edit()
+    }
 
-    fun getTokenWithBearer(): String {
-        fetchToken().let {
+    fun saveAuthToken(token : String, context: Context){
+            getSharedPrefsEditor(context).putString(USER_TOKEN, token).apply()
+    }
+
+    private fun fetchToken(context: Context): String {
+        return getSharedPrefs(context).getString(USER_TOKEN, "")!!
+    }
+
+    fun getTokenWithBearer(context: Context): String {
+        fetchToken(context).let {
             return "$AUTHORIZATION_VALUE_PREFIX $it"
         }
     }
 
-    fun clearAuthToken(){
-        editor.putString(userToken, "")
-        editor.apply()
+    fun clearAuthToken(context: Context){
+        getSharedPrefsEditor(context).putString(USER_TOKEN, "").apply()
     }
 
-    fun  saveDeviceId(userId: String){
-        editor.putString(Config.DEVICE_ID_KEY, userId)
-        editor.apply()
+    fun saveDeviceId(userId: String, context: Context){
+        getSharedPrefsEditor(context).putString(Config.DEVICE_ID_KEY, userId).apply()
     }
 
-    fun fetchDeviceId() = sharedPref.getString(Config.DEVICE_ID_KEY,"")!!
+    fun fetchDeviceId(context: Context): String {
+        return getSharedPrefs(context).getString(Config.DEVICE_ID_KEY,"")!!
+    }
+
+    fun saveFirebaseToken(token: String, context: Context){
+        getSharedPrefsEditor(context).putString(FIREBASE_TOKEN, token).apply()
+    }
+
+    fun fetchFirebaseToken(context: Context): String{
+        return getSharedPrefs(context).getString(FIREBASE_TOKEN, "")!!
+    }
 
 }
