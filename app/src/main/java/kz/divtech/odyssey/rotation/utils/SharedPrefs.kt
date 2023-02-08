@@ -9,7 +9,6 @@ import kz.divtech.odyssey.rotation.app.Config.AUTHORIZATION_VALUE_PREFIX
 
 object SharedPrefs {
 
-
     private const val USER_TOKEN = "user_token"
     private const val FIREBASE_TOKEN = "firebase_token"
 

@@ -307,5 +307,9 @@
     <string name="hours_before">%1$d ч. назад</string>
     <string name="minutes_before">%1$d мин. назад</string>
     <string name="trip_not_found_by_id">Поездка не найдена в Локальной Базе Данных</string>
+    <string name="turn_on_notification_title">Включите уведомления</string>
+    <string name="turn_on_notification_description">Это важно: мы будем уведомлять вас об изменениях в поездках, важных новостях и о проблемах в документах.</string>
+    <string name="turn_on">Включить</string>
+    <string name="remind_later">Напомнить позже</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
@@ -34,9 +35,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     companion object {
         fun newInstance(activeTrips: Boolean) =
             ActiveTripsFragment().apply{
-                val bundle = Bundle()
-                bundle.putBoolean(Constants.ACTIVE_TRIPS, activeTrips)
-                arguments  = bundle
+                arguments  = bundleOf(Constants.ACTIVE_TRIPS to activeTrips)
             }
     }
 

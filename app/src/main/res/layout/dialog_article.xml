@@ -54,10 +54,9 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/closeIV"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:scaleType="center"
-                        android:src="@drawable/icons_tabs_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/icon_close_filled_circle"
                         android:layout_gravity="top|end"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -73,20 +72,21 @@
                     android:textSize="24sp"
                     android:gravity="start"
                     android:text="@{fullArticle.title}"
+                    android:layout_marginTop="5dp"
                     tools:text="@string/news_title_placeholder" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="@string/news_content_placeholder"
-                    android:layout_marginTop="@dimen/two_times_margin"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="17sp"
                     android:textColor="#748595"
                     android:letterSpacing="0.01"
                     android:lineSpacingExtra="8sp"
+                    android:gravity="start"
+                    android:layout_marginTop="@dimen/two_times_margin"
                     app:htmlText="@{fullArticle.content}"
-                    android:gravity="start" />
+                    tools:text="@string/news_content_placeholder" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>

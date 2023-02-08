@@ -25,10 +25,11 @@ class FindEmployeeViewModel : ViewModel() {
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             try {
-                val callResult = RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber)
-                if(callResult.code() == Constants.SUCCESS_CODE){
-                    _employeeInfo.postValue(Event(callResult.body()?.data?.employee!!))
-                }else if(callResult.code() == Constants.BAD_REQUEST_CODE){
+                val response = RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber)
+                val employee = response.body()?.data?.employee!!
+                if(response.code() == Constants.SUCCESS_CODE){
+                    _employeeInfo.postValue(Event(employee))
+                }else if(response.code() == Constants.BAD_REQUEST_CODE){
                     _isEmployeeNotFounded.postValue(Event(true))
                 }
             }catch (e: Exception){

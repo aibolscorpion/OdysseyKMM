@@ -61,10 +61,11 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="center"
-                android:src="@drawable/icons_tabs_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_close_filled_circle"
+                android:layout_marginTop="23dp"
+                android:layout_marginEnd="14dp"
                 android:layout_gravity="top|end"
                 android:onClick="@{() -> documentDialog.close() }" />
 
