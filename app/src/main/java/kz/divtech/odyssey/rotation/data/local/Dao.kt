@@ -24,10 +24,10 @@ interface Dao {
     fun getActiveTrips() :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
-    fun getNearestActiveTrip() :  Flow<Trip>
+    fun observeNearestActiveTrip() :  Flow<Trip>
 
     @Query("SELECT * FROM trip WHERE id=:id")
-    fun getTripById(id: Int): Flow<Trip>
+    fun observeTripById(id: Int): Flow<Trip>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTrips(data: List<Trip>)
@@ -43,7 +43,7 @@ interface Dao {
 
     //Employee
     @Query("SELECT * FROM employee")
-    fun getEmployee(): Flow<Employee>
+    fun observeEmployee(): Flow<Employee>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEmployee(employee: Employee)
@@ -53,7 +53,7 @@ interface Dao {
 
     //FAQ
     @Query("SELECT * FROM faq")
-    fun getFAQ(): Flow<List<Faq>>
+    fun observeFaqList(): Flow<List<Faq>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFAQ(faqList: List<Faq>)
@@ -62,7 +62,7 @@ interface Dao {
     suspend fun deleteFAQ()
 
     @Query("SELECT * FROM faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%'")
-    fun searchFAQ(searchQuery: String) : Flow<List<Faq>>
+    suspend fun searchFAQ(searchQuery: String) : List<Faq>
 
     @Transaction
     suspend fun refreshFaq(faqList: List<Faq>){
@@ -72,7 +72,7 @@ interface Dao {
 
     //Documents
     @Query("SELECT * FROM document")
-    fun getDocuments() : Flow<List<Document>>
+    fun observeDocuments() : Flow<List<Document>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertDocuments(documents: List<Document>)
@@ -92,7 +92,7 @@ interface Dao {
 
     @Query("SELECT * FROM article WHERE title LIKE '%'||:searchQuery||'%' OR" +
             " short_content LIKE '%'||:searchQuery||'%'")
-    fun searchArticle(searchQuery: String): Flow<List<Article>>
+    suspend fun searchArticle(searchQuery: String): List<Article>
 
     @Transaction
     suspend fun refreshNews(articleList: List<Article>){
@@ -102,7 +102,7 @@ interface Dao {
 
     //FullArticle
     @Query("SELECT * FROM full_article WHERE id=:id")
-    fun getArticleById(id: Int) : Flow<FullArticle>
+    fun observeArticleById(id: Int) : Flow<FullArticle>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFullArticle(fullArticle: FullArticle)
@@ -115,7 +115,7 @@ interface Dao {
     fun getNotificationPagingSource() : PagingSource<Int, Notification>
 
     @Query("SELECT * FROM notification ORDER BY created_at DESC LIMIT 3")
-    fun getThreeNotifications(): Flow<List<Notification>>
+    fun observeThreeNotifications(): Flow<List<Notification>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNotifications(notificationList: List<Notification>)

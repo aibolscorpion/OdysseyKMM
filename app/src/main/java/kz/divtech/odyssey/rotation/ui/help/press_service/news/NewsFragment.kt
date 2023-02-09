@@ -69,9 +69,8 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let{
                     lifecycleScope.launch{
-                        viewModel.searchNewsFromDB(newText).collectLatest { articleList ->
-                            adapter.submitData(PagingData.from(articleList))
-                        }
+                        val articleList = viewModel.searchNewsFromDB(newText)
+                        adapter.submitData(PagingData.from(articleList))
                     }
                 }
                 return true

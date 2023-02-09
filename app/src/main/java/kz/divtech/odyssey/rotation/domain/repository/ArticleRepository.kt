@@ -11,7 +11,7 @@ import timber.log.Timber
 class ArticleRepository(private val dao: Dao) {
 
     fun getArticleById(id: Int): Flow<FullArticle> {
-        return dao.getArticleById(id)
+        return dao.observeArticleById(id)
     }
 
     @WorkerThread

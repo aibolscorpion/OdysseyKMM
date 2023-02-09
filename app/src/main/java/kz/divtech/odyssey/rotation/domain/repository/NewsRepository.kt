@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.domain.remotemediator.NewsRemoteMediator
 
 class NewsRepository(private val dao: Dao) {
 
-    fun searchArticlesFromDB(searchQuery: String): Flow<List<Article>> = dao.searchArticle(searchQuery)
+    suspend fun searchArticlesFromDB(searchQuery: String) = dao.searchArticle(searchQuery)
 
     @WorkerThread
     @Suppress("RedundantSuspendModifier")

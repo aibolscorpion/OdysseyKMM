@@ -14,7 +14,7 @@ import kz.divtech.odyssey.rotation.domain.remotemediator.NotificationRemoteMedia
 import timber.log.Timber
 
 class NotificationRepository(private val dao: Dao) {
-    val notifications: Flow<List<Notification>> = dao.getThreeNotifications()
+    val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()
     private var firstTime = true
 
     @WorkerThread
@@ -42,8 +42,8 @@ class NotificationRepository(private val dao: Dao) {
         try {
             if(firstTime){
                 val response = RetrofitClient.getApiService().getNotifications(1)
-                val notifications = response.body()?.data!!
                 if(response.isSuccessful){
+                    val notifications = response.body()?.data!!
                     refreshNotifications(notifications)
                     firstTime = false
                 }

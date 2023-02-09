@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
@@ -16,15 +17,15 @@ import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 
 
 class DocumentDialog : BottomSheetDialogFragment() {
-
+    private val args: DocumentDialogArgs by navArgs()
     val viewModel : DocumentViewModel by viewModels()
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        val document = DocumentDialogArgs.fromBundle(requireArguments()).document.copy()
-        val employee = DocumentDialogArgs.fromBundle(requireArguments()).employee
+        val document = args.document.copy()
+        val employee = args.employee
 
         when(document.type){
             Constants.ID_CARD -> {

@@ -8,12 +8,10 @@ import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import timber.log.Timber
 
 class FaqRepository(private val dao: Dao) {
-    val faqList: Flow<List<Faq>> = dao.getFAQ()
+    val faqList: Flow<List<Faq>> = dao.observeFaqList()
     private var firstTime = true
 
-    fun searchFaq(searchQuery: String): Flow<List<Faq>> {
-        return dao.searchFAQ(searchQuery)
-    }
+    suspend fun searchFaq(searchQuery: String) = dao.searchFAQ(searchQuery)
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
@@ -28,12 +26,12 @@ class FaqRepository(private val dao: Dao) {
         dao.refreshFaq(faqList)
     }
 
-    suspend fun getFaqListFromServer(isRefreshing: Boolean) {
+    suspend fun getFaqListFromServer(isRefreshing: Boolean){
         try{
             if(firstTime || isRefreshing){
                 val response = RetrofitClient.getApiService().getFAQs()
-                val faqList = response.body()
                 if(response.isSuccessful){
+                    val faqList = response.body()
                     refreshFaq(faqList!!)
                     firstTime = false
                 }

@@ -16,8 +16,8 @@ import timber.log.Timber
 
 class TripsRepository(private val dao : Dao) {
 
-    val nearestActiveTrip: Flow<Trip> = dao.getNearestActiveTrip()
-    fun getTripById(id: Int): Flow<Trip> = dao.getTripById(id)
+    val nearestActiveTrip: Flow<Trip> = dao.observeNearestActiveTrip()
+    fun getTripById(id: Int): Flow<Trip> = dao.observeTripById(id)
     private var firstTime = true
 
     @Suppress("RedundantSuspendModifier")

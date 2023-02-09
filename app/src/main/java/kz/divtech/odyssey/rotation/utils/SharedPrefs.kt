@@ -57,4 +57,16 @@ object SharedPrefs {
         return getSharedPrefs(context).getString(FIREBASE_TOKEN, "")!!
     }
 
+    fun saveUrl(url: String, context: Context){
+        getSharedPrefsEditor(context).putString("URL", url).apply()
+    }
+
+    fun fetchUrl(context: Context): String{
+        return getSharedPrefs(context).getString("URL", Config.PROXY_HOST)!!
+    }
+
+    fun clearUrl(context: Context){
+        getSharedPrefsEditor(context).putString("URL", Config.PROXY_HOST).apply()
+    }
+
 }

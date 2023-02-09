@@ -4,10 +4,13 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Config.BASE_URL_KEY
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.utils.Event
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class FindEmployeeViewModel : ViewModel() {
     private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
@@ -22,12 +25,15 @@ class FindEmployeeViewModel : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
 
     fun getEmployeeInfoByPhoneNumber(phoneNumber: String){
+        SharedPrefs.clearUrl(App.appContext)
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             try {
                 val response = RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber)
-                val employee = response.body()?.data?.employee!!
                 if(response.code() == Constants.SUCCESS_CODE){
+                    val baseUrl = response.headers()[BASE_URL_KEY]!!
+                    SharedPrefs.saveUrl(baseUrl, App.appContext)
+                    val employee = response.body()?.data?.employee!!
                     _employeeInfo.postValue(Event(employee))
                 }else if(response.code() == Constants.BAD_REQUEST_CODE){
                     _isEmployeeNotFounded.postValue(Event(true))

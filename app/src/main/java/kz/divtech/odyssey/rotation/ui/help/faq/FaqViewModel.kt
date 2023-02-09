@@ -28,8 +28,7 @@ class FaqViewModel(val repository: FaqRepository): ViewModel() {
             refreshing.set(false)
         }
 
-    fun searchFaqFromDB(searchQuery: String): LiveData<List<Faq>> =
-        repository.searchFaq(searchQuery).asLiveData()
+    suspend fun searchFaqFromDB(searchQuery: String) = repository.searchFaq(searchQuery)
 
 
     class FaqViewModelFactory(val repository: FaqRepository): ViewModelProvider.Factory{

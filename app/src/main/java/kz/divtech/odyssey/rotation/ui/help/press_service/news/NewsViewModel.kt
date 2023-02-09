@@ -12,7 +12,7 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
     fun getPagingNews(): Flow<PagingData<Article>> =
         newsRepository.getPagingNews().cachedIn(viewModelScope)
 
-    fun searchNewsFromDB(searchQuery: String) : Flow<List<Article>> =
+    suspend fun searchNewsFromDB(searchQuery: String) =
         newsRepository.searchArticlesFromDB(searchQuery)
 
     class ViewModelFactory(private val newsRepository: NewsRepository) : ViewModelProvider.Factory{

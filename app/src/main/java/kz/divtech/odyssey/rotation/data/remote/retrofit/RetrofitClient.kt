@@ -26,7 +26,7 @@ object RetrofitClient{
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
-        return Retrofit.Builder().baseUrl(Config.BASE_URL)
+        return Retrofit.Builder().baseUrl(SharedPrefs.fetchUrl(App.appContext)+Config.API)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())

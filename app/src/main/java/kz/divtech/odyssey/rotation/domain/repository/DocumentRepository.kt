@@ -9,7 +9,7 @@ import timber.log.Timber
 
 class DocumentRepository(private val dao: Dao){
 
-    val documents : Flow<List<Document>> = dao.getDocuments()
+    val documents : Flow<List<Document>> = dao.observeDocuments()
     private var firstTime = true
 
     @WorkerThread

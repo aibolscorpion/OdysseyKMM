@@ -18,7 +18,7 @@
             app:destination="@id/accountDeactivatedDialog" />
         <action
             android:id="@+id/action_phoneNumberFragment_to_codeFragment"
-            app:destination="@id/codeFragment" />
+            app:destination="@id/sendSmsFragment" />
         <action
             android:id="@+id/action_phoneNumberFragment_to_phoneNumberErrorDialog"
             app:destination="@id/phoneNumberErrorDialog" />
@@ -61,7 +61,7 @@
     </dialog>
 
     <fragment
-        android:id="@+id/codeFragment"
+        android:id="@+id/sendSmsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.SendSmsFragment"
         app:layout="@layout/fragment_send_sms"
         tools:layout="@layout/fragment_send_sms" >

@@ -13,7 +13,7 @@ import timber.log.Timber
 
 class EmployeeRepository(private val dao: Dao) {
 
-    val employee: Flow<Employee> = dao.getEmployee()
+    val employee: Flow<Employee> = dao.observeEmployee()
     private var firstTimeEmployee = true
     private var firstTimeDeviceInfo = true
 

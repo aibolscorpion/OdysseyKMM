@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
@@ -42,8 +44,9 @@ class FaqFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    viewModel.searchFaqFromDB(it).observe(viewLifecycleOwner) { faqList ->
+                newText?.let { text ->
+                    lifecycleScope.launch {
+                        val faqList = viewModel.searchFaqFromDB(text)
                         faqAdapter.setList(faqList)
                     }
                 }

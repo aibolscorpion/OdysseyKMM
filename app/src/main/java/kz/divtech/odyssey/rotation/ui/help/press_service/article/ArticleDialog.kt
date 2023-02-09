@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
@@ -14,6 +15,7 @@ import kz.divtech.odyssey.rotation.ui.MainActivity
 
 
 class ArticleDialog : BottomSheetDialogFragment() {
+    private val args: ArticleDialogArgs by navArgs()
     val viewModel: ArticleViewModel by viewModels{
         ArticleViewModel.ArticleViewModelFactory((activity as MainActivity).articleRepository)
     }
@@ -34,7 +36,7 @@ class ArticleDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val articleId = ArticleDialogArgs.fromBundle(requireArguments()).articleId
+        val articleId = args.articleId
 
         viewModel.getArticleById(articleId).observe(viewLifecycleOwner){ fullArticle ->
             if(fullArticle != null){
