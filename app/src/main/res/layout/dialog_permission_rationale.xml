@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_notification_turn_on"
+                android:layout_marginTop="@dimen/two_times_margin"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="19sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="5sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/turn_on_notification_title"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:layout_marginTop="@dimen/margin"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="8sp"
+                android:gravity="center_horizontal"
+                android:text="@string/turn_on_notification_description"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/okBtn"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                style="@style/buttonStyle"
+                android:layout_marginTop="24dp"
+                android:text="@string/turn_on"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/bg_remind_later_button"
+                android:textColor="#2d4461"
+                style="@style/buttonStyle"
+                android:onClick="@{() -> thisDialog.dismiss() }"
+                android:text="@string/remind_later"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/icon_close_filled_circle"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:onClick="@{() -> thisDialog.dismiss() }" />
+
+</FrameLayout>
+
+</layout>

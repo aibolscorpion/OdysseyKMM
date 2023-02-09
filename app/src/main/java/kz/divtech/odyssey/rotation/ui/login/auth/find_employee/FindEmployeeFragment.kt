@@ -1,5 +1,9 @@
 package kz.divtech.odyssey.rotation.ui.login.auth.find_employee
 
+import android.Manifest
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
@@ -7,7 +11,9 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,21 +22,22 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
+import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
+import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
-class FindEmployeeFragment : Fragment() {
+class FindEmployeeFragment : Fragment(), NotificationListener {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
 
     private lateinit var dataBinding: FragmentFindEmployeeBinding
     private val viewModel: FindEmployeeViewModel by viewModels()
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()) {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        if(SharedPrefs.isLoggedIn(requireContext())) openMainActivity()
 
         dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
@@ -50,7 +57,7 @@ class FindEmployeeFragment : Fragment() {
                 if(employee.status.equals(Constants.DEACTIVATED_EMPLOYEE))
                     showAccountDeactivatedDialog("${employee.firstName} ${employee.patronymic}")
                 else
-                    openCodeFragment()
+                    openSendSmsFragment()
             }
         }
 
@@ -67,6 +74,8 @@ class FindEmployeeFragment : Fragment() {
                     showErrorDialog()
             }
         }
+
+        checkPermission()
 
     }
 
@@ -117,8 +126,20 @@ class FindEmployeeFragment : Fragment() {
     }
 
 
+    private fun checkPermission(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED) {
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                val modalBottomSheet = PermissionRationale(this)
+                modalBottomSheet.show(activity?.supportFragmentManager!!, "modalBottomSheet")
+            } else {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
 
-    private fun openCodeFragment() =
+    private fun openSendSmsFragment() =
         findNavController().navigate(FindEmployeeFragmentDirections.
         actionPhoneNumberFragmentToCodeFragment("${Config.COUNTRY_CODE}$extractedPhoneNumber",
             dataBinding.phoneNumberET.text.toString()))
@@ -136,9 +157,9 @@ class FindEmployeeFragment : Fragment() {
     private fun showAccountDeactivatedDialog(employeeName: String) =
         findNavController().navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog(employeeName))
 
-    private fun openMainActivity() {
-        findNavController().navigate(FindEmployeeFragmentDirections.actionGlobalMainActivity())
-        (activity as AppCompatActivity).finish()
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onClickOk() {
+        requestPermissionLauncher.launch(POST_NOTIFICATIONS)
     }
 
 }
