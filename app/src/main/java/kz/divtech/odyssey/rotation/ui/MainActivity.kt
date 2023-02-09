@@ -1,7 +1,12 @@
 package kz.divtech.odyssey.rotation.ui
 
+import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
