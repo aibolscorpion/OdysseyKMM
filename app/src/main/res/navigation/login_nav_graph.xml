@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/phoneNumberFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.FindEmployeeFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.FindEmployeeFragment"
         app:layout="@layout/fragment_find_employee"
         tools:layout="@layout/fragment_find_employee">
         <action
@@ -37,21 +37,21 @@
 
     <dialog
         android:id="@+id/phoneNumberErrorDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.PhoneNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.PhoneNumberErrorDialog"
         android:label="PhoneNumberErrorDialog"
         app:layout="@layout/dialog_phone_number_error"
         tools:layout="@layout/dialog_phone_number_error"/>
 
     <dialog
         android:id="@+id/contactSupportDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.ContactSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.ContactSupportDialog"
         android:label="ContactSupportDialog"
         app:layout="@layout/dialog_contact_support"
         tools:layout="@layout/dialog_contact_support" />
 
     <dialog
         android:id="@+id/accountDeactivatedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.AccountDeactivatedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.AccountDeactivatedDialog"
         android:label="AccountDeactivatedDialog"
         app:layout="@layout/dialog_account_deactivated"
         tools:layout="@layout/dialog_account_deactivated" >
@@ -75,10 +75,10 @@
 
     <fragment
         android:id="@+id/IINFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.search_by_iin.SearchIINFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_iin.FindEmployeeByIINFragment"
         android:label="IINFragment"
-        app:layout="@layout/fragment_search_by_iin"
-        tools:layout="@layout/fragment_search_by_iin" >
+        app:layout="@layout/fragment_find_employee_by_iin"
+        tools:layout="@layout/fragment_find_employee_by_iin" >
         <action
             android:id="@+id/action_IINFragment_to_employeeNotFoundDialog"
             app:destination="@id/employeeNotFoundDialog" />
@@ -92,7 +92,7 @@
 
     <dialog
         android:id="@+id/employeeNotFoundDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.search_by_iin.dialogs.EmployeeNotFoundDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_iin.dialogs.EmployeeNotFoundDialog"
         android:label="EmployeeNotFoundDialog"
         app:layout="@layout/dialog_employee_not_found"
         tools:layout="@layout/dialog_employee_not_found" >
@@ -125,7 +125,7 @@
 
     <dialog
         android:id="@+id/phoneNumberAddedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.PhoneNumberAddedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.PhoneNumberAddedDialog"
         android:label="PhoneNumberAddedDialog"
         app:layout="@layout/dialog_phone_number_added"
         tools:layout="@layout/dialog_phone_number_added"/>

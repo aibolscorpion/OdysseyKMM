@@ -5,6 +5,9 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.result.asFailure
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
@@ -19,9 +22,9 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.Ord
         pageIndex = getPageIndex(loadType)?:
             return MediatorResult.Success(true)
 
-        return try{
-            val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir.value)
-            val trips = response.body()?.data?.data!!
+        val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir.value)
+        return if(response.isSuccess()){
+            val trips = response.asSuccess().value.data.data!!
             val newTrips = mutableListOf<Trip>()
             val today = LocalDate.now()
 
@@ -36,16 +39,16 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.Ord
                         newTrips.add(it)
                     }
                 }
-
             }
             when(loadType){
                 LoadType.REFRESH -> dao.refreshTrips(newTrips)
                 else -> dao.insertTrips(newTrips)
             }
             MediatorResult.Success(newTrips.size < state.config.pageSize)
-        }catch (e: Exception){
-            MediatorResult.Error(e)
+        }else{
+            MediatorResult.Error(response.asFailure().error!!)
         }
+
     }
 
     private fun getPageIndex(loadType: LoadType) : Int?{

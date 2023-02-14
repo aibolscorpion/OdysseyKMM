@@ -5,6 +5,9 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.result.asFailure
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 
@@ -18,16 +21,16 @@ class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notificatio
         pageIndex = getPageIndex(loadType) ?:
             return MediatorResult.Success(endOfPaginationReached = true)
 
-        return try {
-            val response = RetrofitClient.getApiService().getNotifications(pageIndex)
-            val notifications = response.body()?.data!!
+        val response = RetrofitClient.getApiService().getNotifications(pageIndex)
+        return if(response.isSuccess()){
+            val notifications = response.asSuccess().value.data
             when(loadType) {
                 LoadType.REFRESH -> dao.refreshNotifications(notifications)
                 else -> dao.insertNotifications(notifications)
             }
             MediatorResult.Success(notifications.size < state.config.pageSize)
-        }catch (e: Exception){
-            MediatorResult.Error(e)
+        }else{
+            MediatorResult.Error(response.asFailure().error!!)
         }
     }
 

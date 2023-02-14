@@ -4,7 +4,7 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs.ContactSupportDialog" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.ContactSupportDialog" />
 
         <variable
             name="contactSupport"

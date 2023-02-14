@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.find_employee.dialogs
+package kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

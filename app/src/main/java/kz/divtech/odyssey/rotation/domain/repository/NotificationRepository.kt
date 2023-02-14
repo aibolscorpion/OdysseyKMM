@@ -8,10 +8,11 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATIONS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.remotemediator.NotificationRemoteMediator
-import timber.log.Timber
 
 class NotificationRepository(private val dao: Dao) {
     val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()
@@ -31,25 +32,17 @@ class NotificationRepository(private val dao: Dao) {
 
     suspend fun markNotificationAsRead(id: String){
         val map = mutableMapOf("notification_id" to id)
-        try {
-            RetrofitClient.getApiService().markAsReadNotificationById(map)
-        }catch (e: Exception){
-            Timber.e("exception - $e")
-        }
+        RetrofitClient.getApiService().markAsReadNotificationById(map)
     }
 
     suspend fun getNotificationsFromServer(){
-        try {
-            if(firstTime){
-                val response = RetrofitClient.getApiService().getNotifications(1)
-                if(response.isSuccessful){
-                    val notifications = response.body()?.data!!
-                    refreshNotifications(notifications)
-                    firstTime = false
-                }
+        if(firstTime){
+            val response = RetrofitClient.getApiService().getNotifications(1)
+            if(response.isSuccess()){
+                val notifications = response.asSuccess().value.data
+                refreshNotifications(notifications)
+                firstTime = false
             }
-        }catch (e: Exception){
-            Timber.e("exception - $e")
         }
     }
 

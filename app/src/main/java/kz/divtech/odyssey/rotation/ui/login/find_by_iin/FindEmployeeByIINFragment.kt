@@ -1,29 +1,35 @@
-package kz.divtech.odyssey.rotation.ui.login.search_by_iin
+package kz.divtech.odyssey.rotation.ui.login.find_by_iin
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.databinding.FragmentSearchByIinBinding
+import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 
-class SearchIINFragment : Fragment() {
-    private val viewModel by lazy { ViewModelProvider(this)[SearchIINViewModel::class.java] }
-    private lateinit var binding: FragmentSearchByIinBinding
+class FindEmployeeByIINFragment : Fragment() {
+    private val viewModel: FindEmployeeByIINViewModel by viewModels{
+        FindEmployeeByIINViewModel.FindEmployeeByIINViewModelFactory(
+            (activity?.application as App).findEmployeeRepository)
+    }
+    private val args: FindEmployeeByIINFragmentArgs by navArgs()
+    private lateinit var binding: FragmentFindEmployeeByIinBinding
     private lateinit var iin: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentSearchByIinBinding.inflate(inflater)
+        binding = FragmentFindEmployeeByIinBinding.inflate(inflater)
         binding.iinFragment = this
-
-        val args = SearchIINFragmentArgs.fromBundle(requireArguments())
         binding.phoneNumber = args.phoneNumber
+        binding.viewModel = viewModel
+
         return binding.root
     }
 
@@ -47,16 +53,16 @@ class SearchIINFragment : Fragment() {
     fun loginByIIN(){
         iin = binding.iinET.text.toString()
         if(iin.length == Config.IIN_LENGTH)
-            viewModel.searchByIIN(iin)
+            viewModel.findByIIN(iin)
         else
             showErrorMessage(requireContext(), binding.searchByIINFL, getString(R.string.enter_iin_fully))
     }
 
     private fun openUpdatePhoneNumber(employee: Employee) =
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToUpdatePhoneNumber(employee))
+        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToUpdatePhoneNumber(employee))
 
     private fun showEmployeeNotFoundDialog() =
-        findNavController().navigate(SearchIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
+        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
 
 
     fun backToSendSmsFragment() = findNavController().popBackStack()

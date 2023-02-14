@@ -16,77 +16,77 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
 import retrofit2.http.*
-import retrofit2.Response
+import kz.divtech.odyssey.rotation.data.remote.result.Result
 
 interface ApiService {
 
     @GET("user-agreement")
-    suspend fun getUserAgreement(): Response<ResponseBody>
+    suspend fun getUserAgreement(): Result<ResponseBody>
 
     @GET("employees/get-employee-by-phone")
-    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Response<EmployeeData>
+    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Result<EmployeeData>
 
     //login
     @POST("employees/send-code-login")
-    suspend fun sendSms(@Body phone: HashMap<String, String>): Response<CodeResponse>
+    suspend fun sendSms(@Body phone: Map<String, String>): Result<CodeResponse>
 
     @POST("employees/login")
-    suspend fun login(@Body login : Login): Response<LoginResponse>
+    suspend fun login(@Body login : Login): Result<LoginResponse>
 
     @GET("employees/get-employee-by-iin")
-    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Response<EmployeeData>
+    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeData>
 
     @POST("employees/update-phone")
-    suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Response<ResponseBody>
+    suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Result<ResponseBody>
 
     //Trips
     @GET("employees/get-applications")
     suspend fun getTrips(@Query("page") pageIndex: Int,
                         @Query("order_by") orderBy: String = "date",
-                        @Query("order_dir") orderDir: String): Response<Data>
+                        @Query("order_dir") orderDir: String): Result<Data>
 
     //FAQ
     @GET("faqs")
-    suspend fun getFAQs() : Response<List<Faq>>
+    suspend fun getFAQs() : Result<List<Faq>>
 
     //Articles
     @GET("articles")
-    suspend fun getArticles(@Query("page") pageIndex: Int) : Response<News>
+    suspend fun getArticles(@Query("page") pageIndex: Int) : Result<News>
 
     @GET("articles/{id}")
-    suspend fun getSpecificArticleById(@Path("id") articleId: Int) : Response<FullArticle>
+    suspend fun getSpecificArticleById(@Path("id") articleId: Int) : Result<FullArticle>
 
     @POST("articles/{id}/mark-as-read")
-    suspend fun markAsReadArticleById(@Path("id") articleId: Int): Response<ResponseBody>
+    suspend fun markAsReadArticleById(@Path("id") articleId: Int): Result<ResponseBody>
 
     //EmployeeInfo
     @GET("employees/info")
-    suspend fun getEmployeeInfo() : Response<Employee>
+    suspend fun getEmployeeInfo() : Result<Employee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("employees/update-data")
-    suspend fun updateData(@Body employee: Employee): Response<ResponseBody>
+    suspend fun updateData(@Body employee: Employee): Result<ResponseBody>
 
     //Documents
     @GET("employees/get-documents")
-    suspend fun getDocuments(): Response<Documents>
+    suspend fun getDocuments(): Result<Documents>
 
     @POST("employees/update-document")
-    suspend fun updateDocument(@Body document: Document): Response<ResponseBody>
+    suspend fun updateDocument(@Body document: Document): Result<ResponseBody>
 
     //Notifications
     @GET("notifications")
-    suspend fun getNotifications(@Query("page") pageIndex: Int) : Response<Notifications>
+    suspend fun getNotifications(@Query("page") pageIndex: Int) : Result<Notifications>
 
     @POST("notifications/mark-as-read")
-    suspend fun markAsReadNotificationById(@Body map: Map<String, String>) : Response<ResponseBody>
+    suspend fun markAsReadNotificationById(@Body map: Map<String, String>) : Result<ResponseBody>
 
     //Logout
     @POST("logout")
-    suspend fun logout(): Response<ResponseBody>
+    suspend fun logout(): Result<ResponseBody>
 
     //DeviceInfo
     @POST("employees/fix")
-    suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Response<ResponseBody>
+    suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Result<ResponseBody>
 
 }

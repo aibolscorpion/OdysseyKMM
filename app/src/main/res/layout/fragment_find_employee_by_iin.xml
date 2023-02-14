@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="iinFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.search_by_iin.SearchIINFragment" />
+            type="kz.divtech.odyssey.rotation.ui.login.find_by_iin.FindEmployeeByIINFragment" />
         <variable
             name="phoneNumber"
             type="String" />
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.login.find_by_iin.FindEmployeeByIINViewModel" />
     </data>
     <FrameLayout
         android:id="@+id/searchByIINFL"
@@ -125,5 +128,11 @@
             android:onClick="@{() -> iinFragment.backToSendSmsFragment()}"
             />
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.pBarVisibility}"
+            tools:visibility="visible" />
     </FrameLayout>
 </layout>

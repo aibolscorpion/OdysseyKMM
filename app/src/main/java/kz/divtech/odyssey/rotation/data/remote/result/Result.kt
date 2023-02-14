@@ -1,6 +1,8 @@
 @file:Suppress("unused")
 package kz.divtech.odyssey.rotation.data.remote.result
 
+import okhttp3.Headers
+
 sealed class Result<out T> {
 
     sealed class Success<T> : Result<T>(){
@@ -15,7 +17,8 @@ sealed class Result<out T> {
             override val value: T,
             override val statusCode: Int,
             override val statusMessage: String? = null,
-            override val url: String? = null
+            override val url: String? = null,
+            override val headers: Headers? = null
         ) : Success<T>(), kz.divtech.odyssey.rotation.data.remote.result.HttpResponse
 
         object Empty: Success<Nothing>(){
@@ -39,6 +42,9 @@ sealed class Result<out T> {
             override val statusMessage: String? get() = error.statusMessage
 
             override val url: String? get() = error.url
+
+            override val headers: Headers? get() = error.headers
+
         }
     }
 }

@@ -2,11 +2,11 @@ package kz.divtech.odyssey.rotation.domain.repository
 
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
-import timber.log.Timber
 
 class ArticleRepository(private val dao: Dao) {
 
@@ -27,25 +27,15 @@ class ArticleRepository(private val dao: Dao) {
     }
 
     suspend fun getArticleByIdFromServer(articleId: Int){
-        try{
-            val response = RetrofitClient.getApiService().getSpecificArticleById(articleId)
-            when(response.code()){
-                Constants.SUCCESS_CODE -> {
-                    insertFullArticle(response.body()!!)
-                }
-            }
-        }catch (e: Exception){
-            Timber.e("exception - ${e.message}")
+        val response = RetrofitClient.getApiService().getSpecificArticleById(articleId)
+        if(response.isSuccess()){
+            insertFullArticle(response.asSuccess().value)
         }
     }
 
 
     suspend fun markArticleAsRead(id: Int){
-        try{
-            RetrofitClient.getApiService().markAsReadArticleById(id)
-        }catch (e: Exception){
-            Timber.e("exception - ${e.message}")
-        }
+        RetrofitClient.getApiService().markAsReadArticleById(id)
     }
 
 }

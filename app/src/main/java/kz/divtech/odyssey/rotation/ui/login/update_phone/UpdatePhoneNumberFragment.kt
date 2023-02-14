@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
+import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
@@ -19,16 +21,18 @@ class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
     private lateinit var dataBinding : FragmentUpdatePhoneBinding
-    private val employee by lazy { UpdatePhoneNumberFragmentArgs.fromBundle(requireArguments()).employee }
-    private val viewModel  by lazy { ViewModelProvider(this)[UpdatePhoneViewModel::class.java] }
+    val args : UpdatePhoneNumberFragmentArgs by navArgs()
+    private val viewModel: UpdatePhoneViewModel by viewModels{
+        UpdatePhoneViewModel.UpdatePhoneViewModelFactory((activity as LoginActivity).employeeRepository)
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         dataBinding = FragmentUpdatePhoneBinding.inflate(inflater)
         dataBinding.updatePhoneNumberFragment = this
+        dataBinding.viewModel = viewModel
+        dataBinding.employee = args.employee
 
-        dataBinding.employee = employee
-
-        if(employee.isPhoneNumber!!){
+        if(args.employee.isPhoneNumber!!){
             changeScreenToChangePhoneNumber()
         }
 
@@ -67,8 +71,9 @@ class UpdatePhoneNumberFragment : Fragment() {
 
     fun updatePhoneNumber(){
         if(phoneNumberFilled) {
-            val request = UpdatePhoneRequest(employee.id, employee.number, employee.firstName, employee.lastName,
-                employee.iin, "${Config.COUNTRY_CODE}$extractedPhoneNumber",
+            val request = UpdatePhoneRequest(args.employee.id, args.employee.number,
+                args.employee.firstName, args.employee.lastName, args.employee.iin,
+                "${Config.COUNTRY_CODE}$extractedPhoneNumber",
                 SharedPrefs.fetchFirebaseToken(requireContext()))
             viewModel.updatePhoneNumber(request)
         } else

@@ -8,10 +8,11 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.remotemediator.TripRemoteMediator
-import timber.log.Timber
 
 
 class TripsRepository(private val dao : Dao) {
@@ -34,19 +35,14 @@ class TripsRepository(private val dao : Dao) {
     }
 
     suspend fun getTripsFromFirstPage(){
-        try {
-            if(firstTime){
-                val response = RetrofitClient.getApiService().getTrips(1, orderDir = OrderDir.DESC.value)
-                if(response.isSuccessful){
-                    val trips = response.body()?.data?.data!!
-                    refreshTrips(trips)
-                    firstTime = false
-                }
+        if(firstTime){
+            val response = RetrofitClient.getApiService().getTrips(1, orderDir = OrderDir.DESC.value)
+            if(response.isSuccess()){
+                val trips = response.asSuccess().value.data.data!!
+                refreshTrips(trips)
+                firstTime = false
             }
-        }catch (e: Exception){
-            Timber.i("exception - $e")
         }
-
     }
 
     @OptIn(ExperimentalPagingApi::class)

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.search_by_iin.dialogs
+package kz.divtech.odyssey.rotation.ui.login.find_by_iin.dialogs
 
 import android.app.Dialog
 import android.os.Bundle

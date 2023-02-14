@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.ui.login.auth.SmsBroadcastReceiver
@@ -54,9 +55,9 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val factory = SendSmsViewModel.FillCodeViewModelFactory(
-            (activity as LoginActivity).employeeRepository)
+            (activity as LoginActivity).employeeRepository,
+            (activity?.application as App).loginRepository)
         viewModel = ViewModelProvider(requireActivity(), factory)[SendSmsViewModel::class.java]
 
         dataBinding.viewModel = viewModel

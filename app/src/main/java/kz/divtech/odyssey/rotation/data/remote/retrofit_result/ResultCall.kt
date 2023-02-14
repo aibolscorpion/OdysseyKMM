@@ -32,6 +32,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
                     statusCode = response.code(),
                     statusMessage = response.message(),
                     url = call.request().url.toString(),
+                    headers = response.headers()
                 )
             } else {
                 result = Result.Failure.HttpError(
@@ -39,6 +40,7 @@ internal class ResultCall<T>(proxy: Call<T>) : CallDelegate<T, Result<T>>(proxy)
                         statusCode = response.code(),
                         statusMessage = response.message(),
                         url = call.request().url.toString(),
+                        headers = response.headers()
                     )
                 )
             }

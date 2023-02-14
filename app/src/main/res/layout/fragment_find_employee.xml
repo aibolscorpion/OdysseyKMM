@@ -4,7 +4,7 @@
     <data>
         <variable
             name="phoneNumberFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.FindEmployeeFragment" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.FindEmployeeFragment" />
 
         <variable
             name="phoneNumber"
@@ -12,7 +12,7 @@
 
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.find_employee.FindEmployeeViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.FindEmployeeViewModel" />
     </data>
     <FrameLayout
         android:id="@+id/findEmployeeFL"

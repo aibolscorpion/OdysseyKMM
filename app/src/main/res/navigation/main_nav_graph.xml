@@ -180,7 +180,8 @@
         android:label="NotificationDialog" >
         <argument
             android:name="notification"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationData"
+            app:nullable="true" />
     </dialog>
     <action
         android:id="@+id/action_global_notificationDialog"

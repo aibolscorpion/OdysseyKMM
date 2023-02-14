@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.login.auth.find_employee
+package kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number
 
 import android.Manifest
 import android.Manifest.permission.POST_NOTIFICATIONS
@@ -20,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
@@ -32,7 +33,9 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     private var extractedPhoneNumber: String? = null
 
     private lateinit var dataBinding: FragmentFindEmployeeBinding
-    private val viewModel: FindEmployeeViewModel by viewModels()
+    private val viewModel: FindEmployeeViewModel by viewModels{
+        FindEmployeeViewModel.FindEmployeeViewModelFactory((activity?.application as App).findEmployeeRepository)
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
@@ -128,13 +131,13 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
     private fun checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
+            if(ContextCompat.checkSelfPermission(requireContext(), POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED) {
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            } else if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                 val modalBottomSheet = PermissionRationale(this)
                 modalBottomSheet.show(activity?.supportFragmentManager!!, "modalBottomSheet")
             } else {
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
         }
     }

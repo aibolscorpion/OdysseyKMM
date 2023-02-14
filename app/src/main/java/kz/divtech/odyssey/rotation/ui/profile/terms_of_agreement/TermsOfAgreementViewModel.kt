@@ -9,8 +9,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import timber.log.Timber
 import java.io.File
 
 class TermsOfAgreementViewModel: ViewModel(){
@@ -22,19 +23,13 @@ class TermsOfAgreementViewModel: ViewModel(){
     fun getUserAgreementFromServer(){
         progressVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            try{
-                val response = RetrofitClient.getApiService().getUserAgreement()
-                if(response.isSuccessful){
-                    val value = response.body()?.string()
-                    _htmlMutableLiveData.postValue(value!!)
-                    getFile().appendText(value)
-                }else{
-                    progressVisibility.set(View.GONE)
-                }
-            }catch (e: Exception){
-                Timber.e("exception - ${e.message}")
-                progressVisibility.set(View.GONE)
+            val response = RetrofitClient.getApiService().getUserAgreement()
+            if(response.isSuccess()){
+                val value = response.asSuccess().value.string()
+                _htmlMutableLiveData.postValue(value)
+                getFile().appendText(value)
             }
+            progressVisibility.set(View.GONE)
         }
     }
 
