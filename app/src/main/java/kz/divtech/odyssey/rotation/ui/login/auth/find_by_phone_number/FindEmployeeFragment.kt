@@ -22,8 +22,8 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
-import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
-import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
+import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
+import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale" />
+            type="kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale" />
     </data>
 
     <FrameLayout

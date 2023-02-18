@@ -57,7 +57,7 @@
         </provider>
 
         <service
-            android:name=".ui.push_notification.PushNotificationService"
+            android:name=".ui.profile.notification.push_notification.PushNotificationService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

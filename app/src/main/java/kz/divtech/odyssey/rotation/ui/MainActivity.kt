@@ -19,8 +19,8 @@ import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.repository.*
-import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
-import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
+import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
+import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 
 

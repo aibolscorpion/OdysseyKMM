@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.push_notification
+package kz.divtech.odyssey.rotation.ui.profile.notification.push_notification
 
 import android.app.Dialog
 import android.os.Bundle
