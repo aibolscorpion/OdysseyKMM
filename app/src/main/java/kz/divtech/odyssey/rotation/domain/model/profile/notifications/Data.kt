@@ -4,5 +4,5 @@ import androidx.room.Embedded
 
 data class Data(
     @Embedded val `data`: NotificationData?,
-    @Embedded val notification: PushNotification?
+    @Embedded val notification: PushNotificationData?
 )

@@ -17,7 +17,7 @@ import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationDialog
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
@@ -96,11 +96,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             }
         }
 
-    private fun openNotificationDialog(notification: NotificationDialog){
+    private fun openNotificationDialog(notification: PushNotification){
         navController.navigate(MainActivityDirections.actionGlobalNotificationDialog(notification))
     }
 
-    private fun openLoggedOutNotificationDialog(notification: NotificationDialog){
+    private fun openLoggedOutNotificationDialog(notification: PushNotification){
         navController.navigate(MainActivityDirections.actionGlobalLoggedOutNotificationDialog(notification))
     }
 

@@ -1,10 +1,15 @@
 package kz.divtech.odyssey.rotation.domain.model.profile.notifications
 
-import androidx.room.ColumnInfo
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class PushNotification(
-    @ColumnInfo(name = "push_notification_body")
-    val body: String,
-    @ColumnInfo(name = "push_notification_title")
-    val title: String
-)
+    val id: String,
+    val notifiableType: String,
+    val sendTime: String,
+    val title: String,
+    val content: String,
+    val type: String,
+    val isImportant: Boolean,
+    val applicationId: Int?): Parcelable
