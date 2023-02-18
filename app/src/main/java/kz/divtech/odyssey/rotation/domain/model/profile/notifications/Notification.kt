@@ -12,14 +12,16 @@ import kotlinx.parcelize.RawValue
 @Parcelize
 data class Notification(
     val created_at: String,
-    @Embedded
-    val `data`: @RawValue Data,
-    @ColumnInfo(name = "notification_id")
-    @PrimaryKey val id: String,
+    @Embedded val `data`: @RawValue Data,
+    @ColumnInfo(name = "notification_id") @PrimaryKey val id: String,
     val notifiable_id: Int?,
     val notifiable_type: String,
     val read_at: String?,
-    @ColumnInfo(name = "notification_type")
-    val type: String,
-    val updated_at: String
-) : Parcelable
+    @ColumnInfo(name = "notification_type") val type: String,
+    val updated_at: String) : Parcelable{
+
+    fun convertToPushNotification(): PushNotification{
+        return PushNotification(id, type, created_at, data.data!!.title,
+            data.data.content, data.data.type, data.data.is_important, data.data.application_id)
+    }
+}

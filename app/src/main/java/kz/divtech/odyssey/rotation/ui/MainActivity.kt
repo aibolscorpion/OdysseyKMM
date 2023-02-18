@@ -21,7 +21,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotifi
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
-import kz.divtech.odyssey.rotation.utils.Utils.convertBundleToNotification
+import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 
 
 class MainActivity : AppCompatActivity(), NotificationListener {
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private fun ifPushNotificationSent() =
         intent.extras?.let { bundle ->
             if(bundle.getString(NOTIFICATION_DATA_TITLE) != null){
-                val notification = convertBundleToNotification(bundle)
+                val notification = bundle.convertToNotification()
                 when(notification.type){
                     NOTIFICATION_TYPE_DEVICE -> openLoggedOutNotificationDialog(notification)
                     else -> openNotificationDialog(notification)

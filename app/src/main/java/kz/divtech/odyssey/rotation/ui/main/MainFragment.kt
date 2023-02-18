@@ -21,7 +21,6 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationLi
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
-import kz.divtech.odyssey.rotation.utils.Utils.convertNotification
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -134,7 +133,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
     override fun onNotificationClicked(notification: Notification) {
         findNavController().navigate(
-            MainFragmentDirections.actionGlobalNotificationDialog(convertNotification(notification))
+            MainFragmentDirections.actionGlobalNotificationDialog(
+                notification.convertToPushNotification())
             )
     }
 
