@@ -159,5 +159,9 @@
     <action
         android:id="@+id/action_global_contactSupportDialog"
         app:destination="@id/contactSupportDialog" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="kz.divtech.odyssey.rotation.ui.login.LoginActivity"
+        android:label="LoginActivity" />
 
 </navigation>

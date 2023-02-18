@@ -361,7 +361,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:onClick="@{() -> viewModel.logout()}"
+            android:onClick="@{() -> viewModel.logoutFromServer()}"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

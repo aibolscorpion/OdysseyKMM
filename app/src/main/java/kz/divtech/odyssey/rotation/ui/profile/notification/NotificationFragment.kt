@@ -20,6 +20,7 @@ import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
+import kz.divtech.odyssey.rotation.utils.Utils.convertNotification
 
 class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.RetryCallback {
     val isRefreshing = ObservableBoolean()
@@ -91,9 +92,11 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
         isRefreshing.set(false)
     }
 
-    override fun onNotificationClicked(notification: Notification) =
+    override fun onNotificationClicked(notification: Notification){
         findNavController().navigate(
-            NotificationFragmentDirections.actionGlobalNotificationDialog(notification))
+            NotificationFragmentDirections.actionGlobalNotificationDialog(convertNotification(notification)))
+    }
+
 
     override fun onRetryClicked() {
         adapter.retry()

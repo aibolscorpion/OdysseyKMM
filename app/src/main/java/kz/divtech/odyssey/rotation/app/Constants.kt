@@ -4,7 +4,6 @@ object Constants {
     const val DEACTIVATED_EMPLOYEE = "dismissed"
     const val TO_WORK = "to-work"
     const val TO_HOME = "to-home"
-    const val DAY = "day"
     const val NIGHT = "night"
     const val STATUS_OPENED = "opened"
     const val STATUS_PARTLY = "partly"
@@ -13,7 +12,6 @@ object Constants {
     const val STATUS_CANCELED = "canceled"
     const val WATCHING = "watching"
     const val PHONE = "phone"
-    const val TRIP_LIST = "trip_list"
     const val ACTIVE_TRIPS = "active_trips"
     const val TEST = "test"
     const val SPACE = " "
@@ -32,11 +30,22 @@ object Constants {
     const val NOTIFICATIONS_PAGE_SIZE = 10
     const val NEWS_PAGE_SIZE = 5
 
-    const val SUCCESS_CODE = 200
     const val BAD_REQUEST_CODE = 400
     const val UNAUTHORIZED_CODE = 401
     const val UNPROCESSABLE_ENTITY_CODE = 422
     const val TOO_MANY_REQUEST_CODE = 429
+
+    const val NOTIFICATION_TYPE_PHONE = "phone"
+    const val NOTIFICATION_TYPE_DEVICE = "device"
+
+    const val NOTIFICATION_DATA_ID = "notification_id"
+    const val NOTIFICATION_DATA_SEND_TIME = "send_time"
+    const val NOTIFICATION_DATA_NOTIFIABLE_TYPE = "notifiable_type"
+    const val NOTIFICATION_DATA_TITLE = "title"
+    const val NOTIFICATION_DATA_CONTENT = "content"
+    const val NOTIFICATION_DATA_TYPE = "type"
+    const val NOTIFICATION_DATA_IS_IMPORTANT = "is_important"
+    const val NOTIFICATION_DATA_APPLICATION_ID = "application_id"
 
     const val ANDROID = "android"
 

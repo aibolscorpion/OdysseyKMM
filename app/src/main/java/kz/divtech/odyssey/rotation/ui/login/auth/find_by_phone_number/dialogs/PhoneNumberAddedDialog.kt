@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_CONTENT
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.databinding.DialogPhoneNumberAddedBinding
 
 
@@ -19,6 +21,10 @@ class PhoneNumberAddedDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val dataBinding  = DialogPhoneNumberAddedBinding.inflate(inflater)
         dataBinding.phoneNumberAddedDialog = this
+
+        dataBinding.titleTV.text = arguments?.getString(NOTIFICATION_DATA_TITLE)
+        dataBinding.contentTV.text = arguments?.getString(NOTIFICATION_DATA_CONTENT)
+
         return dataBinding.root
     }
 

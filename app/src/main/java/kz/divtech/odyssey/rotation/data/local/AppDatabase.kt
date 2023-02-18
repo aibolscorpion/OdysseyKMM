@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
@@ -14,7 +15,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 
 @Database(entities = [Trip::class, Employee::class, Faq::class, Document::class,
-    Article::class, FullArticle::class, Notification::class], version = 1, exportSchema = false)
+    Article::class, FullArticle::class, Notification::class, OrgInfo::class], version = 1, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dao() : Dao

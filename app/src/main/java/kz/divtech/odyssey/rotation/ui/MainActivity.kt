@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -12,15 +13,18 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationDialog
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.push_notification.PermissionRationale
+import kz.divtech.odyssey.rotation.utils.Utils.convertBundleToNotification
 
 
 class MainActivity : AppCompatActivity(), NotificationListener {
-
     private lateinit var navController : NavController
     private val database by lazy { AppDatabase.getDatabase(this) }
     val tripsRepository by lazy { TripsRepository(database.dao()) }
@@ -58,22 +62,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                     R.id.newsFragment-> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
             }
         }
-        checkPermission()
 
-
-
-//        Timber.i("title = ${intent.extras?.getString("title")}")
-//        Timber.i("id = ${intent.extras?.getString("id")}")
-//        Timber.i("content_available = ${intent.extras?.getString("content_available")}")
-//        Timber.i("intent.extras = ${intent.extras}")
-
-
-//        intent.extras?.let { bundle ->
-//            bundle.getString("title")?.let {
-//                openNotificationDialog(bundle)
-//            }
-//        }
-
+        ifPushNotificationSent()
         checkPermission()
     }
 
@@ -95,11 +85,26 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
-    private fun openNotificationDialog(bundle: Bundle?){
-        navController.navigate(R.id.action_global_notificationDialog, bundle)
+    private fun ifPushNotificationSent() =
+        intent.extras?.let { bundle ->
+            if(bundle.getString(NOTIFICATION_DATA_TITLE) != null){
+                val notification = convertBundleToNotification(bundle)
+                when(notification.type){
+                    NOTIFICATION_TYPE_DEVICE -> openLoggedOutNotificationDialog(notification)
+                    else -> openNotificationDialog(notification)
+                }
+            }
+        }
+
+    private fun openNotificationDialog(notification: NotificationDialog){
+        navController.navigate(MainActivityDirections.actionGlobalNotificationDialog(notification))
     }
 
+    private fun openLoggedOutNotificationDialog(notification: NotificationDialog){
+        navController.navigate(MainActivityDirections.actionGlobalLoggedOutNotificationDialog(notification))
+    }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onClickOk() {
         requestPermissionLauncher.launch(POST_NOTIFICATIONS)
     }

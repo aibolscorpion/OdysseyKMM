@@ -3,26 +3,19 @@
     <data>
         <variable
             name="notification"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+            type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationDialog" />
         <variable
             name="thisDialog"
             type="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDialog" />
         <variable
             name="view"
             type="android.view.View" />
-        <variable
-            name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDViewModel" />
     </data>
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +41,7 @@
                         android:layout_height="22dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:notificationIcon="@{notification.type}"
+                        app:notificationIcon="@{notification.notifiableType}"
                         tools:src="@drawable/icon_notifications"/>
 
                     <TextView
@@ -65,7 +58,7 @@
                         app:layout_constraintTop_toTopOf="@id/notificationIV"
                         app:layout_constraintBottom_toBottomOf="@id/notificationIV"
                         app:layout_constraintEnd_toStartOf="@id/notificationTimeTV"
-                        app:isImportant="@{notification.data.data._important}"
+                        app:isImportant="@{notification.important}"
                         tools:text="@string/notification"/>
 
                     <TextView
@@ -79,7 +72,7 @@
                         app:layout_constraintTop_toTopOf="@id/notificationIV"
                         app:layout_constraintBottom_toBottomOf="@id/notificationIV"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:updatedAt="@{notification.created_at}"
+                        app:updatedAt="@{notification.sendTime}"
                         tools:text="5 мин назад"/>
 
                     <TextView
@@ -93,7 +86,7 @@
                         android:layout_marginTop="8dp"
                         app:layout_constraintTop_toBottomOf="@id/notificationIV"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:text="@{notification.data.data.title}"
+                        android:text="@{notification.title}"
                         tools:text="Билеты отменен" />
 
                     <TextView
@@ -109,7 +102,7 @@
                         app:layout_constraintBottom_toTopOf="@id/learnMoreLL"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="16dp"
-                        android:text="@{notification.data.data.content}"
+                        android:text="@{notification.content}"
                         tools:text="На вахту 25 мая, Алматы-2 – Актогай, на 23 мая, ср в 18:30."/>
 
                     <LinearLayout
@@ -118,7 +111,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:orientation="vertical"
-                        app:learnMoreVisibility="@{notification.data.data.type}"
+                        app:learnMoreVisibility="@{notification.type}"
                         tools:visibility="visible">
 
                         <View
@@ -131,7 +124,7 @@
                             android:layout_height="@dimen/button_height"
                             style="@style/bottomSheetBtn"
                             android:text="@string/learn_more"
-                            android:onClick="@{() -> thisDialog.learnMore(notification.data.data.application_id)}"/>
+                            android:onClick="@{() -> thisDialog.learnMore(notification.applicationId)}"/>
 
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -143,15 +136,9 @@
                 style="@style/bottomSheetBtn"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="@dimen/margin"
-                app:importantButtonText="@{notification.data.data._important}"
+                app:importantButtonText="@{notification.important}"
                 android:onClick="@{() -> thisDialog.dismiss()}"
                 tools:text="@string/close" />
 
         </LinearLayout>
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="@{viewModel.PBarVisibility}" />
-    </FrameLayout>
 </layout>

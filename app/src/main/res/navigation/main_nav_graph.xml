@@ -2,15 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
+    android:id="@+id/main_nav_graph"
     app:startDestination="@id/mainFragment">
 
+    <dialog
+        android:id="@+id/loggedOutNotificationDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.LoggedOutNotificationDialog"
+        android:label="LoggedOutNotificationDialog"
+        android:layout="@layout/dialog_logged_out_notification"
+        tools:layout="@layout/dialog_logged_out_notification">
+        <argument
+            android:name="notification"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationDialog" />
+    </dialog>
     <fragment
         android:id="@+id/mainFragment"
         android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
         android:label="@string/main"
-        app:layout="@layout/activity_main"
-        tools:layout="@layout/activity_main"/>
+        app:layout="@layout/fragment_main"
+        tools:layout="@layout/fragment_main"/>
     <fragment
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
@@ -42,9 +52,6 @@
         <action
             android:id="@+id/action_profileFragment_to_personalDataFragment"
             app:destination="@id/personalDataFragment" />
-        <action
-            android:id="@+id/action_profileFragment_to_loginActivity"
-            app:destination="@id/loginActivity" />
     </fragment>
     <dialog
         android:id="@+id/termsOfAgreementDialog"
@@ -177,13 +184,28 @@
     <dialog
         android:id="@+id/notificationDialog"
         android:name="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NotificationDialog"
-        android:label="NotificationDialog" >
+        android:label="NotificationDialog"
+        android:layout="@layout/dialog_notification"
+        tools:layout="@layout/dialog_notification">
         <argument
             android:name="notification"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationData"
-            app:nullable="true" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.NotificationDialog" />
     </dialog>
     <action
         android:id="@+id/action_global_notificationDialog"
         app:destination="@id/notificationDialog" />
+
+    <action
+        android:id="@+id/action_global_loggedOutNotificationDialog"
+        app:destination="@id/loggedOutNotificationDialog" />
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="kz.divtech.odyssey.rotation.ui.MainActivity"
+        android:label="MainActivity" />
+
+    <action
+        android:id="@+id/action_global_loginActivity"
+        app:destination="@id/loginActivity" />
+
 </navigation>

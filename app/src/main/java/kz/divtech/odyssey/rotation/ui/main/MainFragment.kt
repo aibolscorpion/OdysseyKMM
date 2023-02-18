@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
@@ -20,8 +20,8 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
-import kz.divtech.odyssey.rotation.utils.RoundedCornersTransformation
 import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
+import kz.divtech.odyssey.rotation.utils.Utils.convertNotification
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -34,7 +34,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         MainViewModel.MainViewModelFactory(
             (activity as MainActivity).tripsRepository,
             (activity as MainActivity).employeeRepository,
-            (activity as MainActivity).notificationRepository)
+            (activity as MainActivity).notificationRepository,
+            ((activity as MainActivity).application as App).orgInfoRepository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null
@@ -49,11 +50,6 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         binding.mainFragment = this
         binding.viewModel = viewModel
         binding.listener = this
-
-        Glide.with(this).load(R.mipmap.avatar_placeholder).apply(
-                RequestOptions.bitmapTransform(
-                    RoundedCornersTransformation(requireContext(), 18, 2, "#15748595", 10)
-                )).into(binding.avatarIV)
 
         return binding.root
     }
@@ -71,6 +67,13 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
     private fun getEmployeeInfo(){
         viewModel.getEmployeeFromServer()
+
+        viewModel.orgInfo.observe(viewLifecycleOwner){
+            it?.let {
+                Glide.with(this).load(it.logotype_url).into(binding.orgLogoIV)
+            }
+        }
+
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let { it ->
                 binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.lastName).
@@ -129,6 +132,12 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         }
     }
 
+    override fun onNotificationClicked(notification: Notification) {
+        findNavController().navigate(
+            MainFragmentDirections.actionGlobalNotificationDialog(convertNotification(notification))
+            )
+    }
+
     override fun onTripClicked(trip: Trip) {
         trip.let {
             if(trip.segments == null){
@@ -146,8 +155,5 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     fun showWriteSupportDialog() = findNavController().navigate(R.id.action_global_writeSupportDialog)
 
     fun openQuestionsAnswersFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
-
-    override fun onNotificationClicked(notification: Notification) =
-        findNavController().navigate(MainFragmentDirections.actionGlobalNotificationDialog(notification))
 
 }

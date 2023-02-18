@@ -35,6 +35,7 @@ object NotificationBindingAdapter {
             "NewVacationRecived" -> R.drawable.icon_vacation
             "NewDismissedRecived" -> R.drawable.icon_fired
             "NewOvertimeRecived" -> R.drawable.icon_rvd
+            "LoginFromOtherDevice" -> R.drawable.icon_notify_another_device
             else -> R.drawable.icon_notifications
         }
         imageView.setImageResource(iconResource)

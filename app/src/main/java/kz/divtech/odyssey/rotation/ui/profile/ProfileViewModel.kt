@@ -15,12 +15,13 @@ class ProfileViewModel(
     private val documentRepository: DocumentRepository,
     private val newsRepository: NewsRepository,
     private val articleRepository: ArticleRepository,
-    private val notificationRepository: NotificationRepository): ViewModel() {
+    private val notificationRepository: NotificationRepository,
+    private val orgInfoRepository: OrgInfoRepository): ViewModel() {
 
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
-    fun logout(){
+    fun logoutFromServer(){
         viewModelScope.launch {
             employeeRepository.logoutFromServer()
             _isSuccessfullyLoggedOut.postValue(true)
@@ -34,13 +35,15 @@ class ProfileViewModel(
         private val documentRepository: DocumentRepository,
         private val newsRepository: NewsRepository,
         private val articleRepository: ArticleRepository,
-        private val notificationRepository: NotificationRepository) : ViewModelProvider.Factory{
+        private val notificationRepository: NotificationRepository,
+        private val orgInfoRepository: OrgInfoRepository
+    ) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
                 return ProfileViewModel(tripsRepository, employeeRepository,
                     faqRepository, documentRepository, newsRepository,
-                    articleRepository, notificationRepository) as T
+                    articleRepository, notificationRepository, orgInfoRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
@@ -57,7 +60,7 @@ class ProfileViewModel(
         val deleteNewsAsync = async { newsRepository.deleteNews() }
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
         val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
-
+        val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
         deleteTripsAsync.await()
         deleteEmployeeAsync.await()
         deleteFaqAsync.await()
@@ -65,6 +68,7 @@ class ProfileViewModel(
         deleteNewsAsync.await()
         deleteFullArticlesAsync.await()
         deleteNotificationsAsync.await()
+        deleteOrgInfo.await()
     }
 
 }

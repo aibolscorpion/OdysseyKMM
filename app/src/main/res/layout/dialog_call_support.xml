@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="thisDialog"
             type="kz.divtech.odyssey.rotation.ui.help.contact_support.CallSupportDialog" />
-
-        <variable
-            name="contactSupport"
-            type="kz.divtech.odyssey.rotation.ui.help.contact_support.ContactSupport" />
-
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -33,9 +29,10 @@
                 android:paddingTop="28dp">
 
             <TextView
+                android:id="@+id/callSupportDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/call_support_content"
+                tools:text="@string/call_support_content"
                 style="@style/bottomSheetContent" />
 
             <View
@@ -45,11 +42,11 @@
                 android:background="@color/bottom_sheet_line" />
 
             <TextView
+                android:id="@+id/callSupportBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
                 android:text="@string/call_support"
-                style="@style/bottomSheetBtn"
-                android:onClick="@{()-> contactSupport.callSupport(thisDialog)}" />
+                style="@style/bottomSheetBtn" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>

@@ -1,6 +1,5 @@
 package kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number
 
-import android.Manifest
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.pm.PackageManager
 import android.os.Build
@@ -34,7 +33,9 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
     private lateinit var dataBinding: FragmentFindEmployeeBinding
     private val viewModel: FindEmployeeViewModel by viewModels{
-        FindEmployeeViewModel.FindEmployeeViewModelFactory((activity?.application as App).findEmployeeRepository)
+        FindEmployeeViewModel.FindEmployeeViewModelFactory(
+            (activity?.application as App).findEmployeeRepository,
+            (activity?.application as App).orgInfoRepository)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -54,6 +55,8 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getOrgInfoFromServer()
 
         viewModel.employeeInfo.observe(viewLifecycleOwner){
             it?.getContentIfNotHandled()?.let { employee ->

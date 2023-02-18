@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
@@ -128,5 +129,15 @@ interface Dao {
         deleteNotifications()
         insertNotifications(notificationList)
     }
+
+    //Organization Info
+    @Query("SELECT * FROM orgInfo")
+    fun observeOrgInfo(): Flow<OrgInfo>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrgInfo(orgInfo: OrgInfo)
+
+    @Query("DELETE FROM orgInfo")
+    suspend fun deleteOrgInfo()
 
 }

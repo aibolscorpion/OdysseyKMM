@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 
-object ContactSupport {
+object ContactUtil {
 
-    fun callSupport(fragment: Fragment){
+    fun callSupport(fragment: Fragment, supportPhoneNumber: String){
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse("${Config.CALL} ${Config.SUPPORT_PHONE_NUMBER}")
+        intent.data = Uri.parse("${Config.CALL} $supportPhoneNumber")
         fragment.startActivity(intent)
     }
 
-    fun writeSupportOnWhatsapp(fragment: Fragment){
-        val uri = Uri.parse("${Config.WHATSAPP}${Config.SUPPORT_WHATSAPP_NUMBER}")
+    fun writeSupportOnWhatsapp(fragment: Fragment, whatsappNumber: String){
+        val uri = Uri.parse("${Config.WHATSAPP}$whatsappNumber")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.`package` = Config.WHATSAPP_PACKAGE_NAME
         try{
@@ -27,8 +27,8 @@ object ContactSupport {
         }
     }
 
-    fun writeSupportOnTelegram(fragment: Fragment){
-        val uri = Uri.parse("${Config.TELEGRAM}${Config.SUPPORT_TELEGRAM_ID}")
+    fun writeSupportOnTelegram(fragment: Fragment, telegramId: String){
+        val uri = Uri.parse("${Config.TELEGRAM}$telegramId")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.`package` = Config.TELEGRAM_PACKAGE_NAME
         try{

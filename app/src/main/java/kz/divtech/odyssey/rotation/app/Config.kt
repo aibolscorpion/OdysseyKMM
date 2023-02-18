@@ -17,11 +17,8 @@ object Config {
     const val KEY_DISMISS = "key_dismiss"
     const val ticketFileExtension = ".pdf"
     const val CALL = "tel:"
-    const val SUPPORT_PHONE_NUMBER = "+77013553737"
     const val WHATSAPP_PACKAGE_NAME = "com.whatsapp"
     const val WHATSAPP = "https://wa.me/"
-    const val SUPPORT_WHATSAPP_NUMBER = "77013553737"
     const val TELEGRAM_PACKAGE_NAME ="org.telegram.messenger"
     const val TELEGRAM = "https://telegram.me/"
-    const val SUPPORT_TELEGRAM_ID = "rus011rr"
 }

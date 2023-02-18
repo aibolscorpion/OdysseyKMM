@@ -17,6 +17,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Data
 import okhttp3.ResponseBody
 import retrofit2.http.*
 import kz.divtech.odyssey.rotation.data.remote.result.Result
+import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 
 interface ApiService {
 
@@ -88,5 +89,8 @@ interface ApiService {
     //DeviceInfo
     @POST("employees/fix")
     suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Result<ResponseBody>
+
+    @GET("get-app-info")
+    suspend fun getOrgInfo(): Result<OrgInfo>
 
 }

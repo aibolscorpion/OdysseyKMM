@@ -14,6 +14,7 @@ object SharedPrefs {
 
     fun isLoggedIn(context: Context) = fetchToken(context).isNotEmpty()
 
+    //
     private fun getSharedPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(BuildConfig.APPLICATION_ID,
             Context.MODE_PRIVATE)
@@ -23,6 +24,7 @@ object SharedPrefs {
         return getSharedPrefs(context).edit()
     }
 
+    //Authentication Token
     fun saveAuthToken(token : String, context: Context){
             getSharedPrefsEditor(context).putString(USER_TOKEN, token).apply()
     }
@@ -41,6 +43,7 @@ object SharedPrefs {
         getSharedPrefsEditor(context).putString(USER_TOKEN, "").apply()
     }
 
+    // DeviceId
     fun saveDeviceId(userId: String, context: Context){
         getSharedPrefsEditor(context).putString(Config.DEVICE_ID_KEY, userId).apply()
     }
@@ -49,6 +52,7 @@ object SharedPrefs {
         return getSharedPrefs(context).getString(Config.DEVICE_ID_KEY,"")!!
     }
 
+    //Firebase Token
     fun saveFirebaseToken(token: String, context: Context){
         getSharedPrefsEditor(context).putString(FIREBASE_TOKEN, token).apply()
     }
@@ -57,6 +61,7 @@ object SharedPrefs {
         return getSharedPrefs(context).getString(FIREBASE_TOKEN, "")!!
     }
 
+    //Host
     fun saveUrl(url: String, context: Context){
         getSharedPrefsEditor(context).putString("URL", url).apply()
     }

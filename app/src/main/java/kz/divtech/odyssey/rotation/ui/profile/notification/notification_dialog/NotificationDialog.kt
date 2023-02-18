@@ -16,8 +16,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class NotificationDialog : BottomSheetDialogFragment() {
-    private val args by navArgs<NotificationDialogArgs>()
-
+    val args: NotificationDialogArgs by navArgs()
     val viewModel: NotificationDViewModel by viewModels{
         NotificationDViewModel.NotificationDViewModelFactory(
             (activity as MainActivity).tripsRepository,
@@ -35,7 +34,6 @@ class NotificationDialog : BottomSheetDialogFragment() {
 
         binding.notification = args.notification
         binding.thisDialog = this
-        binding.viewModel = viewModel
 
         viewModel.markNotificationAsRead(args.notification.id)
 
@@ -45,7 +43,7 @@ class NotificationDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        isCancelable = !args.notification.data.data!!.is_important
+        isCancelable = !args.notification.isImportant
     }
 
     fun learnMore(tripId: Int){

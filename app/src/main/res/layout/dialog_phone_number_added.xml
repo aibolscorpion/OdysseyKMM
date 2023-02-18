@@ -25,23 +25,23 @@
                 android:orientation="vertical"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
-                android:paddingTop="@dimen/two_times_margin"
-                >
+                android:paddingTop="@dimen/two_times_margin">
+
             <TextView
+                android:id="@+id/titleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_added"
-                style="@style/bottomSheetTitle"
-                />
+                style="@style/bottomSheetTitle" />
 
             <TextView
+                android:id="@+id/contentTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/phone_number_added_content"
                 android:layout_marginTop="@dimen/margin"
                 style="@style/bottomSheetContent"
-                android:layout_marginBottom="@dimen/margin"
-                />
+                android:layout_marginBottom="@dimen/margin" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
@@ -51,6 +51,7 @@
             android:layout_height="@dimen/button_height"
             style="@style/bottomSheetBtn"
             android:text="@android:string/ok"
+            android:onClick="@{() -> phoneNumberAddedDialog.dismiss()}"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="@dimen/margin"/>
 

@@ -11,7 +11,7 @@ import kotlinx.parcelize.RawValue
 @Entity
 @Parcelize
 data class Notification(
-    val created_at: String?,
+    val created_at: String,
     @Embedded
     val `data`: @RawValue Data,
     @ColumnInfo(name = "notification_id")
@@ -20,6 +20,6 @@ data class Notification(
     val notifiable_type: String,
     val read_at: String?,
     @ColumnInfo(name = "notification_type")
-    val type: String?,
+    val type: String,
     val updated_at: String
 ) : Parcelable

@@ -8,9 +8,11 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
+import kz.divtech.odyssey.rotation.domain.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.utils.Event
 
-class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
+class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepository,
+                        private val orgInfoRepository: OrgInfoRepository) : ViewModel() {
     private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
     val isEmployeeNotFounded : LiveData<Event<Boolean>> = _isEmployeeNotFounded
 
@@ -40,12 +42,20 @@ class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepo
         }
     }
 
+    fun getOrgInfoFromServer() =
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
+            orgInfoRepository.getOrgInfoFromServer()
+            pBarVisibility.set(View.GONE)
+        }
 
-    class FindEmployeeViewModelFactory(private val findEmployeeRepository: FindEmployeeRepository): ViewModelProvider.Factory{
+
+    class FindEmployeeViewModelFactory(private val findEmployeeRepository: FindEmployeeRepository,
+        private val orgInfoRepository: OrgInfoRepository): ViewModelProvider.Factory{
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(FindEmployeeViewModel::class.java)){
-                return FindEmployeeViewModel(findEmployeeRepository) as T
+                return FindEmployeeViewModel(findEmployeeRepository, orgInfoRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
