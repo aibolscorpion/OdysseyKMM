@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
@@ -26,20 +27,21 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     private val editTextList = ArrayList<EditText>()
     private lateinit var dataBinding : FragmentSendSmsBinding
     private var gCountDownTimber : CountDownTimer?= null
-    private lateinit var viewModel: SendSmsViewModel
-    private lateinit var phoneNumber : String
+    private val viewModel: SendSmsViewModel by activityViewModels{
+        SendSmsViewModel.FillCodeViewModelFactory(
+            (activity as LoginActivity).employeeRepository,
+            (activity?.application as App).loginRepository)
+    }
     private lateinit var extractedPhoneNumber: String
     private lateinit var smsReceiver: SmsBroadcastReceiver
+    val args: SendSmsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.codeFragment = this
+        dataBinding.phoneNumber = args.phoneNumber
 
-        val args = SendSmsFragmentArgs.fromBundle(requireArguments())
-        phoneNumber = args.phoneNumber
         extractedPhoneNumber = args.extracedPhoneNumber
-
-        dataBinding.phoneNumber = phoneNumber
 
         setupEditTexts()
 
@@ -55,11 +57,6 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = SendSmsViewModel.FillCodeViewModelFactory(
-            (activity as LoginActivity).employeeRepository,
-            (activity?.application as App).loginRepository)
-        viewModel = ViewModelProvider(requireActivity(), factory)[SendSmsViewModel::class.java]
-
         dataBinding.viewModel = viewModel
         viewModel.requestSmsCode(extractedPhoneNumber)
 
@@ -68,15 +65,15 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                 showContactSupportBtn()
                 startTimer(seconds)
                 showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                    getString(R.string.too_many_request_message, seconds)
-                )
+                    getString(R.string.too_many_request_message, seconds))
             }
         }
 
         viewModel.smsCodeSent.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { smsCodeSent ->
-                if (smsCodeSent)
+                if (smsCodeSent){
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+                }
             }
         }
 
@@ -165,7 +162,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         findNavController().popBackStack()
     }
 
-    private fun checkIfAllEditTextsFilled(){
+    private fun checkIfCodeFieldsFilled(){
         var oneOfEditTextIsEmpty = false
         editTextList.forEach { editText ->
             if(editText.text.isEmpty()) oneOfEditTextIsEmpty = true }
@@ -179,7 +176,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
     override fun onFilled() {
 
-        checkIfAllEditTextsFilled()
+        checkIfCodeFieldsFilled()
 
         hideKeyboard(requireContext(), editTextList[editTextList.size-1])
         val code = StringBuilder()

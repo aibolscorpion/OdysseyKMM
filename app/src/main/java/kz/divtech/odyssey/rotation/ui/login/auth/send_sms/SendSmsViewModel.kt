@@ -19,7 +19,7 @@ import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
                        private val loginRepository: LoginRepository) : ViewModel() {
-    var authLogId: String? = null
+    private var authLogId: String? = null
 
     private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
     val smsCodeSent: LiveData<Event<Boolean>> = _smsCodeSent

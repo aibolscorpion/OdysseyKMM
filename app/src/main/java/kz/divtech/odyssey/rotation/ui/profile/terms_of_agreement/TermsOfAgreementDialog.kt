@@ -9,7 +9,7 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
@@ -18,7 +18,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
 
 class TermsOfAgreementDialog : BottomSheetDialogFragment() {
 
-    val viewModel: TermsOfAgreementViewModel by lazy{ ViewModelProvider(this)[TermsOfAgreementViewModel::class.java] }
+    val viewModel: TermsOfAgreementViewModel by viewModels()
     lateinit var dataBinding: DialogTermsOfAgreementBinding
 
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
