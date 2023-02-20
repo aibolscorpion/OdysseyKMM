@@ -20,8 +20,8 @@ import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
 
 class ProfileFragment : Fragment() {
     private var currentEmployee: Employee? = null
-    private val viewModel: ProfileViewModel by viewModels{
-        ProfileViewModel.ProfileViewModelFactory(
+    private val viewModel: LogoutViewModel by viewModels{
+        LogoutViewModel.LogoutViewModelFactory(
             (activity as MainActivity).tripsRepository,
             (activity as MainActivity).employeeRepository,
             (activity as MainActivity).faqRepository,

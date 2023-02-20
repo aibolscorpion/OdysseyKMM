@@ -1,7 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog
 
 import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,12 +17,12 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogLoggedOutNotificationBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.profile.ProfileViewModel
+import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 
 class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
     val args: LoggedOutNotificationDialogArgs by navArgs()
-    private val viewModel: ProfileViewModel by viewModels{
-        ProfileViewModel.ProfileViewModelFactory(
+    private val viewModel: LogoutViewModel by viewModels{
+        LogoutViewModel.LogoutViewModelFactory(
             (activity as MainActivity).tripsRepository,
             (activity as MainActivity).employeeRepository,
             (activity as MainActivity).faqRepository,
@@ -40,17 +39,11 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
         BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = DialogLoggedOutNotificationBinding.inflate(layoutInflater)
 
         binding.notification = args.notification
         binding.thisDialog = this
-
-        viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {
-            deleteAndGoToLoginPage()
-        }
 
         return binding.root
     }
@@ -58,7 +51,7 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        isCancelable = !args.notification.isImportant
+        isCancelable = false
     }
 
     private fun goToLoginPage() {
@@ -66,16 +59,10 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
         (activity as AppCompatActivity).finish()
     }
 
-    private fun deleteAndGoToLoginPage(){
+    fun deleteAndGoToLoginPage(){
         lifecycleScope.launch{
             viewModel.deleteAllDataAsync().await()
             goToLoginPage()
         }
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-
-        viewModel.logoutFromServer()
     }
 }

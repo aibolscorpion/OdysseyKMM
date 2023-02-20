@@ -9,7 +9,7 @@
             type="kz.divtech.odyssey.rotation.ui.profile.ProfileFragment" />
         <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.profile.ProfileViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

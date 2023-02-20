@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.ui
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -63,8 +64,13 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             }
         }
 
-        ifPushNotificationSent()
         checkPermission()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        ifPushNotificationSent(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -85,8 +91,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
-    private fun ifPushNotificationSent() =
-        intent.extras?.let { bundle ->
+    private fun ifPushNotificationSent(intent: Intent?) {
+        intent?.extras?.let { bundle ->
             if(bundle.getString(NOTIFICATION_DATA_TITLE) != null){
                 val notification = bundle.convertToNotification()
                 when(notification.type){
@@ -95,6 +101,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                 }
             }
         }
+    }
+
 
     private fun openNotificationDialog(notification: PushNotification){
         navController.navigate(MainActivityDirections.actionGlobalNotificationDialog(notification))

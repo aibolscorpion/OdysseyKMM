@@ -79,7 +79,7 @@
             style="@style/bottomSheetBtn"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="@dimen/margin"
-            android:onClick="@{() -> thisDialog.dismiss()}"
+            android:onClick="@{() -> thisDialog.deleteAndGoToLoginPage()}"
             android:text="@string/close_and_logout_from_account" />
 
     </LinearLayout>

@@ -8,7 +8,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
-class ProfileViewModel(
+class LogoutViewModel(
     private val tripsRepository: TripsRepository,
     private val employeeRepository: EmployeeRepository,
     private val faqRepository: FaqRepository,
@@ -28,7 +28,7 @@ class ProfileViewModel(
         }
     }
 
-    class ProfileViewModelFactory(
+    class LogoutViewModelFactory(
         private val tripsRepository: TripsRepository,
         private val employeeRepository: EmployeeRepository,
         private val faqRepository: FaqRepository,
@@ -39,9 +39,9 @@ class ProfileViewModel(
         private val orgInfoRepository: OrgInfoRepository
     ) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(ProfileViewModel::class.java)){
+            if(modelClass.isAssignableFrom(LogoutViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return ProfileViewModel(tripsRepository, employeeRepository,
+                return LogoutViewModel(tripsRepository, employeeRepository,
                     faqRepository, documentRepository, newsRepository,
                     articleRepository, notificationRepository, orgInfoRepository) as T
             }

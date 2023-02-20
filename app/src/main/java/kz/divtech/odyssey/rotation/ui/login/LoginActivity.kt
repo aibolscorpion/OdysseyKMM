@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -29,12 +30,6 @@ class LoginActivity : AppCompatActivity(){
 
         if(SharedPrefs.isLoggedIn(this)){
             openMainActivity()
-        }else{
-            intent.extras?.let {
-                if(it.getString(NOTIFICATION_DATA_TYPE) == NOTIFICATION_TYPE_PHONE){
-                    showPhoneNumberChangedDialog()
-                }
-            }
         }
 
         SmsRetriever.getClient(this).startSmsRetriever().addOnFailureListener {  exception ->
@@ -43,7 +38,20 @@ class LoginActivity : AppCompatActivity(){
 
     }
 
-    private fun showPhoneNumberChangedDialog(){
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        ifPhoneNumberChanged(intent)
+    }
+
+    private fun ifPhoneNumberChanged(intent: Intent?) {
+        intent?.extras?.let {
+            if(it.getString(NOTIFICATION_DATA_TYPE) == NOTIFICATION_TYPE_PHONE){
+                showPhoneNumberChangedDialog(intent)
+            }
+        }
+    }
+    private fun showPhoneNumberChangedDialog(intent: Intent){
         navController.navigate(R.id.phoneNumberAddedDialog, intent.extras)
     }
 
