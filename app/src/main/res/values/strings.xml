@@ -123,6 +123,8 @@
 
     <string name="you_dont_have_whatsapp">У вас не установлено WhatsApp !</string>
     <string name="you_dont_have_telegram">У вас не установлено Telegram !</string>
+
+    <string name="you_are_unauthorized">Вы не авторизованы !</string>
     -----------------------------------------------------------------------------------------------
     //Страница Поездки
     <string name="active_trips">Активные поездки</string>
@@ -254,10 +256,6 @@
     <string name="phone_placeholder">+7 (701) 399 3538</string>
     <string name="email">Эл. почта</string>
     <string name="save">Сохранить</string>
-    <string-array name="countries_array">
-        <item>Казахстан</item>
-        <item>Россия</item>
-    </string-array>
 
     //Страница Документы
     <string name="document">Документ</string>

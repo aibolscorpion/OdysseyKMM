@@ -45,7 +45,6 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
         setNews()
         setSearch()
         loadState()
-
     }
 
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -82,7 +83,9 @@ class ProfileFragment : Fragment() {
 
     private fun logout(){
         lifecycleScope.launch{
+            binding.logoutProgressBar.isVisible = true
             viewModel.deleteAllDataAsync().await()
+            binding.logoutProgressBar.isVisible = false
             goToLoginPage()
         }
     }

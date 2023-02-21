@@ -1,5 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.profile
 
+import android.view.View
+import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -21,10 +23,14 @@ class LogoutViewModel(
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
+    val pBarVisibility = ObservableInt(View.GONE)
+
     fun logoutFromServer(){
         viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
             employeeRepository.logoutFromServer()
             _isSuccessfullyLoggedOut.postValue(true)
+            pBarVisibility.set(View.GONE)
         }
     }
 

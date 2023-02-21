@@ -5,24 +5,34 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
+import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.repository.*
+import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class MainActivity : AppCompatActivity(), NotificationListener {
@@ -35,6 +45,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val newsRepository by lazy { NewsRepository(database.dao()) }
     val articleRepository by lazy { ArticleRepository(database.dao()) }
     val notificationRepository by lazy { NotificationRepository(database.dao()) }
+    private val viewModel: LogoutViewModel by viewModels{
+        LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
+            faqRepository, documentRepository, newsRepository, articleRepository,
+            notificationRepository, (application as App).orgInfoRepository)
+    }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
@@ -65,6 +80,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
 
         checkPermission()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -103,6 +124,15 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onUnauthorizedEvent(e: UnauthorizedEvent){
+        Toast.makeText(this, R.string.you_are_unauthorized, Toast.LENGTH_LONG).show()
+        lifecycleScope.launch{
+            viewModel.deleteAllDataAsync().await()
+            goToLoginPage()
+        }
+    }
+
 
     private fun openNotificationDialog(notification: PushNotification){
         navController.navigate(MainActivityDirections.actionGlobalNotificationDialog(notification))
@@ -112,9 +142,21 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         navController.navigate(MainActivityDirections.actionGlobalLoggedOutNotificationDialog(notification))
     }
 
+    private fun goToLoginPage(){
+        navController.navigate(MainActivityDirections.actionGlobalLoginActivity())
+        finish()
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onClickOk() {
         requestPermissionLauncher.launch(POST_NOTIFICATIONS)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+
+        EventBus.getDefault().unregister(this)
     }
 
 }

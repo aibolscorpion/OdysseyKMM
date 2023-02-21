@@ -24,6 +24,7 @@ object RetrofitClient{
                 chain.proceed(request)
             })
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addInterceptor(UnauthorizedInterceptor())
             .build()
 
         return Retrofit.Builder().baseUrl(SharedPrefs.fetchUrl(App.appContext)+Config.API)
