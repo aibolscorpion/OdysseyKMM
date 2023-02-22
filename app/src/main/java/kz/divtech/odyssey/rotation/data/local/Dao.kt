@@ -34,11 +34,25 @@ interface Dao {
     suspend fun insertTrips(data: List<Trip>)
 
     @Query("DELETE FROM trip")
-    suspend fun deleteTrips()
+    suspend fun deleteAllTrips()
+
+    @Query("DELETE FROM trip WHERE date > date('now')")
+    suspend fun deleteActiveTrips()
+
+    @Query("DELETE FROM trip WHERE date < date('now')")
+    suspend fun deleteArchiveTrips()
+
 
     @Transaction
-    suspend fun refreshTrips(data: List<Trip>){
-        deleteTrips()
+    suspend fun refreshAllTrips(data: List<Trip>){
+        deleteAllTrips()
+        insertTrips(data)
+    }
+
+    @Transaction
+    suspend fun refreshTrips(isActive: Boolean, data: List<Trip>){
+        if(isActive)  deleteActiveTrips()
+        else  deleteArchiveTrips()
         insertTrips(data)
     }
 

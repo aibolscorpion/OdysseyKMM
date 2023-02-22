@@ -16,7 +16,7 @@ import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 class MainViewModel(private val tripsRepository: TripsRepository,
                     private val employeeRepository: EmployeeRepository,
                     private val notificationRepository: NotificationRepository,
-                    orgInfoRepository: OrgInfoRepository) : ViewModel() {
+                    private val orgInfoRepository: OrgInfoRepository) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
@@ -26,10 +26,17 @@ class MainViewModel(private val tripsRepository: TripsRepository,
 
     fun sendDeviceInfo() = viewModelScope.launch { employeeRepository.sendDeviceInfo() }
 
+    fun getOrgInfoFromServer() =
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
+            orgInfoRepository.getOrgInfoFromServer()
+            pBarVisibility.set(View.GONE)
+        }
+
     fun getTripsFromFirstPage() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            tripsRepository.getTripsFromFirstPage()
+            tripsRepository.getTripsFromFirstPage(false)
             pBarVisibility.set(View.GONE)
         }
 
@@ -41,10 +48,10 @@ class MainViewModel(private val tripsRepository: TripsRepository,
         }
 
 
-    fun getNotificationsFromServer() =
+    fun getNotificationFromFirstPage() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationsFromServer()
+            notificationRepository.getNotificationFromFirstPage(false)
             pBarVisibility.set(View.GONE)
         }
 

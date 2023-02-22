@@ -23,23 +23,23 @@ class TripsRepository(private val dao : Dao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun deleteTrips(){
-        dao.deleteTrips()
+    suspend fun deleteAllTrips(){
+        dao.deleteAllTrips()
     }
 
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun refreshTrips(data: List<Trip>){
-        dao.refreshTrips(data)
+    suspend fun refreshAllTrips(data: List<Trip>){
+        dao.refreshAllTrips(data)
     }
 
-    suspend fun getTripsFromFirstPage(){
-        if(firstTime){
+    suspend fun getTripsFromFirstPage(refresh: Boolean){
+        if(firstTime || refresh){
             val response = RetrofitClient.getApiService().getTrips(1, orderDir = OrderDir.DESC.value)
             if(response.isSuccess()){
                 val trips = response.asSuccess().value.data.data!!
-                refreshTrips(trips)
+                refreshAllTrips(trips)
                 firstTime = false
             }
         }

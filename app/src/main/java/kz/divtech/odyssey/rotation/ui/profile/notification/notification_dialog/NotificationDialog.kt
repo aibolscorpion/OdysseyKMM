@@ -35,14 +35,13 @@ class NotificationDialog : BottomSheetDialogFragment() {
         binding.notification = args.notification
         binding.thisDialog = this
 
-        viewModel.markNotificationAsRead(args.notification.id)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.markNotificationAsRead(args.notification.id)
         isCancelable = !args.notification.isImportant
     }
 

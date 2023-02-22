@@ -35,8 +35,8 @@ class NotificationRepository(private val dao: Dao) {
         RetrofitClient.getApiService().markAsReadNotificationById(map)
     }
 
-    suspend fun getNotificationsFromServer(){
-        if(firstTime){
+    suspend fun getNotificationFromFirstPage(refresh: Boolean){
+        if(firstTime || refresh){
             val response = RetrofitClient.getApiService().getNotifications(1)
             if(response.isSuccess()){
                 val notifications = response.asSuccess().value.data

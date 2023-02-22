@@ -18,9 +18,10 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_APPLICATION
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_TICKET
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
@@ -45,10 +46,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val newsRepository by lazy { NewsRepository(database.dao()) }
     val articleRepository by lazy { ArticleRepository(database.dao()) }
     val notificationRepository by lazy { NotificationRepository(database.dao()) }
+    val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
             faqRepository, documentRepository, newsRepository, articleRepository,
-            notificationRepository, (application as App).orgInfoRepository)
+            notificationRepository, orgInfoRepository)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -80,6 +82,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
 
         checkPermission()
+
+        ifPushNotificationSent(intent, false)
     }
 
     override fun onStart() {
@@ -91,7 +95,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
-        ifPushNotificationSent(intent)
+        ifPushNotificationSent(intent, true)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -112,13 +116,25 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
-    private fun ifPushNotificationSent(intent: Intent?) {
+    private fun ifPushNotificationSent(intent: Intent?, onNewIntent : Boolean) {
         intent?.extras?.let { bundle ->
-            if(bundle.getString(NOTIFICATION_DATA_TITLE) != null){
+            bundle.getString(NOTIFICATION_DATA_TITLE)?.let{
                 val notification = bundle.convertToNotification()
                 when(notification.type){
                     NOTIFICATION_TYPE_DEVICE -> openLoggedOutNotificationDialog(notification)
-                    else -> openNotificationDialog(notification)
+                    NOTIFICATION_TYPE_APPLICATION, NOTIFICATION_TYPE_TICKET -> {
+                        if(onNewIntent) {
+                            viewModel.getTripsFromFirstPage()
+                            viewModel.getNotificationsFromServer()
+                        }
+                        openNotificationDialog(notification)
+                    }
+                    else -> {
+                        if(onNewIntent) {
+                            viewModel.getNotificationsFromServer()
+                        }
+                        openNotificationDialog(notification)
+                    }
                 }
             }
         }

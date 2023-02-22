@@ -1,7 +1,9 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
+import android.widget.Toast
 import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -30,6 +32,8 @@ class ArticleRepository(private val dao: Dao) {
         val response = RetrofitClient.getApiService().getSpecificArticleById(articleId)
         if(response.isSuccess()){
             insertFullArticle(response.asSuccess().value)
+        }else{
+            Toast.makeText(App.appContext, "$response", Toast.LENGTH_LONG).show()
         }
     }
 

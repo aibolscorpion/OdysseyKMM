@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
@@ -34,7 +33,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
             (activity as MainActivity).tripsRepository,
             (activity as MainActivity).employeeRepository,
             (activity as MainActivity).notificationRepository,
-            ((activity as MainActivity).application as App).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository)
     }
     lateinit var binding : FragmentMainBinding
     private var nearestTrip : Trip? = null
@@ -57,6 +56,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.sendDeviceInfo()
+        viewModel.getOrgInfoFromServer()
         getEmployeeInfo()
         setCalendar()
         setNotifications()
@@ -117,7 +117,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         val adapter = NotificationAdapter(this)
         binding.notificationsRV.adapter = adapter
 
-        viewModel.getNotificationsFromServer()
+        viewModel.getNotificationFromFirstPage()
 
         viewModel.threeNotifications.observe(viewLifecycleOwner) { notificationList ->
 

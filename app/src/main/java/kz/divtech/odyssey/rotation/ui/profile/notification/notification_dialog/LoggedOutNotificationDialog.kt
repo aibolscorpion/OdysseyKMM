@@ -14,7 +14,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.DialogLoggedOutNotificationBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
@@ -30,7 +29,7 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
             (activity as MainActivity).newsRepository,
             (activity as MainActivity).articleRepository,
             (activity as MainActivity).notificationRepository,
-            ((activity as MainActivity).application as App).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme

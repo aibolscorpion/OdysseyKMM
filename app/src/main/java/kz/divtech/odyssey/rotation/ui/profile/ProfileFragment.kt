@@ -12,7 +12,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
@@ -30,7 +29,7 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).newsRepository,
             (activity as MainActivity).articleRepository,
             (activity as MainActivity).notificationRepository,
-            ((activity as MainActivity).application as App).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository)
     }
     private lateinit var binding : FragmentProfileBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {

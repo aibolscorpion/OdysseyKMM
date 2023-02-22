@@ -22,6 +22,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
+import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
@@ -35,7 +36,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     private val viewModel: FindEmployeeViewModel by viewModels{
         FindEmployeeViewModel.FindEmployeeViewModelFactory(
             (activity?.application as App).findEmployeeRepository,
-            (activity?.application as App).orgInfoRepository)
+            (activity as LoginActivity).orgInfoRepository)
     }
 
     private val requestPermissionLauncher = registerForActivityResult(

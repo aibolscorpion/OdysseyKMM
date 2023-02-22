@@ -25,6 +25,22 @@ class LogoutViewModel(
 
     val pBarVisibility = ObservableInt(View.GONE)
 
+    fun getNotificationsFromServer() =
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
+            notificationRepository.getNotificationFromFirstPage(true)
+            pBarVisibility.set(View.GONE)
+        }
+
+    fun getTripsFromFirstPage(){
+        viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
+            tripsRepository.getTripsFromFirstPage(true)
+            pBarVisibility.set(View.GONE)
+
+        }
+    }
+
     fun logoutFromServer(){
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
@@ -59,7 +75,7 @@ class LogoutViewModel(
 
     fun deleteAllDataAsync() = viewModelScope.async{
         SharedPrefs.clearAuthToken(App.appContext)
-        val deleteTripsAsync = async { tripsRepository.deleteTrips() }
+        val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
         val deleteFaqAsync = async { faqRepository.deleteFaq() }
         val deleteDocumentsAsync = async { documentRepository.deleteDocuments() }

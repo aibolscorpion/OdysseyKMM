@@ -41,7 +41,7 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.Ord
                 }
             }
             when(loadType){
-                LoadType.REFRESH -> dao.refreshTrips(newTrips)
+                LoadType.REFRESH -> dao.refreshTrips(isActive, newTrips)
                 else -> dao.insertTrips(newTrips)
             }
             MediatorResult.Success(newTrips.size < state.config.pageSize)

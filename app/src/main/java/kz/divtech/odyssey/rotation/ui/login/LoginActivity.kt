@@ -12,12 +12,14 @@ import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TYPE
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.databinding.ActivityLoginBinding
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.domain.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class LoginActivity : AppCompatActivity(){
     private val database by lazy { AppDatabase.getDatabase(this) }
     val employeeRepository by lazy { EmployeeRepository(database.dao()) }
+    val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
 
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.loginNavHostFragment)
