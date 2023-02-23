@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
+import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -10,12 +11,14 @@ class OrgInfoRepository(val dao: Dao) {
     private var firstTime = true
     val orgInfo = dao.observeOrgInfo()
 
-    private suspend fun insertOrgInfo(orgInfo: OrgInfo){
-        dao.insertOrgInfo(orgInfo)
-    }
-
     suspend fun deleteOrgInfo(){
         dao.deleteOrgInfo()
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun refreshOrgInfo(orgInfo: OrgInfo) {
+        dao.refreshOrgInfo(orgInfo)
     }
 
     suspend fun getOrgInfoFromServer(){
@@ -23,7 +26,7 @@ class OrgInfoRepository(val dao: Dao) {
         val response = RetrofitClient.getApiService().getOrgInfo()
         if(response.isSuccess()){
                 val orgInfo = response.asSuccess().value
-                insertOrgInfo(orgInfo)
+                refreshOrgInfo(orgInfo)
                 firstTime = false
             }
         }

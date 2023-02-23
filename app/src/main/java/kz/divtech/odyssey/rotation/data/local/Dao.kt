@@ -151,6 +151,12 @@ interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertOrgInfo(orgInfo: OrgInfo)
 
+    @Transaction
+    suspend fun refreshOrgInfo(orgInfo: OrgInfo){
+        deleteOrgInfo()
+        insertOrgInfo(orgInfo)
+    }
+
     @Query("DELETE FROM orgInfo")
     suspend fun deleteOrgInfo()
 

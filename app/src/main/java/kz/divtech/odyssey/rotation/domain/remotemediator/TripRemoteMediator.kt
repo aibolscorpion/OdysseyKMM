@@ -25,30 +25,36 @@ class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.Ord
         val response = RetrofitClient.getApiService().getTrips(pageIndex,  orderDir = orderDir.value)
         return if(response.isSuccess()){
             val trips = response.asSuccess().value.data.data!!
-            val newTrips = mutableListOf<Trip>()
-            val today = LocalDate.now()
 
-            trips.forEach{
-                val localDate = LocalDateTimeUtils.getLocalDateByPattern(it.date!!)
-                if(isActive){
-                    if(localDate.isAfter(today)){
-                        newTrips.add(it)
-                    }
-                }else{
-                    if(localDate.isBefore(today)){
-                        newTrips.add(it)
-                    }
-                }
-            }
+            val dividedTrips = getDividedTrips(trips)
+
             when(loadType){
-                LoadType.REFRESH -> dao.refreshTrips(isActive, newTrips)
-                else -> dao.insertTrips(newTrips)
+                LoadType.REFRESH -> dao.refreshTrips(isActive, dividedTrips)
+                else -> dao.insertTrips(dividedTrips)
             }
-            MediatorResult.Success(newTrips.size < state.config.pageSize)
+            MediatorResult.Success(dividedTrips.size < state.config.pageSize)
         }else{
             MediatorResult.Error(response.asFailure().error!!)
         }
 
+    }
+
+    private fun getDividedTrips(trips: List<Trip>): List<Trip>{
+        val newTrips = mutableListOf<Trip>()
+        val today = LocalDate.now()
+        trips.forEach {
+            val localDate = LocalDateTimeUtils.getLocalDateByPattern(it.date!!)
+            if(isActive){
+                if(localDate.isAfter(today)){
+                    newTrips.add(it)
+                }
+            }else{
+                if(localDate.isBefore(today)){
+                    newTrips.add(it)
+                }
+            }
+        }
+        return newTrips
     }
 
     private fun getPageIndex(loadType: LoadType) : Int?{
