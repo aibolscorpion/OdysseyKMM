@@ -19,14 +19,15 @@ import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
 class TermsOfAgreementDialog : BottomSheetDialogFragment() {
 
     val viewModel: TermsOfAgreementViewModel by viewModels()
-    lateinit var dataBinding: DialogTermsOfAgreementBinding
+    private var _dataBinding: DialogTermsOfAgreementBinding? = null
+    val dataBinding get() = _dataBinding!!
 
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        dataBinding  = DialogTermsOfAgreementBinding.inflate(inflater)
+        _dataBinding  = DialogTermsOfAgreementBinding.inflate(inflater)
         dataBinding.thisDialog = this
         dataBinding.viewModel = viewModel
         return dataBinding.root
@@ -63,6 +64,12 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
 
     private fun showData(htmlText: String){
         dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _dataBinding = null
     }
 
 }

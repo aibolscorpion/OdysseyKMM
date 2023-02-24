@@ -30,7 +30,8 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     val viewModel: ActiveTripsViewModel by viewModels{
         ActiveTripsViewModel.TripsViewModelFactory((activity as MainActivity).tripsRepository)
     }
-    lateinit var binding: FragmentActiveTripsBinding
+    private var _binding: FragmentActiveTripsBinding? = null
+    private val binding get() = _binding!!
 
     companion object {
         fun newInstance(activeTrips: Boolean) =
@@ -40,7 +41,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentActiveTripsBinding.inflate(inflater)
+        _binding = FragmentActiveTripsBinding.inflate(inflater)
 
         return binding.root
     }
@@ -128,5 +129,10 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         adapter.retry()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
 
 }

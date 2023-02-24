@@ -11,12 +11,13 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 
 class PersonalDataFragment : Fragment() {
     val viewModel : PersonalDataViewModel by viewModels()
-    lateinit var binding: FragmentPersonalDataBinding
+    private var _binding: FragmentPersonalDataBinding? = null
+    private val binding get() = _binding!!
     lateinit var employee: Employee
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentPersonalDataBinding.inflate(inflater)
+        _binding = FragmentPersonalDataBinding.inflate(inflater)
         employee = PersonalDataFragmentArgs.fromBundle(requireArguments()).employee
 
         binding.employee = employee
@@ -24,6 +25,12 @@ class PersonalDataFragment : Fragment() {
         binding.viewModel = viewModel
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
 }

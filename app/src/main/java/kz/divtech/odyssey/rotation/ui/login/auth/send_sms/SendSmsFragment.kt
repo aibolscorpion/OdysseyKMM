@@ -33,7 +33,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
             (activity?.application as App).loginRepository)
     }
     private lateinit var extractedPhoneNumber: String
-    private lateinit var smsReceiver: SmsBroadcastReceiver
+    private var smsReceiver: SmsBroadcastReceiver? = null
     val args: SendSmsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
@@ -49,7 +49,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
             backToPhoneNumberFragment()}
 
         smsReceiver = SmsBroadcastReceiver()
-        smsReceiver.setListener(this)
+        smsReceiver?.setListener(this)
 
         return dataBinding.root
     }
@@ -203,6 +203,13 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
     override fun onTimeout() {
         showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.sms_retrieve_broadcast_receiver_timeout))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        gCountDownTimber?.cancel()
+        smsReceiver = null
     }
 
 }

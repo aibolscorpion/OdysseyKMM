@@ -32,7 +32,9 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
 
-    private lateinit var dataBinding: FragmentFindEmployeeBinding
+    private var _dataBinding: FragmentFindEmployeeBinding? = null
+    val dataBinding get() = _dataBinding!!
+
     private val viewModel: FindEmployeeViewModel by viewModels{
         FindEmployeeViewModel.FindEmployeeViewModelFactory(
             (activity?.application as App).findEmployeeRepository,
@@ -44,7 +46,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
+        _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
 
         dataBinding.viewModel = viewModel
@@ -144,6 +146,12 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
                 requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _dataBinding = null
     }
 
     private fun openSendSmsFragment() =

@@ -35,7 +35,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
             (activity as MainActivity).notificationRepository,
             (activity as MainActivity).orgInfoRepository)
     }
-    lateinit var binding : FragmentMainBinding
+    private var _binding: FragmentMainBinding? = null
+    val binding get() = _binding!!
     private var nearestTrip : Trip? = null
 
     private val currentDate: LocalDate = LocalDate.now()
@@ -44,7 +45,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     val month: String = currentDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentMainBinding.inflate(inflater)
+        _binding = FragmentMainBinding.inflate(inflater)
         binding.mainFragment = this
         binding.viewModel = viewModel
         binding.listener = this
@@ -146,6 +147,12 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
                 findNavController().navigate(MainFragmentDirections.actionGlobalTripDetailDialog(trip))
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     fun openNotificationsFragment() = findNavController().navigate(R.id.action_global_notificationFragment)

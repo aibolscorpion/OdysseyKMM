@@ -20,14 +20,16 @@ import kz.divtech.odyssey.rotation.utils.SharedPrefs
 class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
-    private lateinit var dataBinding : FragmentUpdatePhoneBinding
+    private var _dataBinding : FragmentUpdatePhoneBinding? = null
+    private val dataBinding get() = _dataBinding!!
     val args : UpdatePhoneNumberFragmentArgs by navArgs()
     private val viewModel: UpdatePhoneViewModel by viewModels{
         UpdatePhoneViewModel.UpdatePhoneViewModelFactory((activity as LoginActivity).employeeRepository)
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        dataBinding = FragmentUpdatePhoneBinding.inflate(inflater)
+        _dataBinding = FragmentUpdatePhoneBinding.inflate(inflater)
         dataBinding.updatePhoneNumberFragment = this
         dataBinding.viewModel = viewModel
         dataBinding.employee = args.employee
@@ -84,6 +86,12 @@ class UpdatePhoneNumberFragment : Fragment() {
         dataBinding.titleTV.text = getString(R.string.change_number)
         dataBinding.descriptionTV.text = getString(R.string.do_you_want_to_change_iin)
         dataBinding.addPhoneNumberBtn.text = getString(R.string.change_phone_number)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _dataBinding = null
     }
 
     private fun showApplicationSentDialog() =

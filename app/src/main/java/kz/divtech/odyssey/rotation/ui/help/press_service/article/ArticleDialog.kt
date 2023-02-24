@@ -19,14 +19,15 @@ class ArticleDialog : BottomSheetDialogFragment() {
     val viewModel: ArticleViewModel by viewModels{
         ArticleViewModel.ArticleViewModelFactory((activity as MainActivity).articleRepository)
     }
-    lateinit var dataBinding: DialogArticleBinding
+    private var _dataBinding: DialogArticleBinding? = null
+    private val dataBinding get() = _dataBinding!!
 
     override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        dataBinding  = DialogArticleBinding.inflate(inflater)
+        _dataBinding  = DialogArticleBinding.inflate(inflater)
         dataBinding.thisDialog = this
         dataBinding.viewModel = viewModel
 
@@ -46,6 +47,12 @@ class ArticleDialog : BottomSheetDialogFragment() {
                 viewModel.markArticleAsRead(articleId)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _dataBinding = null
     }
 
 }

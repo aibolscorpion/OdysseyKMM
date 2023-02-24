@@ -17,7 +17,7 @@ import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class LoginActivity : AppCompatActivity(){
-    private val database by lazy { AppDatabase.getDatabase(this) }
+    private val database by lazy { AppDatabase.getDatabase(applicationContext) }
     val employeeRepository by lazy { EmployeeRepository(database.dao()) }
     val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
 

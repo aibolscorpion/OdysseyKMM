@@ -31,10 +31,12 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).notificationRepository,
             (activity as MainActivity).orgInfoRepository)
     }
-    private lateinit var binding : FragmentProfileBinding
+    private var _binding : FragmentProfileBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
-        binding = FragmentProfileBinding.inflate(inflater)
+        _binding = FragmentProfileBinding.inflate(inflater)
         binding.profileFragment = this
 
         return binding.root
@@ -60,6 +62,12 @@ class ProfileFragment : Fragment() {
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {
             logout()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     fun showTermsOfAgreement() =

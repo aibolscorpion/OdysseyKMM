@@ -12,10 +12,11 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFrag
 
 class TripsFragment : Fragment() {
     val adapter by lazy { ViewPagerAdapter(this) }
-    lateinit var binding : FragmentTripsBinding
+    private var _binding : FragmentTripsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        binding = FragmentTripsBinding.inflate(inflater)
+        _binding = FragmentTripsBinding.inflate(inflater)
 
         return binding.root
     }
@@ -35,6 +36,12 @@ class TripsFragment : Fragment() {
             tab.text = adapter.getPageTitle(position)
             binding.viewPager.setCurrentItem(tab.position, true)
         }.attach()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
 }

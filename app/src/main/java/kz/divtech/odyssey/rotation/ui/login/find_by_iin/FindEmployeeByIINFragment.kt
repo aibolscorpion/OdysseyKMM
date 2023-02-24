@@ -21,11 +21,12 @@ class FindEmployeeByIINFragment : Fragment() {
             (activity?.application as App).findEmployeeRepository)
     }
     private val args: FindEmployeeByIINFragmentArgs by navArgs()
-    private lateinit var binding: FragmentFindEmployeeByIinBinding
+    private var _binding: FragmentFindEmployeeByIinBinding? = null
+    private val binding get() = _binding!!
     private lateinit var iin: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFindEmployeeByIinBinding.inflate(inflater)
+        _binding = FragmentFindEmployeeByIinBinding.inflate(inflater)
         binding.iinFragment = this
         binding.phoneNumber = args.phoneNumber
         binding.viewModel = viewModel
@@ -56,6 +57,12 @@ class FindEmployeeByIINFragment : Fragment() {
             viewModel.findByIIN(iin)
         else
             showErrorMessage(requireContext(), binding.searchByIINFL, getString(R.string.enter_iin_fully))
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     private fun openUpdatePhoneNumber(employee: Employee) =

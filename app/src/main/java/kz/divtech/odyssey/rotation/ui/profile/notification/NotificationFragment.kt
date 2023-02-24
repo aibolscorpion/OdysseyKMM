@@ -28,10 +28,11 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
             (activity as MainActivity).notificationRepository)
     }
     val adapter: NotificationPagingAdapter by lazy { NotificationPagingAdapter(this) }
-    lateinit var binding: FragmentNotificationBinding
+    private var _binding: FragmentNotificationBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        binding = FragmentNotificationBinding.inflate(inflater)
+        _binding = FragmentNotificationBinding.inflate(inflater)
 
         binding.thisFragment = this
         binding.viewModel = viewModel
@@ -100,5 +101,11 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
 
     override fun onRetryClicked() {
         adapter.retry()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 }

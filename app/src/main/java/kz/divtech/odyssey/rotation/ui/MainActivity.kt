@@ -38,7 +38,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity : AppCompatActivity(), NotificationListener {
     private lateinit var navController : NavController
-    private val database by lazy { AppDatabase.getDatabase(this) }
+    private val database by lazy { AppDatabase.getDatabase(applicationContext) }
     val tripsRepository by lazy { TripsRepository(database.dao()) }
     val employeeRepository by lazy { EmployeeRepository(database.dao()) }
     val faqRepository by lazy { FaqRepository(database.dao()) }
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUnauthorizedEvent(e: UnauthorizedEvent){
-        Toast.makeText(this, R.string.you_are_unauthorized, Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.you_are_unauthorized, Toast.LENGTH_SHORT).show()
         lifecycleScope.launch{
             viewModel.deleteAllDataAsync().await()
             goToLoginPage()

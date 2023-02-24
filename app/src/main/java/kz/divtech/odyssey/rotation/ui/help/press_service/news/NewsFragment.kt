@@ -29,10 +29,11 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     val viewModel: NewsViewModel by viewModels{
         NewsViewModel.ViewModelFactory((activity as MainActivity).newsRepository)
     }
-    lateinit var binding: FragmentNewsBinding
+    private var _binding: FragmentNewsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNewsBinding.inflate(inflater)
+        _binding = FragmentNewsBinding.inflate(inflater)
         binding.viewModel = viewModel
         binding.thisFragment = this
 
@@ -112,6 +113,12 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
         isRefreshing.set(true)
         adapter.refresh()
         isRefreshing.set(false)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     override fun onNewsClick(articleId: Int) {

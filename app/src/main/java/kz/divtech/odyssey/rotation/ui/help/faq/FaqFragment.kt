@@ -13,12 +13,14 @@ import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class FaqFragment : Fragment() {
-    lateinit var binding : FragmentFaqBinding
+    private var _binding : FragmentFaqBinding? = null
+    private val binding get() = _binding!!
     internal val viewModel: FaqViewModel by viewModels {
             FaqViewModel.FaqViewModelFactory((activity as MainActivity).faqRepository)
     }
+
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFaqBinding.inflate(inflater)
+        _binding = FragmentFaqBinding.inflate(inflater)
         binding.viewModel = viewModel
 
         return binding.root
@@ -54,5 +56,11 @@ class FaqFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 }

@@ -20,9 +20,11 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
             (activity as MainActivity).employeeRepository,
             (activity as MainActivity).documentRepository)
     }
-    private lateinit var binding: FragmentDocumentsBinding
+    private var _binding: FragmentDocumentsBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentDocumentsBinding.inflate(inflater)
+        _binding = FragmentDocumentsBinding.inflate(inflater)
         binding.documentsFragment = this
         binding.viewModel = viewModel
 
@@ -52,4 +54,9 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
         findNavController().navigate(action)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
 }
