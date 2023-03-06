@@ -93,6 +93,7 @@
     //Bottom Navigation Menu
     <string name="main">Главная</string>
     <string name="trips">Поездки</string>
+    <string name="search">Поиск</string>
     <string name="help">Помощь</string>
     <string name="profile">Профиль</string>
 
@@ -125,6 +126,26 @@
     <string name="you_dont_have_telegram">У вас не установлено Telegram !</string>
 
     <string name="you_are_unauthorized">Вы не авторизованы !</string>
+
+    //Ваучер
+    <string name="my_voucher">Мой ваучер</string>
+    <string name="your_voucher_is_not_opened">Ваш ваучер еще не открыт</string>
+    <string name="voucher_balance">Остаток\nпо ваучеру</string>
+    <string name="zero_balance">0 ₸</string>
+    <string name="spent">Потрачено</string>
+    <string name="update_date_will_be_shown_after_opening">Дата обновления ваучера отобразиться после его открытия</string>
+    <string name="operation">Операция</string>
+    <string name="history">История</string>
+    <string name="date">Дата</string>
+    <string name="sum">Сумма</string>
+    <string name="no_purchase_by_voucher">У вас еще не было ни одной покупки по ваучеру. После проведения оплаты ваучером, транзакции отобразяться здесь.</string>
+
+    //Задолженность
+    <string name="debt">Задолженность</string>
+    <string name="current_debt">ТЕКУЩАЯ\nЗАДОЛЖЕННОСТЬ</string>
+    <string name="no_purchase_by_debt">У вас еще не было ни одной покупки в долг. После проведения такой покупки, транзакции отобразяться здесь.</string>
+    <string name="operation_and_date">Операция и Дата</string>
+
     -----------------------------------------------------------------------------------------------
     //Страница Поездки
     <string name="active_trips">Активные поездки</string>
@@ -165,11 +186,14 @@
     <string name="application_id">Заявка №%1$s</string>
     <string name="total_time_in_way">В %1$s. %2$d ч. %3$d мин. в пути"</string>
     <string name="to_end_station">В %1$s"</string>
-    <string name="carrier">перевозчик</string>
+    <string name="in_way">в пути</string>
+    <string name="in_way_time">%1$d ч %2$d мин</string>
+    <string name="in_way_time_placeholder">5 ч 20 мин</string>
     <string name="train">поезд</string>
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
     <string name="ktzh">КТЖ</string>
+
     <string name="train_number_dep_arr_station_names">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
@@ -177,7 +201,7 @@
     <string name="ticket_not_found">Билет не найден</string>
     <string name="no_app_for_view_pdf">У вас нет приложения для открытия pdf файла</string>
     <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>
-    <string name="train_transfer">Пересадка, %1$d ч. %2$d мин.</string>
+    <string name="train_transfer">Пересадка в г. %1$s: %2$d ч. %3$d мин.</string>
     <string name="price">Стоимость</string>
     <string name="ticket_position_number">ЖД билет №%1$d</string>
     <string name="ticket_price">%1$d тг</string>
@@ -187,6 +211,13 @@
     <string name="status_returned_description_title">Поездка отменена !</string>
     <string name="status_partly_description_title">Поездка оформлена частично !</string>
     <string name="status_returned_partly_title">Часть билетов была оформлена, часть билетов была отменена !</string>
+
+    <string name="sort">Сортировать</string>
+    <string name="filters">Фильтры</string>
+    <string name="by_departure_date">По дате выезда</string>
+    <string name="first_coming">Сначала ближайшие</string>
+    <string name="by_status">По статусу</string>
+    <string name="first_purchased">Сначала оформленные</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

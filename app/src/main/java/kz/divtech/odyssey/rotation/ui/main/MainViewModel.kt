@@ -4,7 +4,6 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
@@ -22,7 +21,6 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
     val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
     val nearestActiveTrip: LiveData<Trip> = tripsRepository.nearestActiveTrip.asLiveData()
-    val orgInfo: LiveData<OrgInfo> = orgInfoRepository.orgInfo.asLiveData()
 
     fun sendDeviceInfo() = viewModelScope.launch { employeeRepository.sendDeviceInfo() }
 

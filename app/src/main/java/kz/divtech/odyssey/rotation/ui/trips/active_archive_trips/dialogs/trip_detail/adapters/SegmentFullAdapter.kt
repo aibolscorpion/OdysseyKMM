@@ -33,7 +33,6 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
     fun setSegmentList(segmentList: List<Segment>?){
         listOfSegments.clear()
         segmentList?.let { listOfSegments.addAll(it) }
-        notifyDataSetChanged()
     }
 
     class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
@@ -43,6 +42,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             currentSegment = segment
             binding.segment = currentSegment
 
+            binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
             setViewsByStatus(defineSegmentStatus(segment))
 
             binding.trainTransferTV.apply {
@@ -79,8 +79,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     val color = App.appContext.getColor(R.color.returned_ticket_text)
                     val text = App.appContext.getString(R.string.tickets_are_not_purchased_2)
                     setCarriageAndPlaceNumber(color, text, text)
-                    setDirectionColor(color, R.drawable.icons_tabs_grey_train,
-                        R.drawable.icon_grey_point)
+                    setDirectionColor(color, R.drawable.icon_train_grey,
+                        R.drawable.icon_point_grey)
                 }
 
                 SegmentStatus.ON_THE_WAITING_LIST -> {
@@ -88,8 +88,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     val color = App.appContext.getColor(R.color.on_the_waiting_list_bg)
                     val text =  App.appContext.getString(R.string.tickets_are_on_the_waiting_list)
                     setCarriageAndPlaceNumber(textColor, text, text)
-                    setDirectionColor(color, R.drawable.icons_tabs_orange_train,
-                        R.drawable.icon_orange_point)
+                    setDirectionColor(color, R.drawable.icon_train_orange,
+                        R.drawable.icon_point_orange)
                 }
 
                 SegmentStatus.CANCELED, SegmentStatus.RETURNED -> {
@@ -97,14 +97,14 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     val color = App.appContext.getColor(R.color.returned_bg)
                     setCarriageAndPlaceNumber(textColor, currentSegment.ticket?.car_number,
                         currentSegment.ticket?.seat_number)
-                    setDirectionColor(color, R.drawable.icons_tabs_red_train,
-                        R.drawable.icon_red_point)
+                    setDirectionColor(color, R.drawable.icon_train_red,
+                        R.drawable.icon_point_red)
 
-                    val listOfTextViews = listOf(binding.departureDateTV, binding.departureTimeTV, binding.carrierNameTV,
-                        binding.trainNumberTV, binding.arrivalDateTV, binding.arrivalTimeTV)
+                    val listOfTextViews = listOf(binding.departureDateTV, binding.departureTimeTV,
+                        binding.inWayTimeTV, binding.trainNumberTV, binding.arrivalDateTV,
+                        binding.arrivalTimeTV)
 
                     listOfTextViews.forEach{ textView -> textView.setTextColor(textColor) }
-
                 }
 
                 SegmentStatus.ISSUED -> {
@@ -112,8 +112,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     val imageColor = App.appContext.getColor(R.color.issued_bg)
                     setCarriageAndPlaceNumber(color, currentSegment.ticket?.car_number,
                         currentSegment.ticket?.seat_number)
-                    setDirectionColor(imageColor, R.drawable.icons_tabs_green_train,
-                        R.drawable.icon_green_point)
+                    setDirectionColor(imageColor, R.drawable.icon_train_green,
+                        R.drawable.icon_point_green)
                 }
             }
         }
@@ -145,7 +145,14 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             tempDateTime = tempDateTime.plusHours(hours)
             val minutes: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.MINUTES)
 
-            return App.appContext.getString(R.string.train_transfer, hours, minutes)
+            return App.appContext.getString(R.string.train_transfer,
+                segmentList[position].arr_station, hours, minutes)
+        }
+
+        private fun parseMinutesToTime(inWayMinutes: Int?): String{
+            val hours = inWayMinutes!!/60
+            val minutes = inWayMinutes%60
+            return App.appContext.getString(R.string.in_way_time, hours, minutes)
         }
 
     }

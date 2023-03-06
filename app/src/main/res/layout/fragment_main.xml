@@ -43,18 +43,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/orgLogoIV"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@string/company"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:src="@mipmap/avatar_placeholder"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#15748595"/>
-
                     <TextView
                         android:id="@+id/employeeOrgTV"
                         android:layout_width="0dp"
@@ -62,13 +50,12 @@
                         android:fontFamily="@font/pt_root_ui_medium"
                         android:textSize="15sp"
                         android:textColor="#748595"
-                        android:layout_marginStart="12dp"
                         android:singleLine="true"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/orgLogoIV"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/employeeNameTV"
-                        tools:text="ТОО «Kaz Minerals» "/>
+                        tools:text="ТОО «Kaz Minerals»"/>
 
                     <TextView
                         android:id="@+id/employeeNameTV"
@@ -76,14 +63,113 @@
                         android:layout_height="wrap_content"
                         style="@style/mainTitleTextStyle"
                         android:singleLine="true"
-                        android:layout_marginStart="12dp"
                         app:layout_constraintTop_toBottomOf="@id/employeeOrgTV"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/orgLogoIV"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         tools:text="@string/employee_name_placeholder"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/voucherCL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="12dp"
+                        android:background="@drawable/bg_voucher_amount"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp">
+
+                        <TextView
+                            android:id="@+id/voucherAmountTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:textSize="20sp"
+                            android:textColor="#ffffff"
+                            android:letterSpacing="0"
+                            android:lineSpacingExtra="8sp"
+                            android:text="0 ₸"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_crown"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:textSize="10sp"
+                            android:textColor="#ffffff"
+                            android:letterSpacing="0.04"
+                            android:lineSpacingExtra="2sp"
+                            android:text="Остаток по ваучеру"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintTop_toBottomOf="@+id/voucherAmountTV"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/debtCL"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="12dp"
+                        android:background="@drawable/bg_debt_amount"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/debtAmountTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:textSize="20sp"
+                            android:textColor="#ffffff"
+                            android:letterSpacing="0"
+                            android:lineSpacingExtra="8sp"
+                            android:text="0 ₸"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_wallet"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:textSize="10sp"
+                            android:textColor="#ffffff"
+                            android:letterSpacing="0.04"
+                            android:lineSpacingExtra="2sp"
+                            android:text="Задолженность"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintTop_toBottomOf="@+id/debtAmountTV"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

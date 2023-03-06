@@ -20,8 +20,8 @@ import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.main.MainFragmentDirections
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
+import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 
 class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback{
@@ -50,6 +50,10 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         super.onViewCreated(view, savedInstanceState)
 
         binding.thisFragment = this
+
+        binding.sortTripLL.setOnClickListener{
+            openSortTripDialog()
+        }
 
         setupTripsPagingAdapter()
         loadStates()
@@ -111,19 +115,22 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         refreshing.set(false)
     }
 
-
+    private fun openSortTripDialog(){
+        findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToSortTripDialog())
+    }
 
     override fun onTripClicked(trip: Trip) {
         if(trip.segments == null){
-            findNavController().navigate(MainFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+            findNavController().navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
         }else {
-            findNavController().navigate(MainFragmentDirections.actionGlobalTripDetailDialog(trip))
+            findNavController().navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))
         }
     }
 
     init {
         this.arguments = Bundle()
     }
+
 
     override fun onRetryClicked() {
         adapter.retry()

@@ -23,7 +23,6 @@ class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDat
     }
 
     inner class TripViewHolder (val binding : ItemTripBinding) : RecyclerView.ViewHolder(binding.root){
-        private lateinit var currentTrip : Trip
         private val adapter = SegmentAdapter()
 
         init {
@@ -32,8 +31,7 @@ class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDat
 
         fun bind(trip : Trip?){
             binding.trip = trip
-            currentTrip = trip!!
-            adapter.setSegmentList(currentTrip.segments)
+            adapter.setSegmentList(trip?.segments)
         }
 
     }

@@ -20,13 +20,24 @@
         android:name="kz.divtech.odyssey.rotation.ui.main.MainFragment"
         android:label="@string/main"
         app:layout="@layout/fragment_main"
-        tools:layout="@layout/fragment_main"/>
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_voucherDialog"
+            app:destination="@id/voucherDialog" />
+        <action
+            android:id="@+id/action_mainFragment_to_debtDialog"
+            app:destination="@id/debtDialog" />
+    </fragment>
     <fragment
         android:id="@+id/tripsFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.TripsFragment"
         android:label="@string/trips"
         app:layout="@layout/fragment_trips"
-        tools:layout="@layout/fragment_trips"/>
+        tools:layout="@layout/fragment_trips">
+        <action
+            android:id="@+id/action_tripsFragment_to_sortTripDialog"
+            app:destination="@id/sortTripDialog" />
+    </fragment>
     <fragment
         android:id="@+id/helpFragment"
         android:name="kz.divtech.odyssey.rotation.ui.help.HelpFragment"
@@ -207,5 +218,20 @@
     <action
         android:id="@+id/action_global_loginActivity"
         app:destination="@id/loginActivity" />
+    <dialog
+        android:id="@+id/sortTripDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripDialog"
+        android:label="SortTripDialog"
+        tools:layout="@layout/dialog_sort" />
+    <dialog
+        android:id="@+id/voucherDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.main.dialogs.VoucherDialog"
+        android:label="VoucherDialog"
+        tools:layout="@layout/dialog_voucher"/>
+    <dialog
+        android:id="@+id/debtDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.main.dialogs.DebtDialog"
+        android:label="DebtDialog"
+        tools:layout="@layout/dialog_debt"/>
 
 </navigation>

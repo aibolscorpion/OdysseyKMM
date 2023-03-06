@@ -14,7 +14,7 @@ object SharedPrefs {
 
     fun isLoggedIn(context: Context) = fetchToken(context).isNotEmpty()
 
-    //
+    //Shared Preferences
     private fun getSharedPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(BuildConfig.APPLICATION_ID,
             Context.MODE_PRIVATE)

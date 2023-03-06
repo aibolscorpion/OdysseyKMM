@@ -23,7 +23,6 @@ class AccountDeactivatedDialog : BottomSheetDialogFragment(), DialogListener {
                               savedInstanceState: Bundle?): View {
         val dataBinding  = DialogAccountDeactivatedBinding.inflate(inflater)
         dataBinding.listener = this
-
         dataBinding.employeeName = AccountDeactivatedDialogArgs.fromBundle(requireArguments()).employeeName
 
         return dataBinding.root

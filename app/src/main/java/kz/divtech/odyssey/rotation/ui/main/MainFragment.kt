@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
@@ -58,6 +57,9 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
         viewModel.sendDeviceInfo()
         viewModel.getOrgInfoFromServer()
+
+        binding.voucherCL.setOnClickListener { openVoucherDialog() }
+        binding.debtCL.setOnClickListener { openDebtDialog() }
         getEmployeeInfo()
         setCalendar()
         setNotifications()
@@ -67,12 +69,6 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
     private fun getEmployeeInfo(){
         viewModel.getEmployeeFromServer()
-
-        viewModel.orgInfo.observe(viewLifecycleOwner){
-            it?.let {
-                Glide.with(this).load(it.logotype_url).into(binding.orgLogoIV)
-            }
-        }
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let { it ->
@@ -154,6 +150,12 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
         _binding = null
     }
+
+    private fun openVoucherDialog() = findNavController().navigate(
+        MainFragmentDirections.actionMainFragmentToVoucherDialog())
+
+    private fun openDebtDialog() = findNavController().navigate(
+        MainFragmentDirections.actionMainFragmentToDebtDialog())
 
     fun openNotificationsFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 

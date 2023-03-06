@@ -12,9 +12,7 @@ import java.util.*
 class App : Application() {
     val findEmployeeRepository by lazy { FindEmployeeRepository() }
     val loginRepository by lazy { LoginRepository() }
-    companion object {
-        lateinit var appContext : Context
-    }
+    companion object { lateinit var appContext : Context }
 
     override fun onCreate() {
         super.onCreate()
