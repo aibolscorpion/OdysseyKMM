@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/margin"
+            android:paddingBottom="@dimen/margin"
+            android:paddingStart="13dp"
+            android:paddingEnd="12dp">
+
+        <CheckBox
+            android:id="@+id/ticketCB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="0sp"
+                    android:text="Алматы 2 – Караганды"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#808e9e"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginTop="8dp"
+                    android:text="КТЖ, 010Т «Стандарт»"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="18dp"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#808e9e"
+                    android:lineSpacingExtra="4sp"
+                    android:layout_marginTop="2dp"
+                    android:text="8 фев, 16:40 – 8 фев, 23:20"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#e4e8eb"
+                    android:layout_marginTop="12dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp"
+                    android:layout_marginTop="12dp"
+                    android:text="14 вагон • Купе • Класс 1Л • 2 место"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="16dp"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp"
+                    android:layout_marginTop="8dp"
+                    android:text="№77871063639754"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

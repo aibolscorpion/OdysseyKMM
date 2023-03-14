@@ -5,12 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemTicketPriceBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
-import timber.log.Timber
 
 class TicketPriceAdapter : RecyclerView.Adapter<TicketPriceAdapter.TicketPriceViewHolder>() {
-    private val listOfPrices = mutableListOf<Ticket>()
+    private val ticketList = mutableListOf<Ticket>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketPriceViewHolder {
         val binding = ItemTicketPriceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,23 +18,23 @@ class TicketPriceAdapter : RecyclerView.Adapter<TicketPriceAdapter.TicketPriceVi
     }
 
     override fun onBindViewHolder(holder: TicketPriceViewHolder, position: Int) {
-        Timber.i("price = ${listOfPrices[position].sum}, position = $position")
-        holder.bind(listOfPrices[position], position)
+        holder.bind(ticketList[position])
     }
 
-    override fun getItemCount(): Int = listOfPrices.size
+    override fun getItemCount(): Int = ticketList.size
 
     fun setTicketPriceList(priceList : List<Ticket>){
-        listOfPrices.clear()
-        listOfPrices.addAll(priceList)
+        ticketList.clear()
+        ticketList.addAll(priceList)
         notifyDataSetChanged()
     }
 
-    class TicketPriceViewHolder(val binding: ItemTicketPriceBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class TicketPriceViewHolder(val binding: ItemTicketPriceBinding) : RecyclerView.ViewHolder(binding.root){
         val context: Context = binding.root.context
 
-        fun bind(ticket: Ticket, position: Int){
-            binding.ticketPosition.text = context.getString(R.string.ticket_position_number, position+1)
+        fun bind(ticket: Ticket){
+            binding.departureDestinationTV.text = App.appContext.getString(
+                R.string.dep_arrival_station_name, ticket.dep_station_name, ticket.arr_station_name)
             binding.ticketPrice.text = context.getString(R.string.ticket_price, ticket.sum)
         }
     }

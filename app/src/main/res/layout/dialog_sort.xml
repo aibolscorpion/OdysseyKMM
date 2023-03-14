@@ -5,10 +5,16 @@
             name="thisDialog"
             type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripDialog" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:paddingTop="@dimen/margin"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin"
+        android:paddingBottom="9dp"
+        android:background="@drawable/bg_white_bottom_sheet_dialog">
 
         <TextView
             android:id="@+id/sortTV"
@@ -29,8 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/icon_close_filled_circle"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
             android:onClick="@{() -> thisDialog.dismiss()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -42,93 +46,34 @@
             android:layout_marginTop="24dp"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RadioButton
+                android:id="@+id/departureDateRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/by_departure_date_first_incoming"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/departureDateRB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/byDepartureDateTV"
-                    app:layout_constraintBottom_toBottomOf="@+id/firstComingTV"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/byDepartureDateTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/by_departure_date"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="16sp"
-                    android:textColor="#07213d"
-                    android:lineSpacingExtra="2sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/departureDateRB" />
-
-                <TextView
-                    android:id="@+id/firstComingTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/first_coming"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="13sp"
-                    android:textColor="#808e9e"
-                    android:letterSpacing="-0.01"
-                    android:lineSpacingExtra="5sp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/byDepartureDateTV"
-                    app:layout_constraintStart_toEndOf="@+id/departureDateRB" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RadioButton
+                android:id="@+id/statusRB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/by_status_first_purchased"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
-                android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin">
+                app:layout_constraintTop_toBottomOf="@+id/departureDateRB"
+                app:layout_constraintStart_toStartOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/statusRB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@+id/byStatusTV"
-                    app:layout_constraintBottom_toBottomOf="@+id/firstPurchasedTV"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <TextView
-                    android:id="@+id/byStatusTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/by_status"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="16sp"
-                    android:textColor="#07213d"
-                    android:lineSpacingExtra="2sp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/statusRB" />
-
-                <TextView
-                    android:id="@+id/firstPurchasedTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/first_purchased"
-                    android:fontFamily="@font/pt_root_ui_medium"
-                    android:textSize="13sp"
-                    android:textColor="#808e9e"
-                    android:letterSpacing="-0.01"
-                    android:lineSpacingExtra="5sp"
-                    android:layout_marginTop="4dp"
-                    app:layout_constraintTop_toBottomOf="@+id/byStatusTV"
-                    app:layout_constraintStart_toEndOf="@+id/statusRB" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

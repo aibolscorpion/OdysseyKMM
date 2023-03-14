@@ -10,6 +10,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
@@ -48,7 +49,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             binding.trainTransferTV.apply {
                 if(segmentList.size > position+1) {
                     visibility = View.VISIBLE
-                    text = calculateWaitingTime(segmentList, position)
+                    setSpannedText(this, getWaitingTime(segmentList, position))
                 } else {
                     visibility = View.GONE
                 }
@@ -136,7 +137,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             binding.destinationIV.setImageResource(destinationIcon)
         }
 
-        private fun calculateWaitingTime(segmentList: List<Segment>, position: Int): String{
+        private fun getWaitingTime(segmentList: List<Segment>, position: Int): String{
             val arrLocalDateTime = getLocalDateTimeByPattern(segmentList[position].train?.arr_date_time!!)
             val depLocalDateTime = getLocalDateTimeByPattern(segmentList[position+1].train?.dep_date_time!!)
             var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)

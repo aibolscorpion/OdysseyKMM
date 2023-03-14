@@ -29,22 +29,23 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/sortTripLL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_sort_filter_button"
                         android:orientation="horizontal"
                         android:paddingStart="12dp"
-                        android:paddingEnd="@dimen/margin"
                         android:paddingTop="8dp"
+                        android:paddingEnd="@dimen/margin"
                         android:paddingBottom="8dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginStart="@dimen/margin"
-                        android:background="@drawable/bg_sort_filter_button"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" >
+                        android:onClick="@{() -> thisFragment.openSortTripDialog()}"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -54,13 +55,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/by_departure_date"
-                            android:fontFamily="@font/pt_root_ui_bold"
-                            android:textSize="14sp"
-                            android:textColor="#2d4461"
-                            android:lineSpacingExtra="10sp"
+                            android:layout_gravity="center"
                             android:layout_marginStart="6dp"
-                            android:layout_gravity="center"/>
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:lineSpacingExtra="10sp"
+                            android:text="@string/by_departure_date"
+                            android:textColor="#2d4461"
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -68,16 +69,17 @@
                         android:id="@+id/filterTripLL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="@dimen/margin"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
                         android:layout_marginTop="18dp"
                         android:layout_marginEnd="@dimen/margin"
                         android:background="@drawable/bg_sort_filter_button"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent">
+                        android:orientation="horizontal"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="@dimen/margin"
+                        android:paddingBottom="8dp"
+                        android:onClick="@{() -> thisFragment.openFilterTripDialog()}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -87,13 +89,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/filters"
-                            android:fontFamily="@font/pt_root_ui_bold"
-                            android:textSize="14sp"
-                            android:textColor="#2d4461"
-                            android:lineSpacingExtra="10sp"
+                            android:layout_gravity="center"
                             android:layout_marginStart="6dp"
-                            android:layout_gravity="center"/>
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:lineSpacingExtra="10sp"
+                            android:text="@string/filters"
+                            android:textColor="#2d4461"
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -101,10 +103,10 @@
                         android:id="@+id/tripsRV"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         android:layout_marginTop="10dp"
-                        android:paddingBottom="6dp"
                         android:clipToPadding="false"
+                        android:paddingBottom="6dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintTop_toBottomOf="@+id/sortTripLL"
                         tools:listitem="@layout/item_trip" />
 

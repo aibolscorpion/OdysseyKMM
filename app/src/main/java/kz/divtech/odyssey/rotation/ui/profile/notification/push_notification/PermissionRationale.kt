@@ -11,7 +11,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogPermissionRationaleBinding
 
 class PermissionRationale(val listener: NotificationListener) : BottomSheetDialogFragment(){
-    override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 

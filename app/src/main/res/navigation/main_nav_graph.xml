@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_tripsFragment_to_sortTripDialog"
             app:destination="@id/sortTripDialog" />
+        <action
+            android:id="@+id/action_tripsFragment_to_filterTripFragment"
+            app:destination="@id/filterTripFragment" />
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -157,6 +160,9 @@
         <argument
             android:name="trip"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+        <action
+            android:id="@+id/action_tripDetailDialog_to_chooseTicketRefundFragment"
+            app:destination="@id/chooseTicketRefundFragment" />
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
@@ -221,17 +227,53 @@
     <dialog
         android:id="@+id/sortTripDialog"
         android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripDialog"
-        android:label="SortTripDialog"
+        android:label="@string/sort"
         tools:layout="@layout/dialog_sort" />
     <dialog
         android:id="@+id/voucherDialog"
         android:name="kz.divtech.odyssey.rotation.ui.main.dialogs.VoucherDialog"
-        android:label="VoucherDialog"
+        android:label="@string/my_voucher"
         tools:layout="@layout/dialog_voucher"/>
     <dialog
         android:id="@+id/debtDialog"
         android:name="kz.divtech.odyssey.rotation.ui.main.dialogs.DebtDialog"
-        android:label="DebtDialog"
+        android:label="@string/debt"
         tools:layout="@layout/dialog_debt"/>
+    <dialog
+        android:id="@+id/filterTripFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripFragment"
+        android:label="@string/filters"
+        tools:layout="@layout/fragment_filter"/>
+    <fragment
+        android:id="@+id/chooseTicketRefundFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.ChooseTicketRefundFragment"
+        android:label="Возврат по заявке"
+        tools:layout="@layout/fragment_choose_ticket_refund">
+        <action
+            android:id="@+id/action_chooseTicketRefundFragment_to_refundReasonFragment"
+            app:destination="@id/refundReasonFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/refundReasonFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.RefundReasonFragment"
+        android:label="Возврат по заявке"
+        tools:layout="@layout/fragment_refund_reason" >
+        <action
+            android:id="@+id/action_refundReasonFragment_to_refundSendFragment"
+            app:destination="@id/refundSentFragment"
+            app:popUpTo="@id/tripsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/refundSentFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.RefundSentFragment"
+        android:label="Возврат по заявке"
+        tools:layout="@layout/fragment_refund_sent" >
+        <action
+            android:id="@+id/action_refundSentFragment_to_tripsFragment"
+            app:destination="@id/tripsFragment"
+            app:popUpTo="@id/tripsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>

@@ -154,8 +154,8 @@
 
     <style name="tab_text">
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
-        <item name="android:textSize">17sp</item>
-        <item name="android:lineSpacingExtra">7sp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
     </style>
 
     <style name="selected_question_title">
@@ -179,38 +179,15 @@
         <item name="android:lineSpacingExtra">7sp</item>
     </style>
 
-    <style name="TermsOfAgreementBottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
-        <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/TermsOfAgreementBottomSheet</item>
-        <item name="colorAccent">@color/bottom_sheet_btn</item>
-        <item name="android:buttonBarPositiveButtonStyle">@style/AppTheme.Alert.Button.Positive</item>
-        <item name="android:buttonBarNegativeButtonStyle">@style/AppTheme.Alert.Button.Negative</item>
-
-    </style>
-
-    <style name="TermsOfAgreementBottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_terms_of_agreement_dialog</item>
-    </style>
-
-    <style name="AppTheme.Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/bottom_sheet_btn</item>
-    </style>
-
-    <style name="AppTheme.Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">@color/bottom_sheet_btn</item>
-    </style>
-
     <style name="BottomSheetDialogTheme" parent="@style/Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="bottomSheetStyle">@style/bottomSheetStyle</item>
+        <item name="colorAccent">#0469de</item>
     </style>
 
-    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
+    <style name="bottomSheetStyle" parent="@style/Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
-
-
-
 
 
 </resources>

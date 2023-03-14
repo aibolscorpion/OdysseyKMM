@@ -51,10 +51,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
         binding.thisFragment = this
 
-        binding.sortTripLL.setOnClickListener{
-            openSortTripDialog()
-        }
-
         setupTripsPagingAdapter()
         loadStates()
 
@@ -115,8 +111,12 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         refreshing.set(false)
     }
 
-    private fun openSortTripDialog(){
+    fun openSortTripDialog(){
         findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToSortTripDialog())
+    }
+
+    fun openFilterTripDialog(){
+        findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToFilterTripFragment())
     }
 
     override fun onTripClicked(trip: Trip) {
@@ -134,12 +134,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     override fun onRetryClicked() {
         adapter.retry()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        _binding = null
     }
 
 }

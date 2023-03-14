@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.trips.refund.RefundReasonFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin"
+        android:orientation="vertical"
+        android:background="@color/main_bg">
+
+        <TextView
+            android:id="@+id/reasonTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:textSize="20sp"
+            android:textColor="#07213d"
+            android:lineSpacingExtra="8sp"
+            android:text="@string/specify_refund_reason"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <com.github.ihermandev.advancedradiogroup.AdvancedRadioGroup
+            android:id="@+id/reasonsRG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintTop_toBottomOf="@+id/reasonTitleTV">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/trip_cancelled"
+                android:paddingTop="@dimen/margin"
+                android:paddingBottom="@dimen/margin"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/dissatisfied_with_train_or_places"
+                android:paddingTop="@dimen/margin"
+                android:paddingBottom="@dimen/margin"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/illness_me_or_family_member"
+                android:paddingTop="@dimen/margin"
+                android:paddingBottom="@dimen/margin"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/cant_catch_the_train"
+                android:paddingTop="@dimen/margin"
+                android:paddingBottom="@dimen/margin"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp"
+                    android:paddingTop="@dimen/margin"
+                    android:paddingBottom="@dimen/margin" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColorHint="#98a5b1"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:inputType="text"
+                    android:lineSpacingExtra="2sp"
+                    android:hint="@string/your_variant"
+                    android:background="@null"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+        </com.github.ihermandev.advancedradiogroup.AdvancedRadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_application_to_refund"
+            android:gravity="center_horizontal"
+            android:paddingTop="14dp"
+            android:paddingBottom="14dp"
+            android:onClick="@{() -> thisDialog.openRefundSendFragment()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/buttonStyle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

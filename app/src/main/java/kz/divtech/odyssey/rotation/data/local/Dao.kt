@@ -18,11 +18,12 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 @androidx.room.Dao
 interface Dao {
     //Trips
+    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC")
+    fun getActiveTrips() :  PagingSource<Int, Trip>
+
     @Query("SELECT * FROM trip WHERE date < date('now') ORDER BY date DESC")
     fun getArchiveTrips() : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC")
-    fun getActiveTrips() :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
     fun observeNearestActiveTrip() :  Flow<Trip>

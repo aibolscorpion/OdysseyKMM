@@ -22,7 +22,7 @@ class ArticleDialog : BottomSheetDialogFragment() {
     private var _dataBinding: DialogArticleBinding? = null
     private val dataBinding get() = _dataBinding!!
 
-    override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 

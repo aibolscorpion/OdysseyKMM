@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,7 +27,7 @@ import java.io.File
 
 
 class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapter.DownloadInterface {
-    override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     private val args: TripDetailDialogArgs by navArgs()
     internal val viewModel: TripDetailViewModel by viewModels()
     private lateinit var dataBinding: DialogTripDetailBinding
@@ -56,7 +57,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
 
         setSegmentFullRV()
         setTicketPriceRV()
-        setDownloadButtonRV()
+//        setDownloadButtonRV()
 
         dataBinding.trip
     }
@@ -87,17 +88,17 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         dataBinding.totalPriceValueTV.text = requireContext().getString(R.string.ticket_price, totalPrice)
     }
 
-    private fun setDownloadButtonRV(){
-        val ticketAdapter = DownloadTicketButtonAdapter(this)
-        val ticketList = mutableListOf<Ticket>()
-        args.trip.segments?.forEach{ segment ->
-            if(segment.status.equals(Constants.STATUS_ISSUED)){
-                segment.ticket?.let { ticketList.add(it) }
-            }
-        }
-        ticketAdapter.setTicketList(ticketList)
-        dataBinding.ticketsRV.adapter = ticketAdapter
-    }
+//    private fun setDownloadButtonRV(){
+//        val ticketAdapter = DownloadTicketButtonAdapter(this)
+//        val ticketList = mutableListOf<Ticket>()
+//        args.trip.segments?.forEach{ segment ->
+//            if(segment.status.equals(Constants.STATUS_ISSUED)){
+//                segment.ticket?.let { ticketList.add(it) }
+//            }
+//        }
+//        ticketAdapter.setTicketList(ticketList)
+//        dataBinding.ticketsRV.adapter = ticketAdapter
+//    }
 
 
     override fun onDestroy() {
@@ -140,5 +141,8 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
     override fun onTicketClicked(currentTicket: Ticket) {
         viewModel.openFileIfExists(currentTicket)
     }
+
+    fun openChooseTicketRefundFragment() = findNavController().navigate(
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment())
 
 }

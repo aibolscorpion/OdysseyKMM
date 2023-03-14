@@ -76,8 +76,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 R.id.personalDataFragment, R.id.documentsFragment,
-                R.id.notificationFragment, R.id.faqFragment,
-                    R.id.newsFragment-> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
+                    R.id.notificationFragment, R.id.faqFragment,
+                    R.id.newsFragment, R.id.chooseTicketRefundFragment,
+                    R.id.refundReasonFragment -> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
+                R.id.refundSentFragment -> binding.mainToolbar.navigationIcon = null
             }
         }
 

@@ -128,6 +128,7 @@
     <string name="you_are_unauthorized">Вы не авторизованы !</string>
 
     //Ваучер
+    <string name="voucher_balance_sinle_line">Остаток по ваучеру</string>
     <string name="my_voucher">Мой ваучер</string>
     <string name="your_voucher_is_not_opened">Ваш ваучер еще не открыт</string>
     <string name="voucher_balance">Остаток\nпо ваучеру</string>
@@ -142,7 +143,7 @@
 
     //Задолженность
     <string name="debt">Задолженность</string>
-    <string name="current_debt">ТЕКУЩАЯ\nЗАДОЛЖЕННОСТЬ</string>
+    <string name="current_debt">Текущая\nзадолженность</string>
     <string name="no_purchase_by_debt">У вас еще не было ни одной покупки в долг. После проведения такой покупки, транзакции отобразяться здесь.</string>
     <string name="operation_and_date">Операция и Дата</string>
 
@@ -159,7 +160,7 @@
     <string name="shift">Смена</string>
     <string name="trip_status">Статус поездки</string>
     <string name="dep_arrival_station_name">%1$s - %2$s</string>
-    <string name="dep_arrival_time">&lt;b>%1$s - %2$s&lt;/b></string>
+    <string name="dep_arrival_time">%1$s - %2$s</string>
     <string name="to_work">На вахту, %1$s</string>
     <string name="to_home">Домой, %1$s</string>
     <string name="trip">Поездка, %1$s</string>
@@ -192,7 +193,6 @@
     <string name="train">поезд</string>
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
-    <string name="ktzh">КТЖ</string>
 
     <string name="train_number_dep_arr_station_names">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
@@ -201,23 +201,53 @@
     <string name="ticket_not_found">Билет не найден</string>
     <string name="no_app_for_view_pdf">У вас нет приложения для открытия pdf файла</string>
     <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>
-    <string name="train_transfer">Пересадка в г. %1$s: %2$d ч. %3$d мин.</string>
+    <string name="train_transfer">Пересадка в г. %1$s: &lt;b>%2$d ч. %3$d мин.&lt;/b></string>
     <string name="price">Стоимость</string>
-    <string name="ticket_position_number">ЖД билет №%1$d</string>
     <string name="ticket_price">%1$d тг</string>
     <string name="total_price">Итого</string>
+    <string name="show_tickets">Показать билеты</string>
+    <string name="application_to_refund">Создать заявку на возврат</string>
 
     <string name="status_opened_description_title">Билеты еще не куплены !</string>
     <string name="status_returned_description_title">Поездка отменена !</string>
     <string name="status_partly_description_title">Поездка оформлена частично !</string>
     <string name="status_returned_partly_title">Часть билетов была оформлена, часть билетов была отменена !</string>
 
+
+    //Сортировка
     <string name="sort">Сортировать</string>
-    <string name="filters">Фильтры</string>
     <string name="by_departure_date">По дате выезда</string>
-    <string name="first_coming">Сначала ближайшие</string>
-    <string name="by_status">По статусу</string>
-    <string name="first_purchased">Сначала оформленные</string>
+    <string name="by_departure_date_first_incoming">По дате выезда\n<font color="#808e9e" size="13">Сначала ближайшие</font></string>
+    <string name="by_status_first_purchased">По статусу\n<font color="#808e9e" size="13">Сначала оформленные</font></string>
+
+    //Фильтры
+    <string name="filters">Фильтры</string>
+    <string name="purchased">Оформлена</string>
+    <string name="booked">Забронирована</string>
+    <string name="cancelled">Отменена</string>
+    <string name="appointed">Назначена</string>
+    <string name="direction_for_corporate">Направление (для корпоративных)</string>
+    <string name="all">Все</string>
+    <string name="only_home">Только домой</string>
+    <string name="only_to_shift">Только на вахту</string>
+    <string name="reset">Сбросить</string>
+    <string name="show">Показать</string>
+
+    //Возврат
+    <string name="choose_ticket_for_refund">Выберите билеты на возврат</string>
+    <string name="check_tickets_to_refund">Отметьте билеты которые хотите вернуть</string>
+    <string name="next">Далее</string>
+    <string name="specify_refund_reason">Укажите причину возврата</string>
+    <string name="trip_cancelled">Отменилась поездка</string>
+    <string name="dissatisfied_with_train_or_places">Недоволен поездом или местами</string>
+    <string name="illness_me_or_family_member">Заболел я или член семьи</string>
+    <string name="cant_catch_the_train">Не успеваю на поезд</string>
+    <string name="your_variant">Свой вариант…</string>
+    <string name="send_application_to_refund">Отправить заявку на возврат</string>
+    <string name="application_to_refund_sent_title">Заявка на возврат отправлена</string>
+    <string name="application_to_refund_sent_description">Заявка на возврат отправлена на утверждение куратору. Статус можно отследить в «Моих поездках».</string>
+    <string name="back_to_trips">Вернуться к поездкам</string>
+
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

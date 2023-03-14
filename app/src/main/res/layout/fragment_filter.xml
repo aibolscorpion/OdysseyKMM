@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_white_bottom_sheet_dialog">
+
+        <TextView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/filterTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:textSize="19sp"
+            android:textColor="#07213d"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/filters"
+            android:layout_marginTop="22dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/closeIV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_close_filled_circle"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:onClick="@{() -> thisDialog.dismiss()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/filterByStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin"
+            app:layout_constraintTop_toBottomOf="@+id/closeIV">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="16sp"
+                android:textColor="#808e9e"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="6sp" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/purchased"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:layout_marginTop="8dp"/>
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/booked" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/cancelled" />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/appointed" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/statusBottomLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e4e8eb"
+            app:layout_constraintTop_toBottomOf="@+id/filterByStatus"/>
+
+        <LinearLayout
+            android:id="@+id/filterByDirectionCorporate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin"
+            app:layout_constraintTop_toBottomOf="@+id/statusBottomLine">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#808e9e"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="6sp"
+                android:text="@string/direction_for_corporate" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" >
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/all"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/only_home"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp" />
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/only_to_shift"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="2sp" />
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/directionBottomLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#e4e8eb"
+            app:layout_constraintTop_toBottomOf="@+id/filterByDirectionCorporate"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/filterButtonsCV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:elevation="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/directionBottomLine">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset"
+                    android:background="@drawable/bg_reset_button"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="16sp"
+                    android:textColor="#07213d"
+                    android:lineSpacingExtra="0sp"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="4dp"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="0sp"
+                    android:textColor="@color/white"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/show"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="@dimen/margin" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

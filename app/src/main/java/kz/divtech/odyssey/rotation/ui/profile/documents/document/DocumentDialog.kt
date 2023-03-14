@@ -19,7 +19,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 class DocumentDialog : BottomSheetDialogFragment() {
     private val args: DocumentDialogArgs by navArgs()
     val viewModel : DocumentViewModel by viewModels()
-    override fun getTheme(): Int = R.style.TermsOfAgreementBottomSheetDialogTheme
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 

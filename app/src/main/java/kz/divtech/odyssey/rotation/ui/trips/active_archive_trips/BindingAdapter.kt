@@ -200,9 +200,9 @@ object BindingAdapter {
             val formattedArrTime = formatByGivenPattern(arrDateTime,  HOUR_MINUTE_PATTERN)
 
             val text = App.appContext.resources.
-            getString(R.string.dep_arrival_time, formattedDepTime, formattedArrTime)
+                getString(R.string.dep_arrival_time, formattedDepTime, formattedArrTime)
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
-            setSpannedText(textView, text)
+            textView.text = text
         }
     }
 
@@ -212,7 +212,7 @@ object BindingAdapter {
             val formattedDepDate = formatByGivenPattern(depDateTime, DAY_MONTH_DAY_OF_WEEK_PATTERN)
 
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
-            setSpannedText(textView, formattedDepDate)
+            textView.text = formattedDepDate
         }
     }
 

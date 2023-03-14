@@ -2,22 +2,48 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextAppearance="@style/tab_text" />
+            android:clipToPadding="false"
+            android:padding="@dimen/margin"
+            android:background="@color/main_bg">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_tab_background" />
+
+            <View
+                android:id="@+id/indicator"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_gradient" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_tab"
+                app:tabTextAppearance="@style/tab_text"
+                app:tabTextColor="#808e9e"
+                app:tabRippleColor="@null"
+                app:tabSelectedTextColor="@color/white"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabIndicator="@null"/>
+
+        </FrameLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    </LinearLayout>
 </layout>

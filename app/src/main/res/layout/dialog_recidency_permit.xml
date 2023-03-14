@@ -19,7 +19,8 @@
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_white_bottom_sheet_dialog">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
