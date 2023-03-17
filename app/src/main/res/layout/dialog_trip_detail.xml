@@ -210,7 +210,7 @@
                     android:paddingBottom="@dimen/margin"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:onClick="@{() -> thisDialog.openChooseTicketRefundFragment()}"
+                    android:onClick="@{() -> thisDialog.openRefundListFragment()}"
                     app:drawableStartCompat="@drawable/icon_return"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="@dimen/margin"/>

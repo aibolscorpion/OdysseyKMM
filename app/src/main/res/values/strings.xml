@@ -245,9 +245,24 @@
     <string name="your_variant">Свой вариант…</string>
     <string name="send_application_to_refund">Отправить заявку на возврат</string>
     <string name="application_to_refund_sent_title">Заявка на возврат отправлена</string>
-    <string name="application_to_refund_sent_description">Заявка на возврат отправлена на утверждение куратору. Статус можно отследить в «Моих поездках».</string>
+    <string name="application_to_refund_sent_description">Заявка на возврат %1$s создана и отправлена на утверждение куратору. Статус можно отследить в «Моих поездках».</string>
     <string name="back_to_trips">Вернуться к поездкам</string>
+    <string name="cancel_refund">Отменить заявку на возврат</string>
+    <string name="cancel_refund_question">Отменить заявку на возврат?</string>
+    <string name="cancel_refund_description">Заявка будет отменена, но вы сможете создать ее заново.</string>
 
+    <string name="refund_application_list">Заявки на возврат</string>
+    <string name="refund_application_list_by_trip">Заявки на возврат по поездке</string>
+    <string name="manage_refund_list_on_current_trip">Управляйте заявками на возврат по текущей поездке</string>
+    <string name="create_application_to_refund">Создать заявку на возврат</string>
+    <string name="refund_tickets">Возврат билетов</string>
+    <string name="details">Детали</string>
+    <string name="cancel_2">Отменить</string>
+    <string name="sending_date">Дата отправки</string>
+    <string name="specified_reason">Указанная причина</string>
+    <string name="tickets_for_refund">Билеты на возврат</string>
+    <string name="application_to_refund_cancelled_title">Заявка на возврат отменена</string>
+    <string name="application_to_refund_cancelled_description">Вы отменили заявку на возврат билетов %1$s.</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

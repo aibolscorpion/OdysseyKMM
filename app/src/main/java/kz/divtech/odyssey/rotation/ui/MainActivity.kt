@@ -78,8 +78,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                 R.id.personalDataFragment, R.id.documentsFragment,
                     R.id.notificationFragment, R.id.faqFragment,
                     R.id.newsFragment, R.id.chooseTicketRefundFragment,
-                    R.id.refundReasonFragment -> binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
-                R.id.refundSentFragment -> binding.mainToolbar.navigationIcon = null
+                    R.id.refundReasonFragment, R.id.refundListFragment,
+                    R.id.refundDetailFragment ->
+                        binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
+                    R.id.refundSentFragment -> binding.mainToolbar.navigationIcon = null
             }
         }
 

@@ -55,6 +55,8 @@ class TripsRepository(private val dao : Dao) {
            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = true),
            pagingSourceFactory = {dao.getActiveTrips()}
        ).flow
+
+
     }
 
     @OptIn(ExperimentalPagingApi::class)

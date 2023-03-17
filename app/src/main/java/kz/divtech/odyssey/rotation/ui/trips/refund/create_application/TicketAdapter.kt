@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund
+package kz.divtech.odyssey.rotation.ui.trips.refund.create_application
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

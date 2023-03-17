@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund
+package kz.divtech.odyssey.rotation.ui.trips.refund.create_application
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,5 +18,5 @@ class RefundReasonFragment: Fragment() {
     }
 
     fun openRefundSendFragment() = findNavController().navigate(
-            RefundReasonFragmentDirections.actionRefundReasonFragmentToRefundSendFragment())
+            RefundReasonFragmentDirections.actionRefundReasonFragmentToRefundSendFragment(true, "№1000"))
 }

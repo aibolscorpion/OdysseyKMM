@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="thisDialog"
+            type="kz.divtech.odyssey.rotation.ui.trips.refund.application_list.RefundListFragment" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/main_bg"
+        android:padding="@dimen/margin">
+
+        <TextView
+            android:id="@+id/refundListTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:textSize="20sp"
+            android:textColor="#07213d"
+            android:lineSpacingExtra="8sp"
+            android:text="@string/refund_application_list_by_trip"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/refundListDescTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_medium"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"
+            android:textColor="#8015304d"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/manage_refund_list_on_current_trip"
+            app:layout_constraintTop_toBottomOf="@+id/refundListTitleTV"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/refundListRV"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/createRefundAppTV"
+            app:layout_constraintTop_toBottomOf="@+id/refundListDescTV"
+            tools:listitem="@layout/item_refund"
+            tools:itemCount="3" />
+
+        <TextView
+            android:id="@+id/createRefundAppTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_refund_button_2"
+            android:drawablePadding="@dimen/margin"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:gravity="center_vertical"
+            android:onClick="@{() -> thisDialog.openChooseTicketRefundFragment()}"
+            android:lineSpacingExtra="2sp"
+            android:paddingStart="12dp"
+            android:paddingTop="@dimen/margin"
+            android:paddingEnd="12dp"
+            android:paddingBottom="@dimen/margin"
+            android:text="@string/create_application_to_refund"
+            android:textColor="#07213d"
+            android:textSize="16sp"
+            app:drawableStartCompat="@drawable/icon_return"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="16dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.trips.refund.RefundReasonFragment" />
+            type="kz.divtech.odyssey.rotation.ui.trips.refund.create_application.RefundReasonFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
