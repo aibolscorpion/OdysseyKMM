@@ -111,6 +111,7 @@
                 android:layout_height="wrap_content">
 
                 <RadioButton
+                    android:id="@+id/userVariantRB"
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
@@ -121,6 +122,7 @@
                     android:paddingBottom="@dimen/margin" />
 
                 <EditText
+                    android:id="@+id/userVariantET"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColorHint="#98a5b1"
@@ -148,7 +150,7 @@
             android:gravity="center_horizontal"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:onClick="@{() -> thisDialog.openRefundSendFragment()}"
+            android:onClick="@{() -> thisDialog.sendApplicationToRefund()}"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/buttonStyle" />
 

@@ -18,6 +18,7 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
+import kz.divtech.odyssey.rotation.domain.model.trips.RefundApplication
 
 interface ApiService {
 
@@ -45,6 +46,16 @@ interface ApiService {
     suspend fun getTrips(@Query("page") pageIndex: Int,
                         @Query("order_by") orderBy: String = "date",
                         @Query("order_dir") orderDir: String): Result<Data>
+
+    //Refund
+    @GET("employees/refund-applications")
+    suspend fun getRefundApplications()
+
+    @POST("employees/refund-applications")
+    suspend fun sendApplicationToRefund(@Body refundApplication: RefundApplication) : Result<Map<String, Int>>
+
+    @POST("employees/refund-applications/{id}/cancel")
+    suspend fun cancelRefund(@Path("id") refundId: Int) : Result<ResponseBody>
 
     //FAQ
     @GET("faqs")

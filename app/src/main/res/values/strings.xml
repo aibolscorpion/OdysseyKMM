@@ -159,8 +159,7 @@
     <string name="destination">Назначение</string>
     <string name="shift">Смена</string>
     <string name="trip_status">Статус поездки</string>
-    <string name="dep_arrival_station_name">%1$s - %2$s</string>
-    <string name="dep_arrival_time">%1$s - %2$s</string>
+    <string name="dash_sign_btw_two_text">%1$s - %2$s</string>
     <string name="to_work">На вахту, %1$s</string>
     <string name="to_home">Домой, %1$s</string>
     <string name="trip">Поездка, %1$s</string>
@@ -194,7 +193,7 @@
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
 
-    <string name="train_number_dep_arr_station_names">№%1$s</string>
+    <string name="number_sign_before_text">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
     <string name="download_ticket">Открыть билет: %1$s - %2$s</string>
@@ -222,10 +221,10 @@
 
     //Фильтры
     <string name="filters">Фильтры</string>
-    <string name="purchased">Оформлена</string>
-    <string name="booked">Забронирована</string>
+    <string name="issued">Оформлена</string>
+    <string name="partly">Частично оформлена/отменена</string>
     <string name="cancelled">Отменена</string>
-    <string name="appointed">Назначена</string>
+    <string name="opened">Назначена</string>
     <string name="direction_for_corporate">Направление (для корпоративных)</string>
     <string name="all">Все</string>
     <string name="only_home">Только домой</string>
@@ -245,7 +244,7 @@
     <string name="your_variant">Свой вариант…</string>
     <string name="send_application_to_refund">Отправить заявку на возврат</string>
     <string name="application_to_refund_sent_title">Заявка на возврат отправлена</string>
-    <string name="application_to_refund_sent_description">Заявка на возврат %1$s создана и отправлена на утверждение куратору. Статус можно отследить в «Моих поездках».</string>
+    <string name="application_to_refund_sent_description">Заявка на возврат №%1$d создана и отправлена на утверждение куратору. Статус можно отследить в «Моих поездках».</string>
     <string name="back_to_trips">Вернуться к поездкам</string>
     <string name="cancel_refund">Отменить заявку на возврат</string>
     <string name="cancel_refund_question">Отменить заявку на возврат?</string>
@@ -262,7 +261,9 @@
     <string name="specified_reason">Указанная причина</string>
     <string name="tickets_for_refund">Билеты на возврат</string>
     <string name="application_to_refund_cancelled_title">Заявка на возврат отменена</string>
-    <string name="application_to_refund_cancelled_description">Вы отменили заявку на возврат билетов %1$s.</string>
+    <string name="application_to_refund_cancelled_description">Вы отменили заявку на возврат билетов №%1$d.</string>
+    <string name="train_info">КТЖ, %1$s %2$s</string>
+    <string name="car_place_info">%1$s вагон • %2$s • Класс %3$s • %4$s место</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

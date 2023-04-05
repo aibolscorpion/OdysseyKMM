@@ -4,29 +4,44 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTicketBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
+import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 
-class TicketAdapter : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
-    private val ticketList = mutableListOf<Ticket>()
+class TicketAdapter(private val checkListener: OnItemCheckListener) : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
+    private val segmentList = mutableListOf<Segment>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         val binding = ItemTicketBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TicketViewHolder(binding)
     }
 
-    fun setTicketList(newTicketList: List<Ticket>){
-        ticketList.clear()
-        ticketList.addAll(newTicketList)
+    fun setTicketList(newSegmentList: List<Segment>){
+        segmentList.clear()
+        segmentList.addAll(newSegmentList)
         notifyDataSetChanged()
     }
+
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
+        val segment = segmentList[position]
+        val checkBox = holder.binding.ticketCB
+        holder.binding.ticket = segment.ticket
         holder.binding.root.setOnClickListener {
-            holder.binding.ticketCB.isChecked = !holder.binding.ticketCB.isChecked
+            checkBox.isChecked = !checkBox.isChecked
+            segment.ticket?.checkedState = checkBox.isChecked
+            if(checkBox.isChecked){
+                checkListener.onItemCheck(segment.id)
+            }else{
+                checkListener.onItemUncheck(segment.id)
+            }
         }
     }
 
-    override fun getItemCount() = 10
+    override fun getItemCount() = segmentList.size
 
     inner class TicketViewHolder(val binding: ItemTicketBinding)
         : RecyclerView.ViewHolder(binding.root)
+
+    interface OnItemCheckListener{
+        fun onItemCheck(segmentId: Int)
+        fun onItemUncheck(segmentId: Int)
+    }
 
 }

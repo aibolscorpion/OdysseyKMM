@@ -22,14 +22,21 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripDialog
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.OnFilterClicked
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripDialog
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_STATUS
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_DEPARTURE_DATE
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 
-class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback{
+class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback,
+    SortTripDialog.OnTripSortClicked, OnFilterClicked {
     val refreshing = ObservableBoolean()
     val adapter: TripsPagingAdapter by lazy { TripsPagingAdapter(this) }
     val viewModel: ActiveTripsViewModel by viewModels{
         ActiveTripsViewModel.TripsViewModelFactory((activity as MainActivity).tripsRepository)
     }
+    private var sortType = BY_DEPARTURE_DATE
     private var _binding: FragmentActiveTripsBinding? = null
     private val binding get() = _binding!!
 
@@ -42,7 +49,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentActiveTripsBinding.inflate(inflater)
-
         return binding.root
     }
 
@@ -57,16 +63,49 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     private fun setupTripsPagingAdapter(){
-        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-
         binding.tripsRV.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
+        getTripsSortedByDate()
+    }
+
+    private fun getTripsSortedByDate(){
+        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch{
             if(isActiveTrips!!){
-                viewModel.getActivePagingTrips().collectLatest { pagingData ->
+                viewModel.getActiveTripsSortedByDate().collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
             }else{
-                viewModel.getArchivePagingTrips().collectLatest { pagingData ->
+                viewModel.getArchiveTripsSortedByDate().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }
+        }
+    }
+
+    private fun getTripsSortedByStatus(){
+        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
+        lifecycleScope.launch{
+            if(isActiveTrips!!){
+                viewModel.getActiveTripsSortedByStatus().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }else{
+                viewModel.getArchiveTripsSortedByStatus().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }
+        }
+    }
+
+    private fun getFilteredTrips(){
+        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
+        lifecycleScope.launch{
+            if(isActiveTrips!!){
+                viewModel.getFilteredActiveTrips().collectLatest { pagingData ->
+                    adapter.submitData(pagingData)
+                }
+            }else{
+                viewModel.getFilteredArchiveTrips().collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
             }
@@ -112,11 +151,13 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     fun openSortTripDialog(){
-        findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToSortTripDialog())
+        val sortTripDialog = SortTripDialog(this, sortType)
+        sortTripDialog.show(activity?.supportFragmentManager!!, "SortTripDialog")
     }
 
     fun openFilterTripDialog(){
-        findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToFilterTripFragment())
+        val filterTripDialog = FilterTripDialog(this)
+        filterTripDialog.show(childFragmentManager, "FilterTripDialog")
     }
 
     override fun onTripClicked(trip: Trip) {
@@ -134,6 +175,22 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     override fun onRetryClicked() {
         adapter.retry()
+    }
+
+    override fun onDateClicked() {
+        sortType = BY_DEPARTURE_DATE
+        getTripsSortedByDate()
+    }
+
+    override fun onStatusClicked() {
+        sortType = BY_STATUS
+        getTripsSortedByStatus()
+    }
+
+    override fun applyFilterClicked() {
+        getFilteredTrips()
+        binding.appliedFilterCountTV.isVisible = viewModel.appliedFilterCount != 0
+        binding.appliedFilterCountTV.text = viewModel.appliedFilterCount.toString()
     }
 
 }

@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundListBinding
 
 class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick{
     private var _binding: FragmentRefundListBinding? = null
     private val binding get() = _binding!!
+    private val args: RefundListFragmentArgs by navArgs()
     val adapter : RefundListAdapter by lazy { RefundListAdapter(this) }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -25,14 +27,15 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick{
         binding.refundListRV.adapter = adapter
     }
 
-    fun openChooseTicketRefundFragment() = findNavController().navigate(
-        RefundListFragmentDirections.actionRefundListFragmentToChooseTicketRefundFragment())
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         _binding = null
     }
+
+    fun openChooseTicketRefundFragment() = findNavController().navigate(
+        RefundListFragmentDirections.actionRefundListFragmentToChooseTicketRefundFragment(args.segmentList))
 
     override fun onDetailClick(position: Int) {
         openRefundDetailFragment()
@@ -43,7 +46,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick{
     }
 
     private fun openCancelRefundDialog() = findNavController().navigate(
-        RefundListFragmentDirections.actionRefundListFragmentToCancelRefundDialog())
+        RefundListFragmentDirections.actionRefundListFragmentToCancelRefundDialog(7))
 
     private fun openRefundDetailFragment() = findNavController().navigate(
         RefundListFragmentDirections.actionRefundListFragmentToRefundDetailFragment())

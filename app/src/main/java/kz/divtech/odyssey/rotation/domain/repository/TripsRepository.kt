@@ -48,26 +48,71 @@ class TripsRepository(private val dao : Dao) {
     @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getActivePagingTrip(): Flow<PagingData<Trip>>{
-
+    suspend fun getActiveTripsSortedByDate(): Flow<PagingData<Trip>>{
        return Pager(
            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = true),
-           pagingSourceFactory = {dao.getActiveTrips()}
+           pagingSourceFactory = {dao.getActiveTripsSortedByDate()}
        ).flow
-
 
     }
 
     @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun getArchivePagingTrip(): Flow<PagingData<Trip>>{
+    suspend fun getActiveTripsSortedByStatus(): Flow<PagingData<Trip>>{
+        return Pager(
+            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = true),
+            pagingSourceFactory = {dao.getActiveTripsSortedByStatus()}
+        ).flow
+    }
 
+    @OptIn(ExperimentalPagingApi::class)
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getArchiveTripsSortedByDate(): Flow<PagingData<Trip>>{
         return Pager(
             config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
             remoteMediator = TripRemoteMediator(dao, OrderDir.ASC, isActive = false),
-            pagingSourceFactory = {dao.getArchiveTrips()}
+            pagingSourceFactory = {dao.getArchiveTripsSortedByDate()}
+        ).flow
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getArchiveTripsSortedByStatus(): Flow<PagingData<Trip>>{
+        return Pager(
+            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = false),
+            pagingSourceFactory = {dao.getArchiveTripsSortedByStatus()}
+        ).flow
+    }
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getFilteredActiveTrips(statusType: Array<String>, direction: Array<String>)
+                                : Flow<PagingData<Trip>>{
+        return Pager(
+            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.DESC, isActive = true),
+            pagingSourceFactory = {dao.getFilteredActiveTrips(statusType, direction)}
+        ).flow
+
+    }
+
+
+    @OptIn(ExperimentalPagingApi::class)
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun getFilteredArchiveTrips(statusType: Array<String>, direction: Array<String>)
+                                    : Flow<PagingData<Trip>>{
+        return Pager(
+            config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+            remoteMediator = TripRemoteMediator(dao, OrderDir.ASC, isActive = false),
+            pagingSourceFactory = {dao.getFilteredArchiveTrips(statusType, direction)}
         ).flow
     }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -19,6 +20,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
+import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.DownloadTicketButtonAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
@@ -59,7 +61,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         setTicketPriceRV()
 //        setDownloadButtonRV()
 
-        dataBinding.trip
+        dataBinding.refundBtn.isVisible = getIssuedTickets().isNotEmpty()
     }
 
     private fun setSegmentFullRV(){
@@ -142,11 +144,21 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         viewModel.openFileIfExists(currentTicket)
     }
 
+    private fun getIssuedTickets() : Array<Segment> {
+        val listOfIssuedTickets = mutableListOf<Segment>()
+        args.trip.segments?.forEach { segment ->
+            if(segment.status == Constants.STATUS_ISSUED){
+                listOfIssuedTickets.add(segment)
+            }
+        }
+        return listOfIssuedTickets.toTypedArray()
+    }
+
     fun openChooseTicketRefundFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment())
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getIssuedTickets()))
 
     fun openRefundListFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToRefundListFragment()
+        TripDetailDialogDirections.actionTripDetailDialogToRefundListFragment(getIssuedTickets())
     )
 
 }

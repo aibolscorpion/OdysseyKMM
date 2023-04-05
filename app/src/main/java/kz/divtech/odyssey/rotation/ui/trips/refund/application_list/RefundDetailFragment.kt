@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundDetailBinding
-import kz.divtech.odyssey.rotation.ui.trips.refund.create_application.TicketAdapter
 
 class RefundDetailFragment : Fragment() {
-    private val adapter by lazy { TicketAdapter() }
+//    private val adapter by lazy { TicketAdapter() }
     private var _binding: FragmentRefundDetailBinding? = null
     private val binding get() = _binding!!
 
@@ -22,7 +21,7 @@ class RefundDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.ticketForRefundRV.adapter = adapter
+//        binding.ticketForRefundRV.adapter = adapter
     }
 
     override fun onDestroyView() {

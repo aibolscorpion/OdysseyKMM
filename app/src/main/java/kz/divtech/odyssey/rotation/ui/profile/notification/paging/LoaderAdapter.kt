@@ -21,8 +21,6 @@ class LoaderAdapter(private val callback: RetryCallback) : LoadStateAdapter<Load
         holder.bind(loadState)
     }
 
-
-
     class LoaderViewHolder(val binding: ItemLoadAdapterBinding) :
         RecyclerView.ViewHolder(binding.root){
 

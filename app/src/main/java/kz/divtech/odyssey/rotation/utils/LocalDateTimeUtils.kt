@@ -12,6 +12,7 @@ object LocalDateTimeUtils {
     const val DAY_MONTH_YEAR_PATTERN = "d.MM.yyyy"
     const val DAY_MONTH_PATTERN = "d MMM"
     const val HOUR_MINUTE_PATTERN = "HH:mm"
+    const val DAY_MONTH_HOUR_MINUTE_PATTERN = "d MMM HH:mm"
 
     fun formatByGivenPattern(dateTime: String?, pattern: String): String{
         var returnString = ""

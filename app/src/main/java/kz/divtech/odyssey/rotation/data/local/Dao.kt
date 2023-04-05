@@ -19,11 +19,26 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 interface Dao {
     //Trips
     @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC")
-    fun getActiveTrips() :  PagingSource<Int, Trip>
+    fun getActiveTripsSortedByDate() :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM trip WHERE date < date('now') ORDER BY date DESC")
-    fun getArchiveTrips() : PagingSource<Int, Trip>
+    fun getArchiveTripsSortedByDate() : PagingSource<Int, Trip>
 
+    @Query("SELECT * FROM trip WHERE date > date('now') " +
+        "ORDER BY case when status = 'issued' then 0 else 1 end, status")
+    fun getActiveTripsSortedByStatus() :  PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM trip WHERE date < date('now') " +
+            "ORDER BY case when status = 'issued' then 0 else 1 end, status")
+    fun getArchiveTripsSortedByStatus() : PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM trip WHERE date > date('now') AND (status IN (:statusType))" +
+            " AND (direction IN (:direction))")
+    fun getFilteredActiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM trip WHERE date < date('now') AND (status IN (:statusType))" +
+            " AND (direction IN (:direction))")
+    fun getFilteredArchiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
 
     @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
     fun observeNearestActiveTrip() :  Flow<Trip>

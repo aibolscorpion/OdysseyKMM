@@ -24,7 +24,7 @@ object DocumentBindingAdapter {
         val formattedIssueDate = formatByGivenPattern(issueDate, DAY_MONTH_YEAR_PATTERN)
         val formattedExpireDate = formatByGivenPattern(expireDate, DAY_MONTH_YEAR_PATTERN)
 
-        textView.text = App.appContext.getString(R.string.dep_arrival_station_name,
+        textView.text = App.appContext.getString(R.string.dash_sign_btw_two_text,
             formattedIssueDate, formattedExpireDate)
     }
 }

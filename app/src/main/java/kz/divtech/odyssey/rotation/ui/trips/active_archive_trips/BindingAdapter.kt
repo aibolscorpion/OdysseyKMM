@@ -184,7 +184,7 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
     @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String?, arrStationName: String?){
         if(depStationName != null && arrStationName != null){
-            val depArrStationNames = App.appContext.getString(R.string.dep_arrival_station_name,
+            val depArrStationNames = App.appContext.getString(R.string.dash_sign_btw_two_text,
                 properCase(depStationName), properCase(arrStationName)
             )
 
@@ -200,7 +200,7 @@ object BindingAdapter {
             val formattedArrTime = formatByGivenPattern(arrDateTime,  HOUR_MINUTE_PATTERN)
 
             val text = App.appContext.resources.
-                getString(R.string.dep_arrival_time, formattedDepTime, formattedArrTime)
+                getString(R.string.dash_sign_btw_two_text, formattedDepTime, formattedArrTime)
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
             textView.text = text
         }

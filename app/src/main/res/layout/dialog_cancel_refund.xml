@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> thisDialog.openRefundCancelledFragment()}"
+            android:onClick="@{() -> thisDialog.cancelRefund()}"
             android:fontFamily="@font/pt_root_ui_bold"
             android:textSize="16sp"
             android:textColor="@color/white"
@@ -56,12 +56,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> thisDialog.dismiss()}"
             android:fontFamily="@font/pt_root_ui_bold"
             android:textSize="16sp"
             android:textColor="#07213d"
             android:lineSpacingExtra="2sp"
             android:gravity="center_horizontal"
+            android:onClick="@{() -> thisDialog.dismiss()}"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_refund_button"
             android:paddingTop="@dimen/margin"

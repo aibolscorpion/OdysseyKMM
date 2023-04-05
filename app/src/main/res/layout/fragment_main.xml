@@ -34,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:clipToPadding="false"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
                 android:paddingTop="24dp"
@@ -132,6 +133,7 @@
                         android:paddingBottom="12dp"
                         android:paddingStart="8dp"
                         android:paddingEnd="12dp"
+                        android:elevation="2dp"
                         android:background="@drawable/bg_debt_amount"
                         android:layout_weight="1" >
 
@@ -177,8 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
-                    app:cardCornerRadius="6dp"
-                    app:cardUseCompatPadding="true">
+                    app:cardCornerRadius="6dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"

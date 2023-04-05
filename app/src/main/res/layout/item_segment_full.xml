@@ -213,7 +213,7 @@
                 android:id="@+id/trainNumberTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{@string/train_number_dep_arr_station_names(segment.train.display_number)}"
+                android:text="@{@string/number_sign_before_text(segment.train.display_number)}"
                 android:fontFamily="@font/pt_root_ui_medium"
                 android:textSize="14sp"
                 android:textColor="#1b344f"

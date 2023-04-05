@@ -34,7 +34,7 @@ class TicketPriceAdapter : RecyclerView.Adapter<TicketPriceAdapter.TicketPriceVi
 
         fun bind(ticket: Ticket){
             binding.departureDestinationTV.text = App.appContext.getString(
-                R.string.dep_arrival_station_name, ticket.dep_station_name, ticket.arr_station_name)
+                R.string.dash_sign_btw_two_text, ticket.dep_station_name, ticket.arr_station_name)
             binding.ticketPrice.text = context.getString(R.string.ticket_price, ticket.sum)
         }
     }

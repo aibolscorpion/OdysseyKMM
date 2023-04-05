@@ -22,6 +22,7 @@
         android:layout_marginBottom="6dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
+        app:cardElevation="4dp"
         android:onClick="@{()-> listener.onTripClicked(trip)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout

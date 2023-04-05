@@ -3,13 +3,13 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripFragment" />
+            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripDialog" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_white_bottom_sheet_dialog">
 
         <TextView
@@ -57,9 +57,10 @@
                 android:lineSpacingExtra="6sp" />
 
             <CheckBox
+                android:id="@+id/issuedCB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/purchased"
+                android:text="@string/issued"
                 android:fontFamily="@font/pt_root_ui_medium"
                 android:textSize="16sp"
                 android:textColor="#07213d"
@@ -67,15 +68,7 @@
                 android:layout_marginTop="8dp"/>
 
             <CheckBox
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="16sp"
-                android:textColor="#07213d"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/booked" />
-
-            <CheckBox
+                android:id="@+id/returnedCB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pt_root_ui_medium"
@@ -85,13 +78,24 @@
                 android:text="@string/cancelled" />
 
             <CheckBox
+                android:id="@+id/openedCB"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pt_root_ui_medium"
                 android:textSize="16sp"
                 android:textColor="#07213d"
                 android:lineSpacingExtra="2sp"
-                android:text="@string/appointed" />
+                android:text="@string/opened" />
+
+            <CheckBox
+                android:id="@+id/partlyCB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/partly" />
 
         </LinearLayout>
 
@@ -122,11 +126,13 @@
                 android:text="@string/direction_for_corporate" />
 
             <RadioGroup
+                android:id="@+id/directionRG"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp" >
 
                 <RadioButton
+                    android:id="@+id/bothDirectionRB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/all"
@@ -136,6 +142,7 @@
                     android:lineSpacingExtra="2sp" />
 
                 <RadioButton
+                    android:id="@+id/toHomeRB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/only_home"
@@ -145,6 +152,7 @@
                     android:lineSpacingExtra="2sp" />
 
                 <RadioButton
+                    android:id="@+id/toWorkRB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/only_to_shift"
@@ -169,7 +177,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:elevation="20dp"
+            app:cardElevation="20dp"
             app:layout_constraintTop_toBottomOf="@+id/directionBottomLine">
 
             <LinearLayout
@@ -177,6 +185,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingTop="8dp"
+                android:elevation="10dp"
                 android:paddingBottom="8dp">
 
                 <TextView
@@ -188,6 +197,7 @@
                     android:paddingBottom="14dp"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
+                    android:onClick="@{() -> thisDialog.resetFilter()}"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="16sp"
                     android:textColor="#07213d"
@@ -196,6 +206,7 @@
                     android:layout_marginEnd="4dp"/>
 
                 <TextView
+                    android:id="@+id/applyFilterBtn"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_button"
@@ -207,6 +218,7 @@
                     android:paddingBottom="14dp"
                     android:gravity="center_horizontal"
                     android:text="@string/show"
+                    android:onClick="@{() -> thisDialog.applyFilter()}"
                     android:layout_weight="1"
                     android:layout_marginStart="4dp"
                     android:layout_marginEnd="@dimen/margin" />
