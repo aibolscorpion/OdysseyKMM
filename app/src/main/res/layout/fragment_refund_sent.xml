@@ -5,7 +5,7 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.trips.refund.create_application.RefundSentFragment" />
+            type="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.RefundSentFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

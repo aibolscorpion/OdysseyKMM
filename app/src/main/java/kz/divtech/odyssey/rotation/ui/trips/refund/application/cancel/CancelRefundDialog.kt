@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund.application_list
+package kz.divtech.odyssey.rotation.ui.trips.refund.application.cancel
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,7 +17,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogCancelRefundBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.trips.refund.create_application.RefundViewModel
+import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 
 class CancelRefundDialog : DialogFragment() {
     val args: CancelRefundDialogArgs by navArgs()

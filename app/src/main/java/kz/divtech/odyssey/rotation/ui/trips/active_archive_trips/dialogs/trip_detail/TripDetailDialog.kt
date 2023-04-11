@@ -60,8 +60,8 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         setSegmentFullRV()
         setTicketPriceRV()
 //        setDownloadButtonRV()
+        setRefundButtons()
 
-        dataBinding.refundBtn.isVisible = getIssuedTickets().isNotEmpty()
     }
 
     private fun setSegmentFullRV(){
@@ -154,11 +154,20 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         return listOfIssuedTickets.toTypedArray()
     }
 
+    private fun setRefundButtons(){
+        val refundApplications = args.trip.refund_applications
+        dataBinding.refundCL.isVisible = refundApplications.isNotEmpty()
+        dataBinding.refundApplicationSizeTV.text = refundApplications.size.toString()
+
+        dataBinding.createRefundAppTV.isVisible = refundApplications.isEmpty()
+                && getIssuedTickets().isNotEmpty()
+    }
+
     fun openChooseTicketRefundFragment() = findNavController().navigate(
         TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getIssuedTickets()))
 
     fun openRefundListFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToRefundListFragment(getIssuedTickets())
+        TripDetailDialogDirections.actionTripDetailDialogToRefundListFragment(getIssuedTickets(), args.trip)
     )
 
 }

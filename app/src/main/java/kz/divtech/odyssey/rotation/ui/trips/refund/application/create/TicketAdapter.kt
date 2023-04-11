@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund.create_application
+package kz.divtech.odyssey.rotation.ui.trips.refund.application.create
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,7 +25,6 @@ class TicketAdapter(private val checkListener: OnItemCheckListener) : RecyclerVi
         holder.binding.ticket = segment.ticket
         holder.binding.root.setOnClickListener {
             checkBox.isChecked = !checkBox.isChecked
-            segment.ticket?.checkedState = checkBox.isChecked
             if(checkBox.isChecked){
                 checkListener.onItemCheck(segment.id)
             }else{

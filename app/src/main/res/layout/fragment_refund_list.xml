@@ -3,7 +3,7 @@
     <data>
         <variable
             name="thisDialog"
-            type="kz.divtech.odyssey.rotation.ui.trips.refund.application_list.RefundListFragment" />
+            type="kz.divtech.odyssey.rotation.ui.trips.refund.application.list.RefundListFragment" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

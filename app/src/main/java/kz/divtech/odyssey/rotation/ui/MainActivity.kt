@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val articleRepository by lazy { ArticleRepository(database.dao()) }
     val notificationRepository by lazy { NotificationRepository(database.dao()) }
     val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
-    val refundRepository by lazy { RefundRepository() }
+    val refundRepository by lazy { RefundRepository(database.dao()) }
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
             faqRepository, documentRepository, newsRepository, articleRepository,

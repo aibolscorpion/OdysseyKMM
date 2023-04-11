@@ -42,4 +42,12 @@
     <color name="issued_bg">#00B688</color>
     <color name="returned_bg">#FF4242</color>
     <color name="returned_ticket_text">#4D081426</color>
+
+    <color name="refund_status_pending_bg">#FFF1B8</color>
+    <color name="refund_status_rejected_canceled_bg">#FFEAE4</color>
+    <color name="refund_status_completed_process_bg">#E1F7F1</color>
+    <color name="refund_status_pending_text">#9A8126</color>
+    <color name="refund_status_rejected_canceled_text">#FF4E1D</color>
+    <color name="refund_status_completed_process_text">#00B688</color>
+
 </resources>

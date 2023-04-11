@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <data>
+        <variable
+            name="refundAppItem"
+            type="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
+    </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -19,7 +23,8 @@
             android:textSize="20sp"
             android:textColor="#07213d"
             android:lineSpacingExtra="8sp"
-            android:text="Заявка на возврат №000564"/>
+            android:text="@{@string/refund_application_number(refundAppItem.id)}"
+            tools:text="Заявка на возврат №20"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +45,8 @@
             android:textColor="#07213d"
             android:lineSpacingExtra="2sp"
             android:gravity="end"
-            android:text="3.01.23, 16:45"/>
+            app:refundAppCreatedDateTime="@{refundAppItem.created_at}"
+            tools:text="3 янв 2023, 16:45"/>
 
         <View
             android:layout_width="match_parent"
@@ -66,7 +72,8 @@
             android:layout_marginTop="7dp"
             android:textColor="#07213d"
             android:lineSpacingExtra="6sp"
-            android:text="«Не хочу ехать на сидячем, найдите купе либо место в плацкарте.»"/>
+            android:text="@{@string/refund_reason(refundAppItem.reason)}"
+            tools:text="«Не хочу ехать на сидячем, найдите купе либо место в плацкарте.»"/>
 
         <TextView
             android:layout_width="wrap_content"

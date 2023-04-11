@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
+import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import java.lang.reflect.Type
 
 @TypeConverters(SegmentConverter::class)
@@ -43,7 +44,8 @@ data class Trip(
     val start_station_code: String?,
     val status: String?,
     val updated_at: String?,
-    val user_id: Int?
+    val user_id: Int?,
+    val refund_applications: List<RefundAppItem>
 ) : Parcelable
 
 class SegmentConverter {
@@ -55,6 +57,18 @@ class SegmentConverter {
 
     @TypeConverter
     fun fromData(data: List<Segment>): String {
+        val gson = Gson()
+        return gson.toJson(data)
+    }
+
+    @TypeConverter
+    fun fromStringToRefundApplicationsItem(value: String?): List<RefundAppItem> {
+        val listType: Type = object : TypeToken<List<RefundAppItem>>() {}.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromRefundApplicationsItem(data: List<RefundAppItem>): String {
         val gson = Gson()
         return gson.toJson(data)
     }

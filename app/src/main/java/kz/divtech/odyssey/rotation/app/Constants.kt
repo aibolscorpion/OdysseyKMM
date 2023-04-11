@@ -49,4 +49,10 @@ object Constants {
 
     const val ANDROID = "android"
 
+    const val REFUND_STATUS_PENDING = "pending"
+    const val REFUND_STATUS_REJECTED = "rejected"
+    const val REFUND_STATUS_PROCESS = "process"
+    const val REFUND_STATUS_COMPLETED = "completed"
+    const val REFUND_STATUS_CANCELED = "canceled"
+
 }

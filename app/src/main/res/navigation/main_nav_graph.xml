@@ -232,7 +232,7 @@
         tools:layout="@layout/dialog_debt"/>
     <fragment
         android:id="@+id/chooseTicketRefundFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.create_application.ChooseTicketRefundFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.ChooseTicketRefundFragment"
         android:label="Возврат по заявке"
         tools:layout="@layout/fragment_choose_ticket_refund">
         <action
@@ -244,7 +244,7 @@
     </fragment>
     <fragment
         android:id="@+id/refundReasonFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.create_application.RefundReasonFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.RefundReasonFragment"
         android:label="Возврат по заявке"
         tools:layout="@layout/fragment_refund_reason" >
         <action
@@ -261,7 +261,7 @@
     </fragment>
     <fragment
         android:id="@+id/refundSentFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.create_application.RefundSentFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.RefundSentFragment"
         android:label="Возврат по заявке"
         tools:layout="@layout/fragment_refund_sent" >
         <action
@@ -278,7 +278,7 @@
     </fragment>
     <fragment
         android:id="@+id/refundListFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application_list.RefundListFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.list.RefundListFragment"
         android:label="@string/refund_application_list"
         tools:layout="@layout/fragment_refund_list" >
         <action
@@ -291,12 +291,15 @@
             android:id="@+id/action_refundListFragment_to_refundDetailFragment"
             app:destination="@id/refundDetailFragment" />
         <argument
-            android:name="segment_list"
+            android:name="issuedSegmentList"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]" />
+        <argument
+            android:name="trip"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
     </fragment>
     <dialog
         android:id="@+id/cancelRefundDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application_list.CancelRefundDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.cancel.CancelRefundDialog"
         android:label="CancelRefundDialog"
         tools:layout="@layout/dialog_cancel_refund">
         <action
@@ -310,8 +313,15 @@
     </dialog>
     <fragment
         android:id="@+id/refundDetailFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application_list.RefundDetailFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.detail.RefundDetailFragment"
         android:label="@string/refund_tickets"
-        tools:layout="@layout/fragment_refund_detail" />
+        tools:layout="@layout/fragment_refund_detail" >
+        <argument
+            android:name="refundAppItem"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
+        <argument
+            android:name="trip"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+    </fragment>
 
 </navigation>

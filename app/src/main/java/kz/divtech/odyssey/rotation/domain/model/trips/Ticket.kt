@@ -55,6 +55,5 @@ data class Ticket(
     val train_display_number: String?,
     val train_number: String?,
     val travcom_issue_download: Int?,
-    val travcom_refund_download: Int?,
-    var checkedState: Boolean = true
+    val travcom_refund_download: Int?
 ) : Parcelable

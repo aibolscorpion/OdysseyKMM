@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund.create_application
+package kz.divtech.odyssey.rotation.ui.trips.refund.application.create
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

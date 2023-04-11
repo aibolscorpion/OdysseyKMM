@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="refundApp"
+            type="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
+        <variable
+            name="constants"
+            type="kz.divtech.odyssey.rotation.app.Constants" />
+    </data>
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,44 +26,52 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_refund_application_status"
                 android:paddingTop="12dp"
                 android:paddingBottom="10dp"
                 android:paddingStart="12dp"
-                android:paddingEnd="12dp">
+                android:paddingEnd="12dp"
+                app:refundStatus="@{refundApp.status}">
 
                 <ImageView
                     android:id="@+id/refundStatusIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_refund_for_consideration"
+                    app:refundStatus="@{refundApp.status}"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:src="@drawable/icon_refund_pending" />
 
                 <TextView
                     android:id="@+id/refundTitleTV"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Заявка на рассмотрении"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="15sp"
                     android:textColor="#9a8126"
                     android:lineSpacingExtra="1sp"
                     android:layout_marginStart="14dp"
+                    app:refundStatus="@{refundApp.status}"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/refundStatusIV" />
+                    app:layout_constraintStart_toEndOf="@+id/refundStatusIV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Заявка на рассмотрении" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/refundDescTV"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="13sp"
                     android:textColor="#9a8126"
                     android:lineSpacingExtra="5sp"
-                    android:text="Ожидаем подтверждения заявки на возврат билетов."
+                    app:refundStatus="@{refundApp.status}"
+                    app:rejectReason="@{refundApp.reject_reason}"
+                    app:date="@{refundApp.updated_at}"
                     app:layout_constraintTop_toBottomOf="@+id/refundTitleTV"
-                    app:layout_constraintStart_toStartOf="@id/refundTitleTV"/>
+                    app:layout_constraintStart_toStartOf="@id/refundTitleTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Ожидаем подтверждения заявки на возврат билетов."/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -69,26 +85,16 @@
                 android:letterSpacing="0.01"
                 android:layout_marginTop="12dp"
                 android:lineSpacingExtra="0sp"
-                android:text="№000565"/>
+                android:text="@{@string/number_sign_before_text(String.valueOf(refundApp.id))}"
+                tools:text="№000565"/>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/refundSegmentsRV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#808e9e"
-                android:lineSpacingExtra="4sp"
-                android:text="Алматы 2 – Караганды"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:layout_marginTop="2dp"
-                android:textColor="#808e9e"
-                android:lineSpacingExtra="4sp"
-                android:text="8 фев, 16:40 – 8 фев, 23:20"/>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_train"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,6 +127,7 @@
                     android:textSize="15sp"
                     android:textColor="#07213d"
                     android:lineSpacingExtra="3sp"
+                    app:cancelRefund="@{refundApp.status}"
                     android:background="@drawable/bg_refund_button"
                     android:layout_marginStart="4dp"
                     android:gravity="center_horizontal"

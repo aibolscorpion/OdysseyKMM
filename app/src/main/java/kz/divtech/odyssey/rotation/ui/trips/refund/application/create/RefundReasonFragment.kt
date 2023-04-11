@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.trips.refund.create_application
+package kz.divtech.odyssey.rotation.ui.trips.refund.application.create
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +17,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 
 class RefundReasonFragment: Fragment() {
     private val args : RefundReasonFragmentArgs by navArgs()
