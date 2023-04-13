@@ -269,15 +269,18 @@
 
     <string name="refund_status_pending_title">Заявка на рассмотрении</string>
     <string name="refund_status_process_title">Билеты отправлены на возврат</string>
-    <string name="refund_status_completed_title">Заявка на возврат подтверждена</string>
+    <string name="refund_status_completed_title">Билеты возвращенны</string>
     <string name="refund_status_rejected_title">Заявка на возврат отклонена</string>
     <string name="refund_status_canceled_title">Заявка на возврат отменена</string>
+    <string name="refund_status_error_partly_title">Ошибка при возврате</string>
 
     <string name="refund_status_pending_desс">Ожидаем подтверждения заявки на возврат билетов</string>
     <string name="refund_status_process_desc">Диспетчер отправил билеты по вашей заявке на возврат %1$s</string>
-    <string name="refund_status_completed_desc">Билеты будут возвращенны в ближайшее время</string>
+    <string name="refund_status_completed_desc">Билеты по заявке были возвращены %1$s</string>
     <string name="refund_status_rejected_desc">По причине: «%1$s»</string>
     <string name="refund_status_canceled_desc">Заявка была отменена Вами %1$s</string>
+    <string name="refund_status_error_desc">Произошла ошибка при попытке возврата билетов</string>
+    <string name="refund_status_partly_desc">Произошла ошибка при попытке возврата билетов: %1$s Остальные билеты были возвращены.</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

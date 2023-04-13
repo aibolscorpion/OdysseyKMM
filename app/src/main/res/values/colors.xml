@@ -49,5 +49,10 @@
     <color name="refund_status_pending_text">#9A8126</color>
     <color name="refund_status_rejected_canceled_text">#FF4E1D</color>
     <color name="refund_status_completed_process_text">#00B688</color>
+    <color name="refund_status_error_partly_bg">#ff5a49</color>
+
+    <color name="disabled_ticket">#F7F9FC</color>
+    <color name="disabled_dep_arr_name">#4D808E9E</color>
+    <color name="black_opacity_30">#4D07213d</color>
 
 </resources>

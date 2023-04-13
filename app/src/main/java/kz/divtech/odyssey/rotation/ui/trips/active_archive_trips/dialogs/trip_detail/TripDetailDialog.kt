@@ -25,7 +25,9 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.DownloadTicketButtonAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
 import java.io.File
+import java.time.LocalDateTime
 
 
 class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapter.DownloadInterface {
@@ -146,9 +148,12 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
 
     private fun getIssuedTickets() : Array<Segment> {
         val listOfIssuedTickets = mutableListOf<Segment>()
-        args.trip.segments?.forEach { segment ->
-            if(segment.status == Constants.STATUS_ISSUED){
-                listOfIssuedTickets.add(segment)
+        val date = LocalDateTimeUtils.getLocalDateTimeByPattern(args.trip.date!!)
+        if(date.isAfter(LocalDateTime.now())){
+            args.trip.segments?.forEach { segment ->
+                if(segment.status == Constants.STATUS_ISSUED){
+                    listOfIssuedTickets.add(segment)
+                }
             }
         }
         return listOfIssuedTickets.toTypedArray()

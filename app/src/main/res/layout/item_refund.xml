@@ -15,6 +15,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         android:background="@drawable/bg_white_radius_10dp">
 
         <LinearLayout
@@ -65,9 +68,7 @@
                     android:textSize="13sp"
                     android:textColor="#9a8126"
                     android:lineSpacingExtra="5sp"
-                    app:refundStatus="@{refundApp.status}"
-                    app:rejectReason="@{refundApp.reject_reason}"
-                    app:date="@{refundApp.updated_at}"
+                    app:refundApp="@{refundApp}"
                     app:layout_constraintTop_toBottomOf="@+id/refundTitleTV"
                     app:layout_constraintStart_toStartOf="@id/refundTitleTV"
                     app:layout_constraintEnd_toEndOf="parent"

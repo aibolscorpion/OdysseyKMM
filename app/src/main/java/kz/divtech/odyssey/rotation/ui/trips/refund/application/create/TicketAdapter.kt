@@ -2,7 +2,11 @@ package kz.divtech.odyssey.rotation.ui.trips.refund.application.create
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemTicketBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 
@@ -31,6 +35,21 @@ class TicketAdapter(private val checkListener: OnItemCheckListener) : RecyclerVi
                 checkListener.onItemUncheck(segment.id)
             }
         }
+
+        if(segment.status == Constants.REFUND_STATUS_PENDING){
+            holder.binding.root.isEnabled = false
+            holder.binding.ticketCB.isEnabled = false
+            holder.binding.ticketLL.setBackgroundColor(App.appContext.getColor(R.color.disabled_ticket))
+            holder.binding.depArrNameTV.setTextViewColor(R.color.black_opacity_30)
+            holder.binding.trainInfoTV.setTextViewColor(R.color.disabled_dep_arr_name)
+            holder.binding.ticketDateTimeTV.setTextViewColor(R.color.disabled_dep_arr_name)
+            holder.binding.ticketInfoTV.setTextViewColor(R.color.black_opacity_30)
+            holder.binding.ticketNumberTV.setTextViewColor(R.color.black_opacity_30)
+        }
+    }
+
+    private fun TextView.setTextViewColor(color: Int){
+        this.setTextColor(App.appContext.getColor(color))
     }
 
     override fun getItemCount() = segmentList.size

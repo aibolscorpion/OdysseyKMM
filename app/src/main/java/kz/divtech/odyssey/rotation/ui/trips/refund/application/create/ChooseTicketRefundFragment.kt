@@ -30,6 +30,7 @@ class ChooseTicketRefundFragment : Fragment(), TicketAdapter.OnItemCheckListener
         val adapter = TicketAdapter(this)
         binding.ticketsRV.adapter = adapter
         adapter.setTicketList(args.issuedTickets.toList())
+        segmentIdList.clear()
     }
 
     fun openReasonForRefundFragment(){

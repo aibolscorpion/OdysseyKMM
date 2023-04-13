@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.trips.refund.application
 
+import android.content.res.Resources
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import android.widget.TextView
@@ -9,17 +10,21 @@ import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 
 object RefundAppListBindingAdapter {
+
+    val Int.dpToPx: Int
+        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
     @BindingAdapter("refundStatus")
     @JvmStatic
     fun setViewGroupBackgroundColorByStatus(layout: ConstraintLayout, status: String){
         val shape = GradientDrawable()
         shape.shape = GradientDrawable.RECTANGLE
-        shape.cornerRadius = 12f
+        shape.cornerRadius = 12.dpToPx.toFloat()
 
         shape.apply {
             when(status){
@@ -29,6 +34,8 @@ object RefundAppListBindingAdapter {
                     setColor(getColor(R.color.refund_status_completed_process_bg))
                 Constants.REFUND_STATUS_REJECTED, Constants.REFUND_STATUS_CANCELED ->
                     setColor(getColor(R.color.refund_status_rejected_canceled_bg))
+                Constants.REFUND_STATUS_ERROR, Constants.REFUND_STATUS_PARTLY ->
+                    setColor(getColor(R.color.refund_status_error_partly_bg))
             }
         }
         layout.background = shape
@@ -44,6 +51,8 @@ object RefundAppListBindingAdapter {
                     setImageResource(R.drawable.icon_refund_completed)
                 Constants.REFUND_STATUS_REJECTED -> setImageResource(R.drawable.icon_refund_rejected)
                 Constants.REFUND_STATUS_CANCELED -> setImageResource(R.drawable.icon_refund_cancelled)
+                Constants.REFUND_STATUS_PARTLY, Constants.REFUND_STATUS_ERROR ->
+                    setImageResource(R.drawable.icon_refund_partly_error)
             }
         }
     }
@@ -73,17 +82,21 @@ object RefundAppListBindingAdapter {
                     text = getStringRes(R.string.refund_status_canceled_title)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
+                Constants.REFUND_STATUS_ERROR, Constants.REFUND_STATUS_PARTLY -> {
+                    text = App.appContext.getString(R.string.refund_status_error_partly_title)
+                    setTextColor(getColor(R.color.white))
+                }
             }
         }
     }
 
-    @BindingAdapter("refundStatus", "rejectReason", "date")
+    @BindingAdapter("refundApp")
     @JvmStatic
-    fun setDescByStatus(textView: TextView, status: String, rejectReason: String?, date: String){
-        val formattedDate = LocalDateTimeUtils.formatByGivenPattern(date,
+    fun setDescByStatus(textView: TextView, refundApp: RefundAppItem){
+        val formattedDate = LocalDateTimeUtils.formatByGivenPattern(refundApp.updated_at,
             DEFAULT_PATTERN)
         textView.apply {
-            when (status) {
+            when (refundApp.status) {
                 Constants.REFUND_STATUS_PENDING -> {
                     text = getStringRes(R.string.refund_status_pending_desс)
                     setTextColor(getColor(R.color.refund_status_pending_text))
@@ -93,16 +106,30 @@ object RefundAppListBindingAdapter {
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_COMPLETED -> {
-                    text = getStringRes(R.string.refund_status_completed_desc)
+                    text = App.appContext.getString(R.string.refund_status_completed_desc, formattedDate)
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_REJECTED -> {
-                    text = App.appContext.getString(R.string.refund_status_rejected_desc, rejectReason)
+                    text = App.appContext.getString(R.string.refund_status_rejected_desc, refundApp.reject_reason)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_CANCELED -> {
                     text = App.appContext.getString(R.string.refund_status_canceled_desc, formattedDate)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
+                }
+                Constants.REFUND_STATUS_ERROR -> {
+                    text = App.appContext.getString(R.string.refund_status_error_desc)
+                    setTextColor(getColor(R.color.white))
+                }
+                Constants.REFUND_STATUS_PARTLY -> {
+                    val strBuilder = StringBuilder()
+                    for(position in 0 until refundApp.segments.size){
+                        if(refundApp.segments[position].status == Constants.REFUND_STATUS_ERROR){
+                            strBuilder.append(" ${refundApp.realSegment!![position].train?.dep_station_name} - ${refundApp.realSegment!![position].train?.arr_station_name}.")
+                        }
+                    }
+                    text = App.appContext.getString(R.string.refund_status_partly_desc, strBuilder)
+                    setTextColor(getColor(R.color.white))
                 }
             }
         }

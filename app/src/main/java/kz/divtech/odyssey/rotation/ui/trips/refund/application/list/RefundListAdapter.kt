@@ -4,10 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemRefundBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 
-class RefundListAdapter(private val btnClick: RefundBtnClick, val trip: Trip) : RecyclerView.Adapter<RefundListAdapter.ApplicationViewHolder>() {
+class RefundListAdapter(private val btnClick: RefundBtnClick) : RecyclerView.Adapter<RefundListAdapter.ApplicationViewHolder>() {
     private val oldRefundList = mutableListOf<RefundAppItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ApplicationViewHolder {
@@ -22,14 +21,14 @@ class RefundListAdapter(private val btnClick: RefundBtnClick, val trip: Trip) : 
 
     override fun getItemCount()  = oldRefundList.size
 
-    fun setRefundList(newRefundList: ArrayList<RefundAppItem>, trip: Trip){
+    fun setRefundList(newRefundList: List<RefundAppItem>){
         oldRefundList.clear()
         oldRefundList.addAll(newRefundList)
         notifyDataSetChanged()
     }
 
     inner class ApplicationViewHolder(val binding: ItemRefundBinding) : RecyclerView.ViewHolder(binding.root) {
-        val adapter = TrainAdapter(trip)
+        val adapter = TrainAdapter()
         private var refundAppItem: RefundAppItem? = null
 
         init{
@@ -46,7 +45,7 @@ class RefundListAdapter(private val btnClick: RefundBtnClick, val trip: Trip) : 
         fun bind(refundAppItem: RefundAppItem){
             this.refundAppItem = refundAppItem
             binding.refundApp = refundAppItem
-            adapter.setSegmentList(refundAppItem.segments)
+            adapter.setSegmentList(refundAppItem.realSegment!!.toList())
         }
     }
 

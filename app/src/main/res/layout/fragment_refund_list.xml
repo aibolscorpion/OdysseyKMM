@@ -11,7 +11,10 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/main_bg"
-        android:padding="@dimen/margin">
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin">
 
         <TextView
             android:id="@+id/refundListTitleTV"
@@ -61,10 +64,13 @@
             android:gravity="center_vertical"
             android:onClick="@{() -> thisDialog.openChooseTicketRefundFragment()}"
             android:lineSpacingExtra="2sp"
+            tools:visibility="visible"
+            android:visibility="gone"
             android:paddingStart="12dp"
             android:paddingTop="@dimen/margin"
             android:paddingEnd="12dp"
             android:paddingBottom="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
             android:text="@string/create_application_to_refund"
             android:textColor="#07213d"
             android:textSize="16sp"

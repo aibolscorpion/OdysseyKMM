@@ -4,14 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTrainBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundSegment
 
-class TrainAdapter(val trip: Trip) : RecyclerView.Adapter<TrainAdapter.TicketViewHolder>() {
-    private val oldSegmentList = mutableListOf<RefundSegment>()
+class TrainAdapter : RecyclerView.Adapter<TrainAdapter.TicketViewHolder>() {
+    private val oldSegmentList = mutableListOf<Segment>()
 
-    fun setSegmentList(newSegmentList: List<RefundSegment>){
+    fun setSegmentList(newSegmentList: List<Segment>){
         oldSegmentList.clear()
         oldSegmentList.addAll(newSegmentList)
         notifyDataSetChanged()
@@ -23,20 +21,11 @@ class TrainAdapter(val trip: Trip) : RecyclerView.Adapter<TrainAdapter.TicketVie
     }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
-        holder.binding.train = getSegmentById(oldSegmentList[position].segment_id)?.train
+        holder.binding.train = oldSegmentList[position].train
     }
 
     override fun getItemCount() = oldSegmentList.size
 
-    private fun getSegmentById(segmentId: Int): Segment?{
-        var segment: Segment? = null
-        trip.segments?.forEach {
-            if(it.id == segmentId){
-                segment = it
-            }
-        }
-        return segment
-    }
 
     inner class TicketViewHolder(val binding: ItemTrainBinding): RecyclerView.ViewHolder(binding.root)
 

@@ -54,5 +54,7 @@ object Constants {
     const val REFUND_STATUS_PROCESS = "process"
     const val REFUND_STATUS_COMPLETED = "completed"
     const val REFUND_STATUS_CANCELED = "canceled"
+    const val REFUND_STATUS_PARTLY = "partly"
+    const val REFUND_STATUS_ERROR = "error"
 
 }

@@ -12,7 +12,7 @@ class RefundDetailFragment : Fragment() {
     private var _binding: FragmentRefundDetailBinding? = null
     private val binding get() = _binding!!
     val args: RefundDetailFragmentArgs by navArgs()
-    private val adapter by lazy { TicketAdapter(args.trip) }
+    private val adapter by lazy { TicketAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -25,7 +25,7 @@ class RefundDetailFragment : Fragment() {
 
         binding.refundAppItem = args.refundAppItem
         binding.ticketForRefundRV.adapter = adapter
-        adapter.setTicketList(args.refundAppItem.segments)
+        adapter.setTicketList(args.refundAppItem.realSegment!!)
     }
 
     override fun onDestroyView() {

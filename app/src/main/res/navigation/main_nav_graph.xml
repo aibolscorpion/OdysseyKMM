@@ -239,7 +239,7 @@
             android:id="@+id/action_chooseTicketRefundFragment_to_refundReasonFragment"
             app:destination="@id/refundReasonFragment" />
         <argument
-            android:name="issued_tickets"
+            android:name="issuedTickets"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]" />
     </fragment>
     <fragment
@@ -319,9 +319,7 @@
         <argument
             android:name="refundAppItem"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
-        <argument
-            android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+
     </fragment>
 
 </navigation>

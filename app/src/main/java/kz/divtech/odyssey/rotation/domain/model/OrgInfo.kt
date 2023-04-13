@@ -17,7 +17,7 @@ data class OrgInfo(
     @SerializedName("support_phone")
     val supportPhone: String,
     @SerializedName("telegram_phone")
-    val telegramPhone: String,
+    val telegramPhone: String?,
     @SerializedName("whatsapp_phone")
     val whatsappPhone: String
 )

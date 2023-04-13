@@ -10,10 +10,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
 
         <LinearLayout
+            android:id="@+id/ticketLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -31,7 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
+                    android:id="@+id/depArrNameTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_bold"
@@ -43,6 +49,7 @@
                     tools:text="Алматы 1 - Уш Тобе"/>
 
                 <TextView
+                    android:id="@+id/trainInfoTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
@@ -55,6 +62,7 @@
                     tools:text="КТЖ, 010Т «Тальго»"/>
 
                 <TextView
+                    android:id="@+id/ticketDateTimeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
@@ -73,6 +81,7 @@
                     android:layout_marginTop="12dp" />
 
                 <TextView
+                    android:id="@+id/ticketInfoTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
@@ -87,6 +96,7 @@
                     tools:text="14 вагон • Купе • Класс 1Л • 2 место"/>
 
                 <TextView
+                    android:id="@+id/ticketNumberTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_root_ui_medium"
