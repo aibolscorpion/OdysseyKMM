@@ -10,6 +10,8 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import java.time.LocalDateTime
@@ -17,32 +19,32 @@ import java.time.temporal.ChronoUnit
 
 class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHolder>() {
     private val listOfSegments = mutableListOf<Segment>()
+    var trip: Trip? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TicketViewHolder {
         val binding = ItemSegmentFullBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
         return TicketViewHolder(binding, listOfSegments)
     }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
-
         holder.bind(listOfSegments[position], position)
     }
 
     override fun getItemCount() = listOfSegments.size
 
-    fun setSegmentList(segmentList: List<Segment>?){
+    fun setSegmentList(trip: Trip){
+        this.trip = trip
         listOfSegments.clear()
-        segmentList?.let { listOfSegments.addAll(it) }
+        trip.segments?.let { listOfSegments.addAll(it) }
     }
 
-    class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
+    inner class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
         private lateinit var currentSegment: Segment
 
         fun bind(segment: Segment, position: Int){
             currentSegment = segment
             binding.segment = currentSegment
-
+            binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, currentSegment.id)
             binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
             setViewsByStatus(defineSegmentStatus(segment))
 
@@ -54,6 +56,23 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     visibility = View.GONE
                 }
             }
+        }
+
+        private fun getRefundSegmentStatus(refundAppList: List<RefundAppItem>, segmentId: Int): String?{
+            if(refundAppList.isNotEmpty()){
+                refundAppList.forEach { refundAppItem ->
+                    refundAppItem.segments.forEach { refundSegment ->
+                        if(refundSegment.segment_id == segmentId){
+                            return when(refundAppItem.status){
+                                Constants.REFUND_STATUS_PENDING -> Constants.REFUND_STATUS_PENDING
+                                Constants.REFUND_STATUS_REJECTED -> Constants.REFUND_STATUS_REJECTED
+                                else -> refundSegment.status
+                            }
+                        }
+                    }
+                }
+            }
+            return null
         }
 
         private fun defineSegmentStatus(segment: Segment): SegmentStatus {

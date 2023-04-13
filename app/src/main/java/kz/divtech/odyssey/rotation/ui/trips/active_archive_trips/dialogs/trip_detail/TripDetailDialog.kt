@@ -68,7 +68,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
 
     private fun setSegmentFullRV(){
         val tripDetailAdapter = SegmentFullAdapter()
-        tripDetailAdapter.setSegmentList(args.trip.segments)
+        tripDetailAdapter.setSegmentList(args.trip)
         dataBinding.segmentDetailRV.adapter = tripDetailAdapter
     }
 

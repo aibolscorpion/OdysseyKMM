@@ -281,6 +281,12 @@
     <string name="refund_status_canceled_desc">Заявка была отменена Вами %1$s</string>
     <string name="refund_status_error_desc">Произошла ошибка при попытке возврата билетов</string>
     <string name="refund_status_partly_desc">Произошла ошибка при попытке возврата билетов: %1$s Остальные билеты были возвращены.</string>
+
+    <string name="segment_status_rejected">Возврат отклонен</string>
+    <string name="segment_status_pending">Отправлено на возврат</string>
+    <string name="segment_status_process">Возврат подтвержен</string>
+    <string name="segment_status_returned">Возвращен</string>
+    <string name="segment_status_error">Ошибка возврата</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>

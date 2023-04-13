@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
@@ -19,6 +20,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
+import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundAppListBindingAdapter.dpToPx
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
@@ -432,6 +434,55 @@ object BindingAdapter {
     @BindingAdapter("depArrTime")
     @JvmStatic fun setDepArrTime(textView: TextView, dateTime: String){
         textView.text = formatByGivenPattern(dateTime, HOUR_MINUTE_PATTERN)
+    }
+
+    @BindingAdapter("refundSegmentStatus")
+    @JvmStatic fun setSegmentRefundStatus(textView: TextView, refundSegmentStatus: String?){
+        val drawable = GradientDrawable()
+        drawable.shape = GradientDrawable.RECTANGLE
+        drawable.cornerRadius = 6.dpToPx.toFloat()
+
+        when(refundSegmentStatus){
+            Constants.REFUND_STATUS_PROCESS -> {
+                drawable.setColor(App.appContext.getColor(R.color.refund_status_completed_process_bg))
+                textView.apply {
+                    setTextColor(App.appContext.getColor(R.color.refund_status_completed_process_text))
+                    text = App.appContext.getString(R.string.segment_status_process)
+                }
+            }
+            Constants.STATUS_RETURNED -> {
+                drawable.setColor(App.appContext.getColor(R.color.refund_status_completed_process_bg))
+                textView.apply {
+                    setTextColor(App.appContext.getColor(R.color.refund_status_completed_process_text))
+                    text = App.appContext.getString(R.string.segment_status_returned)
+                }
+            }
+            Constants.REFUND_STATUS_ERROR -> {
+                drawable.setColor(App.appContext.getColor(R.color.refund_status_error_partly_bg))
+                textView.apply {
+                    setTextColor(App.appContext.getColor(R.color.white))
+                    text = App.appContext.getString(R.string.segment_status_error)
+                }
+
+            }
+            Constants.REFUND_STATUS_PENDING -> {
+                drawable.setColor(App.appContext.getColor(R.color.refund_status_pending_bg))
+                textView.apply {
+                    setTextColor(App.appContext.getColor(R.color.refund_status_pending_text))
+                    text = App.appContext.getString(R.string.segment_status_pending)
+                }
+
+            }
+            Constants.REFUND_STATUS_REJECTED -> {
+                drawable.setColor(App.appContext.getColor(R.color.refund_status_rejected_canceled_bg))
+                textView.apply {
+                    setTextColor(App.appContext.getColor(R.color.refund_status_rejected_canceled_text))
+                    text = App.appContext.getString(R.string.segment_status_rejected)
+                }
+            }
+            null -> textView.isVisible = false
+        }
+        textView.background = drawable
     }
 
 
