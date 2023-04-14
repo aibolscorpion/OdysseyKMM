@@ -12,6 +12,9 @@
         <variable
             name="view"
             type="android.view.View" />
+        <variable
+            name="refundSegmentStatus"
+            type="String" />
     </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,11 +26,13 @@
 
             <ImageView
                 android:id="@+id/trainIV"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:contentDescription="@string/trips"
-                app:loadFromUrl="@{segments.icon}"
-                app:layout_constraintTop_toTopOf="parent"
+                app:imgUrl="@{segments.icon}"
+                app:refundSegmentStatus="@{refundSegmentStatus}"
+                app:layout_constraintTop_toTopOf="@+id/trainStationsTV"
+                app:layout_constraintBottom_toBottomOf="@+id/trainStationsTV"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:src="@mipmap/new_avia_logo_bundle" />
 

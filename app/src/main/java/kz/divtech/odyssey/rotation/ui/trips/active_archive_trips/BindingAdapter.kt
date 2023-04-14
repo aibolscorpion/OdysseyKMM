@@ -183,6 +183,19 @@ object BindingAdapter {
         }
     }
 
+    @BindingAdapter("imgUrl", "refundSegmentStatus")
+    @JvmStatic fun setSegmentIcon(imageView: ImageView, imgUrl: String?, refundSegmentStatus: String?){
+        when(refundSegmentStatus){
+            Constants.REFUND_STATUS_PROCESS, Constants.STATUS_RETURNED ->
+                imageView.setImageResource(R.drawable.icon_refund_completed)
+            Constants.REFUND_STATUS_ERROR -> imageView.setImageResource(R.drawable.icon_refund_partly_error_red)
+            Constants.REFUND_STATUS_PENDING -> imageView.setImageResource(R.drawable.icon_refund_pending)
+            Constants.REFUND_STATUS_REJECTED -> imageView.setImageResource(R.drawable.icon_refund_rejected)
+            null -> imgUrl?.let { Glide.with(imageView.context).load(imgUrl).into(imageView) }
+        }
+    }
+
+
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
     @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String?, arrStationName: String?){
         if(depStationName != null && arrStationName != null){

@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.utils.Utils.getRefundSegmentStatus
 
 class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
     private val listOfSegments = ArrayList<Segment>()
-
+    var trip: Trip? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SegmentViewHolder {
         val binding = ItemSegmentShortBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,13 +20,15 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
 
     override fun onBindViewHolder(holder: SegmentViewHolder, position: Int) {
         holder.binding.segments = listOfSegments[position]
+        holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, listOfSegments[position].id)
     }
 
     override fun getItemCount() = listOfSegments.size
 
-    fun setSegmentList(segmentList: List<Segment>?){
+    fun setSegmentList(trip: Trip){
+        this.trip = trip
         listOfSegments.clear()
-        segmentList?.let { listOfSegments.addAll(it) }
+        trip.segments?.let { listOfSegments.addAll(it) }
         notifyDataSetChanged()
     }
 

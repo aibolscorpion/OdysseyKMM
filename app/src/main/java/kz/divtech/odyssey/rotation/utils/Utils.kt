@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.utils
 import android.os.Bundle
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
+import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 
 object Utils {
 
@@ -24,6 +25,23 @@ object Utils {
         val applicationId = getString(Constants.NOTIFICATION_DATA_APPLICATION_ID)?.toInt()
         return PushNotification(id!!, notifiableType!!, sendTime!!,
             title!!, content!!, type!!, isImportant!!, applicationId)
+    }
+
+    fun getRefundSegmentStatus(refundAppList: List<RefundAppItem>, segmentId: Int): String?{
+        if(refundAppList.isNotEmpty()){
+            refundAppList.forEach { refundAppItem ->
+                refundAppItem.segments.forEach { refundSegment ->
+                    if(refundSegment.segment_id == segmentId){
+                        return when(refundAppItem.status){
+                            Constants.REFUND_STATUS_PENDING -> Constants.REFUND_STATUS_PENDING
+                            Constants.REFUND_STATUS_REJECTED -> Constants.REFUND_STATUS_REJECTED
+                            else -> refundSegment.status
+                        }
+                    }
+                }
+            }
+        }
+        return null
     }
 
 }

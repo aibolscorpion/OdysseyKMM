@@ -31,7 +31,7 @@ class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDat
 
         fun bind(trip : Trip?){
             binding.trip = trip
-            adapter.setSegmentList(trip?.segments)
+            adapter.setSegmentList(trip!!)
         }
 
     }

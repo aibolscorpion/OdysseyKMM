@@ -11,9 +11,9 @@ import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
+import kz.divtech.odyssey.rotation.utils.Utils.getRefundSegmentStatus
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
@@ -56,23 +56,6 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                     visibility = View.GONE
                 }
             }
-        }
-
-        private fun getRefundSegmentStatus(refundAppList: List<RefundAppItem>, segmentId: Int): String?{
-            if(refundAppList.isNotEmpty()){
-                refundAppList.forEach { refundAppItem ->
-                    refundAppItem.segments.forEach { refundSegment ->
-                        if(refundSegment.segment_id == segmentId){
-                            return when(refundAppItem.status){
-                                Constants.REFUND_STATUS_PENDING -> Constants.REFUND_STATUS_PENDING
-                                Constants.REFUND_STATUS_REJECTED -> Constants.REFUND_STATUS_REJECTED
-                                else -> refundSegment.status
-                            }
-                        }
-                    }
-                }
-            }
-            return null
         }
 
         private fun defineSegmentStatus(segment: Segment): SegmentStatus {
