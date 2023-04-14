@@ -69,7 +69,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
     }
 
     private fun assignPendingStatusToIssuedSegments(refundList: List<RefundAppItem>){
-        args.issuedSegmentList.forEach { segment ->
+        args.issuedSegmentList?.forEach { segment ->
             refundList.forEach { refundAppItem ->
                 if (refundAppItem.status == Constants.REFUND_STATUS_PENDING) {
                     refundAppItem.segments.forEach { refundSegment ->
@@ -84,16 +84,16 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
 
     private fun isShownCreateRefundBtn(): Boolean{
         var countPendingSegments = 0
-        args.issuedSegmentList.forEach {
+        args.issuedSegmentList?.forEach {
             if(it.status == Constants.REFUND_STATUS_PENDING) countPendingSegments++
         }
-        return args.issuedSegmentList.isNotEmpty() && args.issuedSegmentList.size != countPendingSegments
+        return !args.issuedSegmentList.isNullOrEmpty() && args.issuedSegmentList!!.size != countPendingSegments
     }
 
 
     fun openChooseTicketRefundFragment() = findNavController().navigate(
         RefundListFragmentDirections.actionRefundListFragmentToChooseTicketRefundFragment(
-            args.issuedSegmentList))
+            args.issuedSegmentList!!))
 
     override fun onDetailClick(refundAppItem: RefundAppItem) {
         openRefundDetailFragment(refundAppItem)

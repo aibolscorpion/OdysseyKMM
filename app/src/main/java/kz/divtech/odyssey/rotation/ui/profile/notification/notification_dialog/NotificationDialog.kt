@@ -12,7 +12,9 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class NotificationDialog : BottomSheetDialogFragment() {
@@ -45,18 +47,25 @@ class NotificationDialog : BottomSheetDialogFragment() {
         isCancelable = !args.notification.isImportant
     }
 
-    fun learnMore(tripId: Int){
-        viewModel.getTripById(tripId).observe(viewLifecycleOwner){ trip ->
+    fun learnMore(notification: PushNotification){
+        viewModel.getTripById(notification.applicationId!!).observe(viewLifecycleOwner){ trip ->
             if(trip != null){
-                if(trip.segments != null){
-                    findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip))
-                }else{
-                    findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+                when(notification.type){
+                    Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
+                        if(trip.segments != null){
+                            findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip))
+                        }else{
+                            findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+                        }
+                    }
+                    Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
+                        findNavController().navigate(NotificationDialogDirections.
+                            actionGlobalRefundListFragment(null, trip))
+                    }
                 }
             }else{
                 Toast.makeText(requireContext(), R.string.trip_not_found_by_id, Toast.LENGTH_SHORT).show()
             }
-
         }
     }
 

@@ -36,6 +36,10 @@ object NotificationBindingAdapter {
             "NewDismissedRecived" -> R.drawable.icon_fired
             "NewOvertimeRecived" -> R.drawable.icon_rvd
             "LoginFromOtherDevice" -> R.drawable.icon_notify_another_device
+            "RefundApplicationRejected" -> R.drawable.icon_refund_rejected
+            "RefundApplicationConfirmed" -> R.drawable.icon_refund_completed
+            "RefundSucceed" -> R.drawable.icon_refund_completed
+            "RefundError" -> R.drawable.icon_refund_partly_error_red
             else -> R.drawable.icon_notifications
         }
         imageView.setImageResource(iconResource)
@@ -78,9 +82,11 @@ object NotificationBindingAdapter {
 
     @BindingAdapter("learnMoreVisibility")
     @JvmStatic fun setLearnMoreVisibility(learnMoreLL: LinearLayout, notificationTypeGroup: String?){
-        learnMoreLL.visibility = when(notificationTypeGroup){
-            Constants.NOTIFICATION_TYPE_TICKET, Constants.NOTIFICATION_TYPE_APPLICATION -> View.VISIBLE
-            else -> View.GONE
+        learnMoreLL.visibility =
+            when(notificationTypeGroup){
+                Constants.NOTIFICATION_TYPE_TICKET, Constants.NOTIFICATION_TYPE_APPLICATION,
+                Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> View.VISIBLE
+                else -> View.GONE
         }
     }
 

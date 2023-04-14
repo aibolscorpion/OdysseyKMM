@@ -156,9 +156,6 @@
         <action
             android:id="@+id/action_tripDetailDialog_to_chooseTicketRefundFragment"
             app:destination="@id/chooseTicketRefundFragment" />
-        <action
-            android:id="@+id/action_tripDetailDialog_to_refundListFragment"
-            app:destination="@id/refundListFragment" />
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
@@ -292,7 +289,8 @@
             app:destination="@id/refundDetailFragment" />
         <argument
             android:name="issuedSegmentList"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]"
+            app:nullable="true" />
         <argument
             android:name="trip"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
@@ -321,5 +319,6 @@
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
 
     </fragment>
+    <action android:id="@+id/action_global_refundListFragment" app:destination="@id/refundListFragment" />
 
 </navigation>

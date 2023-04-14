@@ -25,6 +25,7 @@ object Constants {
 
     const val NOTIFICATION_TYPE_TICKET = "ticket"
     const val NOTIFICATION_TYPE_APPLICATION = "application"
+    const val NOTIFICATION_TYPE_REFUND_APPLICATION = "refund-application"
 
     const val TRIPS_PAGE_SIZE = 20
     const val NOTIFICATIONS_PAGE_SIZE = 10

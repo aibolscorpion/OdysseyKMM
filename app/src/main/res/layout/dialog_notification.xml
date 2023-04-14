@@ -124,7 +124,7 @@
                             android:layout_height="@dimen/button_height"
                             style="@style/bottomSheetBtn"
                             android:text="@string/learn_more"
-                            android:onClick="@{() -> thisDialog.learnMore(notification.applicationId)}"/>
+                            android:onClick="@{() -> thisDialog.learnMore(notification)}"/>
 
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
