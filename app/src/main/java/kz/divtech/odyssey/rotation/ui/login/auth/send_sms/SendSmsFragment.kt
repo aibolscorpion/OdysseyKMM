@@ -41,7 +41,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         dataBinding.codeFragment = this
         dataBinding.phoneNumber = args.phoneNumber
 
-        extractedPhoneNumber = args.extracedPhoneNumber
+        extractedPhoneNumber = args.extractedPhoneNumber
 
         setupEditTexts()
 
@@ -188,7 +188,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     }
 
     fun showContactSupportDialog() = findNavController().navigate(
-        SendSmsFragmentDirections.actionGlobalContactSupportDialog())
+        R.id.action_global_contactSupportDialog)
 
     private fun openMainActivity(){
         findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())

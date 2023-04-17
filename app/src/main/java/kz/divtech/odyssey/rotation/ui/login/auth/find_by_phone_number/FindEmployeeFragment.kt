@@ -163,14 +163,29 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
         findNavController().navigate(FindEmployeeFragmentDirections.
         actionPhoneNumberFragmentToIINFragment(dataBinding.phoneNumberET.text.toString()))
 
-    fun showTermsOfAgreementDialog() =
-         findNavController().navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
+    fun showTermsOfAgreementDialog(){
+        with(findNavController()){
+            if(R.id.phoneNumberFragment == currentDestination?.id){
+                navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
+            }
+        }
+    }
 
-    private fun showErrorDialog() =
-        findNavController().navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToPhoneNumberErrorDialog())
+    private fun showErrorDialog(){
+        with(findNavController()){
+            if(R.id.phoneNumberFragment == currentDestination?.id){
+                navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToPhoneNumberErrorDialog())
+            }
+        }
+    }
 
-    private fun showAccountDeactivatedDialog(employeeName: String) =
-        findNavController().navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog(employeeName))
+    private fun showAccountDeactivatedDialog(employeeName: String){
+        with(findNavController()){
+            if(R.id.phoneNumberFragment == currentDestination?.id){
+                navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToAccountDeactivatedDialog(employeeName))
+            }
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onClickOk() {

@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
@@ -49,9 +50,12 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     }
 
     override fun onDocumentClicked(document: Document) {
-        val action = DocumentsFragmentDirections.actionDocumentsFragmentToDocumentDialog(
-            document, currentEmployee)
-        findNavController().navigate(action)
+        with(findNavController()){
+            if(R.id.documentsFragment == currentDestination?.id){
+                navigate(DocumentsFragmentDirections.actionDocumentsFragmentToDocumentDialog(
+                    document, currentEmployee))
+            }
+        }
     }
 
     override fun onDestroyView() {

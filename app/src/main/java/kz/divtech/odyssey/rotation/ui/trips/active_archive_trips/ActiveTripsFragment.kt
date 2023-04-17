@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
@@ -161,10 +162,14 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     override fun onTripClicked(trip: Trip) {
-        if(trip.segments == null){
-            findNavController().navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
-        }else {
-            findNavController().navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))
+        with(findNavController()){
+            if(R.id.tripsFragment == currentDestination?.id){
+                if(trip.segments == null){
+                    navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+                }else {
+                    navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))
+                }
+            }
         }
     }
 

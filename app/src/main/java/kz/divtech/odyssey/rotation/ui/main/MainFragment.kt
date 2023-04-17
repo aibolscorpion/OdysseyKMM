@@ -151,11 +151,23 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         _binding = null
     }
 
-    private fun openVoucherDialog() = findNavController().navigate(
-        MainFragmentDirections.actionMainFragmentToVoucherDialog())
+    private fun openVoucherDialog() {
+        with(findNavController()){
+            if(R.id.mainFragment == currentDestination?.id){
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToVoucherDialog())
+            }
+        }
+    }
 
-    private fun openDebtDialog() = findNavController().navigate(
-        MainFragmentDirections.actionMainFragmentToDebtDialog())
+    private fun openDebtDialog() {
+        with(findNavController()){
+            if(R.id.mainFragment == currentDestination?.id){
+                findNavController().navigate(
+                    MainFragmentDirections.actionMainFragmentToDebtDialog())
+            }
+        }
+    }
 
     fun openNotificationsFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
 

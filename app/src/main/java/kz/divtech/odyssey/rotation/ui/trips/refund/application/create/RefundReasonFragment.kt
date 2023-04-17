@@ -18,6 +18,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils
 
 class RefundReasonFragment: Fragment() {
     private val args : RefundReasonFragmentArgs by navArgs()
@@ -25,11 +26,38 @@ class RefundReasonFragment: Fragment() {
     val viewModel: RefundViewModel by viewModels{
         RefundViewModel.RefundViewModelFactory((activity as MainActivity).refundRepository)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRefundReasonBinding.inflate(inflater)
         binding.thisDialog = this
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setRadioGroup()
+    }
+
+    private fun setRadioGroup(){
+        binding.reasonsRG.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.userVariantRB -> {
+                    KeyboardUtils.showKeyboard(requireContext(), binding.userVariantET)
+                }
+                else -> {
+                    KeyboardUtils.hideKeyboard(requireContext(), binding.userVariantET)
+                    binding.userVariantET.clearFocus()
+                }
+            }
+        }
+
+        binding.userVariantET.setOnFocusChangeListener{ _, hasFocus ->
+            if(hasFocus){
+                binding.userVariantRB.isChecked = true
+            }
+        }
     }
 
     fun sendApplicationToRefund(){
@@ -53,8 +81,11 @@ class RefundReasonFragment: Fragment() {
         val checkedRadioId = binding.reasonsRG.checkedRadioId
         return if(checkedRadioId != -1){
             val checkedRadioBtn = binding.reasonsRG.findViewById<RadioButton>(checkedRadioId)
-            if(checkedRadioId == binding.userVariantRB.id) binding.userVariantET.text.toString()
-            else checkedRadioBtn.text.toString()
+            if(checkedRadioId == binding.userVariantRB.id) {
+                binding.userVariantET.text.toString()
+            }else {
+                checkedRadioBtn.text.toString()
+            }
         }else{
             ""
         }

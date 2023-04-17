@@ -16,6 +16,7 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
@@ -122,8 +123,11 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     }
 
     override fun onNewsClick(articleId: Int) {
-        val action = NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId)
-        findNavController().navigate(action)
+        with(findNavController()){
+            if(R.id.newsFragment == currentDestination?.id){
+                navigate(NewsFragmentDirections.actionNewsFragmentToArticleDialog(articleId))
+            }
+        }
     }
 
     override fun onRetryClicked() {

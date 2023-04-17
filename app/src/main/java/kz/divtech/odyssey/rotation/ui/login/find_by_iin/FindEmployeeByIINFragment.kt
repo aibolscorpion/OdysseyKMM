@@ -68,9 +68,13 @@ class FindEmployeeByIINFragment : Fragment() {
     private fun openUpdatePhoneNumber(employee: Employee) =
         findNavController().navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToUpdatePhoneNumber(employee))
 
-    private fun showEmployeeNotFoundDialog() =
-        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
-
+    private fun showEmployeeNotFoundDialog() {
+        with(findNavController()){
+            if(R.id.IINFragment == currentDestination?.id){
+                navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
+            }
+        }
+    }
 
     fun backToSendSmsFragment() = findNavController().popBackStack()
 

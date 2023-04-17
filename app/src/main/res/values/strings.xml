@@ -269,7 +269,7 @@
 
     <string name="refund_status_pending_title">Заявка на рассмотрении</string>
     <string name="refund_status_process_title">Билеты отправлены на возврат</string>
-    <string name="refund_status_completed_title">Билеты возвращенны</string>
+    <string name="refund_status_completed_title">Билеты возвращены</string>
     <string name="refund_status_rejected_title">Заявка на возврат отклонена</string>
     <string name="refund_status_canceled_title">Заявка на возврат отменена</string>
     <string name="refund_status_error_partly_title">Ошибка при возврате</string>

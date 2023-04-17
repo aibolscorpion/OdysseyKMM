@@ -94,11 +94,21 @@ class UpdatePhoneNumberFragment : Fragment() {
         _dataBinding = null
     }
 
-    private fun showApplicationSentDialog() =
-        findNavController().navigate(UpdatePhoneNumberFragmentDirections.actionAddPhoneNumberToApplicationSentDialog(dataBinding.phoneNumberET.text.toString()))
+    private fun showApplicationSentDialog(){
+        with(findNavController()){
+            if(R.id.updatePhoneNumber == currentDestination?.id){
+                navigate(UpdatePhoneNumberFragmentDirections.actionAddPhoneNumberToApplicationSentDialog(dataBinding.phoneNumberET.text.toString()))
+            }
+        }
+    }
 
-    private fun showErrorDialog() =
-        findNavController().navigate(UpdatePhoneNumberFragmentDirections.actionAddPhoneNumberToChangeNumberErrorDialog())
+    private fun showErrorDialog(){
+        with(findNavController()){
+            if(R.id.updatePhoneNumber == currentDestination?.id){
+                navigate(UpdatePhoneNumberFragmentDirections.actionAddPhoneNumberToChangeNumberErrorDialog())
+            }
+        }
+    }
 
     fun backToSearchByIINFragment() = findNavController().popBackStack()
 }
