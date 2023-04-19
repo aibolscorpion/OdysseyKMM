@@ -192,6 +192,7 @@
     <string name="train">поезд</string>
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
+    <string name="trip_tickets">Билеты по поездке</string>
 
     <string name="number_sign_before_text">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>

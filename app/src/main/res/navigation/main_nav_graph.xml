@@ -156,6 +156,9 @@
         <action
             android:id="@+id/action_tripDetailDialog_to_chooseTicketRefundFragment"
             app:destination="@id/chooseTicketRefundFragment" />
+        <action
+            android:id="@+id/action_tripDetailDialog_to_chooseTicketForOpen"
+            app:destination="@id/chooseTicketForOpen" />
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
@@ -320,5 +323,14 @@
 
     </fragment>
     <action android:id="@+id/action_global_refundListFragment" app:destination="@id/refundListFragment" />
+    <fragment
+        android:id="@+id/chooseTicketForOpen"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.ChooseTicketForOpen"
+        android:label="Билеты по поездке"
+        tools:layout="@layout/fragment_choose_ticket_for_open" >
+        <argument
+            android:name="issuedTickets"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Ticket[]" />
+    </fragment>
 
 </navigation>

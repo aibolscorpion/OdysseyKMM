@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin"
+        android:background="@color/main_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:textSize="20sp"
+            android:textColor="#07213d"
+            android:lineSpacingExtra="8sp"
+            android:text="@string/trip_tickets"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chooseTicketForOpenRV"
+            android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.ItemFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".ui.trips.active_archive_trips.dialogs.trip_detail.ChooseTicketForOpen"
+            tools:listitem="@layout/item_ticket_name" />
+
+    </LinearLayout>
+
+</layout>

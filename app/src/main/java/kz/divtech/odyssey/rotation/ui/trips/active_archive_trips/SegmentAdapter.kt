@@ -25,10 +25,10 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
 
     override fun getItemCount() = listOfSegments.size
 
-    fun setSegmentList(trip: Trip){
+    fun setSegmentList(trip: Trip?){
         this.trip = trip
         listOfSegments.clear()
-        trip.segments?.let { listOfSegments.addAll(it) }
+        trip?.segments?.let { listOfSegments.addAll(it) }
         notifyDataSetChanged()
     }
 

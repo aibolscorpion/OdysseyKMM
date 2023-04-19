@@ -171,17 +171,6 @@
 
                 </LinearLayout>
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/ticketsRV"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="12dp"-->
-<!--                    android:layout_marginBottom="24dp"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                    tools:itemCount="2"-->
-<!--                    tools:listitem="@layout/item_download_ticket" />-->
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -193,6 +182,7 @@
                     android:paddingBottom="@dimen/margin"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:onClick="@{() -> thisDialog.openChooseTicketForOpenFragment()}"
                     android:text="@string/show_tickets"
                     app:drawableStartCompat="@drawable/icon_ticket"
                     android:layout_marginTop="24dp"/>

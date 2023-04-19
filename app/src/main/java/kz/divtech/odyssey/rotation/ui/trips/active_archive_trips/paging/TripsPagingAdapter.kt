@@ -2,11 +2,13 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
+import timber.log.Timber
 
 class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDataAdapter<Trip, TripsPagingAdapter.TripViewHolder>(
     TripsDiffCallBack()
@@ -31,7 +33,7 @@ class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDat
 
         fun bind(trip : Trip?){
             binding.trip = trip
-            adapter.setSegmentList(trip!!)
+            adapter.setSegmentList(trip)
         }
 
     }

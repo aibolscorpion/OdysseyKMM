@@ -16,7 +16,7 @@ object LocalDateTimeUtils {
 
     fun formatByGivenPattern(dateTime: String?, pattern: String): String{
         var returnString = ""
-        if(dateTime != null){
+        dateTime?.let {
             val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
             val parsedDateTime = LocalDateTime.parse(dateTime, serverDateTimeFormat)
 

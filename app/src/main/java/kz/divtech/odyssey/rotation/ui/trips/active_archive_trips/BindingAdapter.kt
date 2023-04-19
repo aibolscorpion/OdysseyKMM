@@ -148,7 +148,7 @@ object BindingAdapter {
     }
 
     private fun generateIconForEachSegment(segment: Segment, statusSet: HashSet<SegmentStatus>,
-                                           layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
+               layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
         when(segment.status){
             Constants.STATUS_OPENED -> {
                 if(segment.active_process.equals(Constants.WATCHING)){
@@ -178,7 +178,7 @@ object BindingAdapter {
 
     @BindingAdapter("loadFromUrl")
     @JvmStatic fun ImageView.setSrc(imgUrl: String?){
-        if(imgUrl != null){
+        imgUrl?.let {
             Glide.with(this.context).load(imgUrl).into(this)
         }
     }
@@ -454,7 +454,6 @@ object BindingAdapter {
         val drawable = GradientDrawable()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 6.dpToPx.toFloat()
-
         when(refundSegmentStatus){
             Constants.REFUND_STATUS_PROCESS -> {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_completed_process_bg))
