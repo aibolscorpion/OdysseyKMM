@@ -401,7 +401,7 @@
     <string name="empty_notifications_title">Уведомления не найдены</string>
     <string name="empty_notifications_content">У вас пока нет новых уведомлений</string>
     <string name="important_notification">Важное уведомление</string>
-    <string name="important_button_text">Спасибо,я ознакомлен</string>
+    <string name="important_button_text">Спасибо, я ознакомлен</string>
     <string name="learn_more">Узнать подробнее</string>
     <string name="hours_before">%1$d ч. назад</string>
     <string name="minutes_before">%1$d мин. назад</string>
