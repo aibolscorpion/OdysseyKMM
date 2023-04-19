@@ -22,7 +22,6 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
-import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.DownloadTicketButtonAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
@@ -30,7 +29,7 @@ import java.io.File
 import java.time.LocalDateTime
 
 
-class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapter.DownloadInterface {
+class TripDetailDialog : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     private val args: TripDetailDialogArgs by navArgs()
     internal val viewModel: TripDetailViewModel by viewModels()
@@ -61,7 +60,6 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
 
         setSegmentFullRV()
         setTicketPriceRV()
-//        setDownloadButtonRV()
         setRefundButtons()
 
     }
@@ -92,19 +90,6 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         dataBinding.totalPriceValueTV.text = requireContext().getString(R.string.ticket_price, totalPrice)
     }
 
-//    private fun setDownloadButtonRV(){
-//        val ticketAdapter = DownloadTicketButtonAdapter(this)
-//        val ticketList = mutableListOf<Ticket>()
-//        args.trip.segments?.forEach{ segment ->
-//            if(segment.status.equals(Constants.STATUS_ISSUED)){
-//                segment.ticket?.let { ticketList.add(it) }
-//            }
-//        }
-//        ticketAdapter.setTicketList(ticketList)
-//        dataBinding.ticketsRV.adapter = ticketAdapter
-//    }
-
-
     override fun onDestroy() {
         super.onDestroy()
 
@@ -127,8 +112,7 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
     private fun openFile(file: File){
         if(file.exists()){
             val fileURI = FileProvider.getUriForFile(
-                App.appContext, App.appContext.packageName+
-                        ".provider", file)
+                App.appContext, App.appContext.packageName+ ".provider", file)
             val intent = Intent(Intent.ACTION_VIEW)
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -142,21 +126,27 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         }
     }
 
-    override fun onTicketClicked(currentTicket: Ticket) {
-        viewModel.openFileIfExists(currentTicket)
-    }
-
-    private fun getIssuedTickets() : Array<Segment> {
-        val listOfIssuedTickets = mutableListOf<Segment>()
+    private fun getActiveIssuedSegments() : Array<Segment> {
+        val listOfIssuedSegments = mutableListOf<Segment>()
         val date = LocalDateTimeUtils.getLocalDateTimeByPattern(args.trip.date!!)
         if(date.isAfter(LocalDateTime.now())){
             args.trip.segments?.forEach { segment ->
                 if(segment.status == Constants.STATUS_ISSUED){
-                    listOfIssuedTickets.add(segment)
+                    listOfIssuedSegments.add(segment)
                 }
             }
         }
-        return listOfIssuedTickets.toTypedArray()
+        return listOfIssuedSegments.toTypedArray()
+    }
+
+    private fun getTickets() : Array<Ticket> {
+        val listOfTickets = mutableListOf<Ticket>()
+        args.trip.segments?.forEach { segment ->
+            if(segment.status == Constants.STATUS_ISSUED){
+                segment.ticket?.let { listOfTickets.add(it) }
+            }
+        }
+        return listOfTickets.toTypedArray()
     }
 
     private fun setRefundButtons(){
@@ -165,14 +155,18 @@ class TripDetailDialog : BottomSheetDialogFragment(), DownloadTicketButtonAdapte
         dataBinding.refundApplicationSizeTV.text = refundApplications.size.toString()
 
         dataBinding.createRefundAppTV.isVisible = refundApplications.isEmpty()
-                && getIssuedTickets().isNotEmpty()
+                && getActiveIssuedSegments().isNotEmpty()
     }
 
+    fun openChooseTicketForOpenFragment() = findNavController().navigate(
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketForOpen(getTickets())
+    )
+
     fun openChooseTicketRefundFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getIssuedTickets()))
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getActiveIssuedSegments()))
 
     fun openRefundListFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionGlobalRefundListFragment(getIssuedTickets(), args.trip)
+        TripDetailDialogDirections.actionGlobalRefundListFragment(getActiveIssuedSegments(), args.trip)
     )
 
 }
