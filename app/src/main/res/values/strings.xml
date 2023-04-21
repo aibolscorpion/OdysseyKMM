@@ -193,6 +193,8 @@
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
     <string name="trip_tickets">Билеты по поездке</string>
+    <string name="click_to_download">Нажмите, чтобы скачать</string>
+    <string name="file_extension_modified_date_and_size">%1$s • %2$s • %3$s</string>
 
     <string name="number_sign_before_text">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
@@ -410,6 +412,6 @@
     <string name="turn_on_notification_description">Это важно: мы будем уведомлять вас об изменениях в поездках, важных новостях и о проблемах в документах.</string>
     <string name="turn_on">Включить</string>
     <string name="remind_later">Напомнить позже</string>
-    <string name="close_and_logout_from_account">Закрыть и выйти изаккаунта</string>
+    <string name="close_and_logout_from_account">Закрыть и выйти из аккаунта</string>
 
 </resources>

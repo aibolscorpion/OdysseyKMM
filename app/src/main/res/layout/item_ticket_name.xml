@@ -8,9 +8,10 @@
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
         <ImageView
             android:id="@+id/fileIV"
@@ -18,7 +19,7 @@
             android:layout_height="42dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/icon_notify_another_device" />
+            tools:src="@drawable/icon_download" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,11 +29,13 @@
             android:textColor="#07213d"
             android:lineSpacingExtra="8sp"
             android:layout_marginStart="12dp"
-            tools:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintStart_toEndOf="@+id/fileIV"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fileIV"
+            android:text="@{@string/dash_sign_btw_two_text(ticket.dep_station_name, ticket.arr_station_name)}"
             tools:text="Семей – Актогай"/>
 
         <TextView
+            android:id="@+id/ticketFileDescTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_root_ui_medium"
@@ -41,9 +44,8 @@
             android:lineSpacingExtra="5sp"
             android:layout_marginStart="12dp"
             app:layout_constraintBottom_toBottomOf="@+id/fileIV"
-            tools:layout_constraintStart_toEndOf="@+id/fileIV"
-            tools:text="PDF • 1 фев 2023 • 92.5 КБ" />
-
+            app:layout_constraintStart_toEndOf="@+id/fileIV"
+            tools:text="Нажмите, чтобы скачать" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

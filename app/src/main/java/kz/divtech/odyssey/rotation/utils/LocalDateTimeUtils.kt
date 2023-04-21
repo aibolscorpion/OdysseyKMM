@@ -1,7 +1,9 @@
 package kz.divtech.odyssey.rotation.utils
 
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object LocalDateTimeUtils {
@@ -35,5 +37,11 @@ object LocalDateTimeUtils {
     fun getLocalDateByPattern(serverDateTime: String): LocalDate {
         val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
         return LocalDate.parse(serverDateTime, serverDateTimeFormat)
+    }
+
+    fun Long.toDateString(): String {
+        val date = Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
+        val format = DateTimeFormatter.ofPattern("d MMM yyyy")
+        return format.format(date)
     }
 }

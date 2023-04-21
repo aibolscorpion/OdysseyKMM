@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
             app:layoutManager="LinearLayoutManager"
-            tools:context=".ui.trips.active_archive_trips.dialogs.trip_detail.ChooseTicketForOpen"
+            tools:context=".ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.ChooseTicketForOpen"
             tools:listitem="@layout/item_ticket_name" />
 
     </LinearLayout>

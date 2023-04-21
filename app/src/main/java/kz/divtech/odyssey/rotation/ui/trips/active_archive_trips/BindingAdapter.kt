@@ -437,7 +437,19 @@ object BindingAdapter {
         return strBuilder.toString()
     }
 
+    @BindingAdapter("trip")
+    @JvmStatic fun setCityAndTotalTimeInWay(textView: TextView, trip: Trip){
+        var totalMinutes = 0
+        trip.segments?.forEach { segment ->
+            totalMinutes += segment.train?.in_way_minutes!!
+        }
+        val hours = totalMinutes/60
+        val minutes = totalMinutes%60
 
+        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station, hours, minutes)
+
+        textView.text = totalTimeInWay
+    }
 
     @BindingAdapter("depArrDate")
     @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String){

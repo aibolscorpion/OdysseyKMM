@@ -135,8 +135,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
             )
     }
 
-    override fun onTripClicked(trip: Trip) {
-        trip.let {
+    override fun onTripClicked(trip: Trip?) {
+        trip?.let {
             if(trip.segments == null){
                 findNavController().navigate(MainFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
             }else {

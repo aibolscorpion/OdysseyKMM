@@ -13,9 +13,6 @@
             name="constants"
             type="kz.divtech.odyssey.rotation.app.Constants" />
         <variable
-            name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailViewModel" />
-        <variable
             name="view"
             type="android.view.View" />
     </data>
@@ -80,7 +77,7 @@
                     android:layout_marginTop="4dp"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:lineSpacingExtra="2sp"
-                    android:text="@{viewModel.cityAndTimeInWay}"
+                    app:trip="@{trip}"
                     android:textColor="#748595"
                     android:textSize="14sp"
                     tools:text="В Алматы. 8 ч 45 мин в пути" />
@@ -172,6 +169,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/showTicketsTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/buttonStyle"
@@ -182,7 +180,7 @@
                     android:paddingBottom="@dimen/margin"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
-                    android:onClick="@{() -> thisDialog.openChooseTicketForOpenFragment()}"
+                    android:onClick="@{() -> thisDialog.openTickets()}"
                     android:text="@string/show_tickets"
                     app:drawableStartCompat="@drawable/icon_ticket"
                     android:layout_marginTop="24dp"/>

@@ -161,13 +161,15 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         filterTripDialog.show(childFragmentManager, "FilterTripDialog")
     }
 
-    override fun onTripClicked(trip: Trip) {
-        with(findNavController()){
-            if(R.id.tripsFragment == currentDestination?.id){
-                if(trip.segments == null){
-                    navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
-                }else {
-                    navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))
+    override fun onTripClicked(trip: Trip?) {
+        trip?.let {
+            with(findNavController()){
+                if(R.id.tripsFragment == currentDestination?.id){
+                    if(trip.segments == null){
+                        navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+                    }else {
+                        navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))
+                    }
                 }
             }
         }

@@ -325,7 +325,7 @@
     <action android:id="@+id/action_global_refundListFragment" app:destination="@id/refundListFragment" />
     <fragment
         android:id="@+id/chooseTicketForOpen"
-        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.ChooseTicketForOpen"
+        android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.ChooseTicketForOpen"
         android:label="Билеты по поездке"
         tools:layout="@layout/fragment_choose_ticket_for_open" >
         <argument

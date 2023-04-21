@@ -4,6 +4,7 @@ import android.os.Bundle
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
+import java.io.File
 
 object Utils {
 
@@ -42,6 +43,15 @@ object Utils {
             }
         }
         return null
+    }
+
+    fun File.getFileSize(): String {
+        val size: Long = this.length() / 1024 // Get size and convert bytes into Kb.
+        return if (size >= 1024) {
+            (size / 1024).toString() + " Mb"
+        } else {
+            "$size Kb"
+        }
     }
 
 }

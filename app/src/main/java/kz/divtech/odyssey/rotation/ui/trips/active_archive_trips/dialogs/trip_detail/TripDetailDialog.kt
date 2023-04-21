@@ -24,6 +24,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
 import java.io.File
 import java.time.LocalDateTime
@@ -32,8 +33,18 @@ import java.time.LocalDateTime
 class TripDetailDialog : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     private val args: TripDetailDialogArgs by navArgs()
-    internal val viewModel: TripDetailViewModel by viewModels()
     private lateinit var dataBinding: DialogTripDetailBinding
+    val viewModel: OpenTicketViewModel by viewModels()
+    var ticketList = mutableListOf<Ticket>()
+
+    private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+            if(viewModel.downloadId == id){
+                viewModel.fileMap[id]?.let { openFile(it) }
+            }
+        }
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
@@ -46,22 +57,16 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
-        viewModel.fileLiveData.observe(this) { file ->
-            openFile(file)
-        }
-
-        viewModel.setCityAndTotalTimeInWay(args.trip)
+        ticketList.addAll(getTickets().toList())
 
         dataBinding.thisDialog = this
         dataBinding.trip = args.trip
-        dataBinding.viewModel = viewModel
+        dataBinding.showTicketsTV.isVisible = ticketList.isNotEmpty()
 
+        requireActivity().registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
         setSegmentFullRV()
         setTicketPriceRV()
         setRefundButtons()
-
     }
 
     private fun setSegmentFullRV(){
@@ -88,42 +93,6 @@ class TripDetailDialog : BottomSheetDialogFragment() {
         dataBinding.ticketsPriceRV.addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         dataBinding.ticketsPriceRV.adapter = priceAdapter
         dataBinding.totalPriceValueTV.text = requireContext().getString(R.string.ticket_price, totalPrice)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        requireActivity().unregisterReceiver(pdfDownloadedReceiver)
-    }
-
-    private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if(viewModel.downloadId == id){ openFileById(id) }
-        }
-    }
-
-
-    fun openFileById(downloadId : Long){
-        val file = viewModel.getFileById(downloadId)
-        openFile(file)
-    }
-
-    private fun openFile(file: File){
-        if(file.exists()){
-            val fileURI = FileProvider.getUriForFile(
-                App.appContext, App.appContext.packageName+ ".provider", file)
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.setDataAndType(fileURI, "application/pdf")
-            try{
-                startActivity(intent)
-            }catch (e: ActivityNotFoundException){
-                Toast.makeText(requireContext(), R.string.no_app_for_view_pdf, Toast.LENGTH_LONG).show()
-            }
-        }
     }
 
     private fun getActiveIssuedSegments() : Array<Segment> {
@@ -158,8 +127,49 @@ class TripDetailDialog : BottomSheetDialogFragment() {
                 && getActiveIssuedSegments().isNotEmpty()
     }
 
-    fun openChooseTicketForOpenFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketForOpen(getTickets())
+    internal fun openFile(file: File){
+        if(file.exists()){
+            val fileURI = FileProvider.getUriForFile(
+                App.appContext, App.appContext.packageName+ ".provider", file)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setDataAndType(fileURI, "application/pdf")
+            try{
+                startActivity(intent)
+            }catch (e: ActivityNotFoundException){
+                Toast.makeText(requireContext(), R.string.no_app_for_view_pdf, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun openTickets(){
+        if(ticketList.size == 1){
+            openFileIfExists(ticketList[0])
+        }else{
+            openChooseTicketForOpenFragment()
+        }
+    }
+
+    private fun openFileIfExists(ticket: Ticket){
+        val file = viewModel.getFileByTicket(ticket)
+        if(file.exists()){
+            openFile(file)
+        }else{
+            viewModel.downloadTicketByUrl(ticket)
+        }
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        requireActivity().unregisterReceiver(pdfDownloadedReceiver)
+    }
+
+    private fun openChooseTicketForOpenFragment() = findNavController().navigate(
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketForOpen(ticketList.toTypedArray())
     )
 
     fun openChooseTicketRefundFragment() = findNavController().navigate(
