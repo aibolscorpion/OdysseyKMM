@@ -40,7 +40,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if(viewModel.downloadId == id){
+            if(viewModel.downloadIdList.contains(id)){
                 viewModel.fileMap[id]?.let { openFile(it) }
             }
         }

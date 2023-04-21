@@ -14,7 +14,7 @@ import java.io.File
 class OpenTicketViewModel : ViewModel(){
     val fileMap = mutableMapOf<Long, File>()
     val ticketMap = mutableMapOf<Long, Ticket>()
-    var downloadId: Long = 0
+    var downloadIdList = mutableListOf<Long>()
 
     fun downloadTicketByUrl(ticket: Ticket){
         val pdfUrl = ticket.ticket_url
@@ -22,7 +22,8 @@ class OpenTicketViewModel : ViewModel(){
         val request = DownloadManager.Request(Uri.parse(pdfUrl))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, getFilePath(ticket))
-        downloadId = downloadManager.enqueue(request)
+        val downloadId = downloadManager.enqueue(request)
+        downloadIdList.add(downloadId)
         fileMap[downloadId] = getFileByTicket(ticket)
         ticketMap[downloadId] = ticket
     }
