@@ -66,13 +66,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavigationView = binding.bottomNavigationView
-        NavigationUI.setupWithNavController(bottomNavigationView, navController, false)
+        NavigationUI.setupWithNavController(binding.bottomNavigationView, navController, false)
+
         setSupportActionBar(binding.mainToolbar)
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment,
-            R.id.tripsFragment, R.id.helpFragment, R.id.profileFragment)
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        setupActionBarWithNavController(navController, AppBarConfiguration(setOf(R.id.mainFragment,
+            R.id.tripsFragment, R.id.searchFragment, R.id.helpFragment, R.id.profileFragment)))
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){

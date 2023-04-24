@@ -290,6 +290,12 @@
     <string name="segment_status_process">Возврат подтвержен</string>
     <string name="segment_status_returned">Возвращен</string>
     <string name="segment_status_error">Ошибка возврата</string>
+
+    -----------------------------------------------------------------------------------------------
+    //Страница Поиск
+    <string name="ticket_purchase_under_development">Раздел покупки билетов сейчас в разработке</string>
+    <string name="soon_you_will_be_able_to_buy_ticket">Совсем скоро вы сможете покупать авиа и ЖД билеты в приложении. Мы уведомим Вас когда раздел заработает.</string>
+    <string name="go_to_main_page">Вернуться на главную</string>
     -----------------------------------------------------------------------------------------------
     //Страница Помощь
     <string name="help_content">Поддержка клиентов работает круглосуточно, без выходных дней, без перерывов.</string>
@@ -413,5 +419,6 @@
     <string name="turn_on">Включить</string>
     <string name="remind_later">Напомнить позже</string>
     <string name="close_and_logout_from_account">Закрыть и выйти из аккаунта</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
