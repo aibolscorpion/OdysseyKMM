@@ -73,7 +73,7 @@
                             android:text="@string/name" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -89,7 +89,7 @@
                             android:text="@string/surname" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -107,7 +107,7 @@
 
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -123,7 +123,7 @@
                             android:text="@string/name_latin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -139,7 +139,7 @@
                             android:text="@string/surname_latin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -156,13 +156,13 @@
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/dateOfBirthEditText"
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:layout_marginTop="7dp"
-                            android:background="@drawable/bg_grey_date_edit_text"
+                            android:background="@drawable/bg_date_edit_text"
                             android:focusable="false"
-                            app:birthDate="@{employee.birthDate}"
+                            app:birthDate="@={employee.birthDate}"
                             tools:text="@string/date_of_birth_placeholder" />
 
                         <TextView
@@ -180,7 +180,7 @@
                             android:orientation="horizontal"
                             app:maleButton="@{maleRadioButton}"
                             app:femaleButton="@{femaleRadioButton}"
-                            app:gender="@{employee.gender}" >
+                            app:gender="@={employee.gender}" >
 
                             <RadioButton
                                 android:id="@+id/maleRadioButton"
@@ -213,7 +213,7 @@
                             android:text="@string/iin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
@@ -230,7 +230,7 @@
                             android:text="@string/citizenship" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -279,7 +279,7 @@
                             android:layout_marginTop="7dp"
                             android:text="@={employee.phone}"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            style="@style/uneditable_text"
+                            style="@style/profileMenuTextStyle"
                             tools:text="@string/phone_placeholder" />
 
                         <TextView
@@ -295,7 +295,7 @@
                             android:layout_marginTop="7dp"
                             android:text="@={employee.email}"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            style="@style/uneditable_text" />
+                            style="@style/profileMenuTextStyle" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
                 </androidx.cardview.widget.CardView>
@@ -304,11 +304,11 @@
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
-                    android:background="@drawable/bg_grey_button"
                     android:text="@string/save"
                     app:layout_constraintTop_toBottomOf="@+id/contactInfoCV"
-                    android:layout_marginTop="@dimen/margin"
+                    android:onClick="@{() -> viewModel.updatePersonalData(employee)}"
                     android:layout_marginBottom="23dp"
+                    android:layout_marginTop="@dimen/margin"
                     android:layout_marginStart="@dimen/margin"
                     android:layout_marginEnd="@dimen/margin" />
 

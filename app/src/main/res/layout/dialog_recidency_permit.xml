@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:clipToPadding="false"
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
@@ -55,9 +56,9 @@
                     style="@style/buttonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
-                    android:background="@drawable/bg_grey_button"
                     android:text="@string/save"
-                    android:layout_marginTop="@dimen/margin" />
+                    android:layout_marginTop="@dimen/margin"
+                    android:onClick="@{() -> viewModel.updateDocument(document)}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

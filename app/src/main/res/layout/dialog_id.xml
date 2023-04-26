@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:clipToPadding="false"
                 android:paddingStart="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
                 android:paddingEnd="@dimen/margin"
@@ -144,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="@dimen/margin"
-                    android:background="@drawable/bg_grey_button"
+                    android:onClick="@{() -> viewModel.updateDocument(document)}"
                     android:text="@string/save" />
 
 
