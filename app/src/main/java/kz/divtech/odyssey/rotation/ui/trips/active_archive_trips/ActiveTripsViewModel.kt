@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 
 class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {

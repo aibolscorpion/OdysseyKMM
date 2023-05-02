@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
@@ -14,7 +14,6 @@ class LogoutViewModel(
     private val tripsRepository: TripsRepository,
     private val employeeRepository: EmployeeRepository,
     private val faqRepository: FaqRepository,
-    private val documentRepository: DocumentRepository,
     private val newsRepository: NewsRepository,
     private val articleRepository: ArticleRepository,
     private val notificationRepository: NotificationRepository,
@@ -32,15 +31,6 @@ class LogoutViewModel(
             pBarVisibility.set(View.GONE)
         }
 
-    fun getTripsFromFirstPage(){
-        viewModelScope.launch {
-            pBarVisibility.set(View.VISIBLE)
-            tripsRepository.getTripsFromFirstPage(true)
-            pBarVisibility.set(View.GONE)
-
-        }
-    }
-
     fun logoutFromServer(){
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
@@ -54,7 +44,6 @@ class LogoutViewModel(
         private val tripsRepository: TripsRepository,
         private val employeeRepository: EmployeeRepository,
         private val faqRepository: FaqRepository,
-        private val documentRepository: DocumentRepository,
         private val newsRepository: NewsRepository,
         private val articleRepository: ArticleRepository,
         private val notificationRepository: NotificationRepository,
@@ -64,7 +53,7 @@ class LogoutViewModel(
             if(modelClass.isAssignableFrom(LogoutViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
                 return LogoutViewModel(tripsRepository, employeeRepository,
-                    faqRepository, documentRepository, newsRepository,
+                    faqRepository, newsRepository,
                     articleRepository, notificationRepository, orgInfoRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
@@ -78,7 +67,6 @@ class LogoutViewModel(
         val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
         val deleteFaqAsync = async { faqRepository.deleteFaq() }
-        val deleteDocumentsAsync = async { documentRepository.deleteDocuments() }
         val deleteNewsAsync = async { newsRepository.deleteNews() }
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
         val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
@@ -86,7 +74,6 @@ class LogoutViewModel(
         deleteTripsAsync.await()
         deleteEmployeeAsync.await()
         deleteFaqAsync.await()
-        deleteDocumentsAsync.await()
         deleteNewsAsync.await()
         deleteFullArticlesAsync.await()
         deleteNotificationsAsync.await()

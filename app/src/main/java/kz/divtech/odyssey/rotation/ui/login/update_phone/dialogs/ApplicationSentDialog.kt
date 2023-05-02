@@ -11,10 +11,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogApplicationSentBinding
-import kz.divtech.odyssey.rotation.ui.login.listener.DialogListener
+import kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.DialogListener
 
 
-class ApplicationSentDialog : BottomSheetDialogFragment(), DialogListener{
+class ApplicationSentDialog : BottomSheetDialogFragment(), DialogListener {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

@@ -9,11 +9,11 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 
 class EmployeeRepository(private val dao: Dao) {
 
@@ -21,13 +21,11 @@ class EmployeeRepository(private val dao: Dao) {
     private var firstTimeEmployee = true
     private var firstTimeDeviceInfo = true
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insertEmployee(employeeInfo: Employee){
         dao.insertEmployee(employeeInfo)
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteEmployee(){
         dao.deleteEmployee()

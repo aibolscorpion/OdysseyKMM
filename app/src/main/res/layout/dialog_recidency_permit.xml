@@ -7,7 +7,7 @@
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog" />
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentViewModel" />

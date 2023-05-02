@@ -4,7 +4,7 @@
     <data>
         <variable
             name="ticket"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Ticket" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket" />
     </data>
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -92,7 +92,7 @@
                     app:carNumber="@{ticket.car_number}"
                     app:carTypeLabel="@{ticket.car_type_label}"
                     app:carClass="@{ticket.car_class}"
-                    app:placeNumber="@{ticket.places}"
+                    app:placeNumber="@{ticket.seat_number}"
                     tools:text="14 вагон • Купе • Класс 1Л • 2 место"/>
 
                 <TextView

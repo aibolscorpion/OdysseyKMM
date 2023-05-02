@@ -8,42 +8,25 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.remotemediator.TripRemoteMediator
 
 
 class TripsRepository(private val dao : Dao) {
+    suspend fun getTripById(id: Int): Result<SingleTrip> {
+        return RetrofitClient.getApiService().getTripById(id)
+    }
 
-    val nearestActiveTrip: Flow<Trip> = dao.observeNearestActiveTrip()
-    fun getTripById(id: Int): Flow<Trip> = dao.observeTripById(id)
-    private var firstTime = true
-
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteAllTrips(){
-        dao.deleteAllTrips()
+        dao.deleteActiveTrips()
+        dao.deleteArchiveTrips()
     }
 
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun refreshAllTrips(data: List<Trip>){
-        dao.refreshAllTrips(data)
-    }
-
-    suspend fun getTripsFromFirstPage(refresh: Boolean){
-        if(firstTime || refresh){
-            val response = RetrofitClient.getApiService().getTrips(1, orderDir = OrderDir.DESC.value)
-            if(response.isSuccess()){
-                val trips = response.asSuccess().value.data.data!!
-                refreshAllTrips(trips)
-                firstTime = false
-            }
-        }
-    }
+    suspend fun getNearestActiveTrip() = RetrofitClient.getApiService().getNearestActiveTrip()
 
     @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")

@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val tripsRepository by lazy { TripsRepository(database.dao()) }
     val employeeRepository by lazy { EmployeeRepository(database.dao()) }
     val faqRepository by lazy { FaqRepository(database.dao()) }
-    val documentRepository by lazy { DocumentRepository(database.dao()) }
     val newsRepository by lazy { NewsRepository(database.dao()) }
     val articleRepository by lazy { ArticleRepository(database.dao()) }
     val notificationRepository by lazy { NotificationRepository(database.dao()) }
@@ -50,7 +49,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val refundRepository by lazy { RefundRepository(database.dao()) }
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
-            faqRepository, documentRepository, newsRepository, articleRepository,
+            faqRepository, newsRepository, articleRepository,
             notificationRepository, orgInfoRepository)
     }
 
@@ -127,7 +126,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                     NOTIFICATION_TYPE_DEVICE -> openLoggedOutNotificationDialog(notification)
                     NOTIFICATION_TYPE_APPLICATION, NOTIFICATION_TYPE_TICKET -> {
                         if(onNewIntent) {
-                            viewModel.getTripsFromFirstPage()
                             viewModel.getNotificationsFromServer()
                         }
                         openNotificationDialog(notification)

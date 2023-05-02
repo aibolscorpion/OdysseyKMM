@@ -2,51 +2,61 @@ package kz.divtech.odyssey.rotation.data.remote.retrofit
 
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.domain.model.login.login.Login
-import kz.divtech.odyssey.rotation.domain.model.login.login.LoginResponse
+import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Documents
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notifications
-import kz.divtech.odyssey.rotation.domain.model.trips.Data
+import kz.divtech.odyssey.rotation.domain.model.trips.response.TripResponse
 import okhttp3.ResponseBody
 import retrofit2.http.*
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
+import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.create.RefundApplication
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 
 interface ApiService {
-
     @GET("user-agreement")
     suspend fun getUserAgreement(): Result<ResponseBody>
 
-    @GET("employees/get-employee-by-phone")
-    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Result<EmployeeData>
+    @GET("get-employee-by-phone")
+    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Result<EmployeeResult>
 
     //login
-    @POST("employees/send-code-login")
-    suspend fun sendSms(@Body phone: Map<String, String>): Result<CodeResponse>
+    @POST("send-sms-code")
+    suspend fun sendSms(@Body codeRequest: CodeRequest): Result<CodeResponse>
 
-    @POST("employees/login")
-    suspend fun login(@Body login : Login): Result<LoginResponse>
+    @POST("login")
+    suspend fun login(@Body authRequest : AuthRequest): Result<LoginResponse>
 
-    @GET("employees/get-employee-by-iin")
-    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeData>
+    @GET("get-employee-by-iin")
+    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeResult>
 
-    @POST("employees/update-phone")
+    @POST("update-phone-request")
     suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Result<ResponseBody>
 
     //Trips
-    @GET("employees/get-applications")
-    suspend fun getTrips(@Query("page") pageIndex: Int,
-                        @Query("order_by") orderBy: String = "date",
-                        @Query("order_dir") orderDir: String): Result<Data>
+    @GET("applications/get-nearest-active-app")
+    suspend fun getNearestActiveTrip(): Result<SingleTrip>
+
+    @GET("applications/active")
+    suspend fun getActiveTrips(@Query("page") pageIndex: Int,
+                               @Query("order_by") orderBy: String = "date",
+                               @Query("order_dir") orderDir: String): Result<TripResponse>
+    @GET("applications/archive")
+    suspend fun getArchiveTrips(@Query("page") pageIndex: Int,
+                               @Query("order_by") orderBy: String = "date",
+                               @Query("order_dir") orderDir: String): Result<TripResponse>
+
+    @GET("applications/{id}")
+    suspend fun getTripById(@Path("id") tripId: Int): Result<SingleTrip>
 
     //Refund
     @GET("employees/refund-applications")
@@ -74,16 +84,12 @@ interface ApiService {
     suspend fun markAsReadArticleById(@Path("id") articleId: Int): Result<ResponseBody>
 
     //EmployeeInfo
-    @GET("employees/info")
+    @GET("profile")
     suspend fun getEmployeeInfo() : Result<Employee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("employees/update-data")
     suspend fun updateData(@Body employee: Employee): Result<ResponseBody>
-
-    //Documents
-    @GET("employees/get-documents")
-    suspend fun getDocuments(): Result<Documents>
 
     @POST("employees/update-document")
     suspend fun updateDocument(@Body document: Document): Result<ResponseBody>
@@ -100,7 +106,7 @@ interface ApiService {
     suspend fun logout(): Result<ResponseBody>
 
     //DeviceInfo
-    @POST("employees/fix")
+    @POST("fix-device")
     suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Result<ResponseBody>
 
     @GET("get-app-info")

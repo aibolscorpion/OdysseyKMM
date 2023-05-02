@@ -5,7 +5,7 @@
     <data>
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
         <variable
             name="view"
             type="android.view.View" />
@@ -95,7 +95,7 @@
                 android:textSize="14sp"
                 android:textColor="#B3748595"
                 android:lineSpacingExtra="2sp"
-                android:text="@{trip.end_station}"
+                android:text="@{trip.end_station.name}"
                 android:singleLine="true"
                 app:layout_constraintTop_toBottomOf="@+id/directionTV"
                 app:layout_constraintStart_toStartOf="parent"

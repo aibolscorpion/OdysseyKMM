@@ -45,28 +45,30 @@ class NotificationDialog : BottomSheetDialogFragment() {
 
         viewModel.markNotificationAsRead(args.notification.id)
         isCancelable = !args.notification.isImportant
-    }
 
-    fun learnMore(notification: PushNotification){
-        viewModel.getTripById(notification.applicationId!!).observe(viewLifecycleOwner){ trip ->
-            if(trip != null){
-                when(notification.type){
+        viewModel.trip.observe(viewLifecycleOwner){
+            if(it != null){
+                when(args.notification.type){
                     Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
-                        if(trip.segments != null){
-                            findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip))
+                        if(it.data.segments.isNotEmpty()){
+                            findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(it.data))
                         }else{
-                            findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
+                            findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(it.data))
                         }
                     }
                     Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
                         findNavController().navigate(NotificationDialogDirections.
-                            actionGlobalRefundListFragment(null, trip))
+                        actionGlobalRefundListFragment(null, it.data))
                     }
                 }
             }else{
                 Toast.makeText(requireContext(), R.string.trip_not_found_by_id, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun learnMore(notification: PushNotification){
+        viewModel.getTripById(notification.applicationId!!)
     }
 
 }

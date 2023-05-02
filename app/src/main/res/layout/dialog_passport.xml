@@ -8,10 +8,10 @@
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog" />
         <variable
             name="employee"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentViewModel" />
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
-                    android:text="@{employee.firstNameEn}"
+                    android:text="@{employee.first_name_en}"
                     android:backgroundTint="@color/bottom_sheet_line"
                     style="@style/uneditable_text"
                     tools:text="@string/name_en_placeholder" />
@@ -80,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@{employee.lastNameEn}"
+                    android:text="@{employee.last_name_en}"
                     android:backgroundTint="@color/bottom_sheet_line"
                     style="@style/uneditable_text"
                     tools:text="@string/surname_en_placeholder" />
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    app:birthDate="@{employee.birthDate}"
+                    app:birthDate="@{employee.birth_date}"
                     android:backgroundTint="@color/bottom_sheet_line"
                     style="@style/uneditable_text"
                     tools:text="@string/date_of_birth_placeholder" />
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.countryName}"
+                    android:text="@{employee.country_code}"
                     style="@style/uneditable_text"
                     tools:text="@string/kazakhstan"/>
 

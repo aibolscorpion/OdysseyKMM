@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/phoneNumberFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.FindEmployeeFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.FindEmployeeFragment"
         app:layout="@layout/fragment_find_employee"
         tools:layout="@layout/fragment_find_employee">
         <action
@@ -37,21 +37,21 @@
 
     <dialog
         android:id="@+id/phoneNumberErrorDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.PhoneNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.PhoneNumberErrorDialog"
         android:label="PhoneNumberErrorDialog"
         app:layout="@layout/dialog_phone_number_error"
         tools:layout="@layout/dialog_phone_number_error"/>
 
     <dialog
         android:id="@+id/contactSupportDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.ContactSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.ContactSupportDialog"
         android:label="ContactSupportDialog"
         app:layout="@layout/dialog_contact_support"
         tools:layout="@layout/dialog_contact_support" />
 
     <dialog
         android:id="@+id/accountDeactivatedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.AccountDeactivatedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.AccountDeactivatedDialog"
         android:label="AccountDeactivatedDialog"
         app:layout="@layout/dialog_account_deactivated"
         tools:layout="@layout/dialog_account_deactivated" >
@@ -62,7 +62,7 @@
 
     <fragment
         android:id="@+id/sendSmsFragment"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.send_sms.SendSmsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.send_sms.SendSmsFragment"
         app:layout="@layout/fragment_send_sms"
         tools:layout="@layout/fragment_send_sms" >
         <argument
@@ -125,7 +125,7 @@
 
     <dialog
         android:id="@+id/phoneNumberAddedDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.PhoneNumberAddedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.PhoneNumberAddedDialog"
         android:label="PhoneNumberAddedDialog"
         app:layout="@layout/dialog_phone_number_added"
         tools:layout="@layout/dialog_phone_number_added"/>
@@ -142,15 +142,15 @@
         android:label="updatePhoneNumber"
         app:layout="@layout/fragment_update_phone"
         tools:layout="@layout/fragment_update_phone">
-        <argument
-            android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
         <action
             android:id="@+id/action_addPhoneNumber_to_applicationSentDialog"
             app:destination="@id/applicationSentDialog" />
         <action
             android:id="@+id/action_addPhoneNumber_to_changeNumberErrorDialog"
             app:destination="@id/changeNumberErrorDialog" />
+        <argument
+            android:name="employee"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort" />
     </fragment>
     <action
         android:id="@+id/action_global_mainActivity"

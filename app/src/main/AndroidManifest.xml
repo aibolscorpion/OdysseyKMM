@@ -40,7 +40,7 @@
         </activity>
 
         <receiver
-            android:name=".ui.login.auth.SmsBroadcastReceiver"
+            android:name=".ui.login.send_sms.SmsBroadcastReceiver"
             android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
             <intent-filter>

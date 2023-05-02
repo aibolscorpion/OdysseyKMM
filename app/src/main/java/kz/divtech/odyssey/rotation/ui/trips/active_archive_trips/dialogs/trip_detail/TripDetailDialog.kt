@@ -20,14 +20,14 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
 import java.io.File
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 
 class TripDetailDialog : BottomSheetDialogFragment() {
@@ -80,8 +80,8 @@ class TripDetailDialog : BottomSheetDialogFragment() {
         val ticketList = mutableListOf<Ticket>()
         var totalPrice = 0
         var hasIssuedTicket = false
-        args.trip.segments?.forEach{ segment ->
-            if(segment.status.equals(Constants.STATUS_ISSUED)){
+        args.trip.segments.forEach{ segment ->
+            if(segment.status == Constants.STATUS_ISSUED){
                 hasIssuedTicket = true
                 val ticket = segment.ticket
                 totalPrice += ticket?.sum!!
@@ -97,9 +97,9 @@ class TripDetailDialog : BottomSheetDialogFragment() {
 
     private fun getActiveIssuedSegments() : Array<Segment> {
         val listOfIssuedSegments = mutableListOf<Segment>()
-        val date = LocalDateTimeUtils.getLocalDateTimeByPattern(args.trip.date!!)
-        if(date.isAfter(LocalDateTime.now())){
-            args.trip.segments?.forEach { segment ->
+        val date = args.trip.date.getLocalDateByPattern()
+        if(date.isAfter(LocalDate.now())){
+            args.trip.segments.forEach { segment ->
                 if(segment.status == Constants.STATUS_ISSUED){
                     listOfIssuedSegments.add(segment)
                 }
@@ -110,7 +110,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
 
     private fun getTickets() : Array<Ticket> {
         val listOfTickets = mutableListOf<Ticket>()
-        args.trip.segments?.forEach { segment ->
+        args.trip.segments.forEach { segment ->
             if(segment.status == Constants.STATUS_ISSUED){
                 segment.ticket?.let { listOfTickets.add(it) }
             }

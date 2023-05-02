@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import java.io.File
 
 class OpenTicketViewModel : ViewModel(){

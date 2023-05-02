@@ -9,13 +9,14 @@ import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.ActiveTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.ArchiveTrip
 
-@Database(entities = [Trip::class, Employee::class, Faq::class, Document::class,
-    Article::class, FullArticle::class, Notification::class, OrgInfo::class], version = 1, exportSchema = false)
+@Database(entities = [ActiveTrip::class, ArchiveTrip::class, Employee::class, Faq::class,
+    Article::class, FullArticle::class, Notification::class, OrgInfo::class],
+    version = 1, exportSchema = false)
 
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dao() : Dao

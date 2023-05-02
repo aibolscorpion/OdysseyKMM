@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 
 class DocumentViewModel : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)

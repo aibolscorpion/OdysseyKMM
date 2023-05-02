@@ -12,11 +12,9 @@ import androidx.databinding.InverseBindingListener
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.BIRTH_DATE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 object DocumentBindingAdapter {
 
@@ -66,13 +64,9 @@ object DocumentBindingAdapter {
     @BindingAdapter("birthDate")
     @JvmStatic fun setBirthDate(editText: EditText, date: String?){
         var formattedDate = ""
-        if(date != null){
+        date?.let {
             val birthDate = date.substring(0, 10)
-            val serverDateTimeFormat = DateTimeFormatter.ofPattern(BIRTH_DATE_PATTERN)
-            val parsedDateTime = LocalDate.parse(birthDate, serverDateTimeFormat)
-
-            val format = DateTimeFormatter.ofPattern(DAY_MONTH_YEAR_PATTERN)
-            formattedDate = parsedDateTime.format(format)
+            formattedDate = date.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
         }
         editText.setText(formattedDate)
     }
@@ -97,7 +91,7 @@ object DocumentBindingAdapter {
     @BindingAdapter("issueDate")
     @JvmStatic fun setIssueDate(editText: EditText, date: String?){
         if(editText.text.toString() != date){
-            val formattedDate = formatByGivenPattern(date, DAY_MONTH_YEAR_PATTERN)
+            val formattedDate = date.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
             editText.setText(formattedDate)
         }
     }

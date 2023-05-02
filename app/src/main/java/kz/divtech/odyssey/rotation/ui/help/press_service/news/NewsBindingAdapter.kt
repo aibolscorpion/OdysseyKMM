@@ -21,7 +21,7 @@ object NewsBindingAdapter {
             val date = formatByGivenPattern(publishedDate, DAY_MONTH_PATTERN)
             val time = formatByGivenPattern(publishedDate, HOUR_MINUTE_PATTERN)
 
-            textView.text = when(getLocalDateByPattern(publishedDate)){
+            textView.text = when(publishedDate.getLocalDateByPattern()){
                 today -> App.appContext.getString(R.string.today_at_time, time)
                 yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
                 else -> App.appContext.getString(R.string.date_at_time, date, time)

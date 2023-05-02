@@ -4,7 +4,7 @@
     <data>
         <variable
             name="ticket"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Ticket" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

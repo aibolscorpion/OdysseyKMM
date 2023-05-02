@@ -4,7 +4,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.domain.model.trips.Place
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
 
 object RefundBindingAdapter {
@@ -26,8 +25,8 @@ object RefundBindingAdapter {
 
     @BindingAdapter("trainNumber", "isTalgo")
     @JvmStatic
-    fun setTrainInfo(textView: TextView, trainNumber: String, isTalgo: Int){
-        val isTalgoTrain = if(isTalgo == 1) "«Тальго»" else ""
+    fun setTrainInfo(textView: TextView, trainNumber: String, isTalgo: Boolean){
+        val isTalgoTrain = if(isTalgo) "«Тальго»" else ""
         textView.apply {
             text = App.appContext.resources.getString(R.string.train_info, trainNumber, isTalgoTrain)
         }
@@ -36,11 +35,10 @@ object RefundBindingAdapter {
     @BindingAdapter("carNumber", "carTypeLabel", "carClass", "placeNumber")
     @JvmStatic
     fun setCarPlaceInfo(textView: TextView, carNumber: String, carTypeLabel: String,
-            carClass: String, places: List<Place>){
-        val commaSeparatedPlaceNumber = places.joinToString{ it -> "${it.number}" }
+            carClass: String, places: String){
         textView.apply {
             text = App.appContext.resources.getString(R.string.car_place_info, carNumber, carTypeLabel,
-                carClass, commaSeparatedPlaceNumber)
+                carClass, places)
         }
     }
 }

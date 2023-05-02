@@ -5,7 +5,7 @@
     <data>
         <variable
             name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.DialogListener" />
+            type="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.DialogListener" />
         <variable
             name="phoneNumber"
             type="String" />

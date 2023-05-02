@@ -70,7 +70,6 @@
     <string name="change_phone_number">Изменить номер телефона</string>
     <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
     <string name="change_iin">Изменить ИИН</string>
-    <string name="lastname_firstname_patronymic">%1$s %2$s %3$s</string>
     <string name="phone_number_added">Номер успешно добавлен</string>
     <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
     <string name="go_to_login_page">Перейти на страницу входа</string>
@@ -413,7 +412,7 @@
     <string name="learn_more">Узнать подробнее</string>
     <string name="hours_before">%1$d ч. назад</string>
     <string name="minutes_before">%1$d мин. назад</string>
-    <string name="trip_not_found_by_id">Поездка не найдена в Локальной Базе Данных</string>
+    <string name="trip_not_found_by_id">Поездка не найдена !</string>
     <string name="turn_on_notification_title">Включите уведомления</string>
     <string name="turn_on_notification_description">Это важно: мы будем уведомлять вас об изменениях в поездках, важных новостях и о проблемах в документах.</string>
     <string name="turn_on">Включить</string>

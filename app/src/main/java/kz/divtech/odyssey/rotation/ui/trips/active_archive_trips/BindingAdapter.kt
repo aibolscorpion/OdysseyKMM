@@ -17,8 +17,8 @@ import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.domain.model.trips.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundAppListBindingAdapter.dpToPx
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
@@ -26,13 +26,15 @@ import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 
 object BindingAdapter {
 
     @BindingAdapter("direction","date")
     @JvmStatic fun setDirection(textView: TextView, direction: String?, date: String?) {
         val context = App.appContext
-        val dayMonth = formatByGivenPattern(date, DAY_MONTH_PATTERN)
+        val dayMonth = date.formatDateToGivenPattern(DAY_MONTH_PATTERN)
         textView.text = when (direction) {
             Constants.TO_WORK -> context.getString(R.string.to_work, dayMonth)
             Constants.TO_HOME -> context.getString(R.string.to_home, dayMonth)
@@ -57,7 +59,7 @@ object BindingAdapter {
     @JvmStatic fun setApplicationStatusIcon(imageView: ImageView, trip: Trip?){
         when(trip?.status){
             Constants.STATUS_OPENED -> {
-                if(trip.segments?.isEmpty()!!){
+                if(trip.segments.isEmpty()){
                     imageView.setImageResource(R.drawable.icons_tabs_opened_without_details)
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
@@ -76,7 +78,7 @@ object BindingAdapter {
             }
 
             Constants.STATUS_RETURNED -> {
-                if(trip.segments?.size == 1){
+                if(trip.segments.size == 1){
                     imageView.setImageResource(R.drawable.drawable_trip_status_returned_fully)
                 }else{
                     imageView.setImageDrawable(moreThanOneSegments(trip))
@@ -84,7 +86,7 @@ object BindingAdapter {
             }
 
             Constants.STATUS_ISSUED -> {
-                if(trip.segments?.size  == 1){
+                if(trip.segments.size == 1){
                     imageView.setImageResource(R.drawable.drawable_trip_status_issued)
                 }else {
                     imageView.setImageDrawable(moreThanOneSegments(trip))}
@@ -95,7 +97,7 @@ object BindingAdapter {
     private fun moreThanOneSegments(trip: Trip) : Drawable? {
         val statusSet = HashSet<SegmentStatus>()
         var layerDrawable: LayerDrawable? = null
-        when (trip.segments?.size) {
+        when (trip.segments.size) {
             2 -> {
                 layerDrawable = ContextCompat.getDrawable(App.appContext,
                     R.drawable.drawable_two_segments) as LayerDrawable
@@ -148,7 +150,7 @@ object BindingAdapter {
     }
 
     private fun generateIconForEachSegment(segment: Segment, statusSet: HashSet<SegmentStatus>,
-               layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
+            layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
         when(segment.status){
             Constants.STATUS_OPENED -> {
                 if(segment.active_process.equals(Constants.WATCHING)){
@@ -176,25 +178,16 @@ object BindingAdapter {
         }
     }
 
-    @BindingAdapter("loadFromUrl")
-    @JvmStatic fun ImageView.setSrc(imgUrl: String?){
-        imgUrl?.let {
-            Glide.with(this.context).load(imgUrl).into(this)
-        }
-    }
-
-    @BindingAdapter("imgUrl", "refundSegmentStatus")
-    @JvmStatic fun setSegmentIcon(imageView: ImageView, imgUrl: String?, refundSegmentStatus: String?){
+    @BindingAdapter("refundSegmentStatus")
+    @JvmStatic fun setSegmentIcon(imageView: ImageView, refundSegmentStatus: String?){
         when(refundSegmentStatus){
             Constants.REFUND_STATUS_PROCESS, Constants.STATUS_RETURNED ->
                 imageView.setImageResource(R.drawable.icon_refund_completed)
             Constants.REFUND_STATUS_ERROR -> imageView.setImageResource(R.drawable.icon_refund_partly_error_red)
             Constants.REFUND_STATUS_PENDING -> imageView.setImageResource(R.drawable.icon_refund_pending)
             Constants.REFUND_STATUS_REJECTED -> imageView.setImageResource(R.drawable.icon_refund_rejected)
-            null -> imgUrl?.let { Glide.with(imageView.context).load(imgUrl).into(imageView) }
+            null -> Glide.with(imageView.context).load(R.mipmap.ktzh_logo).into(imageView) }
         }
-    }
-
 
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
     @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String?, arrStationName: String?){
@@ -211,8 +204,8 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depDateTime",  "arrDateTime")
     @JvmStatic fun formatTime(textView: TextView, segmentStatus: String, depDateTime: String?, arrDateTime: String?){
         if(depDateTime != null && arrDateTime != null){
-            val formattedDepTime = formatByGivenPattern(depDateTime, HOUR_MINUTE_PATTERN)
-            val formattedArrTime = formatByGivenPattern(arrDateTime,  HOUR_MINUTE_PATTERN)
+            val formattedDepTime = depDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
+            val formattedArrTime = arrDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
 
             val text = App.appContext.resources.
                 getString(R.string.dash_sign_btw_two_text, formattedDepTime, formattedArrTime)
@@ -224,7 +217,7 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depDateTime")
     @JvmStatic fun formatDate(textView: TextView, segmentStatus: String?, depDateTime: String?){
         if(segmentStatus != null && depDateTime != null){
-            val formattedDepDate = formatByGivenPattern(depDateTime, DAY_MONTH_DAY_OF_WEEK_PATTERN)
+            val formattedDepDate = depDateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN)
 
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
             textView.text = formattedDepDate
@@ -254,7 +247,7 @@ object BindingAdapter {
 
     @BindingAdapter("htmlText")
     @JvmStatic fun setSpannedText(textView: TextView, text: String?){
-        if(text != null && text.isNotEmpty()){
+        if(!text.isNullOrEmpty()){
             textView.text = Html.fromHtml(text, FROM_HTML_MODE_LEGACY)
         }
     }
@@ -335,13 +328,13 @@ object BindingAdapter {
     @BindingAdapter("tripDescription")
     @JvmStatic fun setDescription(textView: TextView, trip: Trip?){
         val strBuilder = StringBuilder()
-        if (trip != null && trip.is_extra!!) {
+        if (trip != null && trip.is_extra) {
             strBuilder.append(App.appContext.getString(R.string.extra_application))
             strBuilder.append(Constants.SPACE)
         }
         when(trip?.status){
             Constants.STATUS_OPENED -> {
-                if(trip.segments?.isEmpty()!!){
+                if(trip.segments.isEmpty()){
                     strBuilder.append(App.appContext.getString(R.string.opened_without_details_desc))
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
@@ -362,10 +355,10 @@ object BindingAdapter {
             }
 
             Constants.STATUS_RETURNED -> {
-                if(trip.segments?.size  == 1){
+                if(trip.segments.size  == 1){
                     strBuilder.append(App.appContext.getString(R.string.returned_fully_one_segment_desc,
                         trip.segments[0].closed_reason,
-                        formatByGivenPattern(trip.segments[0].ticket?.returned_at, DEFAULT_PATTERN)
+                        trip.segments[0].ticket?.returned_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
                     ))
                 }else{
                     strBuilder.append(composeTextForMoreThanOneSeg(trip))
@@ -373,7 +366,7 @@ object BindingAdapter {
             }
 
             Constants.STATUS_ISSUED -> {
-                if(trip.segments?.size!! > 1){
+                if(trip.segments.size > 1){
                     strBuilder.append(composeTextForMoreThanOneSeg(trip))
                 }
             }
@@ -385,7 +378,7 @@ object BindingAdapter {
         val strBuilder = StringBuilder()
         val statusSet = HashSet<SegmentStatus>()
 
-        if(trip.segments?.size!! > 1){
+        if(trip.segments.size > 1){
             trip.segments.forEach{ segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED -> {
@@ -440,25 +433,25 @@ object BindingAdapter {
     @BindingAdapter("trip")
     @JvmStatic fun setCityAndTotalTimeInWay(textView: TextView, trip: Trip){
         var totalMinutes = 0
-        trip.segments?.forEach { segment ->
+        trip.segments.forEach { segment ->
             totalMinutes += segment.train?.in_way_minutes!!
         }
         val hours = totalMinutes/60
         val minutes = totalMinutes%60
 
-        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station, hours, minutes)
+        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station.name, hours, minutes)
 
         textView.text = totalTimeInWay
     }
 
     @BindingAdapter("depArrDate")
     @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String){
-        textView.text = formatByGivenPattern(dateTime, DAY_MONTH_DAY_OF_WEEK_PATTERN)
+        textView.text = dateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN)
     }
 
     @BindingAdapter("depArrTime")
     @JvmStatic fun setDepArrTime(textView: TextView, dateTime: String){
-        textView.text = formatByGivenPattern(dateTime, HOUR_MINUTE_PATTERN)
+        textView.text = dateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
     }
 
     @BindingAdapter("refundSegmentStatus")

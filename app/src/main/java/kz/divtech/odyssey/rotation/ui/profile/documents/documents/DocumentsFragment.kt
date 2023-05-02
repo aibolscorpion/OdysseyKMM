@@ -10,16 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     private var currentEmployee: Employee? = null
     private val viewModel : DocumentsViewModel by viewModels{
-        DocumentsViewModel.DocumentsViewModelFactory(
-            (activity as MainActivity).employeeRepository,
-            (activity as MainActivity).documentRepository)
+        DocumentsViewModel.DocumentsViewModelFactory((activity as MainActivity).employeeRepository)
     }
     private var _binding: FragmentDocumentsBinding? = null
     private val binding get() = _binding!!
@@ -35,17 +33,12 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            currentEmployee = employee
-        }
-
         val adapter = DocumentsAdapter(this)
         binding.documentRV.adapter = adapter
-
-        viewModel.getDocumentsFromServer()
-        viewModel.documentsLiveData.observe(viewLifecycleOwner){ documents ->
-            binding.emptyDocuments.root.isVisible = documents.isEmpty()
-            adapter.setDocumentList(documents)
+        viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
+            currentEmployee = employee
+            binding.emptyDocuments.root.isVisible = employee.documents.isEmpty()
+            adapter.setDocumentList(employee.documents)
         }
     }
 
@@ -53,7 +46,7 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
         with(findNavController()){
             if(R.id.documentsFragment == currentDestination?.id){
                 navigate(DocumentsFragmentDirections.actionDocumentsFragmentToDocumentDialog(
-                    document, currentEmployee))
+                    currentEmployee, document))
             }
         }
     }

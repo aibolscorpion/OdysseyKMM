@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.TicketsAreNotPurchasedDialog" />
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"
@@ -49,7 +49,7 @@
                     android:textSize="14sp"
                     android:textColor="#748595"
                     android:lineSpacingExtra="2sp"
-                    android:text="@{@string/to_end_station(trip.end_station)}"
+                    android:text="@{@string/to_end_station(trip.end_station.name)}"
                     tools:text="В Алматы"
                     android:layout_marginTop="4dp"/>
 

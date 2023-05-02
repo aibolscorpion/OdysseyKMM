@@ -1,11 +1,8 @@
 package kz.divtech.odyssey.rotation.domain.repository
 
-import androidx.annotation.WorkerThread
-import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.create.RefundApplication
 import okhttp3.ResponseBody
@@ -26,10 +23,5 @@ class RefundRepository(val dao: Dao) {
         return RetrofitClient.getApiService().cancelRefund(refundId)
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    fun getTripById(tripId: Int): Flow<Trip> {
-        return dao.observeTripById(tripId)
-    }
 
 }

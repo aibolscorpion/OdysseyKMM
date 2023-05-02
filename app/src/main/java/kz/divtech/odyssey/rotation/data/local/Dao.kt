@@ -10,66 +10,59 @@ import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
-import kz.divtech.odyssey.rotation.domain.model.profile.documents.Document
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.ActiveTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.ArchiveTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 
 @androidx.room.Dao
 interface Dao {
     //Trips
-    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC")
+    @Query("SELECT * FROM active_trip ORDER BY date ASC")
     fun getActiveTripsSortedByDate() :  PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date < date('now') ORDER BY date DESC")
+    @Query("SELECT * FROM archive_trip ORDER BY date DESC")
     fun getArchiveTripsSortedByDate() : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date > date('now') " +
+    @Query("SELECT * FROM active_trip " +
         "ORDER BY case when status = 'issued' then 0 else 1 end, status")
     fun getActiveTripsSortedByStatus() :  PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date < date('now') " +
+    @Query("SELECT * FROM archive_trip " +
             "ORDER BY case when status = 'issued' then 0 else 1 end, status")
     fun getArchiveTripsSortedByStatus() : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date > date('now') AND (status IN (:statusType))" +
+    @Query("SELECT * FROM active_trip WHERE (status IN (:statusType))" +
             " AND (direction IN (:direction))")
     fun getFilteredActiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date < date('now') AND (status IN (:statusType))" +
+    @Query("SELECT * FROM archive_trip WHERE (status IN (:statusType))" +
             " AND (direction IN (:direction))")
     fun getFilteredArchiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
 
-    @Query("SELECT * FROM trip WHERE date > date('now') ORDER BY date ASC LIMIT 1")
-    fun observeNearestActiveTrip() :  Flow<Trip>
-
-    @Query("SELECT * FROM trip WHERE id=:id")
-    fun observeTripById(id: Int): Flow<Trip>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertActiveTrips(data: List<ActiveTrip>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrips(data: List<Trip>)
+    suspend fun insertArchiveTrips(data: List<ArchiveTrip>)
 
-    @Query("DELETE FROM trip")
-    suspend fun deleteAllTrips()
-
-    @Query("DELETE FROM trip WHERE date > date('now')")
+    @Query("DELETE FROM active_trip")
     suspend fun deleteActiveTrips()
 
-    @Query("DELETE FROM trip WHERE date < date('now')")
+    @Query("DELETE FROM archive_trip")
     suspend fun deleteArchiveTrips()
 
-
     @Transaction
-    suspend fun refreshAllTrips(data: List<Trip>){
-        deleteAllTrips()
-        insertTrips(data)
+    suspend fun refreshActiveTrips(data: List<ActiveTrip>){
+        deleteActiveTrips()
+        insertActiveTrips(data)
     }
 
     @Transaction
-    suspend fun refreshTrips(isActive: Boolean, data: List<Trip>){
-        if(isActive)  deleteActiveTrips()
-        else  deleteArchiveTrips()
-        insertTrips(data)
+    suspend fun refreshArchiveTrips(data: List<ArchiveTrip>){
+        deleteArchiveTrips()
+        insertArchiveTrips(data)
     }
 
     //Employee
@@ -100,16 +93,6 @@ interface Dao {
         deleteFAQ()
         insertFAQ(faqList)
     }
-
-    //Documents
-    @Query("SELECT * FROM document")
-    fun observeDocuments() : Flow<List<Document>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertDocuments(documents: List<Document>)
-
-    @Query("DELETE FROM document")
-    suspend fun deleteDocuments()
 
     //News
     @Query("SELECT * FROM article ORDER BY published_on DESC")

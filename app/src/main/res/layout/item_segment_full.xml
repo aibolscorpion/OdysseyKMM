@@ -4,7 +4,7 @@
     <data>
         <variable
             name="segment"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Segment" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment" />
         <variable
             name="segmentStatus"
             type="kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus" />
@@ -81,10 +81,9 @@
                 android:id="@+id/departureTrainIcon"
                 android:layout_width="34dp"
                 android:layout_height="34dp"
-                app:loadFromUrl="@{segment.icon}"
+                android:src="@mipmap/ktzh_logo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:src="@mipmap/new_avia_logo_bundle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/departureDateTV"
@@ -293,10 +292,9 @@
                 android:layout_width="34dp"
                 android:layout_height="34dp"
                 android:layout_marginTop="16dp"
-                app:loadFromUrl="@{segment.icon}"
+                android:src="@mipmap/ktzh_logo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:src="@mipmap/new_avia_logo_bundle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/arrivalDateTV"

@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentChooseTicketForOpenBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 import java.io.File
 

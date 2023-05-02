@@ -3,7 +3,6 @@ package kz.divtech.odyssey.rotation.ui.trips.refund.application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.Result
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.domain.repository.RefundRepository
 import okhttp3.ResponseBody
@@ -28,9 +27,6 @@ class RefundViewModel(val repository: RefundRepository) : ViewModel() {
     suspend fun cancelRefund(refundId: Int): Result<ResponseBody>{
         return repository.cancelRefund(refundId)
     }
-
-    fun getTripById(segmentId: Int, tripId: Int): LiveData<Trip> =
-        repository.getTripById(tripId).asLiveData()
 
     class RefundViewModelFactory(private val repository: RefundRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

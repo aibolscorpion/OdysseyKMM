@@ -6,7 +6,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 
 object DocumentBindingAdapter {
     @BindingAdapter("documentType")
@@ -21,8 +21,8 @@ object DocumentBindingAdapter {
 
     @BindingAdapter("issueDate","expireDate")
     @JvmStatic fun setIssueExpireDate(textView: TextView, issueDate: String?, expireDate: String?){
-        val formattedIssueDate = formatByGivenPattern(issueDate, DAY_MONTH_YEAR_PATTERN)
-        val formattedExpireDate = formatByGivenPattern(expireDate, DAY_MONTH_YEAR_PATTERN)
+        val formattedIssueDate = issueDate.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
+        val formattedExpireDate = expireDate.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
 
         textView.text = App.appContext.getString(R.string.dash_sign_btw_two_text,
             formattedIssueDate, formattedExpireDate)

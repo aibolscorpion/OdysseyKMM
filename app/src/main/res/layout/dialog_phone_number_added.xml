@@ -4,7 +4,7 @@
     <data>
         <variable
             name="phoneNumberAddedDialog"
-            type="kz.divtech.odyssey.rotation.ui.login.auth.find_by_phone_number.dialogs.PhoneNumberAddedDialog" />
+            type="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.PhoneNumberAddedDialog" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"

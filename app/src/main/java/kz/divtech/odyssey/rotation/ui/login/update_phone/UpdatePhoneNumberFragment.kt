@@ -34,9 +34,7 @@ class UpdatePhoneNumberFragment : Fragment() {
         dataBinding.viewModel = viewModel
         dataBinding.employee = args.employee
 
-        if(args.employee.isPhoneNumber!!){
-            changeScreenToChangePhoneNumber()
-        }
+        args.employee.phone?.let { changeScreenToChangePhoneNumber() }
 
         setupMaskedEditText()
 
@@ -73,8 +71,7 @@ class UpdatePhoneNumberFragment : Fragment() {
 
     fun updatePhoneNumber(){
         if(phoneNumberFilled) {
-            val request = UpdatePhoneRequest(args.employee.id, args.employee.number,
-                args.employee.firstName, args.employee.lastName, args.employee.iin,
+            val request = UpdatePhoneRequest(args.employee.id,
                 "${Config.COUNTRY_CODE}$extractedPhoneNumber",
                 SharedPrefs.fetchFirebaseToken(requireContext()))
             viewModel.updatePhoneNumber(request)

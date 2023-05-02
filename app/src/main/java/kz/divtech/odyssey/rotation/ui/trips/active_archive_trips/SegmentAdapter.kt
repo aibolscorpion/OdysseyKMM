@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.utils.Utils.getRefundSegmentStatus
 
 class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {

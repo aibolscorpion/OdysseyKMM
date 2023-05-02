@@ -3,7 +3,7 @@
     <data>
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

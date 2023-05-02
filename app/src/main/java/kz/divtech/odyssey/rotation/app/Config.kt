@@ -8,7 +8,7 @@ object Config {
     const val PROXY_HOST = "http://78.40.108.65:21232"
     const val API = "/api/"
     const val BASE_URL_KEY = "x-pod-url"
-    const val REQUEST_TYPE = "type"
+    const val IS_TEST = true
     const val COUNTRY_CODE = "7"
     const val DEVICE_ID_KEY = "deviceId"
     const val AUTHORIZATION_KEY = "Authorization"

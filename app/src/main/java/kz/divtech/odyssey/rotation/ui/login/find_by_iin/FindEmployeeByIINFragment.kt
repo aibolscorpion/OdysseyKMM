@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 
 class FindEmployeeByIINFragment : Fragment() {
@@ -65,7 +65,7 @@ class FindEmployeeByIINFragment : Fragment() {
         _binding = null
     }
 
-    private fun openUpdatePhoneNumber(employee: Employee) =
+    private fun openUpdatePhoneNumber(employee: EmployeeShort) =
         findNavController().navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToUpdatePhoneNumber(employee))
 
     private fun showEmployeeNotFoundDialog() {

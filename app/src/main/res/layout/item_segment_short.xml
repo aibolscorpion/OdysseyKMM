@@ -5,7 +5,7 @@
     <data>
         <variable
             name="segments"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Segment" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment" />
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.app.Constants" />
@@ -29,12 +29,11 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:contentDescription="@string/trips"
-                app:imgUrl="@{segments.icon}"
                 app:refundSegmentStatus="@{refundSegmentStatus}"
                 app:layout_constraintTop_toTopOf="@+id/trainStationsTV"
                 app:layout_constraintBottom_toBottomOf="@+id/trainStationsTV"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:src="@mipmap/new_avia_logo_bundle" />
+                tools:src="@mipmap/ktzh_logo" />
 
             <TextView
                 android:id="@+id/trainStationsTV"

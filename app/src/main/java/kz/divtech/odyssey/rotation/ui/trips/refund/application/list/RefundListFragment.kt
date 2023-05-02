@@ -15,7 +15,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundListBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
@@ -57,7 +57,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
         refundAppList.forEach { refundAppItem ->
             val realSegment = mutableListOf<Segment>()
             refundAppItem.segments.forEach { refundSegment ->
-                args.trip.segments?.forEach { segment ->
+                args.trip.segments.forEach { segment ->
                     if(segment.id == refundSegment.segment_id){
                         realSegment.add(segment)
                     }

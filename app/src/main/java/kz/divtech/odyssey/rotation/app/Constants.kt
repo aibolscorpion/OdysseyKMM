@@ -11,9 +11,7 @@ object Constants {
     const val STATUS_ISSUED = "issued"
     const val STATUS_CANCELED = "canceled"
     const val WATCHING = "watching"
-    const val PHONE = "phone"
     const val ACTIVE_TRIPS = "active_trips"
-    const val TEST = "test"
     const val SPACE = " "
     const val ID_CARD = "id-card"
     const val PASSPORT = "passport"
@@ -27,7 +25,7 @@ object Constants {
     const val NOTIFICATION_TYPE_APPLICATION = "application"
     const val NOTIFICATION_TYPE_REFUND_APPLICATION = "refund-application"
 
-    const val TRIPS_PAGE_SIZE = 20
+    const val TRIPS_PAGE_SIZE = 10
     const val NOTIFICATIONS_PAGE_SIZE = 10
     const val NEWS_PAGE_SIZE = 5
 

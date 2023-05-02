@@ -4,20 +4,18 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
 import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
 
 class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
-    private val _employeeData = MutableLiveData<Event<Employee>>()
-    val employeeData: LiveData<Event<Employee>> = _employeeData
+    private val _employeeData = MutableLiveData<Event<EmployeeShort>>()
+    val employeeData: LiveData<Event<EmployeeShort>> = _employeeData
 
     private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
-    val isEmployeeNotFounded = _isEmployeeNotFounded
+    val isEmployeeNotFounded: LiveData<Event<Boolean>> = _isEmployeeNotFounded
 
     val pBarVisibility = ObservableInt(View.GONE)
 
@@ -26,10 +24,11 @@ class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmploye
             pBarVisibility.set(View.VISIBLE)
             val response = findEmployeeRepository.findByIIN(iin)
             if(response.isSuccess()){
-                _employeeData.postValue(Event(response.asSuccess().value.data.employee!!))
-            }else if(response.isHttpException()){
-                if(response.statusCode == Constants.BAD_REQUEST_CODE){
-                    isEmployeeNotFounded.postValue(Event(true))
+                val employeeResult = response.asSuccess().value
+                if(employeeResult.exists){
+                    _employeeData.value = Event(employeeResult.employee)
+                }else{
+                    _isEmployeeNotFounded.value = Event(true)
                 }
             }
             pBarVisibility.set(View.GONE)

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="train"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Train"/>
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Train"/>
     </data>
 
     <LinearLayout

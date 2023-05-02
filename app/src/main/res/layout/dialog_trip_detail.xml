@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialog" />
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.app.Constants" />

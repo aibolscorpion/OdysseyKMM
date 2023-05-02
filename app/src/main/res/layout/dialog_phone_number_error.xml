@@ -4,7 +4,7 @@
     <data>
         <variable
             name="listener"
-            type="kz.divtech.odyssey.rotation.ui.login.listener.DialogListener" />
+            type="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.DialogListener" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"

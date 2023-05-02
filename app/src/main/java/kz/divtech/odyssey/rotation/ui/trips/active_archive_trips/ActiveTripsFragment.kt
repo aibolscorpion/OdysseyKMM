@@ -19,7 +19,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
@@ -165,7 +165,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         trip?.let {
             with(findNavController()){
                 if(R.id.tripsFragment == currentDestination?.id){
-                    if(trip.segments == null){
+                    if(trip.segments.isEmpty()){
                         navigate(TripsFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
                     }else {
                         navigate(TripsFragmentDirections.actionGlobalTripDetailDialog(trip))

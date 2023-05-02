@@ -8,10 +8,10 @@
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog" />
         <variable
             name="employee"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
+            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentViewModel" />
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.firstName}"
+                    android:text="@{employee.first_name}"
                     tools:text="@string/name_placeholder" />
 
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.lastName}"
+                    android:text="@{employee.last_name}"
                     tools:text="@string/surname_placeholder" />
 
                 <TextView
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    app:birthDate="@{employee.birthDate}"
+                    app:birthDate="@{employee.birth_date}"
                     tools:text="@string/date_of_birth_placeholder" />
 
 

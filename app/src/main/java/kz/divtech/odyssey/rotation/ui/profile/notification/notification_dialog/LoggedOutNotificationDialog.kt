@@ -25,7 +25,6 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
             (activity as MainActivity).tripsRepository,
             (activity as MainActivity).employeeRepository,
             (activity as MainActivity).faqRepository,
-            (activity as MainActivity).documentRepository,
             (activity as MainActivity).newsRepository,
             (activity as MainActivity).articleRepository,
             (activity as MainActivity).notificationRepository,

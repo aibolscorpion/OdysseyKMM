@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemTicketNameBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Ticket
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.toDateString
 import kz.divtech.odyssey.rotation.utils.Utils.getFileSize
 import java.io.File

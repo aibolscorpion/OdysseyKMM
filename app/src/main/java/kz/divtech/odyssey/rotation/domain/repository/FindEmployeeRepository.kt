@@ -5,11 +5,11 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.domain.model.login.search_by_iin.EmployeeData
+import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 
 class FindEmployeeRepository {
 
-    suspend fun findByPhoneNumber(phoneNumber:String) : Result<EmployeeData>{
+    suspend fun findByPhoneNumber(phoneNumber:String) : Result<EmployeeResult>{
         SharedPrefs.clearUrl(App.appContext)
         val response = RetrofitClient.getApiService().getEmployeeByPhone(phoneNumber)
         if(response.isSuccess()){
@@ -19,7 +19,7 @@ class FindEmployeeRepository {
         return response
     }
 
-    suspend fun findByIIN(iin: String): Result<EmployeeData>{
+    suspend fun findByIIN(iin: String): Result<EmployeeResult>{
         SharedPrefs.clearUrl(App.appContext)
         val response = RetrofitClient.getApiService().getEmployeeByIIN(iin)
         if(response.isSuccess()){

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.Employee
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 
 class PersonalDataFragment : Fragment() {
     val viewModel : PersonalDataViewModel by viewModels()

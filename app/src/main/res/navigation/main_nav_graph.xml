@@ -95,12 +95,12 @@
         android:layout="@layout/dialog_id"
         tools:layout="@layout/dialog_id" >
         <argument
-            android:name="document"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.documents.Document" />
-        <argument
             android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee"
             app:nullable="true" />
+        <argument
+            android:name="document"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
     </dialog>
     <fragment
         android:id="@+id/personalDataFragment"
@@ -110,7 +110,7 @@
         tools:layout="@layout/fragment_personal_data">
         <argument
             android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.Employee" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -152,7 +152,7 @@
         tools:layout="@layout/dialog_trip_detail">
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
         <action
             android:id="@+id/action_tripDetailDialog_to_chooseTicketRefundFragment"
             app:destination="@id/chooseTicketRefundFragment" />
@@ -168,7 +168,7 @@
         tools:layout="@layout/dialog_tickets_are_not_purchased">
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
     </dialog>
     <activity
         android:id="@+id/loginActivity"
@@ -240,7 +240,7 @@
             app:destination="@id/refundReasonFragment" />
         <argument
             android:name="issuedTickets"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment[]" />
     </fragment>
     <fragment
         android:id="@+id/refundReasonFragment"
@@ -292,11 +292,11 @@
             app:destination="@id/refundDetailFragment" />
         <argument
             android:name="issuedSegmentList"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Segment[]"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment[]"
             app:nullable="true" />
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Trip" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
     </fragment>
     <dialog
         android:id="@+id/cancelRefundDialog"
@@ -330,7 +330,7 @@
         tools:layout="@layout/fragment_choose_ticket_for_open" >
         <argument
             android:name="issuedTickets"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.Ticket[]" />
+            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket[]" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

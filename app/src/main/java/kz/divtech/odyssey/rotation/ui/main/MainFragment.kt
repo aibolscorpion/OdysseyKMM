@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
@@ -36,7 +36,6 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     }
     private var _binding: FragmentMainBinding? = null
     val binding get() = _binding!!
-    private var nearestTrip : Trip? = null
 
     private val currentDate: LocalDate = LocalDate.now()
     val dayOfWeek: String = currentDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
@@ -68,14 +67,14 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     }
 
     private fun getEmployeeInfo(){
-        viewModel.getEmployeeFromServer()
+//        viewModel.getEmployeeFromServer()
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let { it ->
-                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.lastName).
-                append(Constants.SPACE).appendWithoutNull(it.firstName).append(Constants.SPACE).
+                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.last_name).
+                append(Constants.SPACE).appendWithoutNull(it.first_name).append(Constants.SPACE).
                 appendWithoutNull(it.patronymic)
-                binding.employeeOrgTV.text = it.orgName
+//                binding.employeeOrgTV.text = it.additional_phone
             }
         }
     }
@@ -89,21 +88,17 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     }
 
     private fun setNearestTrip(){
+        viewModel.getNearestActiveTrip()
+
         val segmentAdapter = SegmentAdapter()
         binding.nearestTripView.segmentsRV.adapter = segmentAdapter
 
-        viewModel.getTripsFromFirstPage()
-        
         viewModel.nearestActiveTrip.observe(viewLifecycleOwner) { trip ->
-            if(trip != null){
-                binding.nearestTripTV.isVisible = true
-                binding.nearestTripView.root.isVisible = true
-                nearestTrip = trip
-                binding.trip = nearestTrip
+            binding.nearestTripTV.isVisible = (trip != null)
+            binding.nearestTripView.root.isVisible = (trip != null)
+            trip?.let{
+                binding.trip = trip
                 segmentAdapter.setSegmentList(trip)
-            }else{
-                binding.nearestTripTV.isVisible = false
-                binding.nearestTripView.root.isVisible = false
             }
         }
     }
@@ -137,7 +132,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
     override fun onTripClicked(trip: Trip?) {
         trip?.let {
-            if(trip.segments == null){
+            if(trip.segments.isEmpty()){
                 findNavController().navigate(MainFragmentDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
             }else {
                 findNavController().navigate(MainFragmentDirections.actionGlobalTripDetailDialog(trip))

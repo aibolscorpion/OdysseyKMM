@@ -7,8 +7,9 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object LocalDateTimeUtils {
-    const val SERVER_PATTERN = "yyyy-MM-dd HH:mm:ss"
-    const val BIRTH_DATE_PATTERN = "yyyy-MM-dd"
+    private const val SERVER_DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"
+    private const val SERVER_PATTERN = "yyyy-MM-dd HH:mm:ss"
+    const val YEAR_MONTH_DATE_PATTERN = "yyyy-MM-dd"
     const val DEFAULT_PATTERN = "d MMM yyyy, HH:mm"
     const val DAY_MONTH_DAY_OF_WEEK_PATTERN = "d MMM EE"
     const val DAY_MONTH_YEAR_PATTERN = "d.MM.yyyy"
@@ -28,15 +29,38 @@ object LocalDateTimeUtils {
         return returnString
     }
 
+    fun String?.formatDateToGivenPattern(givenPattern: String): String{
+        var formattedDate = ""
+        this?.let {
+            val serverDateTimeFormat = DateTimeFormatter.ofPattern(YEAR_MONTH_DATE_PATTERN)
+            val parsedDateTime = LocalDate.parse(this, serverDateTimeFormat)
 
-    fun getLocalDateTimeByPattern(serverDateTime: String): LocalDateTime {
-        val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
-        return LocalDateTime.parse(serverDateTime, serverDateTimeFormat)
+            val format = DateTimeFormatter.ofPattern(givenPattern)
+            formattedDate = parsedDateTime.format(format)
+        }
+        return formattedDate
     }
 
-    fun getLocalDateByPattern(serverDateTime: String): LocalDate {
-        val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_PATTERN)
-        return LocalDate.parse(serverDateTime, serverDateTimeFormat)
+    fun String?.formatDateTimeToGivenPattern(givenPattern: String): String{
+        var formattedDate = ""
+        this?.let {
+            val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_DATE_TIME_PATTERN)
+            val parsedDateTime = LocalDateTime.parse(this, serverDateTimeFormat)
+
+            val format = DateTimeFormatter.ofPattern(givenPattern)
+            formattedDate = parsedDateTime.format(format)
+        }
+        return formattedDate
+    }
+
+    fun String.getLocalDateTimeByPattern(): LocalDateTime {
+        val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_DATE_TIME_PATTERN)
+        return LocalDateTime.parse(this, serverDateTimeFormat)
+    }
+
+    fun String.getLocalDateByPattern(): LocalDate {
+        val serverDateTimeFormat = DateTimeFormatter.ofPattern(YEAR_MONTH_DATE_PATTERN)
+        return LocalDate.parse(this, serverDateTimeFormat)
     }
 
     fun Long.toDateString(): String {

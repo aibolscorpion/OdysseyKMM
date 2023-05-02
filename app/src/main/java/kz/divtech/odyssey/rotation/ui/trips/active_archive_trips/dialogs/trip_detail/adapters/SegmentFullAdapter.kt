@@ -8,9 +8,9 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.Segment
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
-import kz.divtech.odyssey.rotation.domain.model.trips.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import kz.divtech.odyssey.rotation.utils.Utils.getRefundSegmentStatus
@@ -35,7 +35,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
     fun setSegmentList(trip: Trip){
         this.trip = trip
         listOfSegments.clear()
-        trip.segments?.let { listOfSegments.addAll(it) }
+        listOfSegments.addAll(trip.segments)
     }
 
     inner class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
@@ -44,7 +44,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
         fun bind(segment: Segment, position: Int){
             currentSegment = segment
             binding.segment = currentSegment
-            binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, currentSegment.id)
+            binding.refundSegmentStatus =
+                trip?.refund_applications?.let { getRefundSegmentStatus(it, currentSegment.id) }
             binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
             setViewsByStatus(defineSegmentStatus(segment))
 
@@ -140,8 +141,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
         }
 
         private fun getWaitingTime(segmentList: List<Segment>, position: Int): String{
-            val arrLocalDateTime = getLocalDateTimeByPattern(segmentList[position].train?.arr_date_time!!)
-            val depLocalDateTime = getLocalDateTimeByPattern(segmentList[position+1].train?.dep_date_time!!)
+            val arrLocalDateTime = segmentList[position].train?.arr_date_time!!.getLocalDateTimeByPattern()
+            val depLocalDateTime = segmentList[position+1].train?.dep_date_time!!.getLocalDateTimeByPattern()
             var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)
 
             val hours: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.HOURS)
@@ -149,7 +150,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             val minutes: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.MINUTES)
 
             return App.appContext.getString(R.string.train_transfer,
-                segmentList[position].arr_station, hours, minutes)
+                segmentList[position].arr_station_name, hours, minutes)
         }
 
         private fun parseMinutesToTime(inWayMinutes: Int?): String{
