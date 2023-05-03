@@ -9,15 +9,12 @@ import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.domain.remotemediator.NewsRemoteMediator
 
 class NewsRepository(private val dao: Dao) {
-
     suspend fun searchArticlesFromDB(searchQuery: String) = dao.searchArticle(searchQuery)
 
     @WorkerThread
-    @Suppress("RedundantSuspendModifier")
     suspend fun deleteNews(){
         dao.deleteNews()
     }
-
 
     @OptIn(ExperimentalPagingApi::class)
     fun getPagingNews(): Flow<PagingData<Article>>{
@@ -27,5 +24,4 @@ class NewsRepository(private val dao: Dao) {
             pagingSourceFactory = { dao.getNewsPagingSource() }
         ).flow
     }
-
 }

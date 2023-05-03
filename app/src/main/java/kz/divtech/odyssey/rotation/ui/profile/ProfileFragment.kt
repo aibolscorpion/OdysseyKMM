@@ -12,11 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class ProfileFragment : Fragment() {
     private var currentEmployee: Employee? = null
@@ -47,15 +46,12 @@ class ProfileFragment : Fragment() {
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let { it ->
                 currentEmployee = it
-                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.last_name).
-                append(Constants.SPACE).appendWithoutNull(it.first_name).append(Constants.SPACE).
-                appendWithoutNull(it.patronymic)
+                binding.employeeNameTV.text = it.full_name
                 binding.employeeTableNumberTV.text = it.number
-//                binding.employeeOrgNameTV.text = it
                 binding.employeePositionTV.text = it.position
             }
-
         }
+        binding.employeeOrgNameTV.text = SharedPrefs.fetchOrganizationName(requireContext())
 
         binding.viewModel = viewModel
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {

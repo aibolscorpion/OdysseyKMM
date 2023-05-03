@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -18,7 +17,7 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
-import kz.divtech.odyssey.rotation.utils.Utils.appendWithoutNull
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -67,16 +66,12 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     }
 
     private fun getEmployeeInfo(){
-//        viewModel.getEmployeeFromServer()
-
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let { it ->
-                binding.employeeNameTV.text = StringBuilder().appendWithoutNull(it.last_name).
-                append(Constants.SPACE).appendWithoutNull(it.first_name).append(Constants.SPACE).
-                appendWithoutNull(it.patronymic)
-//                binding.employeeOrgTV.text = it.additional_phone
+                binding.employeeNameTV.text = it.full_name
             }
         }
+        binding.employeeOrgTV.text = SharedPrefs.fetchOrganizationName(requireContext())
     }
 
     private fun setCalendar(){

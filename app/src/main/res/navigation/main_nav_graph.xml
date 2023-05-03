@@ -241,6 +241,9 @@
         <argument
             android:name="issuedTickets"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment[]" />
+        <argument
+            android:name="tripId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/refundReasonFragment"

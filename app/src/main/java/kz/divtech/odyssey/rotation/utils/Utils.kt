@@ -8,13 +8,6 @@ import java.io.File
 
 object Utils {
 
-    fun StringBuilder.appendWithoutNull(text: String?): StringBuilder{
-        if(text != null){
-            append(text)
-        }
-        return this
-    }
-
     fun Bundle.convertToNotification(): PushNotification {
         val id = getString(Constants.NOTIFICATION_DATA_ID)
         val sendTime = getString(Constants.NOTIFICATION_DATA_SEND_TIME)

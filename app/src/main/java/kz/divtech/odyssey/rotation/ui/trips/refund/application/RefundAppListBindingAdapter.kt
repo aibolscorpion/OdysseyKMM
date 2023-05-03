@@ -11,8 +11,8 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 
 object RefundAppListBindingAdapter {
 
@@ -93,8 +93,7 @@ object RefundAppListBindingAdapter {
     @BindingAdapter("refundApp")
     @JvmStatic
     fun setDescByStatus(textView: TextView, refundApp: RefundAppItem){
-        val formattedDate = LocalDateTimeUtils.formatByGivenPattern(refundApp.updated_at,
-            DEFAULT_PATTERN)
+        val formattedDate = refundApp.updated_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
         textView.apply {
             when (refundApp.status) {
                 Constants.REFUND_STATUS_PENDING -> {
@@ -142,7 +141,7 @@ object RefundAppListBindingAdapter {
 
     @BindingAdapter("refundAppCreatedDateTime")
     @JvmStatic fun setApplicationCreatedDateTime(textView: TextView, dateTime: String){
-        val formattedDateTime = LocalDateTimeUtils.formatByGivenPattern(dateTime, DEFAULT_PATTERN)
+        val formattedDateTime = dateTime.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
         textView.text = formattedDateTime
     }
 

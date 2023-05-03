@@ -4,16 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundListBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
@@ -39,21 +35,14 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
         super.onViewCreated(view, savedInstanceState)
 
         binding.thisDialog = this
-
-        viewModel.getRefundListByTripId(args.trip.id)
-        viewModel.refundListLiveData.observe(viewLifecycleOwner) {
-            if(it.isSuccess()){
-                assignPendingStatusToIssuedSegments(it.asSuccess().value)
-                binding.createRefundAppTV.isVisible = isShownCreateRefundBtn()
-                adapter.setRefundList(getRefundListWithRealSegment(it.asSuccess().value))
-            }else{
-                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
-            }
-        }
+        val refundAppList = args.trip.refund_applications
+        assignPendingStatusToIssuedSegments(refundAppList)
+        binding.createRefundAppTV.isVisible = isShownCreateRefundBtn()
+        adapter.setRefundList(getRefundListWithRealSegment(refundAppList))
         binding.refundListRV.adapter = adapter
     }
 
-    private fun getRefundListWithRealSegment(refundAppList: ArrayList<RefundAppItem>) : ArrayList<RefundAppItem> {
+    private fun getRefundListWithRealSegment(refundAppList: List<RefundAppItem>) : List<RefundAppItem> {
         refundAppList.forEach { refundAppItem ->
             val realSegment = mutableListOf<Segment>()
             refundAppItem.segments.forEach { refundSegment ->
@@ -93,7 +82,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
 
     fun openChooseTicketRefundFragment() = findNavController().navigate(
         RefundListFragmentDirections.actionRefundListFragmentToChooseTicketRefundFragment(
-            args.issuedSegmentList!!))
+            args.issuedSegmentList!!, args.trip.id))
 
     override fun onDetailClick(refundAppItem: RefundAppItem) {
         openRefundDetailFragment(refundAppItem)

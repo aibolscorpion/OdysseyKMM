@@ -42,7 +42,6 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         dataBinding.phoneNumber = args.phoneNumber
 
         extractedPhoneNumber = args.extractedPhoneNumber
-
         setupEditTexts()
 
         dataBinding.toolBar.setOnClickListener {
@@ -74,6 +73,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                 if (smsCodeSent){
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
                     editTextList.isEnabled(true)
+                    showKeyboard(requireContext(), editTextList[0])
                 }
             }
         }
@@ -114,7 +114,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     }
 
     private fun ArrayList<EditText>.isEnabled(enable: Boolean){
-        editTextList.forEach{
+        this.forEach{
             it.isEnabled = enable
         }
     }
@@ -145,12 +145,6 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
     fun hideContactSupportBtn(){
         dataBinding.contactSupportLLC.visibility = View.GONE
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        showKeyboard(requireContext(), editTextList[0])
     }
 
     override fun onResume() {

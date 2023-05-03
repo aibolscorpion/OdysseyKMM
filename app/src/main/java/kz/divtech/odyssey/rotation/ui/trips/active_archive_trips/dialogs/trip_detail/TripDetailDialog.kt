@@ -173,7 +173,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     )
 
     fun openChooseTicketRefundFragment() = findNavController().navigate(
-        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getActiveIssuedSegments()))
+        TripDetailDialogDirections.actionTripDetailDialogToChooseTicketRefundFragment(getActiveIssuedSegments(), args.trip.id))
 
     fun openRefundListFragment() = findNavController().navigate(
         TripDetailDialogDirections.actionGlobalRefundListFragment(getActiveIssuedSegments(), args.trip)

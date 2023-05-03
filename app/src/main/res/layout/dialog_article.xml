@@ -50,7 +50,7 @@
                         android:textColor="#4D1B3652"
                         android:textAllCaps="true"
                         android:letterSpacing="0.01"
-                        android:text="@{fullArticle.published_on.toString()}"
+                        app:publishedDate="@{fullArticle.published_on}"
                         android:lineSpacingExtra="10sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView

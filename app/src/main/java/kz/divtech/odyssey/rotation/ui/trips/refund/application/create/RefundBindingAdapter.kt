@@ -4,18 +4,16 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_HOUR_MINUTE_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 
 object RefundBindingAdapter {
 
     @BindingAdapter("ticketDepDateTime", "ticketArrDateTime")
     @JvmStatic
     fun setTicketDepArrDateTime(textView: TextView, ticketDepDateTime: String?, ticketArrDateTime: String?) {
-        val formattedDepDateTime = LocalDateTimeUtils.formatByGivenPattern(ticketDepDateTime,
-            LocalDateTimeUtils.DAY_MONTH_HOUR_MINUTE_PATTERN)
-
-        val formattedArrDateTime = LocalDateTimeUtils.formatByGivenPattern(ticketArrDateTime,
-            LocalDateTimeUtils.DAY_MONTH_HOUR_MINUTE_PATTERN)
+        val formattedDepDateTime = ticketDepDateTime.formatDateTimeToGivenPattern(DAY_MONTH_HOUR_MINUTE_PATTERN)
+        val formattedArrDateTime = ticketArrDateTime.formatDateTimeToGivenPattern(DAY_MONTH_HOUR_MINUTE_PATTERN)
 
         textView.apply {
             text = App.appContext.resources.getString(R.string.dash_sign_btw_two_text,

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import kz.divtech.odyssey.rotation.BuildConfig
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Config.AUTHORIZATION_VALUE_PREFIX
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Organization
 
 
 object SharedPrefs {
@@ -72,6 +73,14 @@ object SharedPrefs {
 
     fun clearUrl(context: Context){
         getSharedPrefsEditor(context).putString("URL", Config.PROXY_HOST).apply()
+    }
+
+    fun saveOrganizationName(organization: Organization, context: Context){
+        getSharedPrefsEditor(context).putString("organization", organization.name).apply()
+    }
+
+    fun fetchOrganizationName(context: Context): String{
+        return getSharedPrefs(context).getString("organization", "")!!
     }
 
 }

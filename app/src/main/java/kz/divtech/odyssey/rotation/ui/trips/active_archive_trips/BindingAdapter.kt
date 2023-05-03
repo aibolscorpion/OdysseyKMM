@@ -25,7 +25,6 @@ import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEE
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatByGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 
@@ -340,8 +339,7 @@ object BindingAdapter {
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
                         trip.segments[0].active_process.equals(Constants.WATCHING)){
                         strBuilder.append(App.appContext.getString(R.string.opened_on_the_waiting_list_desc,
-                            formatByGivenPattern(trip.segments[0].watcher_time_limit, DEFAULT_PATTERN))
-                        )
+                            trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN)))
                     }else{
                         strBuilder.append(App.appContext.getString(R.string.opened_with_details_desc))
                     }
@@ -384,8 +382,9 @@ object BindingAdapter {
                     Constants.STATUS_OPENED -> {
                         if(segment.active_process.equals(Constants.WATCHING)){
                             statusSet.add(SegmentStatus.ON_THE_WAITING_LIST)
-                            strBuilder.append(App.appContext.getString(R.string.on_the_waiting_list_more_than_one_segment,
-                                formatByGivenPattern(segment.watcher_time_limit, DEFAULT_PATTERN)
+                            strBuilder.append(App.appContext.getString(
+                                R.string.on_the_waiting_list_more_than_one_segment,
+                                segment.watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
                             ))
                         }else{
                             statusSet.add(SegmentStatus.OPENED)
@@ -411,10 +410,8 @@ object BindingAdapter {
                 if(statusSet.contains(SegmentStatus.OPENED)) {
                     return App.appContext.getString(R.string.opened_with_details_desc)
                 }else if(statusSet.contains(SegmentStatus.ON_THE_WAITING_LIST )) {
-                    return App.appContext.getString(
-                    R.string.opened_on_the_waiting_list_desc,
-                        formatByGivenPattern(trip.segments[0].watcher_time_limit, DEFAULT_PATTERN)
-                )
+                    return App.appContext.getString(R.string.opened_on_the_waiting_list_desc,
+                        trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN))
                 }else if(statusSet.contains(SegmentStatus.RETURNED)){
                     return App.appContext.getString(
                         R.string.returned_fully_desc, trip.segments[0].closed_reason)

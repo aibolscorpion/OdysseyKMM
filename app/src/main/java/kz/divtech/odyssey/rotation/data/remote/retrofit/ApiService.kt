@@ -18,7 +18,6 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 
@@ -29,15 +28,15 @@ interface ApiService {
     @GET("get-employee-by-phone")
     suspend fun getEmployeeByPhone(@Query("phone") phone: String): Result<EmployeeResult>
 
+    @GET("get-employee-by-iin")
+    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeResult>
+
     //login
     @POST("send-sms-code")
     suspend fun sendSms(@Body codeRequest: CodeRequest): Result<CodeResponse>
 
     @POST("login")
     suspend fun login(@Body authRequest : AuthRequest): Result<LoginResponse>
-
-    @GET("get-employee-by-iin")
-    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeResult>
 
     @POST("update-phone-request")
     suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Result<ResponseBody>
@@ -59,14 +58,10 @@ interface ApiService {
     suspend fun getTripById(@Path("id") tripId: Int): Result<SingleTrip>
 
     //Refund
-    @GET("employees/refund-applications")
-    suspend fun getRefundApplications(@Query("application_id") applicationId: Int)
-        : Result<ArrayList<RefundAppItem>>
-
-    @POST("employees/refund-applications")
+    @POST("refund-applications")
     suspend fun sendApplicationToRefund(@Body refundApplication: RefundApplication) : Result<Map<String, Int>>
 
-    @POST("employees/refund-applications/{id}/cancel")
+    @POST("refund-applications/{id}/cancel")
     suspend fun cancelRefund(@Path("id") refundId: Int) : Result<ResponseBody>
 
     //FAQ

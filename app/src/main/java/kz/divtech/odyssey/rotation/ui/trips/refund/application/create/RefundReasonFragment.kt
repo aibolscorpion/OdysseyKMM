@@ -66,7 +66,8 @@ class RefundReasonFragment: Fragment() {
             return
         }
         lifecycleScope.launch {
-            val result = viewModel.sendApplicationToRefund(args.applicationId, args.segmentId, getReasonOfRefund())
+            val result = viewModel.sendApplicationToRefund(args.applicationId, args.segmentId,
+                getReasonOfRefund())
             if(result.isSuccess()){
                 val refundId = result.asSuccess().value["id"]!!
                 openRefundSendFragment(refundId)

@@ -66,6 +66,7 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
                 _loggedIn.postValue(Event(true))
                 val loginResponse = response.asSuccess().value
                 SharedPrefs.saveAuthToken(loginResponse.token, App.appContext)
+                SharedPrefs.saveOrganizationName(loginResponse.organization, App.appContext)
                 insertEmployeeToDB(loginResponse.employee)
             }else if(response.isHttpException()) {
                 if (response.statusCode == Constants.BAD_REQUEST_CODE) {
