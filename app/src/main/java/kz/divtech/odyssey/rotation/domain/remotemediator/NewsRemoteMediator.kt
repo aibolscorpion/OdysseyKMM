@@ -10,6 +10,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
+import timber.log.Timber
 
 @ExperimentalPagingApi
 class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() {
@@ -23,6 +24,7 @@ class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() 
         val response = RetrofitClient.getApiService().getArticles(pageIndex)
         return if(response.isSuccess()){
             val news = response.asSuccess().value.data
+            Timber.i("news = $news")
             when(loadType){
                 LoadType.REFRESH -> dao.refreshNews(news)
                 else -> dao.insertNews(news)

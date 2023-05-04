@@ -17,21 +17,20 @@ class ArticleRepository(private val dao: Dao) {
     }
 
     @WorkerThread
-    @Suppress("RedundantSuspendModifier")
     suspend fun insertFullArticle(fullArticle: FullArticle){
         dao.insertFullArticle(fullArticle)
     }
 
     @WorkerThread
-    @Suppress("RedundantSuspendModifier")
     suspend fun deleteFullArticles(){
         dao.deleteFullArticles()
     }
 
     suspend fun getArticleByIdFromServer(articleId: Int){
-        val response = RetrofitClient.getApiService().getSpecificArticleById(articleId)
+        val response = RetrofitClient.getApiService().getArticleById(articleId)
         if(response.isSuccess()){
-            insertFullArticle(response.asSuccess().value)
+            val fullArticle = response.asSuccess().value.data
+            insertFullArticle(fullArticle)
         }else{
             Toast.makeText(App.appContext, "$response", Toast.LENGTH_LONG).show()
         }

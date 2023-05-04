@@ -4,7 +4,6 @@ import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notifications
@@ -13,6 +12,7 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticleResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
@@ -73,7 +73,7 @@ interface ApiService {
     suspend fun getArticles(@Query("page") pageIndex: Int) : Result<News>
 
     @GET("articles/{id}")
-    suspend fun getSpecificArticleById(@Path("id") articleId: Int) : Result<FullArticle>
+    suspend fun getArticleById(@Path("id") articleId: Int) : Result<FullArticleResponse>
 
     @POST("articles/{id}/mark-as-read")
     suspend fun markAsReadArticleById(@Path("id") articleId: Int): Result<ResponseBody>
@@ -83,10 +83,10 @@ interface ApiService {
     suspend fun getEmployeeInfo() : Result<Employee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
-    @POST("employees/update-data")
+    @POST("profile")
     suspend fun updateData(@Body employee: Employee): Result<ResponseBody>
 
-    @POST("employees/update-document")
+    @POST("profile/update-document")
     suspend fun updateDocument(@Body document: Document): Result<ResponseBody>
 
     //Notifications

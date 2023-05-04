@@ -10,5 +10,6 @@ data class Document(
     var issue_by: String?,
     var issue_date: String?,
     var number: String,
-    val type: String
+    val type: String,
+    var use_as_default: Boolean
 ): Parcelable

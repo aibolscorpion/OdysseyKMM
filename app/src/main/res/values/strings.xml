@@ -380,6 +380,7 @@
     <string name="you_have_not_filled_residency_permit_data">Вы еще не указали данные вида на жительство. Нажмите, чтобы добавить</string>
     <string name="empty_documents_title">Документы не найдены</string>
     <string name="empty_documents_content">Мы не нашли ваших документов</string>
+    <string name="use_as_default_document">Использоать как документ по умолчанию</string>
 
     //Модалка Разрешение на работу
     <string name="status">Статус</string>

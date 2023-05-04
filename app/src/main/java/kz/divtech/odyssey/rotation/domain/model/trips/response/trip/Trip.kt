@@ -2,13 +2,11 @@ package kz.divtech.odyssey.rotation.domain.model.trips.response.trip
 
 import android.os.Parcelable
 import androidx.room.Embedded
-import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 import kz.divtech.odyssey.rotation.domain.model.trips.ActiveTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.ArchiveTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
@@ -19,10 +17,10 @@ import java.lang.reflect.Type
 @TypeConverters(SegmentConverter::class)
 @Parcelize
 data class Trip(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val is_extra: Boolean,
-    @Embedded val start_station: @RawValue StartStation,
-    @Embedded val end_station: @RawValue EndStation,
+    @Embedded("start_station_") val start_station: StartStation,
+    @Embedded("end_station_") val end_station: EndStation,
     val direction: String?,
     var shift: String?,
     val date: String,

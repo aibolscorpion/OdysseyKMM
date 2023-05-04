@@ -1,6 +1,5 @@
 package kz.divtech.odyssey.rotation.domain.model.help.press_service.news
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
@@ -9,11 +8,10 @@ import androidx.room.TypeConverters
 @Entity
 data class Article(
     @PrimaryKey val id: Int,
-    val is_important: Int?,
-    @Embedded val pivot: Pivot?,
-    val published_on: String,
-    val read_on: String?,
+    val title: String,
     val short_content: String,
+    val is_important: Boolean,
+    val published_on: String,
     val tags: List<Tag>,
-    val title: String
+    val read_on: String?
 )

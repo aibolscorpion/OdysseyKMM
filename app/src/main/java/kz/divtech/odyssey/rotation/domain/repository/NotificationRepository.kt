@@ -19,13 +19,11 @@ class NotificationRepository(private val dao: Dao) {
     private var firstTime = true
 
     @WorkerThread
-    @Suppress("RedundantSuspendModifier")
     suspend fun refreshNotifications(notificationList: List<Notification>){
         dao.refreshNotifications(notificationList)
     }
 
     @WorkerThread
-    @Suppress("RedundantSuspendModifier")
     suspend fun deleteNotifications(){
         dao.deleteNotifications()
     }

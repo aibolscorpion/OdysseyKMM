@@ -81,5 +81,12 @@
             style="@style/profileMenuTextStyle"
             tools:text="@string/issue_authority_placeholder"/>
 
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:checked="@={document.use_as_default}"
+            android:text="@string/use_as_default_document" />
+
     </LinearLayout>
 </layout>

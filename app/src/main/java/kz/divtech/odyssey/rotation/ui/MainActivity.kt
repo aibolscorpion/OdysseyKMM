@@ -169,7 +169,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         requestPermissionLauncher.launch(POST_NOTIFICATIONS)
     }
 
-
     override fun onStop() {
         super.onStop()
 

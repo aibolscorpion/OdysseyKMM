@@ -1,8 +1,10 @@
 package kz.divtech.odyssey.rotation.domain.model.trips.response.trip.stations
 
-import androidx.room.ColumnInfo
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class StartStation(
-    @ColumnInfo("start_station_code") val code: String,
-    @ColumnInfo("start_station_name") val name: String
-)
+    val code: String,
+    val name: String
+): Parcelable

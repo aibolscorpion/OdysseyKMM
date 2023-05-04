@@ -28,7 +28,7 @@ data class Employee(
     var iin: String,
     val number: String,
     val position: String,
-    var phone: String,
+    var phone: String?,
     val additional_phone: String?,
     var email: String?,
     val documents: @RawValue List<Document>

@@ -65,7 +65,6 @@ object DocumentBindingAdapter {
     @JvmStatic fun setBirthDate(editText: EditText, date: String?){
         var formattedDate = ""
         date?.let {
-            val birthDate = date.substring(0, 10)
             formattedDate = date.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
         }
         editText.setText(formattedDate)
