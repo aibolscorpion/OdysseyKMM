@@ -42,14 +42,11 @@ class CancelRefundDialog : DialogFragment() {
                 Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 
     private fun openRefundCancelledFragment(){
         findNavController().navigate(CancelRefundDialogDirections.
             actionCancelRefundDialogToRefundSentFragment(false, args.refundId))
     }
-
-
 
 }

@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            employee?.let { it ->
+            employee?.let {
                 currentEmployee = it
                 binding.employeeNameTV.text = it.full_name
                 binding.employeeTableNumberTV.text = it.number
@@ -76,8 +76,10 @@ class ProfileFragment : Fragment() {
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
 
     fun openPersonalDataFragment(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment(currentEmployee!!)
-        findNavController().navigate(action)
+        currentEmployee?.let {
+            val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment(it)
+            findNavController().navigate(action)
+        }
     }
 
     fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)

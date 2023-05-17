@@ -16,6 +16,8 @@ object Constants {
     const val ID_CARD = "id-card"
     const val PASSPORT = "passport"
     const val RESIDENCE = "residence"
+    const val FOREIGN = "foreign"
+    const val KAZAKHSTAN_CODE = "KAZ"
     const val MALE = "male"
     const val FEMALE = "female"
     const val RETRY_AFTER = "Retry-After"

@@ -164,9 +164,9 @@
                 android:layout_height="@dimen/button_height"
                 style="@style/buttonStyle"
                 android:text="@string/add_phone_number"
-                app:layout_constraintTop_toBottomOf="@+id/editTextFL"
                 android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> updatePhoneNumberFragment.updatePhoneNumber()}"/>
+                android:onClick="@{() -> updatePhoneNumberFragment.updatePhoneNumber()}"
+                app:layout_constraintTop_toBottomOf="@+id/editTextFL"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

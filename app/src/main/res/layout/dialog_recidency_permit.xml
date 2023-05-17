@@ -30,12 +30,12 @@
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
-                android:paddingBottom="@dimen/two_times_margin">
+                android:paddingBottom="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/residency_permit"
+                    app:documentType="@{document.type}"
                     style="@style/mainTitleTextStyle" />
                 <TextView
                     android:layout_width="match_parent"
@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:text="@string/save"
+                    android:stateListAnimator="@null"
                     android:layout_marginTop="@dimen/margin"
                     android:onClick="@{() -> viewModel.updateDocument(document)}" />
 

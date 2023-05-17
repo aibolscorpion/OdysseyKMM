@@ -14,7 +14,8 @@ object DocumentBindingAdapter {
          val documentNames = mutableMapOf(
             Constants.ID_CARD to App.appContext.getString(R.string.id),
             Constants.PASSPORT to App.appContext.getString(R.string.passport),
-            Constants.RESIDENCE to App.appContext.getString(R.string.residency_permit))
+            Constants.RESIDENCE to App.appContext.getString(R.string.residency_permit),
+            Constants.FOREIGN to App.appContext.getString(R.string.foreign_document))
 
         textView.text = documentNames[documentType]
     }

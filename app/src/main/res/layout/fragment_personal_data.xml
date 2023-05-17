@@ -229,14 +229,22 @@
                             android:layout_marginTop="20dp"
                             android:text="@string/citizenship" />
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            style="@style/profileMenuTextStyle"
+                        <TextView
+                            android:id="@+id/countryTV"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            android:backgroundTint="@color/bottom_sheet_line"
-                            android:text="@={employee.country_code}"
+                            android:focusable="false"
+                            style="@style/profileMenuTextStyle"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            app:drawableEndCompat="@drawable/icons_tabs_right_blue"
                             tools:text="@string/kazakhstan" />
+                        
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/bottom_sheet_line" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -306,7 +314,8 @@
                     android:layout_height="@dimen/button_height"
                     android:text="@string/save"
                     app:layout_constraintTop_toBottomOf="@+id/contactInfoCV"
-                    android:onClick="@{() -> viewModel.updatePersonalData(employee)}"
+                    android:onClick="@{() -> personalDataFragment.updatePersonalData()}"
+                    android:stateListAnimator="@null"
                     android:layout_marginBottom="23dp"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginStart="@dimen/margin"

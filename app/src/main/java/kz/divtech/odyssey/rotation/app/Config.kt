@@ -5,9 +5,8 @@ object Config {
     const val COUNT_DOWN_TIMER_SECONDS = 60
     const val COUNT_DOWN_INTERVAL = 1000L
     const val NOTIFICATION_LIMIT_SIZE = 10
-    const val PROXY_HOST = "http://78.40.108.65:21232"
+    const val PROXY_HOST = "https://proxy.odyssey.kz"
     const val API = "/api/"
-    const val BASE_URL_KEY = "x-pod-url"
     const val IS_TEST = true
     const val COUNTRY_CODE = "7"
     const val DEVICE_ID_KEY = "deviceId"

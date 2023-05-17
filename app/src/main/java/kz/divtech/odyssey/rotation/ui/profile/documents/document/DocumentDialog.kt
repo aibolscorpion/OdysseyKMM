@@ -14,11 +14,14 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 
 
 class DocumentDialog : BottomSheetDialogFragment() {
     private val args: DocumentDialogArgs by navArgs()
-    val viewModel : DocumentViewModel by viewModels()
+    val viewModel : DocumentViewModel by viewModels{
+        DocumentViewModel.DocumentViewModelFactory((activity as MainActivity).employeeRepository)
+    }
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
@@ -46,6 +49,13 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 return passportBinding.root
             }
 
+            Constants.RESIDENCE -> {
+                val residenceBinding = DialogRecidencyPermitBinding.inflate(inflater)
+                residenceBinding.documentDialog = this
+                residenceBinding.document = document
+                residenceBinding.viewModel = viewModel
+                return residenceBinding.root
+            }
             else -> {
                 val residenceBinding = DialogRecidencyPermitBinding.inflate(inflater)
                 residenceBinding.documentDialog = this

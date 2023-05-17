@@ -18,6 +18,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.SingleEmployee
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 
@@ -80,11 +81,11 @@ interface ApiService {
 
     //EmployeeInfo
     @GET("profile")
-    suspend fun getEmployeeInfo() : Result<Employee>
+    suspend fun getEmployeeInfo() : Result<SingleEmployee>
 
     //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("profile")
-    suspend fun updateData(@Body employee: Employee): Result<ResponseBody>
+    suspend fun updateEmployee(@Body employee: Employee): Result<ResponseBody>
 
     @POST("profile/update-document")
     suspend fun updateDocument(@Body document: Document): Result<ResponseBody>

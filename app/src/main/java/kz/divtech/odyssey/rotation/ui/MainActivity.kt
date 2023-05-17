@@ -77,7 +77,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                     R.id.notificationFragment, R.id.faqFragment,
                     R.id.newsFragment, R.id.chooseTicketRefundFragment,
                     R.id.refundReasonFragment, R.id.refundListFragment,
-                    R.id.refundDetailFragment, R.id.chooseTicketForOpen ->
+                    R.id.refundDetailFragment, R.id.chooseTicketForOpen,
+                    R.id.countryListFragment ->
                         binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
                     R.id.refundSentFragment -> binding.mainToolbar.navigationIcon = null
             }

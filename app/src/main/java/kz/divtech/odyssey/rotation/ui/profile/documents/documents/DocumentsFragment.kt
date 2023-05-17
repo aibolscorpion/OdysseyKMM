@@ -4,17 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Constants.ID_CARD
+import kz.divtech.odyssey.rotation.app.Constants.KAZAKHSTAN_CODE
+import kz.divtech.odyssey.rotation.app.Constants.PASSPORT
+import kz.divtech.odyssey.rotation.app.Constants.RESIDENCE
+import kz.divtech.odyssey.rotation.app.Constants.FOREIGN
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
+    private val citizenDocumentList = listOf(ID_CARD, PASSPORT)
+    private val foreignerDocumentList = listOf(PASSPORT, RESIDENCE, FOREIGN)
+
     private var currentEmployee: Employee? = null
     private val viewModel : DocumentsViewModel by viewModels{
         DocumentsViewModel.DocumentsViewModelFactory((activity as MainActivity).employeeRepository)
@@ -24,9 +31,6 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDocumentsBinding.inflate(inflater)
-        binding.documentsFragment = this
-        binding.viewModel = viewModel
-
         return binding.root
     }
 
@@ -34,11 +38,14 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = DocumentsAdapter(this)
-        binding.documentRV.adapter = adapter
+        binding.documentsRV.adapter = adapter
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             currentEmployee = employee
-            binding.emptyDocuments.root.isVisible = employee.documents.isEmpty()
-            adapter.setDocumentList(employee.documents)
+            if(employee.country_code == KAZAKHSTAN_CODE){
+                adapter.setUserDocumentList(employee.documents, citizenDocumentList)
+            }else{
+                adapter.setUserDocumentList(employee.documents, foreignerDocumentList)
+            }
         }
     }
 

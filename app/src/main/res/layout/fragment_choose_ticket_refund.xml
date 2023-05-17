@@ -53,14 +53,14 @@
             tools:listitem="@layout/item_ticket"
             tools:itemCount="3" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/nextBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/buttonStyle"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:gravity="center_horizontal"
+            android:stateListAnimator="@null"
             android:layout_marginTop="@dimen/two_times_margin"
             android:onClick="@{() -> thisDialog.openReasonForRefundFragment()}"
             android:text="@string/next"

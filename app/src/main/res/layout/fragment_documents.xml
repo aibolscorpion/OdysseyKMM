@@ -2,18 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="documentsFragment"
-            type="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsFragment" />
-        <variable
-            name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsViewModel" />
-        <variable
-            name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
-    </data>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,22 +23,14 @@
                 style="@style/mainTitleTextStyle"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/documentRV"
+                android:id="@+id/documentsRV"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="2"
-                tools:layout="@layout/item_document" />
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_document"
+                tools:itemCount="4"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <include
-            android:id="@+id/emptyDocuments"
-            layout="@layout/layout_empty_data"
-            app:emptyData="@{emptyData.DOCUMENTS}"
-            android:visibility="gone" />
-
     </FrameLayout>
 </layout>

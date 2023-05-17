@@ -57,6 +57,7 @@
                 android:layout_height="48dp"
                 style="@style/buttonStyle"
                 android:layout_marginTop="24dp"
+                android:stateListAnimator="@null"
                 android:text="@string/turn_on"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin" />
@@ -67,6 +68,7 @@
                 android:background="@drawable/bg_remind_later_button"
                 android:textColor="#2d4461"
                 style="@style/buttonStyle"
+                android:stateListAnimator="@null"
                 android:onClick="@{() -> thisDialog.dismiss() }"
                 android:text="@string/remind_later"
                 android:layout_marginTop="8dp"

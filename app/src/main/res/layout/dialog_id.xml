@@ -35,7 +35,7 @@
                 android:paddingStart="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
                 android:paddingEnd="@dimen/margin"
-                android:paddingBottom="@dimen/two_times_margin">
+                android:paddingBottom="24dp">
 
                 <TextView
                     style="@style/mainTitleTextStyle"
@@ -145,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="@dimen/margin"
+                    android:stateListAnimator="@null"
                     android:onClick="@{() -> viewModel.updateDocument(document)}"
                     android:text="@string/save" />
 

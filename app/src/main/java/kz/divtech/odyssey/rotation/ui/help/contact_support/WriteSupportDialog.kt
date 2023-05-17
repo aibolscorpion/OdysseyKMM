@@ -33,7 +33,7 @@ class WriteSupportDialog : BottomSheetDialogFragment() {
                     ContactUtil.writeSupportOnWhatsapp(this, orgInfo.whatsappPhone)
                 }
                 dataBinding.writeTelegramBtn.setOnClickListener{
-                    orgInfo.telegramPhone?.let { it1 ->
+                    orgInfo.telegramId?.let { it1 ->
                         ContactUtil.writeSupportOnTelegram(this, it1)
                     }
                 }

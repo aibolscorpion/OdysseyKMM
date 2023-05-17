@@ -96,9 +96,9 @@
                 android:layout_height="@dimen/button_height"
                 style="@style/buttonStyle"
                 android:text="@string/enter"
-                app:layout_constraintTop_toBottomOf="@+id/editTextFL"
                 android:layout_marginTop="@dimen/margin"
-                android:onClick="@{() -> phoneNumberFragment.findEmployee()}"/>
+                android:onClick="@{() -> phoneNumberFragment.findEmployee()}"
+                app:layout_constraintTop_toBottomOf="@+id/editTextFL"/>
 
             <View
                 android:id="@+id/lineVw"

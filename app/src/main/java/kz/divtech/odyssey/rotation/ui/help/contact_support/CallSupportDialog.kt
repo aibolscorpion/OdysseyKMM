@@ -1,6 +1,8 @@
 package kz.divtech.odyssey.rotation.ui.help.contact_support
 
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +28,7 @@ class CallSupportDialog : BottomSheetDialogFragment(){
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         val dataBinding  = DialogCallSupportBinding.inflate(inflater)
         dataBinding.thisDialog = this
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         viewModel.orgInfoLiveData.observe(viewLifecycleOwner){
             it?.let { orgInfo ->

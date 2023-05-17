@@ -15,7 +15,6 @@ class OrgInfoRepository(val dao: Dao) {
         dao.deleteOrgInfo()
     }
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun refreshOrgInfo(orgInfo: OrgInfo) {
         dao.refreshOrgInfo(orgInfo)

@@ -16,14 +16,16 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 
 class EmployeeRepository(private val dao: Dao) {
-
     val employee: Flow<Employee> = dao.observeEmployee()
-    private var firstTimeEmployee = true
     private var firstTimeDeviceInfo = true
 
     @WorkerThread
-    suspend fun insertEmployee(employeeInfo: Employee){
-        dao.insertEmployee(employeeInfo)
+    suspend fun insertEmployee(employee: Employee){
+        dao.insertEmployee(employee)
+    }
+
+    suspend fun updateEmployee(employee: Employee): Result<ResponseBody>{
+        return RetrofitClient.getApiService().updateEmployee(employee)
     }
 
     @WorkerThread
@@ -32,13 +34,10 @@ class EmployeeRepository(private val dao: Dao) {
     }
 
     suspend fun getEmployeeFromServer(){
-        if(firstTimeEmployee){
-            val response = RetrofitClient.getApiService().getEmployeeInfo()
-            if(response.isSuccess()){
-                val employee = response.asSuccess().value
-                insertEmployee(employee)
-                firstTimeEmployee = false
-            }
+        val response = RetrofitClient.getApiService().getEmployeeInfo()
+        if(response.isSuccess()){
+            val employee = response.asSuccess().value.data
+            insertEmployee(employee)
         }
     }
 

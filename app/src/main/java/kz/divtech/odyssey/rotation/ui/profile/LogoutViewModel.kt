@@ -19,6 +19,8 @@ class LogoutViewModel(
     private val notificationRepository: NotificationRepository,
     private val orgInfoRepository: OrgInfoRepository): ViewModel() {
 
+    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
+
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
@@ -35,9 +37,30 @@ class LogoutViewModel(
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
             employeeRepository.logoutFromServer()
-            _isSuccessfullyLoggedOut.postValue(true)
+            _isSuccessfullyLoggedOut.value = true
             pBarVisibility.set(View.GONE)
         }
+    }
+
+
+
+    fun deleteAllDataAsync() = viewModelScope.async{
+        SharedPrefs.clearAuthToken(App.appContext)
+        SharedPrefs.clearUrl(App.appContext)
+        val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
+        val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
+        val deleteFaqAsync = async { faqRepository.deleteFaq() }
+        val deleteNewsAsync = async { newsRepository.deleteNews() }
+        val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
+        val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
+        val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
+        deleteTripsAsync.await()
+        deleteEmployeeAsync.await()
+        deleteFaqAsync.await()
+        deleteNewsAsync.await()
+        deleteFullArticlesAsync.await()
+        deleteNotificationsAsync.await()
+        deleteOrgInfo.await()
     }
 
     class LogoutViewModelFactory(
@@ -58,26 +81,6 @@ class LogoutViewModel(
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
-    }
-
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
-
-    fun deleteAllDataAsync() = viewModelScope.async{
-        SharedPrefs.clearAuthToken(App.appContext)
-        val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
-        val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
-        val deleteFaqAsync = async { faqRepository.deleteFaq() }
-        val deleteNewsAsync = async { newsRepository.deleteNews() }
-        val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
-        val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
-        val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
-        deleteTripsAsync.await()
-        deleteEmployeeAsync.await()
-        deleteFaqAsync.await()
-        deleteNewsAsync.await()
-        deleteFullArticlesAsync.await()
-        deleteNotificationsAsync.await()
-        deleteOrgInfo.await()
     }
 
 }

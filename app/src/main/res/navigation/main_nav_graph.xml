@@ -111,6 +111,12 @@
         <argument
             android:name="employee"
             app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
+        <action
+            android:id="@+id/action_personalDataFragment_to_defDocumentChangedDialog"
+            app:destination="@id/defDocumentChangedDialog" />
+        <action
+            android:id="@+id/action_personalDataFragment_to_countryListFragment"
+            app:destination="@id/countryListFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -340,5 +346,22 @@
         android:name="kz.divtech.odyssey.rotation.ui.search.SearchFragment"
         android:label="Поиск билетов"
         tools:layout="@layout/fragment_search"/>
+    <dialog
+        android:id="@+id/defDocumentChangedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.DefDocumentChangedDialog"
+        android:label="DefDocumentChangedDialog"
+        tools:layout="@layout/dialog_default_document"/>
+    <fragment
+        android:id="@+id/countryListFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.country_list.CountryListFragment"
+        android:label="@string/change_citizenship"
+        tools:layout="@layout/fragment_country_list">
+        <argument
+            android:name="countryList"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.Country[]" />
+        <argument
+            android:name="countryCode"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

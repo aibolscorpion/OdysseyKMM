@@ -8,15 +8,17 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:paddingTop="20dp"
+        android:paddingBottom="8dp"
         android:orientation="vertical">
+
         <TextView
             style="@style/keyTextStyle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="@string/document_number" />
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -81,12 +83,50 @@
             style="@style/profileMenuTextStyle"
             tools:text="@string/issue_authority_placeholder"/>
 
-        <CheckBox
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:checked="@={document.use_as_default}"
-            android:text="@string/use_as_default_document" />
+            android:orientation="vertical">
 
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/defaultDocumentSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={document.use_as_default}"
+                android:paddingEnd="11dp"
+                android:layoutDirection="ltr"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/useAsDefaultTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/use_as_default_document"
+                app:layout_constraintStart_toEndOf="@+id/defaultDocumentSwitch"
+                app:layout_constraintTop_toTopOf="@+id/defaultDocumentSwitch" />
+
+            <TextView
+                android:id="@+id/useAsDefaultDescTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="14sp"
+                android:textColor="#8015304d"
+                android:lineSpacingExtra="4sp"
+                android:layout_marginTop="6dp"
+                android:text="@string/use_as_default_document_desc"
+                app:layout_constraintStart_toStartOf="@+id/useAsDefaultTitleTV"
+                app:layout_constraintTop_toBottomOf="@+id/useAsDefaultTitleTV"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
 </layout>

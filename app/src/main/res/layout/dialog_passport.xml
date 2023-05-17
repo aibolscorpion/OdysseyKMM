@@ -33,7 +33,7 @@
                 android:paddingStart="@dimen/margin"
                 android:paddingEnd="@dimen/margin"
                 android:paddingTop="@dimen/two_times_margin"
-                android:paddingBottom="@dimen/two_times_margin">
+                android:paddingBottom="24dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,6 +127,7 @@
                     android:layout_height="@dimen/button_height"
                     android:text="@string/save"
                     android:layout_marginTop="@dimen/margin"
+                    android:stateListAnimator="@null"
                     android:onClick="@{() -> viewModel.updateDocument(document)}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

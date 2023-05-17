@@ -13,8 +13,10 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.SERVER_DATE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 object DocumentBindingAdapter {
 
@@ -72,7 +74,7 @@ object DocumentBindingAdapter {
 
     @InverseBindingAdapter(attribute = "birthDate")
     @JvmStatic fun getBirthDate(editText: EditText): String {
-        return editText.text.toString()
+        return editText.text.toString().convertDateToServerPattern()
     }
 
     @BindingAdapter("birthDateAttrChanged")
@@ -87,6 +89,19 @@ object DocumentBindingAdapter {
         }
     }
 
+
+    private fun String?.convertDateToServerPattern(): String{
+        var formattedDate = ""
+        this?.let {
+            val serverDateTimeFormat = DateTimeFormatter.ofPattern(DAY_MONTH_YEAR_PATTERN)
+            val parsedDateTime = LocalDate.parse(this, serverDateTimeFormat)
+
+            val format = DateTimeFormatter.ofPattern(SERVER_DATE_PATTERN)
+            formattedDate = parsedDateTime.format(format)
+        }
+        return formattedDate
+    }
+
     @BindingAdapter("issueDate")
     @JvmStatic fun setIssueDate(editText: EditText, date: String?){
         if(editText.text.toString() != date){
@@ -97,7 +112,7 @@ object DocumentBindingAdapter {
 
     @InverseBindingAdapter(attribute = "issueDate")
     @JvmStatic fun getIssueDate(editText: EditText): String {
-        return editText.text.toString()
+        return editText.text.toString().convertDateToServerPattern()
     }
 
     @BindingAdapter("issueDateAttrChanged")

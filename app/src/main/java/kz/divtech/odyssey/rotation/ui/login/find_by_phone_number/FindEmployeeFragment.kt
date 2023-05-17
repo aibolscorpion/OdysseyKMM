@@ -142,7 +142,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
                 PackageManager.PERMISSION_GRANTED) {
             } else if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                 val modalBottomSheet = PermissionRationale(this)
-                modalBottomSheet.show(activity?.supportFragmentManager!!, "modalBottomSheet")
+                activity?.supportFragmentManager?.let { modalBottomSheet.show(it, "modalBottomSheet") }
             } else {
                 requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }

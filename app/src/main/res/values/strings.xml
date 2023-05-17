@@ -364,23 +364,30 @@
     <string name="phone_placeholder">+7 (701) 399 3538</string>
     <string name="email">Эл. почта</string>
     <string name="save">Сохранить</string>
+    <string name="citizenship_default_document_changes">Внимание! При смене гражданства измениться документ по умолчанию</string>
+    <string name="choose_default_document">Обязательно проверьте данные в разделе «Документы» и выберите верный документ по умолчанию.</string>
+    <string name="choose">Выбрать</string>
+    <string name="change_citizenship">Изменить гражданство</string>
+    <string name="data_was_successfully_updated">Данные успешно обновлены</string>
 
     //Страница Документы
     <string name="document">Документ</string>
     <string name="id">Удостоверение личности</string>
     <string name="passport">Паспорт</string>
     <string name="residency_permit">Вид на жительство</string>
+    <string name="foreign_document">Иностранный документ</string>
     <string name="no.">№</string>
     <string name="work_permission_number_placeholder">0005011</string>
     <string name="expire_date_placeholder">10.07.2015 – 15.02.2021</string>
     <string name="iin_value">9202024300975</string>
     <string name="issue_expire_date">Выдано / срок до</string>
     <string name="issue_expire_date_placeholder">11.09.2017 – 11.09.2027, МВД РК</string>
-    <string name="you_have_not_filled_passport_data">Вы еще не указали данные вашего паспорта. Нажмите, чтобы добавить</string>
-    <string name="you_have_not_filled_residency_permit_data">Вы еще не указали данные вида на жительство. Нажмите, чтобы добавить</string>
+    <string name="you_have_not_filled_document_data">Вы еще не указали данные вашего документа. Нажмите, чтобы добавить</string>
     <string name="empty_documents_title">Документы не найдены</string>
     <string name="empty_documents_content">Мы не нашли ваших документов</string>
-    <string name="use_as_default_document">Использоать как документ по умолчанию</string>
+    <string name="use_as_default_document">Документ по умолчанию</string>
+    <string name="use_as_default_document_desc">Данный документ будет использоваться как основной при бронировании билетов</string>
+    <string name="as_default">По умолчанию</string>
 
     //Модалка Разрешение на работу
     <string name="status">Статус</string>
