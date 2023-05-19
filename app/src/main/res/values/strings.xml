@@ -369,6 +369,13 @@
     <string name="choose">Выбрать</string>
     <string name="change_citizenship">Изменить гражданство</string>
     <string name="data_was_successfully_updated">Данные успешно обновлены</string>
+    <string name="enter_code_that_was_sent_to_number">Введите код из СМС-сообщения отправленный на номер %1$s</string>
+    <string name="enter_phone_number">Введите номер телефона</string>
+    <string name="code_will_be_send_to_this_numbe">На данный номер будет отправлен СМС-код для подтверждения</string>
+    <string name="continue_text">Продолжить</string>
+    <string name="phone_number_successfully_updated">Номер телефона успешно изменен"</string>
+    <string name="use_new_phone_number_for_login">Теперь для входа в аккаунт используйте номер %1$s</string>
+    <string name="go_back">Вернуться назад</string>
 
     //Страница Документы
     <string name="document">Документ</string>

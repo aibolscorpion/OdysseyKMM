@@ -21,10 +21,12 @@ import java.time.format.DateTimeFormatter
 object DocumentBindingAdapter {
 
     @BindingAdapter("gender", "maleButton", "femaleButton")
-    @JvmStatic fun setGender(radioGroup: RadioGroup, gender: String, maleButton: RadioButton, femaleButton: RadioButton) {
-        when(gender){
-            Constants.MALE -> changeRadioButtonBackground(maleButton, femaleButton)
-            Constants.FEMALE -> changeRadioButtonBackground(femaleButton, maleButton)
+    @JvmStatic fun setGender(radioGroup: RadioGroup, gender: String?, maleButton: RadioButton, femaleButton: RadioButton) {
+        gender?.let {
+            when(gender){
+                Constants.MALE -> changeRadioButtonBackground(maleButton, femaleButton)
+                Constants.FEMALE -> changeRadioButtonBackground(femaleButton, maleButton)
+            }
         }
     }
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/phoneNumberCL"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg"
+        android:orientation="vertical"
+        android:paddingTop="25dp"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin"
+        android:paddingBottom="@dimen/margin">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="24sp"
+                android:textColor="#112b46"
+                android:gravity="center_horizontal"
+                android:text="@string/enter_phone_number" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="#1b3652"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="7sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/code_will_be_send_to_this_numbe" />
+
+            <FrameLayout
+                android:id="@+id/editTextFL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
+
+                <EditText
+                    android:id="@+id/phoneNumberET"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:hint="@string/phone_number_placeholder"
+                    android:inputType="phone"
+                    android:background="@drawable/bg_white_radius_8dp"
+                    android:letterSpacing="0.02"
+                    android:lineSpacingExtra="7sp"
+                    android:textColor="#0c2b4c"
+                    android:textColorHint="#0c2b4c"
+                    android:textSize="17sp"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingTop="24dp"
+                    android:paddingEnd="@dimen/margin"
+                    android:paddingBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/telephone"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="13sp"
+                    android:textColor="#748595"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="3sp"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin"
+                    android:paddingTop="4dp" />
+            </FrameLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continueBtn"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_text"
+            android:stateListAnimator="@null"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

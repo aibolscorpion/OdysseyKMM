@@ -13,12 +13,10 @@ import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class ProfileFragment : Fragment() {
-    private var currentEmployee: Employee? = null
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(
             (activity as MainActivity).tripsRepository,
@@ -45,7 +43,6 @@ class ProfileFragment : Fragment() {
 
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let {
-                currentEmployee = it
                 binding.employeeNameTV.text = it.full_name
                 binding.employeeTableNumberTV.text = it.number
                 binding.employeePositionTV.text = it.position
@@ -76,10 +73,8 @@ class ProfileFragment : Fragment() {
         findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
 
     fun openPersonalDataFragment(){
-        currentEmployee?.let {
-            val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment(it)
-            findNavController().navigate(action)
-        }
+        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment()
+        findNavController().navigate(action)
     }
 
     fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)

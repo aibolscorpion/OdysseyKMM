@@ -42,7 +42,7 @@ class EmployeeRepository(private val dao: Dao) {
     }
 
     suspend fun updatePhoneNumber(request: UpdatePhoneRequest): Result<ResponseBody>{
-        return RetrofitClient.getApiService().updatePhoneNumber(request)
+        return RetrofitClient.getApiService().updatePhoneNumberWithoutAuth(request)
     }
 
     suspend fun sendDeviceInfo(){

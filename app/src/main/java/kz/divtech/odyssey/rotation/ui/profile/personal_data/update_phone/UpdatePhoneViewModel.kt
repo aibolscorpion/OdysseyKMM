@@ -1,26 +1,28 @@
-package kz.divtech.odyssey.rotation.ui.login.send_sms
+package kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone
 
 import android.view.View
 import androidx.databinding.ObservableInt
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.login.login.*
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
+import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
 import kz.divtech.odyssey.rotation.utils.Event
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
-class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
-                       private val loginRepository: LoginRepository) : ViewModel() {
-
+class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
     private var authLogId: Int = 0
 
     private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
@@ -29,8 +31,8 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
     private val _errorMessage = MutableLiveData<Event<String>>()
     val errorMessage: LiveData<Event<String>> = _errorMessage
 
-    private val _loggedIn = MutableLiveData<Event<Boolean>>()
-    val loggedIn : LiveData<Event<Boolean>> = _loggedIn
+    private val _successfullyUpdated = MutableLiveData<Event<Boolean>>()
+    val successfullyUpdated : LiveData<Event<Boolean>> = _successfullyUpdated
 
     private val _secondsMutableLiveData = MutableLiveData<Event<Int>>()
     val secondsLiveData: LiveData<Event<Int>> = _secondsMutableLiveData
@@ -40,7 +42,8 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
     fun requestSmsCode(phoneNumber: String){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            val response = loginRepository.requestSmsCode(phoneNumber)
+            val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
+            val response = RetrofitClient.getApiService().updatePhoneNumberWithAuth(codeRequest)
             if(response.isSuccess()) {
                 authLogId = response.asSuccess().value.auth_log_id
                 _smsCodeSent.postValue(Event(true))
@@ -56,18 +59,15 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
         }
     }
 
-    fun login(phoneNumber: String, code: String){
+    fun confirmUpdate(code: String){
         pBarVisibility.set(View.VISIBLE)
-        val authRequest = AuthRequest(phoneNumber, code, authLogId)
+        val authRequest = AuthRequest("", code, authLogId)
 
         viewModelScope.launch {
-            val response = loginRepository.login(authRequest)
+            val response = RetrofitClient.getApiService().updatePhoneConfirm(authRequest)
             if(response.isSuccess()) {
-                _loggedIn.postValue(Event(true))
-                val loginResponse = response.asSuccess().value
-                SharedPrefs.saveAuthToken(loginResponse.token, App.appContext)
-                SharedPrefs.saveOrganizationName(loginResponse.organization, App.appContext)
-                insertEmployeeToDB(loginResponse.employee)
+                employeeRepository.getEmployeeFromServer()
+                _successfullyUpdated.postValue(Event(true))
             }else if(response.isHttpException()) {
                 if (response.statusCode == Constants.BAD_REQUEST_CODE) {
                     _errorMessage.postValue(
@@ -87,20 +87,14 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
         }
     }
 
-    class FillCodeViewModelFactory(private val employeeRepository: EmployeeRepository,
-        private val loginRepository: LoginRepository) : ViewModelProvider.Factory{
+    class UpdatePhoneViewModelFactory(private val repository: EmployeeRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(SendSmsViewModel::class.java)){
+            if(modelClass.isAssignableFrom(UpdatePhoneViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
-                return SendSmsViewModel(employeeRepository, loginRepository) as T
+                return UpdatePhoneViewModel(repository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 
-    private fun insertEmployeeToDB(employee: Employee) {
-        viewModelScope.launch {
-            employeeRepository.insertEmployee(employee)
-        }
-    }
 }

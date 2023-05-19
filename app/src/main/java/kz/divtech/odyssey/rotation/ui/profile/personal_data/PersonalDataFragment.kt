@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.ui.MainActivity
@@ -23,34 +24,47 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
     private var _binding: FragmentPersonalDataBinding? = null
     private val binding get() = _binding!!
-    val args: PersonalDataFragmentArgs by navArgs()
     private var initialCountryCode: String? = null
+    private var currentEmployee: Employee? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPersonalDataBinding.inflate(inflater)
-
-        binding.employee = args.employee
-        binding.personalDataFragment = this
-        binding.viewModel = viewModel
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initialCountryCode = args.employee.country_code
+        binding.personalDataFragment = this
+        binding.viewModel = viewModel
+
         val countries = getCountryListFromRaw()
-        setCountryNameByCode(countries)?.let {
-            binding.countryTV.text = it
+        viewModel.employee.observe(viewLifecycleOwner){
+            it?.let {
+                currentEmployee = it
+                initialCountryCode = it.country_code
+                binding.employee = it
+                setCountryNameByCode(countries)?.let {
+                    binding.countryTV.text = it
+                }
+            }
         }
+
         binding.countryTV.setOnClickListener {
             openCountryListFragment(countries)
         }
+
+        viewModel.personalDataUpdated.observe(viewLifecycleOwner){
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
+                findNavController().popBackStack()
+            }
+        }
+
         viewModel.selectedCountry.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
                 binding.countryTV.text = it.name
-                args.employee.country_code = it.code
+                currentEmployee?.country_code = it.code
             }
         }
     }
@@ -63,7 +77,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
 
     private fun setCountryNameByCode(countryList: List<Country>): String? {
         countryList.forEachIndexed { _, country ->
-            if (country.code == args.employee.country_code) {
+            if (country.code == currentEmployee?.country_code) {
                 return country.name
             }
         }
@@ -71,7 +85,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     fun updatePersonalData(){
-        if(initialCountryCode != args.employee.country_code){
+        if(initialCountryCode != currentEmployee?.country_code){
             showDefaultDocumentChangedDialog()
         }else{
             update()
@@ -83,13 +97,19 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     private fun openCountryListFragment(countryList: List<Country>){
-        findNavController().navigate(PersonalDataFragmentDirections.
-            actionPersonalDataFragmentToCountryListFragment(countryList.toTypedArray(),
-                args.employee.country_code))
+        currentEmployee?.country_code?.let {
+            findNavController().navigate(PersonalDataFragmentDirections.
+            actionPersonalDataFragmentToCountryListFragment(countryList.toTypedArray(), it))
+        }
+    }
+
+    fun openPhoneNumberFragment(){
+        findNavController().navigate(
+            PersonalDataFragmentDirections.actionPersonalDataFragmentToPhoneNumberFragment2())
     }
 
     override fun update() {
-        viewModel.updatePersonalData(args.employee)
+        currentEmployee?.let { viewModel.updatePersonalData(it) }
     }
 
 }

@@ -40,7 +40,7 @@ interface ApiService {
     suspend fun login(@Body authRequest : AuthRequest): Result<LoginResponse>
 
     @POST("update-phone-request")
-    suspend fun updatePhoneNumber(@Body request: UpdatePhoneRequest) : Result<ResponseBody>
+    suspend fun updatePhoneNumberWithoutAuth(@Body request: UpdatePhoneRequest) : Result<ResponseBody>
 
     //Trips
     @GET("applications/get-nearest-active-app")
@@ -79,16 +79,21 @@ interface ApiService {
     @POST("articles/{id}/mark-as-read")
     suspend fun markAsReadArticleById(@Path("id") articleId: Int): Result<ResponseBody>
 
-    //EmployeeInfo
+    //Profile
     @GET("profile")
     suspend fun getEmployeeInfo() : Result<SingleEmployee>
 
-    //Update kz.divtech.odyssey.rotation.domain.model.trips.Data
     @POST("profile")
     suspend fun updateEmployee(@Body employee: Employee): Result<ResponseBody>
 
     @POST("profile/update-document")
     suspend fun updateDocument(@Body document: Document): Result<ResponseBody>
+
+    @POST("profile/update-phone")
+    suspend fun updatePhoneNumberWithAuth(@Body codeRequest: CodeRequest): Result<CodeResponse>
+
+    @POST("profile/update-phone-confirm")
+    suspend fun updatePhoneConfirm(@Body authRequest : AuthRequest): Result<ResponseBody>
 
     //Notifications
     @GET("notifications")

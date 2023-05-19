@@ -108,15 +108,15 @@
         android:label="@string/personal_data"
         android:layout="@layout/fragment_personal_data"
         tools:layout="@layout/fragment_personal_data">
-        <argument
-            android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
         <action
             android:id="@+id/action_personalDataFragment_to_defDocumentChangedDialog"
             app:destination="@id/defDocumentChangedDialog" />
         <action
             android:id="@+id/action_personalDataFragment_to_countryListFragment"
             app:destination="@id/countryListFragment" />
+        <action
+            android:id="@+id/action_personalDataFragment_to_phoneNumberFragment2"
+            app:destination="@id/phoneNumberFragment2" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -361,6 +361,40 @@
             app:argType="kz.divtech.odyssey.rotation.domain.model.profile.Country[]" />
         <argument
             android:name="countryCode"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneNumberFragment2"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone.PhoneNumberFragment"
+        android:label="@string/change_number"
+        tools:layout="@layout/fragment_update_phone_2">
+        <action
+            android:id="@+id/action_phoneNumberFragment2_to_smsCodeFragment"
+            app:destination="@id/smsCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/smsCodeFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone.SmsCodeFragment"
+        android:label="@string/change_number"
+        tools:layout="@layout/fragment_enter_code" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <argument
+            android:name="extractedPhoneNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_smsCodeFragment_to_phoneUpdatedFragment"
+            app:destination="@id/phoneUpdatedFragment"
+            app:popUpTo="@id/personalDataFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneUpdatedFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone.PhoneUpdatedFragment"
+        android:label="@string/change_number"
+        tools:layout="@layout/fragment_refund_sent">
+        <argument
+            android:name="phoneNumber"
             app:argType="string" />
     </fragment>
 

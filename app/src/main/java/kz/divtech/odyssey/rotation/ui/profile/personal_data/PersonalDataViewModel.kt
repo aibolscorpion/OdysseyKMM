@@ -1,12 +1,9 @@
 package kz.divtech.odyssey.rotation.ui.profile.personal_data
 
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
@@ -14,8 +11,11 @@ import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
 
 class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
+    val employee = employeeRepository.employee.asLiveData()
     val pBarVisibility = ObservableInt(View.GONE)
 
+    private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
+    val personalDataUpdated: LiveData<Event<Boolean>> = _personalDataUpdated
     private var _selectedCountry = MutableLiveData<Event<Country>>()
     val selectedCountry: LiveData<Event<Country>> get() = _selectedCountry
 
@@ -29,7 +29,7 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
             val response = employeeRepository.updateEmployee(employee)
             if(response.isSuccess()){
                 employeeRepository.insertEmployee(employee)
-                Toast.makeText(App.appContext, R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
+                _personalDataUpdated.value = Event(true)
             }
             pBarVisibility.set(View.GONE)
         }

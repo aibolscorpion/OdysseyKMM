@@ -24,28 +24,28 @@ import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
     private val editTextList = ArrayList<EditText>()
-    private lateinit var dataBinding : FragmentSendSmsBinding
-    private var gCountDownTimber : CountDownTimer?= null
+    private var _dataBinding: FragmentSendSmsBinding? = null
+    private val dataBinding  get() = _dataBinding!!
+
+    private var countDownTimer : CountDownTimer?= null
     private val viewModel: SendSmsViewModel by activityViewModels{
         SendSmsViewModel.FillCodeViewModelFactory(
             (activity as LoginActivity).employeeRepository,
             (activity?.application as App).loginRepository
         )
     }
-    private lateinit var extractedPhoneNumber: String
     private var smsReceiver: SmsBroadcastReceiver? = null
     val args: SendSmsFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
-        dataBinding = FragmentSendSmsBinding.inflate(inflater)
+        _dataBinding = FragmentSendSmsBinding.inflate(inflater)
         dataBinding.codeFragment = this
-        dataBinding.phoneNumber = args.phoneNumber
+        dataBinding.descriptionTV.text =
+            requireContext().getString(R.string.code_was_sent_to_number, args.phoneNumber)
 
-        extractedPhoneNumber = args.extractedPhoneNumber
         setupEditTexts()
 
-        dataBinding.toolBar.setOnClickListener {
-            backToPhoneNumberFragment()}
+        dataBinding.toolBar.setOnClickListener { backToPhoneNumberFragment()}
 
         smsReceiver = SmsBroadcastReceiver()
         smsReceiver?.setListener(this)
@@ -57,7 +57,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         super.onViewCreated(view, savedInstanceState)
 
         dataBinding.viewModel = viewModel
-        viewModel.requestSmsCode(extractedPhoneNumber)
+        viewModel.requestSmsCode(args.extractedPhoneNumber)
 
         viewModel.secondsLiveData.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { seconds ->
@@ -122,22 +122,23 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     private fun startTimer(time: Int){
         val longTime = time * 1000L
         dataBinding.timerTextView.visibility = View.VISIBLE
-        dataBinding.loginBtn.visibility = View.INVISIBLE
-        gCountDownTimber = object: CountDownTimer(longTime, Config.COUNT_DOWN_INTERVAL) {
+        dataBinding.resendSmsBtn.visibility = View.INVISIBLE
+        countDownTimer = object: CountDownTimer(longTime, Config.COUNT_DOWN_INTERVAL) {
             override fun onTick(millisUntilFinished: Long) {
-                dataBinding.seconds = millisUntilFinished/1000
+                dataBinding.timerTextView.text = requireContext().
+                    getString(R.string.resend_sms_with_seconds, millisUntilFinished/1000)
             }
 
             override fun onFinish() {
                 dataBinding.timerTextView.visibility = View.GONE
-                dataBinding.loginBtn.visibility = View.VISIBLE
+                dataBinding.resendSmsBtn.visibility = View.VISIBLE
                 this@SendSmsFragment.hideContactSupportBtn()
             }
         }.start()
     }
 
 
-    fun sendSmsCodeAgain() = viewModel.requestSmsCode(extractedPhoneNumber)
+    fun sendSmsCodeAgain() = viewModel.requestSmsCode(args.extractedPhoneNumber)
 
     private fun showContactSupportBtn(){
         dataBinding.contactSupportLLC.visibility = View.VISIBLE
@@ -160,33 +161,29 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     }
 
     fun backToPhoneNumberFragment(){
-        gCountDownTimber?.cancel()
+        countDownTimer?.cancel()
         findNavController().popBackStack()
     }
 
-    private fun checkIfCodeFieldsFilled(){
-        var oneOfEditTextIsEmpty = false
+    private fun ifOneOfEditTextIsEmpty(): Boolean{
         editTextList.forEach { editText ->
-            if(editText.text.isEmpty()) oneOfEditTextIsEmpty = true }
-
-        if(oneOfEditTextIsEmpty){
-            showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.fill_all_empty_fields))
-            return
+            if(editText.text.isEmpty())
+                return true
         }
-
+        return false
     }
 
     override fun onFilled() {
-
-        checkIfCodeFieldsFilled()
-
-        hideKeyboard(requireContext(), editTextList[editTextList.size-1])
-        val code = StringBuilder()
-        editTextList.forEach { editText ->
-            code.append(editText.text)
+        if(ifOneOfEditTextIsEmpty()){
+            showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.fill_all_empty_fields))
+        }else{
+            hideKeyboard(requireContext(), editTextList[editTextList.size-1])
+            val code = StringBuilder()
+            editTextList.forEach { editText ->
+                code.append(editText.text)
+            }
+            viewModel.login(args.extractedPhoneNumber, code.toString())
         }
-
-        viewModel.login(extractedPhoneNumber, code.toString())
     }
 
     fun showContactSupportDialog() = findNavController().navigate(
@@ -207,11 +204,11 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.sms_retrieve_broadcast_receiver_timeout))
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-        gCountDownTimber?.cancel()
+        _dataBinding = null
+        countDownTimer?.cancel()
         smsReceiver = null
     }
-
 }

@@ -128,7 +128,7 @@
                     android:id="@+id/phoneNumberET"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/pt_root_ui"
+                    android:fontFamily="@font/pt_root_ui_bold"
                     android:hint="@string/phone_number_placeholder"
                     android:inputType="phone"
                     android:background="@drawable/bg_edit_text_layout"
@@ -140,8 +140,7 @@
                     android:paddingStart="@dimen/margin"
                     android:paddingTop="24dp"
                     android:paddingEnd="@dimen/margin"
-                    android:paddingBottom="8dp"
-                    android:textStyle="bold" />
+                    android:paddingBottom="8dp" />
 
                 <TextView
                     android:layout_width="wrap_content"

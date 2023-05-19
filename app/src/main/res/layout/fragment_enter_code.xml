@@ -1,76 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="codeFragment"
-            type="kz.divtech.odyssey.rotation.ui.login.send_sms.SendSmsFragment" />
-
-        <variable
             name="viewModel"
-            type="kz.divtech.odyssey.rotation.ui.login.send_sms.SendSmsViewModel" />
+            type="kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone.UpdatePhoneViewModel" />
     </data>
 
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/sendSmsFL"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/enterCodeCL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:background="@color/main_bg"
+            android:paddingTop="25dp"
             android:paddingStart="@dimen/margin"
             android:paddingEnd="@dimen/margin"
-            android:background="@drawable/bg_screen">
+            android:paddingBottom="@dimen/margin">
 
             <TextView
-                android:id="@+id/titleTV"
-                android:layout_width="wrap_content"
+                android:id="@+id/enterPhoneNumberTV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/editTextsCL"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="24sp"
+                android:textColor="#112b46"
+                android:gravity="center_horizontal"
                 android:text="@string/enter_code"
-                style="@style/loginTitleTextStyle"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/descriptionTV"
-                android:layout_width="wrap_content"
+                android:id="@+id/smsCodeDescTV"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/titleTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="16dp" />
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="#801b3652"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="7sp"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin"
+                tools:text="Введите код из СМС-сообщения отправленный на номер +7 701 399 35 38"
+                app:layout_constraintTop_toBottomOf="@+id/enterPhoneNumberTV" />
 
-            <TextView
-                android:id="@+id/changePhoneNumberTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/change_number"
-                style="@style/descriptionTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/descriptionTV"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="10dp"
-                android:textColor="#40bdff"
-                android:onClick="@{() -> codeFragment.backToPhoneNumberFragment()}" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/editTextsCL"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.42">
+                android:layout_marginTop="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/smsCodeDescTV">
 
                 <EditText
                     android:id="@+id/digitOneET"
                     style="@style/digitsEditTextStyle"
+                    android:background="@drawable/bg_white_radius_8dp"
+                    android:textColor="#112b46"
+                    android:textColorHint="#1A112b46"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/digitTwoET"
                     app:layout_constraintStart_toStartOf="parent"
@@ -79,6 +71,9 @@
                 <EditText
                     android:id="@+id/digitTwoET"
                     style="@style/digitsEditTextStyle"
+                    android:background="@drawable/bg_white_radius_8dp"
+                    android:textColor="#112b46"
+                    android:textColorHint="#1A112b46"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/digitThreeET"
                     app:layout_constraintStart_toEndOf="@+id/digitOneET"
@@ -87,6 +82,9 @@
                 <EditText
                     android:id="@+id/digitThreeET"
                     style="@style/digitsEditTextStyle"
+                    android:background="@drawable/bg_white_radius_8dp"
+                    android:textColor="#112b46"
+                    android:textColorHint="#1A112b46"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/digitFourET"
                     app:layout_constraintStart_toEndOf="@+id/digitTwoET"
@@ -95,10 +93,14 @@
                 <EditText
                     android:id="@+id/digitFourET"
                     style="@style/digitsEditTextStyle"
+                    android:background="@drawable/bg_white_radius_8dp"
+                    android:textColor="#112b46"
+                    android:textColorHint="#1A112b46"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/digitThreeET"
                     app:layout_constraintTop_toTopOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -109,6 +111,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/descriptionTextStyle"
+                android:textColor="#801b3652"
                 android:layout_marginTop="@dimen/margin"
                 android:visibility="gone"
                 tools:visibility="visible"
@@ -120,47 +123,18 @@
                 android:layout_height="@dimen/button_height"
                 android:text="@string/resend_sms"
                 style="@style/buttonStyle"
-                android:visibility="gone"
+                android:textColor="@color/profile_menu_text"
+                android:background="@drawable/bg_refund_button_2"
+                android:visibility="visible"
                 android:layout_marginTop="@dimen/two_times_margin"
-                android:onClick="@{() -> codeFragment.sendSmsCodeAgain()}"
+                android:stateListAnimator="@null"
                 app:layout_constraintTop_toBottomOf="@+id/editTextsCL"/>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/contactSupportLLC"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/timerTextView"
-                android:layout_marginTop="@dimen/two_times_margin">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/contact_support_content"
-                    android:textColor="@color/text_description_2"
-                    style="@style/descriptionTextStyle"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/button_height"
-                    android:text="@string/contact_support_btn"
-                    style="@style/buttonStyle"
-                    android:background="@drawable/bg_contact_support_button"
-                    android:layout_marginTop="24dp"
-                    android:onClick="@{() -> codeFragment.showContactSupportDialog()}"/>
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <include
-            android:id="@+id/toolBar"
-            layout="@layout/layout_login_toolbar" />
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="@{viewModel.PBarVisibility}"/>
-
     </FrameLayout>
 </layout>

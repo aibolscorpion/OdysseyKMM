@@ -126,7 +126,6 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
         dataBinding.phoneNumberET.onFocusChangeListener = maskedETListener
     }
 
-
     fun findEmployee(){
         if(phoneNumberFilled) {
             viewModel.getEmployeeInfoByPhoneNumber("${Config.COUNTRY_CODE}$extractedPhoneNumber")

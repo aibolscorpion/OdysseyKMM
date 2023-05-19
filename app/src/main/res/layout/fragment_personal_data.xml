@@ -280,16 +280,30 @@
                             android:layout_marginTop="20dp"
                             android:text="@string/telephone" />
 
-
                         <androidx.appcompat.widget.AppCompatEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:text="@={employee.phone}"
+                            android:enabled="false"
                             android:backgroundTint="@color/bottom_sheet_line"
                             style="@style/profileMenuTextStyle"
+                            android:textColor="#748595"
                             tools:text="@string/phone_placeholder" />
 
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/change_number"
+                            android:background="@drawable/bg_refund_button"
+                            android:fontFamily="@font/pt_root_ui_bold"
+                            android:textSize="16sp"
+                            android:textColor="@color/profile_menu_text"
+                            android:lineSpacingExtra="2sp"
+                            android:textAllCaps="false"
+                            android:layout_marginTop="@dimen/margin"
+                            android:onClick="@{() -> personalDataFragment.openPhoneNumberFragment()}"
+                            android:stateListAnimator="@null" />
                         <TextView
                             style="@style/keyTextStyle2"
                             android:layout_width="wrap_content"

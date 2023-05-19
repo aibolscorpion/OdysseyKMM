@@ -25,25 +25,34 @@ class RefundSentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.thisDialog = this
-        when(args.refundSent){
-            true -> {
-                binding.refundApplicationIV.setImageResource(R.drawable.icon_refund_sent)
-                binding.refundSentTitleTV.text = getString(R.string.application_to_refund_sent_title)
-                binding.refundSentDescriptionTV.text = getString(
-                    R.string.application_to_refund_sent_description, args.refundNumber)
-            }
-            false -> {
-                binding.refundApplicationIV.setImageResource(R.drawable.icon_refund_cancelled_2)
-                binding.refundSentTitleTV.text = getString(R.string.application_to_refund_cancelled_title)
-                binding.refundSentDescriptionTV.text = getString(
-                    R.string.application_to_refund_cancelled_description, args.refundNumber)
+        binding.goToPrevPageBtn.apply {
+            text = requireContext().getString(R.string.back_to_trips)
+            setOnClickListener {
+                openTripsFragment()
             }
         }
 
+        when(args.refundSent){
+            true -> {
+                binding.apply {
+                    imageView.setImageResource(R.drawable.icon_refund_sent)
+                    titleTextView.text = getString(R.string.application_to_refund_sent_title)
+                    descriptionTextView.text = getString(
+                        R.string.application_to_refund_sent_description, args.refundNumber)
+                }
+            }
+            false -> {
+                binding.apply {
+                    imageView.setImageResource(R.drawable.icon_refund_cancelled_2)
+                    titleTextView.text = getString(R.string.application_to_refund_cancelled_title)
+                    descriptionTextView.text = getString(
+                        R.string.application_to_refund_cancelled_description, args.refundNumber)
+                }
+            }
+        }
     }
 
-    fun openTripsFragment() = findNavController().navigate(
+    private fun openTripsFragment() = findNavController().navigate(
         RefundSentFragmentDirections.actionRefundSentFragmentToTripsFragment())
 
     override fun onDestroyView() {
