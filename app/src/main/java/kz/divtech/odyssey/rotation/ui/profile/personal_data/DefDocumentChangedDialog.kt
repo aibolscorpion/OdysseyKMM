@@ -22,7 +22,7 @@ class DefDocumentChangedDialog(val listener: UpdatePersonalDataListener) : Dialo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.saveBtn.setOnClickListener{
-            listener.update()
+            listener.updatePersonalData(true)
             dismiss()
         }
         binding.cancelBtn.setOnClickListener{
@@ -33,5 +33,5 @@ class DefDocumentChangedDialog(val listener: UpdatePersonalDataListener) : Dialo
 
 }
 interface UpdatePersonalDataListener{
-    fun update()
+    fun updatePersonalData(citizenshipChanged: Boolean)
 }

@@ -117,6 +117,10 @@
         <action
             android:id="@+id/action_personalDataFragment_to_phoneNumberFragment2"
             app:destination="@id/phoneNumberFragment2" />
+        <action
+            android:id="@+id/action_personalDataFragment_to_documentsFragment"
+            app:destination="@id/documentsFragment"
+            app:popUpTo="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -397,5 +401,7 @@
             android:name="phoneNumber"
             app:argType="string" />
     </fragment>
+
+
 
 </navigation>

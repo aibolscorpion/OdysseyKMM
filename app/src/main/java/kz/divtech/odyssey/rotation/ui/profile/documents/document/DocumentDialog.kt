@@ -29,7 +29,6 @@ class DocumentDialog : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val document = args.document.copy()
-        val employee = args.employee
 
         viewModel.documentUpdated.observe(viewLifecycleOwner){
             Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
@@ -41,7 +40,7 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 val idBinding = DialogIdBinding.inflate(inflater)
                 idBinding.documentDialog = this
                 idBinding.document = document
-                idBinding.employee = employee
+                idBinding.employee = args.employee
                 idBinding.viewModel = viewModel
                 return idBinding.root
             }
@@ -50,7 +49,7 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 val passportBinding = DialogPassportBinding.inflate(inflater)
                 passportBinding.documentDialog = this
                 passportBinding.document = document
-                passportBinding.employee = employee
+                passportBinding.employee = args.employee
                 passportBinding.viewModel = viewModel
                 return passportBinding.root
             }

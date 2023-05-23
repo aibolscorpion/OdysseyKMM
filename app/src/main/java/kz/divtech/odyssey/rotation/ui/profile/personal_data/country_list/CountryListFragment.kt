@@ -35,13 +35,15 @@ class CountryListFragment : Fragment(){
         adapter.setCountryList(args.countryList.toList(), args.countryCode)
 
         binding.chooseCountryBtn.setOnClickListener {
-            adapter.country?.let { it1 -> viewModel.setCountry(it1) }
+            adapter.country?.let { it1 ->
+                viewModel.setCountry(it1)
+            }
             findNavController().popBackStack()
         }
 
         binding.countrySearchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String): Boolean {
-                return false
+                return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {

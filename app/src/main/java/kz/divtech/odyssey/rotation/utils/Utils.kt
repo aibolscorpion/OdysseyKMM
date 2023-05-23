@@ -1,7 +1,12 @@
 package kz.divtech.odyssey.rotation.utils
 
 import android.os.Bundle
+import com.google.gson.Gson
+import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.domain.model.profile.Country
+import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import java.io.File
@@ -45,6 +50,12 @@ object Utils {
         } else {
             "$size Kb"
         }
+    }
+
+    fun getCountryList(): List<Country>{
+        val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
+            use { it.readText() }
+        return Gson().fromJson(jsonString, CountryList::class.java).countries
     }
 
 }

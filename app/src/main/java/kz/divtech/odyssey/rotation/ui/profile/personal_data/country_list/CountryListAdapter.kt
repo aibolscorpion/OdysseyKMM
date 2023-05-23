@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.profile.personal_data.country_list
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemCountryBinding
@@ -76,13 +77,16 @@ class CountryListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class CountryViewHolder(val binding: ItemCountryBinding): RecyclerView.ViewHolder(binding.root){
         init {
-            binding.countryItemLLC.setOnClickListener {
+            val listener = View.OnClickListener {
                 oldCheckedPosition = checkedPosition
                 checkedPosition = bindingAdapterPosition
                 country = checkedPosition?.let { countryList[it] }
                 oldCheckedPosition?.let { notifyItemChanged(it) }
                 checkedPosition?.let { notifyItemChanged(it) }
             }
+
+            binding.countryItemLLC.setOnClickListener(listener)
+            binding.countryItemRB.setOnClickListener(listener)
         }
     }
 

@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.country_code}"
+                    app:countryCode="@{employee.country_code}"
                     style="@style/uneditable_text"
                     tools:text="@string/kazakhstan"/>
 

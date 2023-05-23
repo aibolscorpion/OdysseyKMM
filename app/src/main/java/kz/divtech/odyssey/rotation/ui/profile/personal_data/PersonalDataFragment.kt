@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
-import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.Utils
 
 
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
@@ -38,57 +39,48 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         binding.personalDataFragment = this
         binding.viewModel = viewModel
 
-        val countries = getCountryListFromRaw()
-        viewModel.employee.observe(viewLifecycleOwner){
-            it?.let {
+        viewModel.employee.observeOnce(viewLifecycleOwner){
+            it.let {
                 currentEmployee = it
                 initialCountryCode = it.country_code
                 binding.employee = it
-                setCountryNameByCode(countries)?.let {
-                    binding.countryTV.text = it
-                }
             }
         }
 
         binding.countryTV.setOnClickListener {
-            openCountryListFragment(countries)
+            openCountryListFragment(Utils.getCountryList())
         }
 
         viewModel.personalDataUpdated.observe(viewLifecycleOwner){
-            it.getContentIfNotHandled()?.let {
+            it.getContentIfNotHandled()?.let { citizenshipChanged ->
                 Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
-                findNavController().popBackStack()
+                if(citizenshipChanged){
+                    openDocumentsFragment()
+                }else{
+                    findNavController().popBackStack()
+                }
             }
         }
 
         viewModel.selectedCountry.observe(viewLifecycleOwner) {
-            it.getContentIfNotHandled()?.let {
-                binding.countryTV.text = it.name
-                currentEmployee?.country_code = it.code
-            }
+            binding.countryTV.text = it.name
+            currentEmployee?.country_code = it.code
         }
     }
-
-    private fun getCountryListFromRaw(): List<Country>{
-        val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
-        use { it.readText() }
-        return Gson().fromJson(jsonString, CountryList::class.java).countries
-    }
-
-    private fun setCountryNameByCode(countryList: List<Country>): String? {
-        countryList.forEachIndexed { _, country ->
-            if (country.code == currentEmployee?.country_code) {
-                return country.name
+    private fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: Observer<T>) {
+        observe(owner, object : Observer<T> {
+            override fun onChanged(value: T) {
+                observer.onChanged(value)
+                removeObserver(this)
             }
-        }
-        return null
+        })
     }
 
-    fun updatePersonalData(){
+    fun checkCitizenshipAndUpdate(){
         if(initialCountryCode != currentEmployee?.country_code){
             showDefaultDocumentChangedDialog()
         }else{
-            update()
+            updatePersonalData(false)
         }
     }
     private fun showDefaultDocumentChangedDialog(){
@@ -103,13 +95,30 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         }
     }
 
+    override fun updatePersonalData(citizenshipChanged: Boolean) {
+        currentEmployee?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+    }
+
     fun openPhoneNumberFragment(){
         findNavController().navigate(
             PersonalDataFragmentDirections.actionPersonalDataFragmentToPhoneNumberFragment2())
     }
 
-    override fun update() {
-        currentEmployee?.let { viewModel.updatePersonalData(it) }
+    private fun openDocumentsFragment(){
+        findNavController().navigate(
+            PersonalDataFragmentDirections.actionPersonalDataFragmentToDocumentsFragment()
+        )
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        activity?.viewModelStore?.clear()
     }
 
 }

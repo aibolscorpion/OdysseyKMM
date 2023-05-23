@@ -1,9 +1,11 @@
 package kz.divtech.odyssey.rotation.ui.profile.documents.document
 
 import android.app.DatePickerDialog
+import android.view.View
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -15,6 +17,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.SERVER_DATE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
+import kz.divtech.odyssey.rotation.utils.Utils.getCountryList
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -84,8 +87,9 @@ object DocumentBindingAdapter {
         val todayDate = LocalDate.now()
         editText.setOnClickListener{
             DatePickerDialog(editText.context, { _, year, month, dayOfMonth ->
-                val birthDate = App.appContext.getString(R.string.date_of_birth_without_values, dayOfMonth, month+1, year)
-                editText.setText(birthDate)
+                val localDate = LocalDate.of(year, month+1, dayOfMonth)
+                val dateFormatter = DateTimeFormatter.ofPattern(DAY_MONTH_YEAR_PATTERN)
+                editText.setText(localDate.format(dateFormatter))
                 attrChange.onChange()
             }, todayDate.year, todayDate.monthValue-1, todayDate.dayOfMonth).show()
         }
@@ -104,30 +108,20 @@ object DocumentBindingAdapter {
         return formattedDate
     }
 
-    @BindingAdapter("issueDate")
-    @JvmStatic fun setIssueDate(editText: EditText, date: String?){
-        if(editText.text.toString() != date){
-            val formattedDate = date.formatDateToGivenPattern(DAY_MONTH_YEAR_PATTERN)
-            editText.setText(formattedDate)
+    @BindingAdapter("countryCode")
+    @JvmStatic fun setCountryNameByCode(view: View, countryCode: String?) {
+        countryCode?.let{
+            getCountryList().forEachIndexed { _, country ->
+                if (country.code == it) {
+                    when (view) {
+                        is EditText -> view.setText(country.name)
+                        is TextView -> view.text = country.name
+                        else -> throw IllegalArgumentException("Unsupported view type: ${view.javaClass.simpleName}")
+                    }
+                }
+            }
         }
     }
 
-    @InverseBindingAdapter(attribute = "issueDate")
-    @JvmStatic fun getIssueDate(editText: EditText): String {
-        return editText.text.toString().convertDateToServerPattern()
-    }
-
-    @BindingAdapter("issueDateAttrChanged")
-    @JvmStatic fun setIssueDateListener(editText: EditText, attrChange: InverseBindingListener) {
-        val todayDate = LocalDate.now()
-        editText.setOnClickListener{
-            DatePickerDialog(editText.context, { _, year, month, dayOfMonth ->
-                val issueDate = App.appContext.getString(R.string.date_of_birth_without_values, dayOfMonth, month+1, year)
-                editText.setText(issueDate)
-                attrChange.onChange()
-            }, todayDate.year, todayDate.monthValue-1, todayDate.dayOfMonth).show()
-
-        }
-    }
 
 }

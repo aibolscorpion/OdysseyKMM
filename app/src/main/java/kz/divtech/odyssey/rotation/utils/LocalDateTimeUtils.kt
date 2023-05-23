@@ -11,7 +11,7 @@ object LocalDateTimeUtils {
     const val SERVER_DATE_PATTERN = "yyyy-MM-dd"
     const val DEFAULT_PATTERN = "d MMM yyyy, HH:mm"
     const val DAY_MONTH_DAY_OF_WEEK_PATTERN = "d MMM EE"
-    const val DAY_MONTH_YEAR_PATTERN = "d.M.yyyy"
+    const val DAY_MONTH_YEAR_PATTERN = "dd.MM.yyyy"
     const val DAY_MONTH_PATTERN = "d MMM"
     const val HOUR_MINUTE_PATTERN = "HH:mm"
     const val DAY_MONTH_HOUR_MINUTE_PATTERN = "d MMM HH:mm"

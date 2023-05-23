@@ -16,20 +16,21 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
 
     private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
     val personalDataUpdated: LiveData<Event<Boolean>> = _personalDataUpdated
-    private var _selectedCountry = MutableLiveData<Event<Country>>()
-    val selectedCountry: LiveData<Event<Country>> get() = _selectedCountry
+
+    private var _selectedCountry = MutableLiveData<Country>()
+    val selectedCountry: LiveData<Country> = _selectedCountry
 
     fun setCountry(country: Country){
-        _selectedCountry.value = Event(country)
+        _selectedCountry.value = country
     }
 
-    fun updatePersonalData(employee: Employee){
+    fun updatePersonalData(employee: Employee, citizenshipChanged: Boolean){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             val response = employeeRepository.updateEmployee(employee)
             if(response.isSuccess()){
-                employeeRepository.insertEmployee(employee)
-                _personalDataUpdated.value = Event(true)
+                employeeRepository.getEmployeeFromServer()
+                _personalDataUpdated.value = Event(citizenshipChanged)
             }
             pBarVisibility.set(View.GONE)
         }
