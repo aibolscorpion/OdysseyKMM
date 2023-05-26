@@ -22,6 +22,7 @@ import kz.divtech.odyssey.rotation.ui.login.send_sms.OnFilledListener
 import kz.divtech.odyssey.rotation.ui.login.send_sms.SmsBroadcastReceiver
 import kz.divtech.odyssey.rotation.utils.InputUtils
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener  {
     private var _dataBinding: FragmentEnterCodeBinding? = null
@@ -48,12 +49,21 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
         setupEditTexts()
         smsReceiver = SmsBroadcastReceiver()
         smsReceiver?.setListener(this)
-        viewModel.requestSmsCode(args.extractedPhoneNumber)
+
+        if(requireContext().isNetworkAvailable()){
+            viewModel.requestSmsCode(args.extractedPhoneNumber)
+        }else{
+            showNoInternetDialog()
+        }
 
         dataBinding.smsCodeDescTV.text = requireContext().
             getString(R.string.enter_code_that_was_sent_to_number, args.phoneNumber)
         dataBinding.resendSmsBtn.setOnClickListener {
-            viewModel.requestSmsCode(args.extractedPhoneNumber)
+            if(requireContext().isNetworkAvailable()){
+                viewModel.requestSmsCode(args.extractedPhoneNumber)
+            }else{
+                showNoInternetDialog()
+            }
         }
 
         viewModel.secondsLiveData.observe(viewLifecycleOwner) { event ->
@@ -163,7 +173,12 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
             editTextList.forEach { editText ->
                 code.append(editText.text)
             }
-            viewModel.confirmUpdate(code.toString())
+
+            if(requireContext().isNetworkAvailable()){
+                viewModel.confirmUpdate(code.toString())
+            }else{
+                showNoInternetDialog()
+            }
         }
     }
 
@@ -184,6 +199,10 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
     override fun onTimeout() {
         InputUtils.showErrorMessage(requireContext(), dataBinding.enterCodeCL,
             getString(R.string.sms_retrieve_broadcast_receiver_timeout))
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(SmsCodeFragmentDirections.actionGlobalNoInternetDialog())
     }
 
     private fun openPhoneUpdatedFragment(){

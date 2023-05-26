@@ -15,6 +15,7 @@
     </data>
 
     <FrameLayout
+        android:id="@+id/personalDataFL"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -73,6 +74,7 @@
                             android:text="@string/name" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/firstNameET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -89,6 +91,7 @@
                             android:text="@string/surname" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/lastNameET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -107,6 +110,7 @@
 
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/patronymicET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -123,6 +127,7 @@
                             android:text="@string/name_latin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/firstNameEngET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -139,6 +144,7 @@
                             android:text="@string/surname_latin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/lastNameEngET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -155,7 +161,7 @@
                             android:text="@string/date_of_birth" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/dateOfBirthEditText"
+                            android:id="@+id/dateOfBirthET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
@@ -213,6 +219,7 @@
                             android:text="@string/iin" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/iinET"
                             style="@style/profileMenuTextStyle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -313,6 +320,7 @@
                             android:text="@string/email" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/emailET"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"

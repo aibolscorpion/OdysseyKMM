@@ -8,10 +8,8 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -19,6 +17,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class RefundReasonFragment: Fragment() {
     private val args : RefundReasonFragmentArgs by navArgs()
@@ -38,6 +37,15 @@ class RefundReasonFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setRadioGroup()
+
+        viewModel.sendRefundResult.observe(viewLifecycleOwner){ result ->
+            if(result.isSuccess()){
+                val refundId = result.asSuccess().value["id"]!!
+                openRefundSendFragment(refundId)
+            }else{
+                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun setRadioGroup(){
@@ -65,15 +73,11 @@ class RefundReasonFragment: Fragment() {
             Toast.makeText(requireContext(), R.string.specify_refund_reason, Toast.LENGTH_SHORT).show()
             return
         }
-        lifecycleScope.launch {
-            val result = viewModel.sendApplicationToRefund(args.applicationId, args.segmentId,
+        if(requireContext().isNetworkAvailable()){
+            viewModel.sendApplicationToRefund(args.applicationId, args.segmentId,
                 getReasonOfRefund())
-            if(result.isSuccess()){
-                val refundId = result.asSuccess().value["id"]!!
-                openRefundSendFragment(refundId)
-            }else{
-                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
-            }
+        }else{
+            showNoInternetDialog()
         }
 
     }
@@ -90,6 +94,10 @@ class RefundReasonFragment: Fragment() {
         }else{
             ""
         }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(RefundReasonFragmentDirections.actionGlobalNoInternetDialog())
     }
 
     private fun openRefundSendFragment(refundId: Int) {

@@ -6,20 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.databinding.FragmentCountryListBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.profile.personal_data.PersonalDataViewModel
 
 class CountryListFragment : Fragment(){
     var _binding: FragmentCountryListBinding? = null
     val binding get() = _binding!!
-    val viewModel : PersonalDataViewModel by activityViewModels{
-        PersonalDataViewModel.PersonalDataViewModelFactory((activity as MainActivity).employeeRepository)
-    }
     val args: CountryListFragmentArgs by navArgs()
+    private val countrySelectionRequestKey = "countrySelectionRequestKey"
+    private val countrySelectionResultKey = "countrySelectionResultKey"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -36,8 +32,13 @@ class CountryListFragment : Fragment(){
 
         binding.chooseCountryBtn.setOnClickListener {
             adapter.country?.let { it1 ->
-                viewModel.setCountry(it1)
+                val bundle = Bundle().apply {
+                    putParcelable(countrySelectionResultKey, it1)
+                }
+
+                parentFragmentManager.setFragmentResult(countrySelectionRequestKey, bundle)
             }
+
             findNavController().popBackStack()
         }
 

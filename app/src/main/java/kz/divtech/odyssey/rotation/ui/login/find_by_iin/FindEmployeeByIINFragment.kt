@@ -14,6 +14,7 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class FindEmployeeByIINFragment : Fragment() {
     private val viewModel: FindEmployeeByIINViewModel by viewModels{
@@ -53,10 +54,14 @@ class FindEmployeeByIINFragment : Fragment() {
 
     fun loginByIIN(){
         iin = binding.iinET.text.toString()
-        if(iin.length == Config.IIN_LENGTH)
-            viewModel.findByIIN(iin)
-        else
-            showErrorMessage(requireContext(), binding.searchByIINFL, getString(R.string.enter_iin_fully))
+        if(requireContext().isNetworkAvailable()){
+            if(iin.length == Config.IIN_LENGTH)
+                viewModel.findByIIN(iin)
+            else
+                showErrorMessage(requireContext(), binding.searchByIINFL, getString(R.string.enter_iin_fully))
+        }else{
+            showNoInternetDialog()
+        }
     }
 
     override fun onDestroyView() {
@@ -74,6 +79,10 @@ class FindEmployeeByIINFragment : Fragment() {
                 navigate(FindEmployeeByIINFragmentDirections.actionIINFragmentToEmployeeNotFoundDialog(iin))
             }
         }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionGlobalNoInternetDialog2())
     }
 
     fun backToSendSmsFragment() = findNavController().popBackStack()

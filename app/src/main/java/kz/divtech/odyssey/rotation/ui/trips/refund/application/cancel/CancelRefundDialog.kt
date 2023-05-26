@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogCancelRefundBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class CancelRefundDialog : DialogFragment() {
     val args: CancelRefundDialogArgs by navArgs()
@@ -33,9 +32,10 @@ class CancelRefundDialog : DialogFragment() {
         return binding.root
     }
 
-    fun cancelRefund(){
-        lifecycleScope.launch{
-            val result = viewModel.cancelRefund(args.refundId)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.cancelRefundResult.observe(viewLifecycleOwner){ result ->
             if(result.isSuccess()){
                 openRefundCancelledFragment()
             }else{
@@ -44,9 +44,21 @@ class CancelRefundDialog : DialogFragment() {
         }
     }
 
+    fun cancelRefund(){
+        if(requireContext().isNetworkAvailable()){
+            viewModel.cancelRefund(args.refundId)
+        }else{
+            showNoInternetDialog()
+        }
+    }
+
     private fun openRefundCancelledFragment(){
         findNavController().navigate(CancelRefundDialogDirections.
             actionCancelRefundDialogToRefundSentFragment(false, args.refundId))
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(CancelRefundDialogDirections.actionGlobalNoInternetDialog())
     }
 
 }

@@ -6,27 +6,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.FragmentResultListener
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.Utils
 
 
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
-    val viewModel : PersonalDataViewModel by activityViewModels{
+    val viewModel : PersonalDataViewModel by viewModels{
         PersonalDataViewModel.PersonalDataViewModelFactory((activity as MainActivity).employeeRepository)
     }
     private var _binding: FragmentPersonalDataBinding? = null
     private val binding get() = _binding!!
     private var initialCountryCode: String? = null
     private var currentEmployee: Employee? = null
+
+
+    private val countrySelectionRequestKey = "countrySelectionRequestKey"
+    private val countrySelectionResultKey = "countrySelectionResultKey"
+
+    private val countrySelectionResultListener = FragmentResultListener { requestKey, bundle ->
+        if (requestKey == countrySelectionRequestKey) {
+            val selectedCountry = bundle.getParcelable<Country>(countrySelectionResultKey)
+            selectedCountry?.let {
+                currentEmployee?.country_code = it.code
+            }
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPersonalDataBinding.inflate(inflater)
@@ -39,11 +56,11 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         binding.personalDataFragment = this
         binding.viewModel = viewModel
 
-        viewModel.employee.observeOnce(viewLifecycleOwner){
+        viewModel.employee.observe(viewLifecycleOwner){
             it.let {
                 currentEmployee = it
                 initialCountryCode = it.country_code
-                binding.employee = it
+                binding.employee = currentEmployee
             }
         }
 
@@ -62,9 +79,26 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
             }
         }
 
-        viewModel.selectedCountry.observe(viewLifecycleOwner) {
-            binding.countryTV.text = it.name
-            currentEmployee?.country_code = it.code
+        parentFragmentManager.setFragmentResultListener(
+            countrySelectionRequestKey,
+            viewLifecycleOwner,
+            countrySelectionResultListener
+        )
+
+
+        viewModel.validationErrors.observe(viewLifecycleOwner){
+            it.errors.forEach{ (field, errorMessages) ->
+                val firstErrorMessage = errorMessages.first()
+                when(field){
+                    "first_name" -> binding.firstNameET.error = firstErrorMessage
+                    "last_name" -> binding.lastNameET.error = firstErrorMessage
+                    "patronymic" -> binding.patronymicET.error = firstErrorMessage
+                    "first_name_en" -> binding.firstNameEngET.error = firstErrorMessage
+                    "last_name_en" -> binding.lastNameEngET.error = firstErrorMessage
+                    "iin" -> binding.iinET.error = firstErrorMessage
+                    "email" -> binding.emailET.error = firstErrorMessage
+                }
+            }
         }
     }
     private fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: Observer<T>) {
@@ -96,7 +130,40 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     override fun updatePersonalData(citizenshipChanged: Boolean) {
-        currentEmployee?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+        if(requireContext().isNetworkAvailable()){
+            if(validatePersonalData()){
+                currentEmployee?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+            }
+        }else{
+            showNoInternetDialog()
+        }
+    }
+
+    private fun validatePersonalData(): Boolean{
+        var isValid = true
+
+        if(binding.firstNameET.text.toString().isEmpty()){
+            binding.firstNameET.error = getString(R.string.fill_your_name)
+            isValid = false
+        }
+
+        if(binding.lastNameET.text.toString().isEmpty()){
+            binding.lastNameET.error = getString(R.string.fill_your_surname)
+            isValid = false
+        }
+
+        if(binding.iinET.text?.length != Config.IIN_LENGTH){
+            binding.iinET.error = getString(R.string.enter_iin_fully)
+            isValid = false
+        }
+
+        if(binding.emailET.text.toString().isNotEmpty()){
+            if(!isEmailValid(binding.emailET.text.toString())){
+                binding.emailET.error = getString(R.string.invalid_email_address)
+                isValid = false
+            }
+        }
+        return isValid
     }
 
     fun openPhoneNumberFragment(){
@@ -109,16 +176,15 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
             PersonalDataFragmentDirections.actionPersonalDataFragmentToDocumentsFragment()
         )
     }
+
+    private fun showNoInternetDialog() =
+        findNavController().navigate(PersonalDataFragmentDirections.actionGlobalNoInternetDialog())
+
     override fun onDestroyView() {
         super.onDestroyView()
 
         _binding = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        activity?.viewModelStore?.clear()
-    }
 
 }

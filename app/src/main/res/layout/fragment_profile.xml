@@ -71,6 +71,7 @@
                         android:layout_height="wrap_content"
                         style="@style/profileNameTextStyle"
                         android:layout_marginStart="18dp"
+                        android:maxLines="2"
                         app:layout_constrainedWidth="true"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/odysseyIdLineVw"
@@ -146,7 +147,7 @@
 
                     <TextView
                         android:id="@+id/employeePositionTV"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="22dp"
                         android:fontFamily="@font/pt_root_ui_medium"
                         android:letterSpacing="-0.01"

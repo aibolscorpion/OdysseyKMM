@@ -374,8 +374,11 @@
     <string name="code_will_be_send_to_this_numbe">На данный номер будет отправлен СМС-код для подтверждения</string>
     <string name="continue_text">Продолжить</string>
     <string name="phone_number_successfully_updated">Номер телефона успешно изменен"</string>
-    <string name="use_new_phone_number_for_login">Теперь для входа в аккаунт используйте номер %1$s</string>
+    <string name="use_new_phone_number_for_login">Теперь для входа в аккаунт используйте номер\n %1$s</string>
     <string name="go_back">Вернуться назад</string>
+    <string name="invalid_email_address">Неверный адрес электронной почты</string>
+    <string name="fill_your_name">Введите имя</string>
+    <string name="fill_your_surname">Введите фамилию</string>
 
     //Страница Документы
     <string name="document">Документ</string>
@@ -395,6 +398,7 @@
     <string name="use_as_default_document">Документ по умолчанию</string>
     <string name="use_as_default_document_desc">Данный документ будет использоваться как основной при бронировании билетов</string>
     <string name="as_default">По умолчанию</string>
+    <string name="fill_document_number_field">Заполните № документа</string>
 
     //Модалка Разрешение на работу
     <string name="status">Статус</string>
@@ -434,5 +438,7 @@
     <string name="remind_later">Напомнить позже</string>
     <string name="close_and_logout_from_account">Закрыть и выйти из аккаунта</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_internet_connection">Нет соединения с интернетом</string>
+    <string name="no_internet_connection_desc">Не получается обновить данные: нет подключения к сети интернет. Попробуйте позже.</string>
 
 </resources>

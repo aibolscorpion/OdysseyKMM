@@ -401,7 +401,13 @@
             android:name="phoneNumber"
             app:argType="string" />
     </fragment>
-
+    <dialog
+        android:id="@+id/noInternetDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NoInternetDialog"
+        android:label="NoInternetDialog"
+        tools:layout="@layout/dialog_no_internet" />
+    <action android:id="@+id/action_global_noInternetDialog"
+        app:destination="@id/noInternetDialog" />
 
 
 </navigation>

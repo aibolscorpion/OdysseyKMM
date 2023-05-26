@@ -163,5 +163,9 @@
         android:id="@+id/loginActivity"
         android:name="kz.divtech.odyssey.rotation.ui.login.LoginActivity"
         android:label="LoginActivity" />
+    <dialog
+        android:id="@+id/noInternetDialog2"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog.NoInternetDialog"
+        android:label="NoInternetDialog" /><action android:id="@+id/action_global_noInternetDialog2" app:destination="@id/noInternetDialog2"/>
 
 </navigation>

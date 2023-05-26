@@ -15,6 +15,7 @@ import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 
 class UpdatePhoneNumberFragment : Fragment() {
@@ -70,13 +71,17 @@ class UpdatePhoneNumberFragment : Fragment() {
     }
 
     fun updatePhoneNumber(){
-        if(phoneNumberFilled) {
-            val request = UpdatePhoneRequest(args.employee.id,
-                "${Config.COUNTRY_CODE}$extractedPhoneNumber",
-                SharedPrefs.fetchFirebaseToken(requireContext()))
-            viewModel.updatePhoneNumber(request)
-        } else
-            showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))
+        if(requireContext().isNetworkAvailable()){
+            if(phoneNumberFilled) {
+                val request = UpdatePhoneRequest(args.employee.id,
+                    "${Config.COUNTRY_CODE}$extractedPhoneNumber",
+                    SharedPrefs.fetchFirebaseToken(requireContext()))
+                viewModel.updatePhoneNumber(request)
+            } else
+                showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))
+        }else{
+            showNoInternetDialog()
+        }
     }
 
     private fun changeScreenToChangePhoneNumber(){
@@ -105,6 +110,10 @@ class UpdatePhoneNumberFragment : Fragment() {
                 navigate(UpdatePhoneNumberFragmentDirections.actionAddPhoneNumberToChangeNumberErrorDialog())
             }
         }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(UpdatePhoneNumberFragmentDirections.actionGlobalNoInternetDialog2())
     }
 
     fun backToSearchByIINFragment() = findNavController().popBackStack()

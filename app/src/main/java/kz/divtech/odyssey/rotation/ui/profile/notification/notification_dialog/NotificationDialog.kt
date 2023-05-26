@@ -16,6 +16,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class NotificationDialog : BottomSheetDialogFragment() {
     val args: NotificationDialogArgs by navArgs()
@@ -68,7 +69,15 @@ class NotificationDialog : BottomSheetDialogFragment() {
     }
 
     fun learnMore(notification: PushNotification){
-        viewModel.getTripById(notification.applicationId!!)
+        if(requireContext().isNetworkAvailable()){
+            viewModel.getTripById(notification.applicationId!!)
+        }else{
+            showNoInternetDialog()
+        }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(NotificationDialogDirections.actionGlobalNoInternetDialog())
     }
 
 }

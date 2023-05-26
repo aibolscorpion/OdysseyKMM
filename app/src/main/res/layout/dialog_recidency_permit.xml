@@ -49,6 +49,7 @@
                     android:text="@string/be_careful_when_filling_data"/>
 
                 <include
+                    android:id="@+id/documentLayout"
                     layout="@layout/layout_document"
                     app:document="@{document}" />
 
@@ -59,7 +60,7 @@
                     android:text="@string/save"
                     android:stateListAnimator="@null"
                     android:layout_marginTop="@dimen/margin"
-                    android:onClick="@{() -> viewModel.updateDocument(document)}" />
+                    android:onClick="@{() -> documentDialog.updateDocument(document)}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

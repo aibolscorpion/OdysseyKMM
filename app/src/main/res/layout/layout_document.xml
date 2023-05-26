@@ -22,6 +22,7 @@
             android:text="@string/document_number" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/docNumberET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
@@ -75,6 +76,7 @@
             android:text="@string/issue_authority" />
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/issuedByET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

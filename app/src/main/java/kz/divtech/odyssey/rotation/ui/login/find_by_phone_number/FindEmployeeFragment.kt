@@ -27,6 +27,7 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Not
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class FindEmployeeFragment : Fragment(), NotificationListener {
     private var phoneNumberFilled : Boolean = false
@@ -127,10 +128,14 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     }
 
     fun findEmployee(){
-        if(phoneNumberFilled) {
-            viewModel.getEmployeeInfoByPhoneNumber("${Config.COUNTRY_CODE}$extractedPhoneNumber")
-        } else{
-            showErrorMessage(requireContext(), dataBinding.findEmployeeFL, getString(R.string.enter_phone_number_fully))
+        if(requireContext().isNetworkAvailable()){
+            if(phoneNumberFilled) {
+                viewModel.getEmployeeInfoByPhoneNumber("${Config.COUNTRY_CODE}$extractedPhoneNumber")
+            } else{
+                showErrorMessage(requireContext(), dataBinding.findEmployeeFL, getString(R.string.enter_phone_number_fully))
+            }
+        }else{
+            showNoInternetDialog()
         }
     }
 
@@ -195,6 +200,10 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
                 )
             }
         }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(FindEmployeeFragmentDirections.actionGlobalNoInternetDialog2())
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

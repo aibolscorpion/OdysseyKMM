@@ -10,10 +10,16 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kz.divtech.odyssey.rotation.LoginNavGraphDirections
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.ui.MainActivityDirections
+import kz.divtech.odyssey.rotation.ui.login.LoginActivity
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 
 class TermsOfAgreementDialog : BottomSheetDialogFragment() {
@@ -57,13 +63,26 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
             val htmlText = viewModel.getFile().readText()
             showData(htmlText)
         }else{
-            viewModel.getUserAgreementFromServer()
+            if(requireContext().isNetworkAvailable()){
+                viewModel.getUserAgreementFromServer()
+            }else{
+                showNoInternetDialog()
+            }
         }
 
     }
 
     private fun showData(htmlText: String){
         dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().apply {
+            when(activity){
+                is MainActivity ->  this.navigate(MainActivityDirections.actionGlobalNoInternetDialog())
+                is LoginActivity -> this.navigate(LoginNavGraphDirections.actionGlobalNoInternetDialog2())
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -21,11 +21,12 @@ import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
     private val editTextList = ArrayList<EditText>()
     private var _dataBinding: FragmentSendSmsBinding? = null
-    private val dataBinding  get() = _dataBinding!!
+    internal val dataBinding  get() = _dataBinding!!
 
     private var countDownTimer : CountDownTimer?= null
     private val viewModel: SendSmsViewModel by activityViewModels{
@@ -57,7 +58,12 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         super.onViewCreated(view, savedInstanceState)
 
         dataBinding.viewModel = viewModel
-        viewModel.requestSmsCode(args.extractedPhoneNumber)
+
+        if(requireContext().isNetworkAvailable()){
+            viewModel.requestSmsCode(args.extractedPhoneNumber)
+        }else{
+            showNoInternetDialog()
+        }
 
         viewModel.secondsLiveData.observe(viewLifecycleOwner) { event ->
             event.getContentIfNotHandled()?.let { seconds ->
@@ -138,7 +144,13 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     }
 
 
-    fun sendSmsCodeAgain() = viewModel.requestSmsCode(args.extractedPhoneNumber)
+    fun sendSmsCodeAgain() {
+        if(requireContext().isNetworkAvailable()){
+            viewModel.requestSmsCode(args.extractedPhoneNumber)
+        }else{
+            showNoInternetDialog()
+        }
+    }
 
     private fun showContactSupportBtn(){
         dataBinding.contactSupportLLC.visibility = View.VISIBLE
@@ -182,7 +194,12 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
             editTextList.forEach { editText ->
                 code.append(editText.text)
             }
-            viewModel.login(args.extractedPhoneNumber, code.toString())
+
+            if(requireContext().isNetworkAvailable()){
+                viewModel.login(args.extractedPhoneNumber, code.toString())
+            }else{
+                showNoInternetDialog()
+            }
         }
     }
 
@@ -204,6 +221,9 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.sms_retrieve_broadcast_receiver_timeout))
     }
 
+    private fun showNoInternetDialog(){
+        findNavController().navigate(SendSmsFragmentDirections.actionGlobalNoInternetDialog2())
+    }
     override fun onDestroyView() {
         super.onDestroyView()
 

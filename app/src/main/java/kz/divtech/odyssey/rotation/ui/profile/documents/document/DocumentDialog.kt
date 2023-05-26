@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -15,7 +17,9 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
+import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 
 class DocumentDialog : BottomSheetDialogFragment() {
@@ -23,6 +27,8 @@ class DocumentDialog : BottomSheetDialogFragment() {
     val viewModel : DocumentViewModel by viewModels{
         DocumentViewModel.DocumentViewModelFactory((activity as MainActivity).employeeRepository)
     }
+    private var docNumberET: EditText? = null
+    private var issuedByET: EditText? = null
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
@@ -42,6 +48,8 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 idBinding.document = document
                 idBinding.employee = args.employee
                 idBinding.viewModel = viewModel
+                docNumberET = idBinding.documentLayout.docNumberET
+                issuedByET = idBinding.documentLayout.issuedByET
                 return idBinding.root
             }
 
@@ -51,6 +59,8 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 passportBinding.document = document
                 passportBinding.employee = args.employee
                 passportBinding.viewModel = viewModel
+                docNumberET = passportBinding.documentLayout.docNumberET
+                issuedByET = passportBinding.documentLayout.issuedByET
                 return passportBinding.root
             }
 
@@ -59,6 +69,8 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 residenceBinding.documentDialog = this
                 residenceBinding.document = document
                 residenceBinding.viewModel = viewModel
+                docNumberET = residenceBinding.documentLayout.docNumberET
+                issuedByET = residenceBinding.documentLayout.issuedByET
                 return residenceBinding.root
             }
             else -> {
@@ -66,10 +78,50 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 residenceBinding.documentDialog = this
                 residenceBinding.document = document
                 residenceBinding.viewModel = viewModel
+                docNumberET = residenceBinding.documentLayout.docNumberET
+                issuedByET = residenceBinding.documentLayout.issuedByET
                 return residenceBinding.root
             }
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.validationErrors.observe(viewLifecycleOwner){ it ->
+            it.errors.forEach{ (field, errorMessages) ->
+                val firstErrorMessage = errorMessages.first()
+                when(field){
+                    "number" -> docNumberET?.let { it.error = firstErrorMessage}
+                    "issue_by" -> issuedByET?.let { it.error = firstErrorMessage}
+                }
+            }
+        }
+    }
+
+    fun updateDocument(document: Document){
+        if(requireContext().isNetworkAvailable()){
+            if(validateDocument()){
+                viewModel.updateDocument(document)
+            }
+        }else{
+            showNoInternetDialog()
+        }
+    }
+
+    private fun validateDocument(): Boolean{
+        var isValid = true
+        docNumberET?.let{
+            if(it.text.isEmpty()){
+                Toast.makeText(requireContext(), requireContext().getString(R.string.fill_document_number_field), Toast.LENGTH_SHORT).show()
+                isValid = false
+            }
+        }
+        return isValid
+    }
+
+    private fun showNoInternetDialog() =
+        findNavController().navigate(DocumentDialogDirections.actionGlobalNoInternetDialog())
 
     fun close() {
         dismiss()

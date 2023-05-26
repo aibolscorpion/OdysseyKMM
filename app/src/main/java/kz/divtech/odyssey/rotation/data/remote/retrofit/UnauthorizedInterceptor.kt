@@ -14,3 +14,5 @@ class UnauthorizedInterceptor : Interceptor {
         return response
     }
 }
+
+object UnauthorizedEvent

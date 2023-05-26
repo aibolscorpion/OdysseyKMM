@@ -15,14 +15,12 @@ class FaqRepository(private val dao: Dao) {
 
     suspend fun searchFaq(searchQuery: String) = dao.searchFAQ(searchQuery)
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun deleteFaq() {
         dao.deleteFAQ()
     }
 
 
-    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun refreshFaq(faqList: List<Faq>) {
         dao.refreshFaq(faqList)
@@ -31,7 +29,7 @@ class FaqRepository(private val dao: Dao) {
     suspend fun getFaqListFromServer(isRefreshing: Boolean) {
         if (firstTime || isRefreshing) {
             val response = RetrofitClient.getApiService().getFAQs()
-            return if (response.isSuccess()) {
+            if (response.isSuccess()) {
                 val faqList = response.asSuccess().value
                 refreshFaq(faqList)
                 firstTime = false

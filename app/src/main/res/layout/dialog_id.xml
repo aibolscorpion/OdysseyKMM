@@ -137,6 +137,7 @@
                     tools:text="@string/iin_value" />
 
                 <include
+                    android:id="@+id/documentLayout"
                     layout="@layout/layout_document"
                     app:document="@{document}" />
 
@@ -146,7 +147,7 @@
                     android:layout_height="@dimen/button_height"
                     android:layout_marginTop="@dimen/margin"
                     android:stateListAnimator="@null"
-                    android:onClick="@{() -> viewModel.updateDocument(document)}"
+                    android:onClick="@{() -> documentDialog.updateDocument(document)}"
                     android:text="@string/save" />
 
 
