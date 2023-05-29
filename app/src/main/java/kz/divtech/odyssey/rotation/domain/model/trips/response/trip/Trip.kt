@@ -19,8 +19,8 @@ import java.lang.reflect.Type
 data class Trip(
     val id: Int,
     val is_extra: Boolean,
-    @Embedded("start_station_") val start_station: StartStation,
-    @Embedded("end_station_") val end_station: EndStation,
+    @Embedded("start_station_") val start_station: StartStation?,
+    @Embedded("end_station_") val end_station: EndStation?,
     val direction: String?,
     var shift: String?,
     val date: String,
@@ -46,8 +46,8 @@ fun List<Trip>.toArchiveTripList() =
 
 class SegmentConverter {
     @TypeConverter
-    fun fromString(value: String?): List<Segment> {
-        val listType: Type = object : TypeToken<List<Segment>>() {}.type
+    fun fromString(value: String?): List<Segment>? {
+        val listType: Type = object : TypeToken<List<Segment>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 
@@ -58,8 +58,8 @@ class SegmentConverter {
     }
 
     @TypeConverter
-    fun fromStringToRefundApplicationsItem(value: String?): List<RefundAppItem> {
-        val listType: Type = object : TypeToken<List<RefundAppItem>>() {}.type
+    fun fromStringToRefundApplicationsItem(value: String?): List<RefundAppItem>? {
+        val listType: Type = object : TypeToken<List<RefundAppItem>?>() {}.type
         return Gson().fromJson(value, listType)
     }
 

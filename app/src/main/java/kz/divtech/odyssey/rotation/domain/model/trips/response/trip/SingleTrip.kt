@@ -1,3 +1,7 @@
 package kz.divtech.odyssey.rotation.domain.model.trips.response.trip
 
-data class SingleTrip(val data: Trip)
+import androidx.room.Embedded
+import androidx.room.Entity
+
+@Entity(tableName = "nearest_active_trip", primaryKeys = ["id"])
+data class SingleTrip(@Embedded val data: Trip?)

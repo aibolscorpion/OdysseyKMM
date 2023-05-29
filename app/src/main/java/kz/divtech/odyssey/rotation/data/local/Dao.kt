@@ -14,6 +14,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.ActiveTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.ArchiveTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 
 @androidx.room.Dao
@@ -63,6 +64,21 @@ interface Dao {
     suspend fun refreshArchiveTrips(data: List<ArchiveTrip>){
         deleteArchiveTrips()
         insertArchiveTrips(data)
+    }
+
+    @Query("SELECT * FROM nearest_active_trip")
+    fun getNearestActiveTrip(): Flow<SingleTrip>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNearestActiveTrip(data: SingleTrip?)
+
+    @Query("DELETE FROM nearest_active_trip")
+    suspend fun deleteNearestActiveTrip()
+
+    @Transaction
+    suspend fun refreshNearestActiveTrip(data: SingleTrip){
+        deleteNearestActiveTrip()
+        insertNearestActiveTrip(data)
     }
 
     //Employee

@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -16,6 +18,7 @@ import kz.divtech.odyssey.rotation.domain.remotemediator.TripRemoteMediator
 
 
 class TripsRepository(private val dao : Dao) {
+    val nearestActiveTrip = dao.getNearestActiveTrip()
     suspend fun getTripById(id: Int): Result<SingleTrip> {
         return RetrofitClient.getApiService().getTripById(id)
     }
@@ -26,7 +29,19 @@ class TripsRepository(private val dao : Dao) {
         dao.deleteArchiveTrips()
     }
 
-    suspend fun getNearestActiveTrip() = RetrofitClient.getApiService().getNearestActiveTrip()
+    @WorkerThread
+    suspend fun deleteNearestActiveTrip(){
+        dao.deleteNearestActiveTrip()
+    }
+
+    suspend fun getNearestActiveTrip(){
+        val result = RetrofitClient.getApiService().getNearestActiveTrip()
+        if(result.isSuccess()){
+            result.asSuccess().value.data?.let {
+                dao.refreshNearestActiveTrip(result.asSuccess().value)
+            }
+        }
+    }
 
     @OptIn(ExperimentalPagingApi::class)
     @Suppress("RedundantSuspendModifier")

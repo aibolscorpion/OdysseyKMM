@@ -436,7 +436,7 @@ object BindingAdapter {
         val hours = totalMinutes/60
         val minutes = totalMinutes%60
 
-        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station.name, hours, minutes)
+        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
 
         textView.text = totalTimeInWay
     }

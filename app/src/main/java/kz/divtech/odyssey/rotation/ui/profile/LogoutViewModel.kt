@@ -48,6 +48,7 @@ class LogoutViewModel(
         SharedPrefs.clearAuthToken(App.appContext)
         SharedPrefs.clearUrl(App.appContext)
         val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
+        val deleteNearestTripAsync = async { tripsRepository.deleteNearestActiveTrip() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
         val deleteFaqAsync = async { faqRepository.deleteFaq() }
         val deleteNewsAsync = async { newsRepository.deleteNews() }
@@ -55,6 +56,7 @@ class LogoutViewModel(
         val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
         val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
         deleteTripsAsync.await()
+        deleteNearestTripAsync.await()
         deleteEmployeeAsync.await()
         deleteFaqAsync.await()
         deleteNewsAsync.await()

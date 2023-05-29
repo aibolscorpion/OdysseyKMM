@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.Constants.UNPROCESSABLE_ENTITY_CODE
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.fdf.ValidationErrorResponse
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event

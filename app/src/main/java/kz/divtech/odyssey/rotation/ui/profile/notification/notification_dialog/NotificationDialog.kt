@@ -48,7 +48,7 @@ class NotificationDialog : BottomSheetDialogFragment() {
         isCancelable = !args.notification.isImportant
 
         viewModel.trip.observe(viewLifecycleOwner){
-            if(it != null){
+            if(it.data != null){
                 when(args.notification.type){
                     Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
                         if(it.data.segments.isNotEmpty()){

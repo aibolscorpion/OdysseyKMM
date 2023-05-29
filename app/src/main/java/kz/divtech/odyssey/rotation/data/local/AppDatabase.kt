@@ -13,8 +13,9 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.ActiveTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.ArchiveTrip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 
-@Database(entities = [ActiveTrip::class, ArchiveTrip::class, Employee::class, Faq::class,
+@Database(entities = [ActiveTrip::class, ArchiveTrip::class, SingleTrip::class, Employee::class, Faq::class,
     Article::class, FullArticle::class, Notification::class, OrgInfo::class],
     version = 1, exportSchema = false)
 

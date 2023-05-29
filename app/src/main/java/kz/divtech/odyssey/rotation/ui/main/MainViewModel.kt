@@ -4,11 +4,9 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
+import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.domain.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.domain.repository.OrgInfoRepository
@@ -21,9 +19,8 @@ class MainViewModel(private val tripsRepository: TripsRepository,
 
     val pBarVisibility = ObservableInt(View.GONE)
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
+    val nearestActiveTrip: LiveData<SingleTrip> = tripsRepository.nearestActiveTrip.asLiveData()
     val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
-    private val _nearestActiveTrip = MutableLiveData<Trip>()
-    val nearestActiveTrip: LiveData<Trip> = _nearestActiveTrip
 
     fun sendDeviceInfo() = viewModelScope.launch { employeeRepository.sendDeviceInfo() }
 
@@ -37,11 +34,7 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     fun getNearestActiveTrip() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            val result = tripsRepository.getNearestActiveTrip()
-            if(result.isSuccess()){
-                val nearestActiveTrip = result.asSuccess().value.data
-                _nearestActiveTrip.value = nearestActiveTrip
-            }
+            tripsRepository.getNearestActiveTrip()
             pBarVisibility.set(View.GONE)
         }
 

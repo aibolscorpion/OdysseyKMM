@@ -92,8 +92,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
             binding.nearestTripTV.isVisible = (trip != null)
             binding.nearestTripView.root.isVisible = (trip != null)
             trip?.let{
-                binding.trip = trip
-                segmentAdapter.setSegmentList(trip)
+                binding.trip = it.data
+                segmentAdapter.setSegmentList(it.data)
             }
         }
     }
