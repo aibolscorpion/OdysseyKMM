@@ -4,18 +4,14 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
+import kz.divtech.odyssey.rotation.data.remote.result.Result
+import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
 
 class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
-    private val _employeeData = MutableLiveData<Event<EmployeeShort>>()
-    val employeeData: LiveData<Event<EmployeeShort>> = _employeeData
-
-    private val _isEmployeeNotFounded = MutableLiveData<Event<Boolean>>()
-    val isEmployeeNotFounded: LiveData<Event<Boolean>> = _isEmployeeNotFounded
+    private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()
+    val employeeResult: LiveData<Event<Result<EmployeeResult>>> = _employeeResult
 
     val pBarVisibility = ObservableInt(View.GONE)
 
@@ -23,14 +19,7 @@ class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmploye
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
             val response = findEmployeeRepository.findByIIN(iin)
-            if(response.isSuccess()){
-                val employeeResult = response.asSuccess().value
-                if(employeeResult.exists){
-                    _employeeData.value = Event(employeeResult.employee)
-                }else{
-                    _isEmployeeNotFounded.value = Event(true)
-                }
-            }
+            _employeeResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
     }

@@ -11,6 +11,8 @@ import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
@@ -38,18 +40,23 @@ class FindEmployeeByIINFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.employeeData.observe(viewLifecycleOwner) {
-            it?.getContentIfNotHandled()?.let { employee ->
-                openUpdatePhoneNumber(employee)
-            }
-        }
-        viewModel.isEmployeeNotFounded.observe(viewLifecycleOwner){
-            it?.getContentIfNotHandled()?.let { isEmployeeFounded ->
-                if(isEmployeeFounded) showEmployeeNotFoundDialog()
+        viewModel.employeeResult.observe(viewLifecycleOwner) {
+            it?.getContentIfNotHandled()?.let { result ->
+                if(result.isSuccess()){
+                    val employeeResult = result.asSuccess().value
+                    if(employeeResult.exists){
+                        val employee = employeeResult.employee
+                        openUpdatePhoneNumber(employee)
+                    }else{
+                        showEmployeeNotFoundDialog()
+                    }
+                }else{
+                    showErrorMessage(requireContext(), binding.searchByIINFL, "$result")
+                }
             }
         }
 
-        viewModel.employeeData
+        viewModel.employeeResult
     }
 
     fun loginByIIN(){

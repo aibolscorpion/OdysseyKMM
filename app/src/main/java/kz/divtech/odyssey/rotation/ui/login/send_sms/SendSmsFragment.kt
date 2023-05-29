@@ -16,6 +16,10 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
@@ -59,43 +63,48 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
         dataBinding.viewModel = viewModel
 
+        viewModel.smsCodeResult.observe(viewLifecycleOwner){ event ->
+            event.getContentIfNotHandled()?.let { response ->
+                if(response.isSuccess()) {
+                    viewModel.setAuthLogId(response.asSuccess().value.auth_log_id)
+                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+                    editTextList.isEnabled(true)
+                    showKeyboard(requireContext(), editTextList[0])
+                }else if(response.isHttpException()){
+                    if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE){
+                        val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
+                        showContactSupportBtn()
+                        startTimer(seconds)
+                        showErrorMessage(requireContext(), dataBinding.sendSmsFL,
+                            getString(R.string.too_many_request_message, seconds))
+                    }
+                }else{
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
+                }
+            }
+        }
+
+        viewModel.loginResult.observe(viewLifecycleOwner){ event ->
+            event.getContentIfNotHandled()?.let { response ->
+                if(response.isSuccess()) {
+                    openMainActivity()
+                }else if(response.isHttpException()) {
+                    if (response.statusCode == Constants.BAD_REQUEST_CODE) {
+                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.filled_incorrect_code))
+                    }else if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE) {
+                        val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
+                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.too_many_request_message, seconds))
+                    }
+                }else{
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
+                }
+            }
+        }
+
         if(requireContext().isNetworkAvailable()){
             viewModel.requestSmsCode(args.extractedPhoneNumber)
         }else{
             showNoInternetDialog()
-        }
-
-        viewModel.secondsLiveData.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { seconds ->
-                showContactSupportBtn()
-                startTimer(seconds)
-                showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                    getString(R.string.too_many_request_message, seconds))
-            }
-        }
-
-        viewModel.smsCodeSent.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { smsCodeSent ->
-                if (smsCodeSent){
-                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                    editTextList.isEnabled(true)
-                    showKeyboard(requireContext(), editTextList[0])
-                }
-            }
-        }
-
-        viewModel.loggedIn.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { loggedIn ->
-                if (loggedIn) {
-                    openMainActivity()
-                }
-            }
-        }
-
-        viewModel.errorMessage.observe(viewLifecycleOwner) {  event ->
-            event.getContentIfNotHandled()?.let { message ->
-                showErrorMessage(requireContext(), dataBinding.sendSmsFL, message)
-            }
         }
     }
 
