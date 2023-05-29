@@ -21,6 +21,8 @@ import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
@@ -63,31 +65,27 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
         viewModel.getOrgInfoFromServer()
 
-        viewModel.employeeInfo.observe(viewLifecycleOwner){
-            it?.getContentIfNotHandled()?.let { employee ->
-                if(employee.status == Constants.DEACTIVATED_EMPLOYEE)
-                    showAccountDeactivatedDialog(employee.full_name)
-                else
-                    openSendSmsFragment()
-            }
-        }
-
-        viewModel.isEmployeeNotFounded.observe(viewLifecycleOwner){
-            it?.getContentIfNotHandled()?.let { isEmployeeNotFounded ->
-                if(isEmployeeNotFounded)
-                    openIINFragment()
-            }
-        }
-
-        viewModel.isErrorHappened.observe(viewLifecycleOwner) {
-            it?.getContentIfNotHandled()?.let { isErrorHappened ->
-                if(isErrorHappened)
+        viewModel.employeeResult.observe(viewLifecycleOwner){
+            it?.getContentIfNotHandled()?.let { result ->
+                if(result.isSuccess()){
+                    val employeeResult = result.asSuccess().value
+                    if(employeeResult.exists){
+                        val employee = employeeResult.employee
+                        if(employee.status == Constants.DEACTIVATED_EMPLOYEE){
+                            showAccountDeactivatedDialog(employee.full_name)
+                        }else{
+                            openSendSmsFragment()
+                        }
+                    }else{
+                        openIINFragment()
+                    }
+                }else{
                     showErrorDialog()
+                }
             }
         }
 
         checkPermission()
-
     }
 
     override fun onStart() {

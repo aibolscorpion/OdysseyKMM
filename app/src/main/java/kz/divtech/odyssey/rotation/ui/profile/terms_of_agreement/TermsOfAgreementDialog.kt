@@ -9,12 +9,15 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.LoginNavGraphDirections
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.MainActivityDirections
@@ -55,9 +58,16 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
             }
         }
 
-        viewModel.htmlLiveData.observe(viewLifecycleOwner){ htmlText ->
-            showData(htmlText)
+        viewModel.result.observe(viewLifecycleOwner){ result ->
+            if(result.isSuccess()) {
+                val htmlText = result.asSuccess().value.string()
+                showData(htmlText)
+                viewModel.getFile().appendText(htmlText)
+            }else {
+                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
         if(viewModel.getFile().exists()){
             val htmlText = viewModel.getFile().readText()

@@ -10,4 +10,6 @@ class HttpException(
     cause: Throwable? = null,
     val headers: Headers? = null,
     val errorBody: ResponseBody? = null
-) : Exception(null, cause)
+) : Exception(null, cause){
+    override fun toString(): String = "HttpException: statusCode = $statusCode, statusMessage = $statusMessage"
+}

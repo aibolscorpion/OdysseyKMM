@@ -9,26 +9,22 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.result.*
+import okhttp3.ResponseBody
 import java.io.File
 
 class TermsOfAgreementViewModel: ViewModel(){
-    private val _htmlMutableLiveData = MutableLiveData<String>()
-    val htmlLiveData: LiveData<String> = _htmlMutableLiveData
+    private val _result = MutableLiveData<Result<ResponseBody>>()
+    val result: LiveData<Result<ResponseBody>> = _result
 
     val progressVisibility = ObservableInt(View.GONE)
 
     fun getUserAgreementFromServer(){
-        progressVisibility.set(View.VISIBLE)
         viewModelScope.launch {
+            progressVisibility.set(View.VISIBLE)
             val response = RetrofitClient.getApiService().getUserAgreement()
-            if(response.isSuccess()){
-                val value = response.asSuccess().value.string()
-                _htmlMutableLiveData.postValue(value)
-                getFile().appendText(value)
-            }
+            _result.value = response
             progressVisibility.set(View.GONE)
         }
     }
