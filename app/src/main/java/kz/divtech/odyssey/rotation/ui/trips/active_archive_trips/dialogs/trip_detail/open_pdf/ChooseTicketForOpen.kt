@@ -10,11 +10,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentChooseTicketForOpenBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
+import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialogDirections
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 import java.io.File
 
@@ -74,13 +77,20 @@ class ChooseTicketForOpen : Fragment(), DownloadInterface {
         if(file.exists()){
             openFile(file)
         }else{
-            viewModel.downloadTicketByUrl(currentTicket)
+            if(requireContext().isNetworkAvailable()){
+                viewModel.downloadTicketByUrl(currentTicket)
+            }else{
+                showErrorDialog()
+            }
         }
     }
 
     override fun getFileByTicket(currentTicket: Ticket) : File{
         return viewModel.getFileByTicket(currentTicket)
     }
+
+    private fun showErrorDialog() =
+        findNavController().navigate(TripDetailDialogDirections.actionGlobalNoInternetDialog())
 
 
     override fun onDestroyView() {

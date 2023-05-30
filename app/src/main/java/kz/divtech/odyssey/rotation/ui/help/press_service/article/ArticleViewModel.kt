@@ -6,16 +6,22 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.repository.ArticleRepository
+import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticleResponse
 
 class ArticleViewModel(private val articleRepository: ArticleRepository) : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
+
+    private val _articleResult = MutableLiveData<Result<FullArticleResponse>>()
+    val articleResult: LiveData<Result<FullArticleResponse>> = _articleResult
 
     fun getArticleById(id: Int): LiveData<FullArticle> = articleRepository.getArticleById(id).asLiveData()
 
     fun getArticleByIdFromServer(id: Int) =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            articleRepository.getArticleByIdFromServer(id)
+            val response = articleRepository.getArticleByIdFromServer(id)
+            _articleResult.value = response
             pBarVisibility.set(View.GONE)
         }
 

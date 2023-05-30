@@ -26,6 +26,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_de
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import java.io.File
 import java.time.LocalDate
 
@@ -157,7 +158,11 @@ class TripDetailDialog : BottomSheetDialogFragment() {
         if(file.exists()){
             openFile(file)
         }else{
-            viewModel.downloadTicketByUrl(ticket)
+            if(requireContext().isNetworkAvailable()){
+                viewModel.downloadTicketByUrl(ticket)
+            }else{
+                showErrorDialog()
+            }
         }
     }
 
@@ -167,6 +172,10 @@ class TripDetailDialog : BottomSheetDialogFragment() {
 
         requireActivity().unregisterReceiver(pdfDownloadedReceiver)
     }
+
+    private fun showErrorDialog() =
+        findNavController().navigate(TripDetailDialogDirections.actionGlobalNoInternetDialog())
+
 
     private fun openChooseTicketForOpenFragment() = findNavController().navigate(
         TripDetailDialogDirections.actionTripDetailDialogToChooseTicketForOpen(ticketList.toTypedArray())

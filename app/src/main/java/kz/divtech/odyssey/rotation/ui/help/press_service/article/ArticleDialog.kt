@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
@@ -38,6 +40,12 @@ class ArticleDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val articleId = args.articleId
+
+        viewModel.articleResult.observe(viewLifecycleOwner){ result ->
+            if(result.isFailure()){
+                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         viewModel.getArticleById(articleId).observe(viewLifecycleOwner){ fullArticle ->
             if(fullArticle != null){

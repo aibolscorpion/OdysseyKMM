@@ -11,6 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.ui.login.LoginActivity
@@ -45,14 +48,16 @@ class UpdatePhoneNumberFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.isApplicationSent.observe(viewLifecycleOwner) { isApplicationSent ->
-            if(isApplicationSent)
+        viewModel.updatePhoneResult.observe(viewLifecycleOwner){ response ->
+            if(response.isSuccess()) {
                 showApplicationSentDialog()
-            else
+            }else if(response.isHttpException() && response.statusCode ==
+                Constants.UNPROCESSABLE_ENTITY_CODE){
+                showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
+                    getString(R.string.invalid_format_phone_number))
+            }else{
                 showErrorDialog()
-        }
-        viewModel.message.observe(viewLifecycleOwner){ message ->
-            showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, message)
+            }
         }
     }
 
