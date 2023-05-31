@@ -12,20 +12,18 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toActiveTripList
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTripList
-import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 
 @ExperimentalPagingApi
-class TripRemoteMediator(val dao: Dao, private val orderDir: TripsRepository.OrderDir,
-                         val isActive: Boolean) : RemoteMediator<Int, Trip>() {
+class TripRemoteMediator(val dao: Dao, val isActive: Boolean) : RemoteMediator<Int, Trip>() {
     private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Trip>): MediatorResult {
         pageIndex = getPageIndex(loadType)?:
             return MediatorResult.Success(true)
         val response = if(isActive){
-            RetrofitClient.getApiService().getActiveTrips(pageIndex, orderDir = orderDir.value)
+            RetrofitClient.getApiService().getActiveTrips(pageIndex)
         }else{
-            RetrofitClient.getApiService().getArchiveTrips(pageIndex, orderDir = orderDir.value)
+            RetrofitClient.getApiService().getArchiveTrips(pageIndex)
         }
 
         return if(response.isSuccess()){

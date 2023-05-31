@@ -23,113 +23,109 @@
             android:nestedScrollingEnabled="true"
             android:background="@color/main_bg">
 
-            <androidx.core.widget.NestedScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/sortTripLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_sort_filter_button"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="@dimen/margin"
+                android:paddingBottom="8dp"
+                android:onClick="@{() -> thisFragment.openSortTripDialog()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/sortTripLL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin"
-                        android:layout_marginTop="18dp"
-                        android:background="@drawable/bg_sort_filter_button"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="@dimen/margin"
-                        android:paddingBottom="8dp"
-                        android:onClick="@{() -> thisFragment.openSortTripDialog()}"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_sorting" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_sorting" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/by_departure_date"
+                    android:textColor="#2d4461"
+                    android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/pt_root_ui_bold"
-                            android:lineSpacingExtra="10sp"
-                            android:text="@string/by_departure_date"
-                            android:textColor="#2d4461"
-                            android:textSize="14sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/filterTripLL"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="@dimen/margin"
+                android:background="@drawable/bg_sort_filter_button"
+                android:orientation="horizontal"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="@dimen/margin"
+                android:paddingBottom="8dp"
+                android:onClick="@{() -> thisFragment.openFilterTripDialog()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.LinearLayoutCompat
-                        android:id="@+id/filterTripLL"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="@dimen/margin"
-                        android:background="@drawable/bg_sort_filter_button"
-                        android:orientation="horizontal"
-                        android:paddingStart="12dp"
-                        android:paddingTop="8dp"
-                        android:paddingEnd="@dimen/margin"
-                        android:paddingBottom="8dp"
-                        android:onClick="@{() -> thisFragment.openFilterTripDialog()}"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_filter" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/icon_filter" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="6dp"
-                            android:fontFamily="@font/pt_root_ui_bold"
-                            android:lineSpacingExtra="10sp"
-                            android:text="@string/filters"
-                            android:textColor="#2d4461"
-                            android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:lineSpacingExtra="10sp"
+                    android:text="@string/filters"
+                    android:textColor="#2d4461"
+                    android:textSize="14sp" />
 
 
-                        <TextView
-                            android:id="@+id/appliedFilterCountTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/bg_applied_filter_count"
-                            android:text="1"
-                            android:fontFamily="@font/pt_root_ui_bold"
-                            android:textSize="13sp"
-                            android:textColor="#1a5497"
-                            android:layout_gravity="center"
-                            android:lineSpacingExtra="1sp"
-                            android:gravity="center"
-                            android:layout_marginStart="6dp"
-                            tools:visibility="visible"
-                            android:visibility="gone" />
+                <TextView
+                    android:id="@+id/appliedFilterCountTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_applied_filter_count"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="13sp"
+                    android:textColor="#1a5497"
+                    android:layout_gravity="center"
+                    android:lineSpacingExtra="1sp"
+                    android:gravity="center"
+                    android:layout_marginStart="6dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="1"/>
 
-                    </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/tripsRV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:clipToPadding="false"
-                        android:paddingBottom="6dp"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintTop_toBottomOf="@+id/sortTripLL"
-                        tools:listitem="@layout/item_trip" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/tripsRV"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="false"
+                android:paddingBottom="6dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/sortTripLL"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:listitem="@layout/item_trip" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.core.widget.NestedScrollView>
             <ImageView
                 android:id="@+id/tripsRetryBtn"
                 android:layout_width="40dp"

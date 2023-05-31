@@ -47,13 +47,9 @@ interface ApiService {
     suspend fun getNearestActiveTrip(): Result<SingleTrip>
 
     @GET("applications/active")
-    suspend fun getActiveTrips(@Query("page") pageIndex: Int,
-                               @Query("order_by") orderBy: String = "date",
-                               @Query("order_dir") orderDir: String): Result<TripResponse>
+    suspend fun getActiveTrips(@Query("page") pageIndex: Int): Result<TripResponse>
     @GET("applications/archive")
-    suspend fun getArchiveTrips(@Query("page") pageIndex: Int,
-                               @Query("order_by") orderBy: String = "date",
-                               @Query("order_dir") orderDir: String): Result<TripResponse>
+    suspend fun getArchiveTrips(@Query("page") pageIndex: Int): Result<TripResponse>
 
     @GET("applications/{id}")
     suspend fun getTripById(@Path("id") tripId: Int): Result<SingleTrip>

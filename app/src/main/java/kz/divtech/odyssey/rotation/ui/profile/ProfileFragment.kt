@@ -70,14 +70,24 @@ class ProfileFragment : Fragment() {
     }
 
     fun openDocumentsFragment() =
-        findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
+        with(findNavController()) {
+            if (R.id.profileFragment == currentDestination?.id)
+                navigate(ProfileFragmentDirections.actionProfileFragmentToDocumentsFragment())
+        }
+
 
     fun openPersonalDataFragment(){
-        val action = ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment()
-        findNavController().navigate(action)
+        with(findNavController()) {
+            if (R.id.profileFragment == currentDestination?.id)
+                navigate(ProfileFragmentDirections.actionProfileFragmentToPersonalDataFragment())
+        }
     }
 
-    fun openNotificationFragment() = findNavController().navigate(R.id.action_global_notificationFragment)
+    fun openNotificationFragment() =
+        with(findNavController()) {
+            if (R.id.profileFragment == currentDestination?.id)
+                navigate(R.id.action_global_notificationFragment)
+        }
 
     private fun goToLoginPage() {
         findNavController().navigate(ProfileFragmentDirections.actionGlobalLoginActivity())
