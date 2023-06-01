@@ -11,7 +11,6 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogCancelRefundBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
@@ -39,7 +38,7 @@ class CancelRefundDialog : DialogFragment() {
             if(result.isSuccess()){
                 openRefundCancelledFragment()
             }else{
-                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
             }
         }
     }

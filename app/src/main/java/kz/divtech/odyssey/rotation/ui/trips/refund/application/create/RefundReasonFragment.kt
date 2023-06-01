@@ -43,7 +43,7 @@ class RefundReasonFragment: Fragment() {
                 val refundId = result.asSuccess().value["id"]!!
                 openRefundSendFragment(refundId)
             }else{
-                Toast.makeText(requireContext(), R.string.error_happened, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
             }
         }
     }

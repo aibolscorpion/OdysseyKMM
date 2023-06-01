@@ -3,15 +3,13 @@ package kz.divtech.odyssey.rotation.ui.profile.personal_data
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.Constants.UNPROCESSABLE_ENTITY_CODE
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
+import okhttp3.ResponseBody
+import kz.divtech.odyssey.rotation.data.remote.result.*
 
 class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
     val employee = employeeRepository.employee.asLiveData()
@@ -20,9 +18,8 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
     private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
     val personalDataUpdated: LiveData<Event<Boolean>> = _personalDataUpdated
 
-    private val _validationErrors: MutableLiveData<ValidationErrorResponse> = MutableLiveData()
-    val validationErrors: LiveData<ValidationErrorResponse> = _validationErrors
-
+    private val _updatePersonalResult = MutableLiveData<Result<ResponseBody>>()
+    val updatePersonalResult: LiveData<Result<ResponseBody>> = _updatePersonalResult
 
     fun updatePersonalData(employee: Employee, citizenshipChanged: Boolean){
         pBarVisibility.set(View.VISIBLE)
@@ -31,13 +28,8 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
             if(response.isSuccess()){
                 employeeRepository.getEmployeeFromServer()
                 _personalDataUpdated.value = Event(citizenshipChanged)
-            }else if(response.isHttpException()) {
-                if (response.statusCode == UNPROCESSABLE_ENTITY_CODE) {
-                    val errorResponse =
-                        Gson().fromJson(response.error.errorBody?.string(), ValidationErrorResponse::class.java)
-                        _validationErrors.value = errorResponse
-                }
             }
+            _updatePersonalResult.value = response
             pBarVisibility.set(View.GONE)
         }
     }

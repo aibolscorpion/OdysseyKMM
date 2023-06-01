@@ -13,6 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.ui.MainActivity
@@ -47,24 +49,30 @@ class NotificationDialog : BottomSheetDialogFragment() {
         viewModel.markNotificationAsRead(args.notification.id)
         isCancelable = !args.notification.isImportant
 
-        viewModel.trip.observe(viewLifecycleOwner){
-            if(it.data != null){
-                when(args.notification.type){
-                    Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
-                        if(it.data.segments.isNotEmpty()){
-                            findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(it.data))
-                        }else{
-                            findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(it.data))
+        viewModel.tripResult.observe(viewLifecycleOwner){ result ->
+            if(result.isSuccess()){
+                val trip = result.asSuccess().value
+                if(trip.data != null){
+                    when(args.notification.type){
+                        Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
+                            if(trip.data.segments.isNotEmpty()){
+                                findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip.data))
+                            }else{
+                                findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip.data))
+                            }
+                        }
+                        Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
+                            findNavController().navigate(NotificationDialogDirections.
+                            actionGlobalRefundListFragment(null, trip.data))
                         }
                     }
-                    Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
-                        findNavController().navigate(NotificationDialogDirections.
-                        actionGlobalRefundListFragment(null, it.data))
-                    }
+                }else{
+                    Toast.makeText(requireContext(), R.string.trip_not_found_by_id, Toast.LENGTH_SHORT).show()
                 }
             }else{
-                Toast.makeText(requireContext(), R.string.trip_not_found_by_id, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
             }
+
         }
     }
 

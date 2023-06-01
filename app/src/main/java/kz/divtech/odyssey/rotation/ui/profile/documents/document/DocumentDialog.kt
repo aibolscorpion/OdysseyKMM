@@ -12,12 +12,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.isFailure
+import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
@@ -36,10 +40,6 @@ class DocumentDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val document = args.document.copy()
 
-        viewModel.documentUpdated.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
-            dismiss()
-        }
 
         when(document.type){
             Constants.ID_CARD -> {
@@ -88,13 +88,24 @@ class DocumentDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.validationErrors.observe(viewLifecycleOwner){ it ->
-            it.errors.forEach{ (field, errorMessages) ->
-                val firstErrorMessage = errorMessages.first()
-                when(field){
-                    "number" -> docNumberET?.let { it.error = firstErrorMessage}
-                    "issue_by" -> issuedByET?.let { it.error = firstErrorMessage}
+        viewModel.documentUpdated.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
+            dismiss()
+        }
+
+        viewModel.updateDocumentResult.observe(viewLifecycleOwner){ response ->
+            if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
+                val errorResponse =
+                    Gson().fromJson(response.error.errorBody?.string(), ValidationErrorResponse::class.java)
+                errorResponse.errors.forEach{ (field, errorMessages) ->
+                    val firstErrorMessage = errorMessages.first()
+                    when(field){
+                        "number" -> docNumberET?.let { it.error = firstErrorMessage}
+                        "issue_by" -> issuedByET?.let { it.error = firstErrorMessage}
+                    }
                 }
+            }else if(response.isFailure()){
+                Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -113,7 +124,7 @@ class DocumentDialog : BottomSheetDialogFragment() {
         var isValid = true
         docNumberET?.let{
             if(it.text.isEmpty()){
-                Toast.makeText(requireContext(), requireContext().getString(R.string.fill_document_number_field), Toast.LENGTH_SHORT).show()
+                it.error = getString(R.string.fill_document_number_field)
                 isValid = false
             }
         }

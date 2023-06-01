@@ -70,14 +70,12 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
                     editTextList.isEnabled(true)
                     showKeyboard(requireContext(), editTextList[0])
-                }else if(response.isHttpException()){
-                    if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE){
-                        val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                        showContactSupportBtn()
-                        startTimer(seconds)
-                        showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                            getString(R.string.too_many_request_message, seconds))
-                    }
+                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
+                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
+                    showContactSupportBtn()
+                    startTimer(seconds)
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL,
+                        getString(R.string.too_many_request_message, seconds))
                 }else{
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
                 }
@@ -88,13 +86,11 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
             event.getContentIfNotHandled()?.let { response ->
                 if(response.isSuccess()) {
                     openMainActivity()
-                }else if(response.isHttpException()) {
-                    if (response.statusCode == Constants.BAD_REQUEST_CODE) {
-                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.filled_incorrect_code))
-                    }else if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE) {
-                        val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.too_many_request_message, seconds))
-                    }
+                }else if(response.isHttpException() && (response.statusCode == Constants.BAD_REQUEST_CODE)) {
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.filled_incorrect_code))
+                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)) {
+                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.too_many_request_message, seconds))
                 }else{
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
                 }

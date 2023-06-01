@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -14,6 +15,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 
 class ArticleDialog : BottomSheetDialogFragment() {
@@ -51,10 +53,18 @@ class ArticleDialog : BottomSheetDialogFragment() {
             if(fullArticle != null){
                 dataBinding.fullArticle = fullArticle
             }else{
-                viewModel.getArticleByIdFromServer(articleId)
-                viewModel.markArticleAsRead(articleId)
+                if(requireContext().isNetworkAvailable()){
+                    viewModel.getArticleByIdFromServer(articleId)
+                    viewModel.markArticleAsRead(articleId)
+                }else{
+                    showNoInternetDialog()
+                }
             }
         }
+    }
+
+    private fun showNoInternetDialog(){
+        findNavController().navigate(ArticleDialogDirections.actionGlobalNoInternetDialog())
     }
 
     override fun onDestroyView() {

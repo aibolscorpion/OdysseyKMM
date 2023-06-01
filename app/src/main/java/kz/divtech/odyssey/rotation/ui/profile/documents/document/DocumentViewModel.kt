@@ -7,40 +7,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import okhttp3.ResponseBody
+import kz.divtech.odyssey.rotation.data.remote.result.*
 
 class DocumentViewModel(val employeeRepository: EmployeeRepository) : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
     private var _documentUpdated = MutableLiveData<Boolean>()
     val documentUpdated: LiveData<Boolean> get() = _documentUpdated
 
-    private val _validationErrors: MutableLiveData<ValidationErrorResponse> = MutableLiveData()
-    val validationErrors: LiveData<ValidationErrorResponse> = _validationErrors
+    private val _updateDocumentResult = MutableLiveData<Result<ResponseBody>>()
+    val updateDocumentResult: LiveData<Result<ResponseBody>> = _updateDocumentResult
     fun updateDocument(document: Document){
-        pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
+            pBarVisibility.set(View.VISIBLE)
             val response = RetrofitClient.getApiService().updateDocument(document)
             if(response.isSuccess()){
                 employeeRepository.getEmployeeFromServer()
                 _documentUpdated.value = true
-            }else if(response.isHttpException()){
-                if (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE) {
-                    val errorResponse =
-                        Gson().fromJson(response.error.errorBody?.string(), ValidationErrorResponse::class.java)
-                    _validationErrors.value = errorResponse
-                }
             }
+            _updateDocumentResult.value = response
             pBarVisibility.set(View.GONE)
         }
-
     }
 
     class DocumentViewModelFactory(private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{

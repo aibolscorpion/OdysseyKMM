@@ -8,53 +8,38 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asFailure
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
+import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
+import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
+import okhttp3.ResponseBody
 
 class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
     private var authLogId: Int = 0
 
-    private val _smsCodeSent = MutableLiveData<Event<Boolean>>()
-    val smsCodeSent: LiveData<Event<Boolean>> = _smsCodeSent
+    private val _smsCodeResult = MutableLiveData<Event<Result<CodeResponse>>>()
+    val smsCodeResult: LiveData<Event<Result<CodeResponse>>> = _smsCodeResult
 
-    private val _errorMessage = MutableLiveData<Event<String>>()
-    val errorMessage: LiveData<Event<String>> = _errorMessage
-
-    private val _successfullyUpdated = MutableLiveData<Event<Boolean>>()
-    val successfullyUpdated : LiveData<Event<Boolean>> = _successfullyUpdated
-
-    private val _secondsMutableLiveData = MutableLiveData<Event<Int>>()
-    val secondsLiveData: LiveData<Event<Int>> = _secondsMutableLiveData
+    private val _updatedResult = MutableLiveData<Event<Result<ResponseBody>>>()
+    val updatedResult: LiveData<Event<Result<ResponseBody>>> = _updatedResult
 
     val pBarVisibility = ObservableInt(View.GONE)
+
+    fun setAuthLogId(authLogId: Int){
+        this.authLogId = authLogId
+    }
 
     fun requestSmsCode(phoneNumber: String){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
             val response = RetrofitClient.getApiService().updatePhoneNumberWithAuth(codeRequest)
-            if(response.isSuccess()) {
-                authLogId = response.asSuccess().value.auth_log_id
-                _smsCodeSent.postValue(Event(true))
-            }else if(response.isHttpException()){
-                if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE){
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                    _secondsMutableLiveData.postValue(Event(seconds))
-                }
-            }else{
-                _errorMessage.postValue(Event((response.asFailure().error?.message!!)))
-            }
+            _smsCodeResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
     }
@@ -67,22 +52,8 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewMode
             val response = RetrofitClient.getApiService().updatePhoneConfirm(authRequest)
             if(response.isSuccess()) {
                 employeeRepository.getEmployeeFromServer()
-                _successfullyUpdated.postValue(Event(true))
-            }else if(response.isHttpException()) {
-                if (response.statusCode == Constants.BAD_REQUEST_CODE) {
-                    _errorMessage.postValue(
-                        Event(App.appContext.getString(R.string.filled_incorrect_code))
-                    )
-                }else if(response.statusCode == Constants.TOO_MANY_REQUEST_CODE) {
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                    _errorMessage.postValue(
-                        Event(App.appContext.getString(R.string.too_many_request_message, seconds))
-                    )
-                }
-            }else{
-                _errorMessage.postValue(Event(response.asFailure().error?.message!!))
             }
-
+            _updatedResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
     }

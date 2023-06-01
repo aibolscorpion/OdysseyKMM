@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 
@@ -30,8 +32,16 @@ class FaqFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val faqAdapter = FaqAdapter()
-
         binding.faqRecyclerView.adapter = faqAdapter
+
+        viewModel.faqResult.observe(viewLifecycleOwner){ result ->
+            result?.let{
+                if(result.isFailure()){
+                    Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         viewModel.getFaqListFromServer()
 
         viewModel.faqLiveData.observe(viewLifecycleOwner) { faqList ->

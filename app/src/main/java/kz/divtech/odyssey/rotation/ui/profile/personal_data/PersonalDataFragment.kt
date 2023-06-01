@@ -12,11 +12,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.remote.result.isFailure
+import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
@@ -85,19 +90,25 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
             countrySelectionResultListener
         )
 
-
-        viewModel.validationErrors.observe(viewLifecycleOwner){
-            it.errors.forEach{ (field, errorMessages) ->
-                val firstErrorMessage = errorMessages.first()
-                when(field){
-                    "first_name" -> binding.firstNameET.error = firstErrorMessage
-                    "last_name" -> binding.lastNameET.error = firstErrorMessage
-                    "patronymic" -> binding.patronymicET.error = firstErrorMessage
-                    "first_name_en" -> binding.firstNameEngET.error = firstErrorMessage
-                    "last_name_en" -> binding.lastNameEngET.error = firstErrorMessage
-                    "iin" -> binding.iinET.error = firstErrorMessage
-                    "email" -> binding.emailET.error = firstErrorMessage
-                }
+        viewModel.updatePersonalResult.observe(viewLifecycleOwner){ response ->
+            if(response.isHttpException() &&
+                (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)) {
+                    val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
+                        ValidationErrorResponse::class.java)
+                    errorResponse.errors.forEach{ (field, errorMessages) ->
+                        val firstErrorMessage = errorMessages.first()
+                        when(field){
+                            "first_name" -> binding.firstNameET.error = firstErrorMessage
+                            "last_name" -> binding.lastNameET.error = firstErrorMessage
+                            "patronymic" -> binding.patronymicET.error = firstErrorMessage
+                            "first_name_en" -> binding.firstNameEngET.error = firstErrorMessage
+                            "last_name_en" -> binding.lastNameEngET.error = firstErrorMessage
+                            "iin" -> binding.iinET.error = firstErrorMessage
+                            "email" -> binding.emailET.error = firstErrorMessage
+                        }
+                    }
+            }else if(response.isFailure()){
+                Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
             }
         }
     }
