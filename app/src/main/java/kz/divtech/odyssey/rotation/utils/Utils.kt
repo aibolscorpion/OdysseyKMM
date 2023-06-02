@@ -15,8 +15,8 @@ object Utils {
 
     fun Bundle.convertToNotification(): PushNotification {
         val id = getString(Constants.NOTIFICATION_DATA_ID)
-        val sendTime = getString(Constants.NOTIFICATION_DATA_SEND_TIME)
-        val notifiableType = getString(Constants.NOTIFICATION_DATA_NOTIFIABLE_TYPE)
+        val sendTime = getString(Constants.NOTIFICATION_DATA_CREATED_AT)
+        val notifiableType = getString(Constants.NOTIFICATION_DATA_NOTIFICATION_TYPE)
         val title = getString(Constants.NOTIFICATION_DATA_TITLE)
         val content = getString(Constants.NOTIFICATION_DATA_CONTENT)
         val type = getString(Constants.NOTIFICATION_DATA_TYPE)

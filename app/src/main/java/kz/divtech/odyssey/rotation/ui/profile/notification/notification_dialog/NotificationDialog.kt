@@ -78,7 +78,7 @@ class NotificationDialog : BottomSheetDialogFragment() {
 
     fun learnMore(notification: PushNotification){
         if(requireContext().isNetworkAvailable()){
-            viewModel.getTripById(notification.applicationId!!)
+            notification.applicationId?.let { viewModel.getTripById(it) }
         }else{
             showNoInternetDialog()
         }

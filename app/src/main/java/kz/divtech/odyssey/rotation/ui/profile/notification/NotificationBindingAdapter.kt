@@ -56,28 +56,28 @@ object NotificationBindingAdapter {
 
     @BindingAdapter("updatedAt")
     @JvmStatic fun setUpdatedAt(textView: TextView, updatedAt: String?){
-//        val currentLocalDateTime = LocalDateTime.now()
-//        val today = LocalDate.now()
-//        val yesterday = today.minusDays(1)
-//        val updatedLocalDateTime = updatedAt?.getLocalDateTimeByPattern()
-//
-//        val date = updatedAt.formatDateTimeToGivenPattern(DAY_MONTH_PATTERN)
-//        val time = updatedAt.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
-//
-//        if (updatedLocalDateTime != null) {
-//            textView.text = when(updatedLocalDateTime.toLocalDate()){
-//                today -> {
-//                    when(val minutes = updatedLocalDateTime.until(currentLocalDateTime, ChronoUnit.MINUTES)) {
-//                        in 0..60 -> App.appContext.getString(R.string.minutes_before, minutes)
-//                        in 60..120 -> App.appContext.getString(R.string.hours_before, 1)
-//                        in 120..180 -> App.appContext.getString(R.string.hours_before, 2)
-//                        else -> time
-//                    }
-//                }
-//                yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
-//                else -> App.appContext.getString(R.string.date_at_time, date, time)
-//            }
-//        }
+        val currentLocalDateTime = LocalDateTime.now()
+        val today = LocalDate.now()
+        val yesterday = today.minusDays(1)
+        val updatedLocalDateTime = updatedAt?.getLocalDateTimeByPattern()
+
+        val date = updatedAt.formatDateTimeToGivenPattern(DAY_MONTH_PATTERN)
+        val time = updatedAt.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
+
+        if (updatedLocalDateTime != null) {
+            textView.text = when(updatedLocalDateTime.toLocalDate()){
+                today -> {
+                    when(val minutes = updatedLocalDateTime.until(currentLocalDateTime, ChronoUnit.MINUTES)) {
+                        in 0..60 -> App.appContext.getString(R.string.minutes_before, minutes)
+                        in 60..120 -> App.appContext.getString(R.string.hours_before, 1)
+                        in 120..180 -> App.appContext.getString(R.string.hours_before, 2)
+                        else -> time
+                    }
+                }
+                yesterday -> App.appContext.getString(R.string.yesterday_at_time, time)
+                else -> App.appContext.getString(R.string.date_at_time, date, time)
+            }
+        }
     }
 
     @BindingAdapter("learnMoreVisibility")

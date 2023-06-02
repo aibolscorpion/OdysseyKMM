@@ -40,8 +40,8 @@ object Constants {
     const val NOTIFICATION_TYPE_DEVICE = "device"
 
     const val NOTIFICATION_DATA_ID = "notification_id"
-    const val NOTIFICATION_DATA_SEND_TIME = "send_time"
-    const val NOTIFICATION_DATA_NOTIFIABLE_TYPE = "notifiable_type"
+    const val NOTIFICATION_DATA_CREATED_AT = "created_at"
+    const val NOTIFICATION_DATA_NOTIFICATION_TYPE = "notification_type"
     const val NOTIFICATION_DATA_TITLE = "title"
     const val NOTIFICATION_DATA_CONTENT = "content"
     const val NOTIFICATION_DATA_TYPE = "type"
