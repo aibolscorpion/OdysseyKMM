@@ -2,7 +2,6 @@ package kz.divtech.odyssey.rotation.domain.repository
 
 import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants.ANDROID
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
@@ -16,7 +15,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 
 class EmployeeRepository(private val dao: Dao) {
-    val employee: Flow<Employee> = dao.observeEmployee()
+    val employee = dao.observeEmployee()
     private var firstTimeDeviceInfo = true
 
     @WorkerThread

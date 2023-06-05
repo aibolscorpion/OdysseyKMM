@@ -18,7 +18,7 @@ class MainViewModel(private val tripsRepository: TripsRepository,
                     private val orgInfoRepository: OrgInfoRepository) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
+    val employeeLiveData: LiveData<Employee> = employeeRepository.employee
     val nearestActiveTrip: LiveData<SingleTrip> = tripsRepository.nearestActiveTrip.asLiveData()
     val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
 

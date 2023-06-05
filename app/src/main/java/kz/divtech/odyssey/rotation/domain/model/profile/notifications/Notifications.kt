@@ -1,16 +1,10 @@
 package kz.divtech.odyssey.rotation.domain.model.profile.notifications
 
+import kz.divtech.odyssey.rotation.domain.model.trips.response.Links
+import kz.divtech.odyssey.rotation.domain.model.trips.response.Meta
+
 data class Notifications(
-    val current_page: Int,
-    val `data`: List<Notification>,
-    val first_page_url: String,
-    val from: Int,
-    val last_page: Int,
-    val last_page_url: String,
-    val next_page_url: String,
-    val path: String,
-    val per_page: Int,
-    val prev_page_url: Any,
-    val to: Int,
-    val total: Int
+    val data: List<Notification>,
+    val meta: Meta,
+    val link: Links
 )

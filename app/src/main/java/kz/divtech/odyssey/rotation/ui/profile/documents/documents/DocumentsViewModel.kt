@@ -5,7 +5,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 
 class DocumentsViewModel(employeeRepository: EmployeeRepository) : ViewModel() {
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
+    val employeeLiveData: LiveData<Employee> = employeeRepository.employee
 
     class DocumentsViewModelFactory(private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

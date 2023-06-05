@@ -19,7 +19,7 @@ class LogoutViewModel(
     private val notificationRepository: NotificationRepository,
     private val orgInfoRepository: OrgInfoRepository): ViewModel() {
 
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee.asLiveData()
+    val employeeLiveData: LiveData<Employee> = employeeRepository.employee
 
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut

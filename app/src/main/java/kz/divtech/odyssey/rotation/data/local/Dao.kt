@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.paging.PagingSource
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -83,7 +84,7 @@ interface Dao {
 
     //Employee
     @Query("SELECT * FROM employee")
-    fun observeEmployee(): Flow<Employee>
+    fun observeEmployee(): LiveData<Employee>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEmployee(employee: Employee)

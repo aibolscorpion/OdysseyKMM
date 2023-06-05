@@ -8,9 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
@@ -19,7 +16,6 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
@@ -35,20 +31,19 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     private var _binding: FragmentPersonalDataBinding? = null
     private val binding get() = _binding!!
     private var initialCountryCode: String? = null
-    private var currentEmployee: Employee? = null
-
 
     private val countrySelectionRequestKey = "countrySelectionRequestKey"
     private val countrySelectionResultKey = "countrySelectionResultKey"
 
     private val countrySelectionResultListener = FragmentResultListener { requestKey, bundle ->
         if (requestKey == countrySelectionRequestKey) {
-            val selectedCountry = bundle.getParcelable<Country>(countrySelectionResultKey)
+            val selectedCountry = bundle.getParcelable(countrySelectionResultKey, Country::class.java)
             selectedCountry?.let {
-                currentEmployee?.country_code = it.code
+                viewModel.employee.value?.country_code = it.code
             }
         }
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentPersonalDataBinding.inflate(inflater)
@@ -63,9 +58,8 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
 
         viewModel.employee.observe(viewLifecycleOwner){
             it.let {
-                currentEmployee = it
                 initialCountryCode = it.country_code
-                binding.employee = currentEmployee
+                binding.employee = it
             }
         }
 
@@ -112,17 +106,9 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
             }
         }
     }
-    private fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: Observer<T>) {
-        observe(owner, object : Observer<T> {
-            override fun onChanged(value: T) {
-                observer.onChanged(value)
-                removeObserver(this)
-            }
-        })
-    }
 
     fun checkCitizenshipAndUpdate(){
-        if(initialCountryCode != currentEmployee?.country_code){
+        if(initialCountryCode != viewModel.employee.value?.country_code){
             showDefaultDocumentChangedDialog()
         }else{
             updatePersonalData(false)
@@ -134,7 +120,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     private fun openCountryListFragment(countryList: List<Country>){
-        currentEmployee?.country_code?.let {
+        viewModel.employee.value?.country_code?.let {
             findNavController().navigate(PersonalDataFragmentDirections.
             actionPersonalDataFragmentToCountryListFragment(countryList.toTypedArray(), it))
         }
@@ -143,7 +129,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     override fun updatePersonalData(citizenshipChanged: Boolean) {
         if(requireContext().isNetworkAvailable()){
             if(validatePersonalData()){
-                currentEmployee?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+                viewModel.employee.value?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
             }
         }else{
             showNoInternetDialog()

@@ -12,7 +12,7 @@ import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 
 class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
-    val employee = employeeRepository.employee.asLiveData()
+    val employee = employeeRepository.employee
     val pBarVisibility = ObservableInt(View.GONE)
 
     private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
@@ -20,6 +20,7 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
 
     private val _updatePersonalResult = MutableLiveData<Result<ResponseBody>>()
     val updatePersonalResult: LiveData<Result<ResponseBody>> = _updatePersonalResult
+
 
     fun updatePersonalData(employee: Employee, citizenshipChanged: Boolean){
         pBarVisibility.set(View.VISIBLE)
