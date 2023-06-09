@@ -14,14 +14,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kz.divtech.odyssey.rotation.LoginNavGraphDirections
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.MainActivityDirections
-import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
 
@@ -88,10 +84,7 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
 
     private fun showNoInternetDialog(){
         findNavController().apply {
-            when(activity){
-                is MainActivity ->  this.navigate(MainActivityDirections.actionGlobalNoInternetDialog())
-                is LoginActivity -> this.navigate(LoginNavGraphDirections.actionGlobalNoInternetDialog2())
-            }
+            this.navigate(TermsOfAgreementDialogDirections.actionGlobalNoInternetDialog())
         }
     }
 

@@ -89,7 +89,7 @@ class FindEmployeeByIINFragment : Fragment() {
     }
 
     private fun showNoInternetDialog(){
-        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionGlobalNoInternetDialog2())
+        findNavController().navigate(FindEmployeeByIINFragmentDirections.actionGlobalNoInternetDialog())
     }
 
     fun backToSendSmsFragment() = findNavController().popBackStack()

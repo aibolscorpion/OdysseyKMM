@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -21,7 +20,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
-import kz.divtech.odyssey.rotation.ui.login.LoginActivity
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
@@ -35,7 +34,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     private var countDownTimer : CountDownTimer?= null
     private val viewModel: SendSmsViewModel by activityViewModels{
         SendSmsViewModel.FillCodeViewModelFactory(
-            (activity as LoginActivity).employeeRepository,
+            (activity as MainActivity).employeeRepository,
             (activity?.application as App).loginRepository
         )
     }
@@ -212,8 +211,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         R.id.action_global_contactSupportDialog)
 
     private fun openMainActivity(){
-        findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainActivity())
-        (activity as AppCompatActivity).finish()
+        findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainFragment())
     }
 
     override fun onOTPReceived(code: String?) {
@@ -227,7 +225,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
     }
 
     private fun showNoInternetDialog(){
-        findNavController().navigate(SendSmsFragmentDirections.actionGlobalNoInternetDialog2())
+        findNavController().navigate(SendSmsFragmentDirections.actionGlobalNoInternetDialog())
     }
     override fun onDestroyView() {
         super.onDestroyView()

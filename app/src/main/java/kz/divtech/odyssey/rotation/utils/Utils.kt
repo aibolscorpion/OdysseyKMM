@@ -1,6 +1,12 @@
 package kz.divtech.odyssey.rotation.utils
 
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
@@ -9,6 +15,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import java.io.File
 
 object Utils {
@@ -56,6 +63,26 @@ object Utils {
         val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
             use { it.readText() }
         return Gson().fromJson(jsonString, CountryList::class.java).countries
+    }
+
+    fun Fragment.hideBottomNavigationAndStatusBar(){
+        (activity as MainActivity).binding.apply {
+            mainToolbar.isVisible = false
+            bottomNavigationView.isVisible = false
+        }
+    }
+
+    fun Fragment.showBottomNavigationAndStatusBar(){
+        (activity as MainActivity).binding.apply {
+            mainToolbar.isVisible = true
+            bottomNavigationView.isVisible = true
+        }
+    }
+
+    fun Fragment.changeStatusBarColor(@ColorRes statusBarColor: Int){
+        val window: Window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(requireActivity(), statusBarColor)
     }
 
 }

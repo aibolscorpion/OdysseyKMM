@@ -18,6 +18,8 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationLi
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
+import kz.divtech.odyssey.rotation.utils.Utils.showBottomNavigationAndStatusBar
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -58,11 +60,13 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
         binding.voucherCL.setOnClickListener { openVoucherDialog() }
         binding.debtCL.setOnClickListener { openDebtDialog() }
+
+        showBottomNavigationAndStatusBar()
+        changeStatusBarColor(R.color.toolbar_bg)
         getEmployeeInfo()
         setCalendar()
         setNotifications()
         setNearestTrip()
-
     }
 
     private fun getEmployeeInfo(){

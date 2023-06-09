@@ -16,7 +16,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.ui.login.LoginActivity
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
@@ -28,7 +28,7 @@ class UpdatePhoneNumberFragment : Fragment() {
     private val dataBinding get() = _dataBinding!!
     val args : UpdatePhoneNumberFragmentArgs by navArgs()
     private val viewModel: UpdatePhoneViewModel by viewModels{
-        UpdatePhoneViewModel.UpdatePhoneViewModelFactory((activity as LoginActivity).employeeRepository)
+        UpdatePhoneViewModel.UpdatePhoneViewModelFactory((activity as MainActivity).employeeRepository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -118,7 +118,7 @@ class UpdatePhoneNumberFragment : Fragment() {
     }
 
     private fun showNoInternetDialog(){
-        findNavController().navigate(UpdatePhoneNumberFragmentDirections.actionGlobalNoInternetDialog2())
+        findNavController().navigate(UpdatePhoneNumberFragmentDirections.actionGlobalNoInternetDialog())
     }
 
     fun backToSearchByIINFragment() = findNavController().popBackStack()

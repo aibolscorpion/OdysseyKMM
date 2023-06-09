@@ -29,7 +29,7 @@ class LogoutViewModel(
     fun getNotificationsFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationFromFirstPage(true)
+            notificationRepository.getNotificationFromFirstPage()
             pBarVisibility.set(View.GONE)
         }
 

@@ -10,15 +10,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogContactSupportBinding
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.contact_support.ContactSupportViewModel
 import kz.divtech.odyssey.rotation.ui.help.contact_support.ContactUtil
-import kz.divtech.odyssey.rotation.ui.login.LoginActivity
 
 
 class ContactSupportDialog : BottomSheetDialogFragment() {
     val viewModel: ContactSupportViewModel by viewModels{
         ContactSupportViewModel.ContactSupportViewModelFactory(
-            (activity as LoginActivity).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository)
     }
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 

@@ -16,7 +16,6 @@ import kz.divtech.odyssey.rotation.domain.remotemediator.NotificationRemoteMedia
 
 class NotificationRepository(private val dao: Dao) {
     val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()
-    private var firstTime = true
 
     @WorkerThread
     suspend fun refreshNotifications(notificationList: List<Notification>){
@@ -33,14 +32,11 @@ class NotificationRepository(private val dao: Dao) {
         RetrofitClient.getApiService().markAsReadNotificationById(map)
     }
 
-    suspend fun getNotificationFromFirstPage(refresh: Boolean){
-        if(firstTime || refresh){
-            val response = RetrofitClient.getApiService().getNotifications(1)
-            if(response.isSuccess()){
-                val notifications = response.asSuccess().value.data
-                refreshNotifications(notifications)
-                firstTime = false
-            }
+    suspend fun getNotificationFromFirstPage(){
+        val response = RetrofitClient.getApiService().getNotifications(1)
+        if(response.isSuccess()){
+            val notifications = response.asSuccess().value.data
+            refreshNotifications(notifications)
         }
     }
 

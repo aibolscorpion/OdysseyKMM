@@ -24,12 +24,14 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
-import kz.divtech.odyssey.rotation.ui.login.LoginActivity
+import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
+import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigationAndStatusBar
 
 class FindEmployeeFragment : Fragment(), NotificationListener {
     private var phoneNumberFilled : Boolean = false
@@ -41,7 +43,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     private val viewModel: FindEmployeeViewModel by viewModels{
         FindEmployeeViewModel.FindEmployeeViewModelFactory(
             (activity?.application as App).findEmployeeRepository,
-            (activity as LoginActivity).orgInfoRepository
+            (activity as MainActivity).orgInfoRepository
         )
     }
 
@@ -52,9 +54,10 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
         dataBinding.phoneNumberFragment = this
-
         dataBinding.viewModel = viewModel
 
+        hideBottomNavigationAndStatusBar()
+        changeStatusBarColor(R.color.status_bar)
         setupMaskedEditText()
 
         return dataBinding.root
@@ -201,7 +204,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     }
 
     private fun showNoInternetDialog(){
-        findNavController().navigate(FindEmployeeFragmentDirections.actionGlobalNoInternetDialog2())
+        findNavController().navigate(FindEmployeeFragmentDirections.actionGlobalNoInternetDialog())
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

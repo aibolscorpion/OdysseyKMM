@@ -24,7 +24,7 @@ class SearchFragment : Fragment() {
         binding.thisFragment = this
     }
 
-    fun goToPreviousPage() = findNavController().popBackStack()
+    fun goToPreviousPage() = findNavController().navigate(SearchFragmentDirections.actionGlobalMainFragment())
 
     override fun onDestroyView() {
         super.onDestroyView()

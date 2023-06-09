@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.utils.SharedPrefs
 class PushNotificationService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         val intent = message.toIntent().setClassName(applicationContext.packageName,
-            "${applicationContext.packageName}.ui.login.LoginActivity")
+            "${applicationContext.packageName}.ui.MainActivity")
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
 

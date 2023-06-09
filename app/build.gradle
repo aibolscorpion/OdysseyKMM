@@ -5,6 +5,7 @@ plugins {
     id "kotlin-parcelize"
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
+    id "io.sentry.android.gradle" version "3.8.0"
 }
 android {
     namespace 'kz.divtech.odyssey.rotation'
@@ -49,9 +50,9 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     //Test
@@ -94,7 +95,7 @@ dependencies {
 
     //Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.2.2'
+    implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
 
     //LeakCanary
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
@@ -104,5 +105,9 @@ dependencies {
 
     //Custom RadioGroup
     implementation 'io.github.ihermandev:advanced-radio-group:1.0.0'
+
+    //In-App Update
+    implementation 'com.google.android.play:app-update:2.1.0'
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
 }

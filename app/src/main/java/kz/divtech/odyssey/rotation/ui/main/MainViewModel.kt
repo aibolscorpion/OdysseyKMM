@@ -48,7 +48,7 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     fun getNotificationFromFirstPage() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationFromFirstPage(false)
+            notificationRepository.getNotificationFromFirstPage()
             pBarVisibility.set(View.GONE)
         }
 

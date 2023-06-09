@@ -9,7 +9,6 @@ import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 
 class FaqRepository(private val dao: Dao) {
     val faqList: Flow<List<Faq>> = dao.observeFaqList()
-    private var firstTime = true
 
     suspend fun searchFaq(searchQuery: String) = dao.searchFAQ(searchQuery)
 
@@ -24,15 +23,11 @@ class FaqRepository(private val dao: Dao) {
         dao.refreshFaq(faqList)
     }
 
-    suspend fun getFaqListFromServer(isRefreshing: Boolean): Result<List<Faq>>? {
-        var response: Result<List<Faq>>? = null
-        if (firstTime || isRefreshing) {
-            response = RetrofitClient.getApiService().getFAQs()
-            if (response.isSuccess()) {
-                val faqList = response.asSuccess().value
-                refreshFaq(faqList)
-                firstTime = false
-            }
+    suspend fun getFaqListFromServer(): Result<List<Faq>> {
+        val response: Result<List<Faq>> = RetrofitClient.getApiService().getFAQs()
+        if (response.isSuccess()) {
+            val faqList = response.asSuccess().value
+            refreshFaq(faqList)
         }
         return response
     }

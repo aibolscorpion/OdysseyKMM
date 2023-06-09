@@ -13,14 +13,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_APPLICATION
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
+import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_TICKET
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
@@ -30,6 +31,8 @@ import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
+import kz.divtech.odyssey.rotation.utils.InputUtils
+import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -37,7 +40,9 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 class MainActivity : AppCompatActivity(), NotificationListener {
-    private lateinit var navController : NavController
+    private val navController by lazy {
+        (supportFragmentManager.findFragmentById(R.id.mainNavHostFragment)
+                as NavHostFragment).navController }
     private val database by lazy { AppDatabase.getDatabase(applicationContext) }
     val tripsRepository by lazy { TripsRepository(database.dao()) }
     val employeeRepository by lazy { EmployeeRepository(database.dao()) }
@@ -52,6 +57,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             faqRepository, newsRepository, articleRepository,
             notificationRepository, orgInfoRepository)
     }
+    private var _binding: ActivityMainBinding? = null
+    val binding get() = _binding!!
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
@@ -60,10 +67,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainNavHostFragment) as NavHostFragment
-        navController = navHostFragment.navController
+        if(SharedPrefs.isLoggedIn(this)){
+            openMainFragment()
+        }
 
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController, false)
 
@@ -74,21 +82,24 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 R.id.personalDataFragment, R.id.documentsFragment,
-                    R.id.notificationFragment, R.id.faqFragment,
-                    R.id.newsFragment, R.id.chooseTicketRefundFragment,
-                    R.id.refundReasonFragment, R.id.refundListFragment,
-                    R.id.refundDetailFragment, R.id.chooseTicketForOpen,
-                    R.id.countryListFragment, R.id.phoneNumberFragment2,
-                    R.id.smsCodeFragment ->
-                        binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
-                    R.id.refundSentFragment, R.id.phoneUpdatedFragment ->
-                        binding.mainToolbar.navigationIcon = null
+                R.id.notificationFragment, R.id.faqFragment,
+                R.id.newsFragment, R.id.chooseTicketRefundFragment,
+                R.id.refundReasonFragment, R.id.refundListFragment,
+                R.id.refundDetailFragment, R.id.chooseTicketForOpen,
+                R.id.countryListFragment, R.id.phoneNumberFragment2,
+                R.id.smsCodeFragment ->
+                    binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
+                R.id.refundSentFragment, R.id.phoneUpdatedFragment ->
+                    binding.mainToolbar.navigationIcon = null
             }
         }
-
         checkPermission()
-
         ifPushNotificationSent(intent, false)
+
+        SmsRetriever.getClient(this).startSmsRetriever().addOnFailureListener { exception ->
+            exception.message?.let { InputUtils.showErrorMessage(this, binding.root, it) }
+        }
+
     }
 
     override fun onStart() {
@@ -107,7 +118,18 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-
+//    fun checkUpdate(){
+//        val appUpdateManager = AppUpdateManagerFactory.create(this)
+//        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+//
+//        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
+//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+//                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
+//            ) {
+//                // Request the update.
+//            }
+//        }
+//    }
     private fun checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) ==
@@ -126,6 +148,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             bundle.getString(NOTIFICATION_DATA_TITLE)?.let{
                 val notification = bundle.convertToNotification()
                 when(notification.type){
+                    NOTIFICATION_TYPE_PHONE -> showPhoneNumberChangedDialog(intent)
                     NOTIFICATION_TYPE_DEVICE -> openLoggedOutNotificationDialog(notification)
                     NOTIFICATION_TYPE_APPLICATION, NOTIFICATION_TYPE_TICKET -> {
                         if(onNewIntent) {
@@ -163,8 +186,15 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     }
 
     private fun goToLoginPage(){
-        navController.navigate(MainActivityDirections.actionGlobalLoginActivity())
-        finish()
+        navController.navigate(MainActivityDirections.actionGlobalPhoneNumberFragment())
+    }
+
+    private fun showPhoneNumberChangedDialog(intent: Intent){
+        navController.navigate(R.id.phoneNumberAddedDialog, intent.extras)
+    }
+
+    private fun openMainFragment(){
+        navController.navigate(MainActivityDirections.actionGlobalMainFragment())
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -176,6 +206,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.onStop()
 
         EventBus.getDefault().unregister(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        _binding = null
     }
 
 }

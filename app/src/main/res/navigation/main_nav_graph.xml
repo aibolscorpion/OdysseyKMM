@@ -3,7 +3,152 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/phoneNumberFragment">
+
+    <fragment
+        android:id="@+id/phoneNumberFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.FindEmployeeFragment"
+        app:layout="@layout/fragment_find_employee"
+        tools:layout="@layout/fragment_find_employee">
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_termsOfAgreementDialog"
+            app:destination="@id/termsOfAgreementDialog" />
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_accountDeactivatedDialog"
+            app:destination="@id/accountDeactivatedDialog" />
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_codeFragment"
+            app:destination="@id/sendSmsFragment" />
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_phoneNumberErrorDialog"
+            app:destination="@id/phoneNumberErrorDialog" />
+        <action
+            android:id="@+id/action_phoneNumberFragment_to_IINFragment"
+            app:destination="@id/IINFragment" />
+    </fragment>
+
+
+    <dialog
+        android:id="@+id/phoneNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.PhoneNumberErrorDialog"
+        android:label="PhoneNumberErrorDialog"
+        app:layout="@layout/dialog_phone_number_error"
+        tools:layout="@layout/dialog_phone_number_error"/>
+
+    <dialog
+        android:id="@+id/contactSupportDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.ContactSupportDialog"
+        android:label="ContactSupportDialog"
+        app:layout="@layout/dialog_contact_support"
+        tools:layout="@layout/dialog_contact_support" />
+
+    <dialog
+        android:id="@+id/accountDeactivatedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.AccountDeactivatedDialog"
+        android:label="AccountDeactivatedDialog"
+        app:layout="@layout/dialog_account_deactivated"
+        tools:layout="@layout/dialog_account_deactivated" >
+        <argument
+            android:name="employeeName"
+            app:argType="string" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/sendSmsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.send_sms.SendSmsFragment"
+        app:layout="@layout/fragment_send_sms"
+        tools:layout="@layout/fragment_send_sms" >
+        <argument
+            android:name="extractedPhoneNumber"
+            app:argType="string" />
+        <argument
+            android:name="phone_number"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/IINFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_iin.FindEmployeeByIINFragment"
+        android:label="IINFragment"
+        app:layout="@layout/fragment_find_employee_by_iin"
+        tools:layout="@layout/fragment_find_employee_by_iin" >
+        <action
+            android:id="@+id/action_IINFragment_to_employeeNotFoundDialog"
+            app:destination="@id/employeeNotFoundDialog" />
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_IINFragment_to_updatePhoneNumber"
+            app:destination="@id/updatePhoneNumber" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/employeeNotFoundDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_iin.dialogs.EmployeeNotFoundDialog"
+        android:label="EmployeeNotFoundDialog"
+        app:layout="@layout/dialog_employee_not_found"
+        tools:layout="@layout/dialog_employee_not_found" >
+        <argument
+            android:name="iin"
+            app:argType="string" />
+    </dialog>
+
+
+    <dialog
+        android:id="@+id/applicationSentDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.dialogs.ApplicationSentDialog"
+        android:label="ApplicationSentDialog"
+        app:layout="@layout/dialog_application_sent"
+        tools:layout="@layout/dialog_application_sent" >
+        <argument
+            android:name="phoneNumber"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_applicationSentDialog_to_phoneNumberFragment"
+            app:destination="@id/phoneNumberFragment"
+            app:popUpTo="@id/phoneNumberFragment"
+            app:popUpToInclusive="true" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/phoneNumberAddedDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.find_by_phone_number.dialogs.PhoneNumberAddedDialog"
+        android:label="PhoneNumberAddedDialog"
+        app:layout="@layout/dialog_phone_number_added"
+        tools:layout="@layout/dialog_phone_number_added"/>
+
+    <dialog
+        android:id="@+id/changeNumberErrorDialog"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.dialogs.ChangeNumberErrorDialog"
+        android:label="ChangeNumberErrorDialog"
+        app:layout="@layout/dialog_change_number_error"
+        tools:layout="@layout/dialog_change_number_error" />
+
+    <fragment
+        android:id="@+id/updatePhoneNumber"
+        android:name="kz.divtech.odyssey.rotation.ui.login.update_phone.UpdatePhoneNumberFragment"
+        android:label="updatePhoneNumber"
+        app:layout="@layout/fragment_update_phone"
+        tools:layout="@layout/fragment_update_phone">
+        <action
+            android:id="@+id/action_addPhoneNumber_to_applicationSentDialog"
+            app:destination="@id/applicationSentDialog" />
+        <action
+            android:id="@+id/action_addPhoneNumber_to_changeNumberErrorDialog"
+            app:destination="@id/changeNumberErrorDialog" />
+        <argument
+            android:name="employee"
+            app:argType="kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_mainActivity"
+        app:destination="@id/mainActivity"
+        app:launchSingleTop="false" />
+    <action
+        android:id="@+id/action_global_contactSupportDialog"
+        app:destination="@id/contactSupportDialog" />
 
     <dialog
         android:id="@+id/loggedOutNotificationDialog"
@@ -180,12 +325,6 @@
             android:name="trip"
             app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
     </dialog>
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="kz.divtech.odyssey.rotation.ui.login.LoginActivity"
-        android:label="LoginActivity"
-        android:layout="@layout/activity_login"
-        tools:layout="@layout/activity_login"/>
     <action
         android:id="@+id/action_global_callSupportDialog"
         app:destination="@id/callSupportDialog" />
@@ -227,9 +366,6 @@
         android:name="kz.divtech.odyssey.rotation.ui.MainActivity"
         android:label="MainActivity" />
 
-    <action
-        android:id="@+id/action_global_loginActivity"
-        app:destination="@id/loginActivity" />
     <dialog
         android:id="@+id/voucherDialog"
         android:name="kz.divtech.odyssey.rotation.ui.main.dialogs.VoucherDialog"
@@ -408,6 +544,16 @@
         tools:layout="@layout/dialog_no_internet" />
     <action android:id="@+id/action_global_noInternetDialog"
         app:destination="@id/noInternetDialog" />
+    <action
+        android:id="@+id/action_global_mainFragment"
+        app:destination="@id/mainFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_phoneNumberFragment"
+        app:destination="@id/phoneNumberFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
 
 
 </navigation>
