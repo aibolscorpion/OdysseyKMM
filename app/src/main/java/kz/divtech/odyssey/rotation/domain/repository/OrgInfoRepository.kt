@@ -8,7 +8,6 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 
 class OrgInfoRepository(val dao: Dao) {
-    private var firstTime = true
     val orgInfo = dao.observeOrgInfo()
 
     suspend fun deleteOrgInfo(){
@@ -21,13 +20,10 @@ class OrgInfoRepository(val dao: Dao) {
     }
 
     suspend fun getOrgInfoFromServer(){
-        if(firstTime){
-            val response = RetrofitClient.getApiService().getOrgInfo()
-            if(response.isSuccess()){
-                val orgInfo = response.asSuccess().value
-                refreshOrgInfo(orgInfo)
-                firstTime = false
-            }
+        val response = RetrofitClient.getApiService().getOrgInfo()
+        if(response.isSuccess()){
+            val orgInfo = response.asSuccess().value
+            refreshOrgInfo(orgInfo)
         }
     }
 

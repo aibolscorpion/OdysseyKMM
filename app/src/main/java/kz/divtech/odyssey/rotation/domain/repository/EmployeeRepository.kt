@@ -16,7 +16,6 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 
 class EmployeeRepository(private val dao: Dao) {
     val employee = dao.observeEmployee()
-    private var firstTimeDeviceInfo = true
 
     @WorkerThread
     suspend fun insertEmployee(employee: Employee){
@@ -45,14 +44,9 @@ class EmployeeRepository(private val dao: Dao) {
     }
 
     suspend fun sendDeviceInfo(){
-            val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
-            val deviceInfo = DeviceInfo(ANDROID, deviceType, SharedPrefs.fetchFirebaseToken(App.appContext))
-        if(firstTimeDeviceInfo){
-            val response = RetrofitClient.getApiService().sendDeviceInfo(deviceInfo)
-            if(response.isSuccess()){
-                firstTimeDeviceInfo = false
-            }
-        }
+        val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
+        val deviceInfo = DeviceInfo(ANDROID, deviceType, SharedPrefs.fetchFirebaseToken(App.appContext))
+        RetrofitClient.getApiService().sendDeviceInfo(deviceInfo)
     }
 
     suspend fun logoutFromServer(){
