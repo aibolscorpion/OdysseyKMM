@@ -57,7 +57,7 @@
             </intent-filter>
         </service>
 
-        <meta-data android:name="io.sentry.dsn" android:value="" />
+        <meta-data android:name="io.sentry.dsn" android:value="https://71d884fb7b18465c9b64ba81b1889a97@o4505306497220608.ingest.sentry.io/4505318380142592" />
         <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
         <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
         <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />

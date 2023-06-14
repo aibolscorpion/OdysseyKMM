@@ -107,6 +107,8 @@
     <string name="to_online_chat">в онлайн-чат</string>
     <string name="read">Прочитать</string>
     <string name="questions_answers">вопрос/ответ</string>
+    <string name="download_successful_restart_in_5_seconds">Загрузка прошла успешно. Перезапуск приложения через 5 секунд</string>
+    <string name="in_app_update_error_result_code">Ошибка обновления! Код результата: %1$d</string>
 
     <string name="monday">Пн</string>
     <string name="tuesday">Вт</string>

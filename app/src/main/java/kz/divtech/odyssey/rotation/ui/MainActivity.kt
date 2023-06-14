@@ -16,6 +16,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.appupdate.AppUpdateOptions
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
+import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
@@ -31,12 +41,13 @@ import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
-import kz.divtech.odyssey.rotation.utils.InputUtils
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
 
 class MainActivity : AppCompatActivity(), NotificationListener {
@@ -60,6 +71,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private var _binding: ActivityMainBinding? = null
     val binding get() = _binding!!
 
+    private lateinit var appUpdateManager: AppUpdateManager
+    private val updateType = AppUpdateType.IMMEDIATE
+    private val updateRequestCode = 123
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
 
@@ -68,6 +83,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.onCreate(savedInstanceState)
 
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        if(updateType == AppUpdateType.FLEXIBLE){
+            appUpdateManager.registerListener(installStateUpdatedListener)
+        }
+        checkForAppUpdates()
 
         if(SharedPrefs.isLoggedIn(this)){
             openMainFragment()
@@ -96,9 +117,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         checkPermission()
         ifPushNotificationSent(intent, false)
 
-        SmsRetriever.getClient(this).startSmsRetriever().addOnFailureListener { exception ->
-            exception.message?.let { InputUtils.showErrorMessage(this, binding.root, it) }
-        }
+        SmsRetriever.getClient(this).startSmsRetriever()
 
     }
 
@@ -106,6 +125,21 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.onStart()
 
         EventBus.getDefault().register(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+                if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                    if(updateType == AppUpdateType.IMMEDIATE){
+                        appUpdateManager.startUpdateFlowForResult(info, this,
+                            AppUpdateOptions.newBuilder(updateType).build(), updateRequestCode)
+                    }
+                }else if (info.installStatus() == InstallStatus.DOWNLOADED){
+                    showToastForCompleteUpdate()
+                }
+            }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -118,18 +152,47 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-//    fun checkUpdate(){
-//        val appUpdateManager = AppUpdateManagerFactory.create(this)
-//        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
-//
-//        appUpdateInfoTask.addOnSuccessListener { appUpdateInfo ->
-//            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-//                && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)
-//            ) {
-//                // Request the update.
-//            }
-//        }
-//    }
+    private val installStateUpdatedListener = InstallStateUpdatedListener{ state ->
+        if(state.installStatus() == InstallStatus.DOWNLOADED){
+            showToastForCompleteUpdate()
+        }
+    }
+    private fun showToastForCompleteUpdate(){
+        Toast.makeText(this, R.string.download_successful_restart_in_5_seconds,
+            Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            delay(5.seconds)
+            appUpdateManager.completeUpdate()
+        }
+    }
+    private fun checkForAppUpdates(){
+        appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
+            val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+            val isUpdateAllowed = when(updateType){
+                AppUpdateType.FLEXIBLE -> info.isFlexibleUpdateAllowed
+                AppUpdateType.IMMEDIATE -> info.isImmediateUpdateAllowed
+                else -> false
+            }
+            if(isUpdateAvailable && isUpdateAllowed){
+                appUpdateManager.startUpdateFlowForResult(info, this,
+                    AppUpdateOptions.newBuilder(updateType).build(), updateRequestCode)
+            }
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == updateRequestCode){
+            if(resultCode != RESULT_OK){
+                if(updateType == AppUpdateType.IMMEDIATE){
+                    checkForAppUpdates()
+                }
+                Timber.e(getString(R.string.in_app_update_error_result_code, resultCode))
+            }
+        }
+    }
+
     private fun checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) ==
@@ -211,6 +274,9 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     override fun onDestroy() {
         super.onDestroy()
 
+        if(updateType == AppUpdateType.FLEXIBLE){
+            appUpdateManager.unregisterListener(installStateUpdatedListener)
+        }
         _binding = null
     }
 
