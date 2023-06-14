@@ -68,15 +68,11 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         getTripsSortedByDate()
     }
 
-    private fun getTripsSortedByDate(){
+    private fun getTripsSortedByDate() {
         val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        lifecycleScope.launch{
-            if(isActiveTrips!!){
-                viewModel.getActiveTripsSortedByDate().collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
-            }else{
-                viewModel.getArchiveTripsSortedByDate().collectLatest { pagingData ->
+        lifecycleScope.launch {
+            isActiveTrips?.let {
+                viewModel.getTripsSortedByDate(it).collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
             }
@@ -86,12 +82,8 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     private fun getTripsSortedByStatus(){
         val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch{
-            if(isActiveTrips!!){
-                viewModel.getActiveTripsSortedByStatus().collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
-            }else{
-                viewModel.getArchiveTripsSortedByStatus().collectLatest { pagingData ->
+            isActiveTrips?.let {
+                viewModel.getTripsSortedByStatus(it).collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
             }
@@ -101,12 +93,8 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     private fun getFilteredTrips(){
         val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch{
-            if(isActiveTrips!!){
-                viewModel.getFilteredActiveTrips().collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
-            }else{
-                viewModel.getFilteredArchiveTrips().collectLatest { pagingData ->
+            isActiveTrips?.let {
+                viewModel.getFilteredTrips(it).collectLatest { pagingData ->
                     adapter.submitData(pagingData)
                 }
             }

@@ -12,31 +12,16 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
     val checkedStatusList = mutableListOf<String>()
     val directionList = mutableListOf<String>()
 
-    suspend fun getActiveTripsSortedByDate(): Flow<PagingData<Trip>> {
-        return tripsRepository.getActiveTripsSortedByDate().cachedIn(viewModelScope)
+    fun getTripsSortedByDate(isActive: Boolean): Flow<PagingData<Trip>> {
+        return tripsRepository.getTripsSortedByDate(isActive).cachedIn(viewModelScope)
     }
-
-    suspend fun getArchiveTripsSortedByDate(): Flow<PagingData<Trip>> {
-        return tripsRepository.getArchiveTripsSortedByDate().cachedIn(viewModelScope)
-    }
-
-    suspend fun getActiveTripsSortedByStatus()
+    fun getTripsSortedByStatus(isActive: Boolean)
             : Flow<PagingData<Trip>> {
-        return tripsRepository.getActiveTripsSortedByStatus().cachedIn(viewModelScope)
+        return tripsRepository.getTripsSortedByStatus(isActive).cachedIn(viewModelScope)
     }
 
-    suspend fun getArchiveTripsSortedByStatus()
-            : Flow<PagingData<Trip>> {
-        return tripsRepository.getArchiveTripsSortedByStatus().cachedIn(viewModelScope)
-    }
-
-    suspend fun getFilteredActiveTrips(): Flow<PagingData<Trip>> {
-        return tripsRepository.getFilteredActiveTrips(checkedStatusList.toTypedArray(),
-            directionList.toTypedArray()).cachedIn(viewModelScope)
-    }
-
-    suspend fun getFilteredArchiveTrips(): Flow<PagingData<Trip>> {
-        return tripsRepository.getFilteredArchiveTrips(checkedStatusList.toTypedArray(),
+    fun getFilteredTrips(isActive: Boolean): Flow<PagingData<Trip>> {
+        return tripsRepository.getFilteredTrips(isActive, checkedStatusList.toTypedArray(),
             directionList.toTypedArray()).cachedIn(viewModelScope)
     }
 
