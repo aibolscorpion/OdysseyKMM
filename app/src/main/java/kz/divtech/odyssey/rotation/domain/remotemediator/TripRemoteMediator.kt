@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
+import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
@@ -14,16 +15,20 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toActiveTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTripList
 
 @ExperimentalPagingApi
-class TripRemoteMediator(val dao: Dao, val isActive: Boolean) : RemoteMediator<Int, Trip>() {
+class TripRemoteMediator(val dao: Dao,
+                         val isActive: Boolean,
+                         val status: Array<String> = arrayOf(),
+                         val direction: String = Constants.ALL_DIRECTION) : RemoteMediator<Int, Trip>() {
+
     private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Trip>): MediatorResult {
         pageIndex = getPageIndex(loadType)?:
             return MediatorResult.Success(true)
         val response = if(isActive){
-            RetrofitClient.getApiService().getActiveTrips(pageIndex)
+            RetrofitClient.getApiService().getActiveTrips(pageIndex, status.joinToString(","), direction)
         }else{
-            RetrofitClient.getApiService().getArchiveTrips(pageIndex)
+            RetrofitClient.getApiService().getArchiveTrips(pageIndex, status.joinToString(","), direction)
         }
 
         return if(response.isSuccess()){

@@ -4,6 +4,7 @@ object Constants {
     const val DEACTIVATED_EMPLOYEE = "dismissed"
     const val TO_WORK = "to-work"
     const val TO_HOME = "to-home"
+    const val ALL_DIRECTION = "all"
     const val NIGHT = "night"
     const val STATUS_OPENED = "opened"
     const val STATUS_PARTLY = "partly"

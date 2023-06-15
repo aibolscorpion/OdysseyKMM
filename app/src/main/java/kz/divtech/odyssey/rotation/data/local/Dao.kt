@@ -36,12 +36,18 @@ interface Dao {
     fun getArchiveTripsSortedByStatus() : PagingSource<Int, Trip>
 
     @Query("SELECT * FROM active_trip WHERE (status IN (:statusType))" +
-            " AND (direction IN (:direction))")
-    fun getFilteredActiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
+            " AND direction = :direction")
+    fun getFilteredActiveTrips(statusType: Array<String>, direction: String) : PagingSource<Int, Trip>
 
     @Query("SELECT * FROM archive_trip WHERE (status IN (:statusType))" +
-            " AND (direction IN (:direction))")
-    fun getFilteredArchiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
+            " AND direction = :direction")
+    fun getFilteredArchiveTrips(statusType: Array<String>, direction: String) : PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM active_trip WHERE (status IN (:statusType))")
+    fun getFilteredActiveTripsWithAllAllDirection(statusType: Array<String>) : PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM archive_trip WHERE (status IN (:statusType))")
+    fun getFilteredArchiveTripsWithAllAllDirection(statusType: Array<String>) : PagingSource<Int, Trip>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertActiveTrips(data: List<ActiveTrip>)
