@@ -27,6 +27,8 @@ import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
+import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
+import java.time.temporal.ChronoUnit
 
 object BindingAdapter {
 
@@ -429,18 +431,15 @@ object BindingAdapter {
 
     @BindingAdapter("trip")
     @JvmStatic fun setCityAndTotalTimeInWay(textView: TextView, trip: Trip){
-        var totalMinutes = 0
-        trip.segments.forEach { segment ->
-            segment.train?.in_way_minutes?.let {
-                totalMinutes += it
-            }
+        if(trip.segments.first().train != null && trip.segments.last().train != null){
+            val firstSegmentDepLocalDateTime = trip.segments.first().train?.dep_date_time?.getLocalDateTimeByPattern()
+            val lastSegmentArrLocalDateTime = trip.segments.last().train?.arr_date_time?.getLocalDateTimeByPattern()
+            val totalMinutes = firstSegmentDepLocalDateTime?.until(lastSegmentArrLocalDateTime, ChronoUnit.MINUTES)
+            val hours = totalMinutes?.div(60)
+            val minutes = totalMinutes?.rem(60)
+            val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
+            textView.text = totalTimeInWay
         }
-        val hours = totalMinutes/60
-        val minutes = totalMinutes%60
-
-        val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
-
-        textView.text = totalTimeInWay
     }
 
     @BindingAdapter("depArrDate")
