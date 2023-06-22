@@ -2,6 +2,7 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
@@ -19,8 +20,14 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: SegmentViewHolder, position: Int) {
-        holder.binding.segments = listOfSegments[position]
-        holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, listOfSegments[position].id)
+        val segment = listOfSegments[position]
+        if(segment.train != null){
+            holder.binding.segment = segment
+            holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, listOfSegments[position].id)
+        }else{
+            holder.binding.noSegmentInfoLL.isVisible = true
+            holder.binding.segmentInfoCL.isVisible = false
+        }
     }
 
     override fun getItemCount() = listOfSegments.size

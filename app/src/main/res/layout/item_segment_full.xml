@@ -13,349 +13,406 @@
             type="String" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/directionCL"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:paddingTop="@dimen/margin"
-            android:paddingBottom="70dp"
-            android:paddingStart="0dp"
-            android:paddingEnd="6dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/trainTransferTV"
-            app:layout_constraintStart_toStartOf="parent" >
-
-            <ImageView
-                android:id="@+id/departureIV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_train_grey"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:contentDescription="@string/departure" />
-
-            <View
-                android:id="@+id/verticalLineV"
-                android:layout_width="2dp"
-                android:layout_height="0dp"
-                android:background="#4D2D4461"
-                android:layout_gravity="center_horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/departureIV"
-                app:layout_constraintBottom_toTopOf="@+id/destinationIV"
-                app:layout_constraintStart_toStartOf="@id/departureIV"
-                app:layout_constraintEnd_toEndOf="@id/departureIV"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"/>
-
-            <ImageView
-                android:id="@+id/destinationIV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_point_grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/departureIV"
-                app:layout_constraintEnd_toEndOf="@id/departureIV"
-                android:contentDescription="@string/destination"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/topCL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="14dp"
-            android:paddingTop="@dimen/margin"
-            android:paddingEnd="@dimen/margin"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/directionCL"
-            app:layout_constraintEnd_toEndOf="parent">
-
-
-            <ImageView
-                android:id="@+id/departureTrainIcon"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:src="@mipmap/ktzh_logo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/departureDateTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:depArrDate="@{segment.train.dep_date_time}"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="16sp"
-                android:textColor="#1b344f"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="0sp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/departureTrainIcon"
-                android:layout_marginStart="10dp"
-                tools:text="16 авг, вт"/>
-
-            <TextView
-                android:id="@+id/refundSegmentStatusTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="13sp"
-                android:lineSpacingExtra="3sp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                app:refundSegmentStatus="@{refundSegmentStatus}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Возврат отклонен"
-                tools:textColor="@color/refund_status_rejected_canceled_text" />
-
-            <TextView
-                android:id="@+id/departureTimeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:depArrTime="@{segment.train.dep_date_time}"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="20sp"
-                android:textColor="#1b344f"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="-4sp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="@+id/departureDateTV"
-                app:layout_constraintTop_toBottomOf="@+id/departureDateTV"
-                tools:text="10:40"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{segment.train.dep_station_name}"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#748595"
-                android:lineSpacingExtra="2sp"
-                tools:text="Алматы-2, Алматы"
-                app:layout_constraintStart_toStartOf="@+id/departureDateTV"
-                app:layout_constraintTop_toBottomOf="@+id/departureTimeTV"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="4dp" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/centerCL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/topCL"
-            app:layout_constraintStart_toEndOf="@+id/directionCL"
-            app:layout_constraintEnd_toEndOf="parent" >
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/bottom_sheet_line"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/inWayTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/in_way"
-                android:textColor="#748595"
-                android:textSize="14sp"
-                app:layout_constraintTop_toTopOf="@+id/inWayTimeTV"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-            <TextView
-                android:id="@+id/trainTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/train"
-                android:textColor="#748595"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/trainNumberTV" />
-
-            <TextView
-                android:id="@+id/railwayCarriageTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/railway_carriage"
-                android:textColor="#748595"
-                android:textSize="14sp"
-                app:layout_constraintTop_toTopOf="@+id/carriageNumberTV"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/placeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#748595"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/place"
-                app:layout_constraintTop_toTopOf="@+id/placeNumberTV"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/inWayTimeTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#1b344f"
-                android:lineSpacingExtra="2sp"
-                android:text="@string/in_way_time_placeholder"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="30dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/inWayTV"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <TextView
-                android:id="@+id/trainNumberTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{@string/number_sign_before_text(segment.train.display_number)}"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#1b344f"
-                android:lineSpacingExtra="2sp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/inWayTimeTV"
-                app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="№31Т"  />
-
-            <TextView
-                android:id="@+id/carriageNumberTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:lineSpacingExtra="2sp"
-                tools:text="@string/tickets_are_not_purchased_2"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/trainNumberTV"
-                app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:id="@+id/placeNumberTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:lineSpacingExtra="2sp"
-                tools:text="@string/tickets_are_not_purchased_2"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/carriageNumberTV"
-                app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/bottomCL"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/centerCL"
-            app:layout_constraintStart_toEndOf="@+id/directionCL"
-            app:layout_constraintEnd_toEndOf="parent">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/bottom_sheet_line"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:id="@+id/arrivalTrainIcon"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="16dp"
-                android:src="@mipmap/ktzh_logo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/arrivalDateTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:depArrDate="@{segment.train.arr_date_time}"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="16sp"
-                android:textColor="#1b344f"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="0sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/arrivalTrainIcon"
-                tools:text="16 авг, вт"/>
-
-            <TextView
-                android:id="@+id/arrivalTimeTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:depArrTime="@{segment.train.arr_date_time}"
-                android:fontFamily="@font/pt_root_ui_bold"
-                android:textSize="20sp"
-                android:textColor="#1b344f"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="-4sp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/arrivalDateTV"
-                app:layout_constraintStart_toStartOf="@+id/arrivalDateTV"
-                tools:text="20:45" />
-
-            <TextView
-                android:id="@+id/arrStationNameTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{segment.train.arr_station_name}"
-                android:fontFamily="@font/pt_root_ui_medium"
-                android:textSize="14sp"
-                android:textColor="#748595"
-                android:lineSpacingExtra="2sp"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@+id/arrivalTimeTV"
-                app:layout_constraintStart_toStartOf="@+id/arrivalTimeTV"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Актогай, Актогай" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <TextView
-            android:id="@+id/trainTransferTV"
+            android:id="@+id/fullSegmentInfoCL"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:background="@drawable/bg_train_transfer"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:lineSpacingExtra="2sp"
-            android:fontFamily="@font/pt_root_ui_medium"
-            android:textColor="#2d4461"
-            tools:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/bottomCL"
-            tools:text="Пересадка, Балхаш: 2 ч 40 мин"/>
+            android:layout_height="wrap_content"
+            tools:visibility="visible">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/directionCL"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:paddingTop="@dimen/margin"
+                android:paddingBottom="70dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/trainTransferTV"
+                app:layout_constraintStart_toStartOf="parent" >
+
+                <ImageView
+                    android:id="@+id/departureIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_train_grey"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/departure" />
+
+                <View
+                    android:id="@+id/verticalLineV"
+                    android:layout_width="2dp"
+                    android:layout_height="0dp"
+                    android:background="#4D2D4461"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/departureIV"
+                    app:layout_constraintBottom_toTopOf="@+id/destinationIV"
+                    app:layout_constraintStart_toStartOf="@id/departureIV"
+                    app:layout_constraintEnd_toEndOf="@id/departureIV"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <ImageView
+                    android:id="@+id/destinationIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_point_grey"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/departureIV"
+                    app:layout_constraintEnd_toEndOf="@id/departureIV"
+                    android:contentDescription="@string/destination"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/topCL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="14dp"
+                android:paddingTop="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/directionCL"
+                app:layout_constraintEnd_toEndOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/departureTrainIcon"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:src="@mipmap/ktzh_logo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/departureDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:depArrDate="@{segment.train.dep_date_time}"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="16sp"
+                    android:textColor="#1b344f"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="0sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/departureTrainIcon"
+                    android:layout_marginStart="10dp"
+                    tools:text="16 авг, вт"/>
+
+                <TextView
+                    android:id="@+id/refundSegmentStatusTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="3sp"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    app:refundSegmentStatus="@{refundSegmentStatus}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Возврат отклонен"
+                    tools:textColor="@color/refund_status_rejected_canceled_text" />
+
+                <TextView
+                    android:id="@+id/departureTimeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:depArrTime="@{segment.train.dep_date_time}"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="20sp"
+                    android:textColor="#1b344f"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-4sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/departureDateTV"
+                    app:layout_constraintTop_toBottomOf="@+id/departureDateTV"
+                    tools:text="10:40"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{segment.train.dep_station_name}"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#748595"
+                    android:lineSpacingExtra="2sp"
+                    tools:text="Алматы-2, Алматы"
+                    app:layout_constraintStart_toStartOf="@+id/departureDateTV"
+                    app:layout_constraintTop_toBottomOf="@+id/departureTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/centerCL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/topCL"
+                app:layout_constraintStart_toEndOf="@+id/directionCL"
+                app:layout_constraintEnd_toEndOf="parent" >
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bottom_sheet_line"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/inWayTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/in_way"
+                    android:textColor="#748595"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="@+id/inWayTimeTV"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/trainTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/train"
+                    android:textColor="#748595"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/trainNumberTV" />
+
+                <TextView
+                    android:id="@+id/railwayCarriageTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/railway_carriage"
+                    android:textColor="#748595"
+                    android:textSize="14sp"
+                    app:layout_constraintTop_toTopOf="@+id/carriageNumberTV"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/placeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#748595"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/place"
+                    app:layout_constraintTop_toTopOf="@+id/placeNumberTV"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/inWayTimeTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#1b344f"
+                    android:lineSpacingExtra="2sp"
+                    android:text="@string/in_way_time_placeholder"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/inWayTV"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <TextView
+                    android:id="@+id/trainNumberTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{@string/number_sign_before_text(segment.train.display_number)}"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#1b344f"
+                    android:lineSpacingExtra="2sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/inWayTimeTV"
+                    app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="№31Т"  />
+
+                <TextView
+                    android:id="@+id/carriageNumberTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2sp"
+                    tools:text="@string/tickets_are_not_purchased_2"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/trainNumberTV"
+                    app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/placeNumberTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2sp"
+                    tools:text="@string/tickets_are_not_purchased_2"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/carriageNumberTV"
+                    app:layout_constraintStart_toStartOf="@+id/inWayTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottomCL"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/centerCL"
+                app:layout_constraintStart_toEndOf="@+id/directionCL"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/bottom_sheet_line"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/arrivalTrainIcon"
+                    android:layout_width="34dp"
+                    android:layout_height="34dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@mipmap/ktzh_logo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/arrivalDateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:depArrDate="@{segment.train.arr_date_time}"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="16sp"
+                    android:textColor="#1b344f"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="0sp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/arrivalTrainIcon"
+                    tools:text="16 авг, вт"/>
+
+                <TextView
+                    android:id="@+id/arrivalTimeTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:depArrTime="@{segment.train.arr_date_time}"
+                    android:fontFamily="@font/pt_root_ui_bold"
+                    android:textSize="20sp"
+                    android:textColor="#1b344f"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="-4sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/arrivalDateTV"
+                    app:layout_constraintStart_toStartOf="@+id/arrivalDateTV"
+                    tools:text="20:45" />
+
+                <TextView
+                    android:id="@+id/arrStationNameTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{segment.train.arr_station_name}"
+                    android:fontFamily="@font/pt_root_ui_medium"
+                    android:textSize="14sp"
+                    android:textColor="#748595"
+                    android:lineSpacingExtra="2sp"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/arrivalTimeTV"
+                    app:layout_constraintStart_toStartOf="@+id/arrivalTimeTV"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="Актогай, Актогай" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/trainTransferTV"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_train_transfer"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:lineSpacingExtra="2sp"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textColor="#2d4461"
+                tools:visibility="visible"
+                app:layout_constraintTop_toBottomOf="@+id/bottomCL"
+                tools:text="Пересадка, Балхаш: 2 ч 40 мин"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/noSegmentInfoCL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:background="@drawable/bg_no_segment_info"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"
+            tools:visibility="gone">
+
+            <ImageView
+                android:id="@+id/warningIV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_alert_grey"
+                app:layout_constraintTop_toTopOf="@+id/titleTV"
+                app:layout_constraintBottom_toBottomOf="@+id/titleTV"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/titleTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="16sp"
+                android:textColor="#808e9e"
+                android:lineSpacingExtra="12sp"
+                android:layout_marginStart="@dimen/margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/warningIV"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/no_segment_info_title"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:lineSpacingExtra="4sp"
+                android:text="@string/no_segment_info_description"
+                android:textColor="#98a5b1"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/warningIV"
+                app:layout_constraintTop_toBottomOf="@+id/titleTV" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

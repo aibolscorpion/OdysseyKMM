@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
@@ -39,23 +40,25 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
     }
 
     inner class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
-        private lateinit var currentSegment: Segment
 
         fun bind(segment: Segment, position: Int){
-            currentSegment = segment
-            binding.segment = currentSegment
-            binding.refundSegmentStatus =
-                trip?.refund_applications?.let { getRefundSegmentStatus(it, currentSegment.id) }
-            binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
-            setViewsByStatus(defineSegmentStatus(segment))
-
-            binding.trainTransferTV.apply {
-                if(segmentList.size > position+1) {
-                    visibility = View.VISIBLE
-                    setSpannedText(this, getWaitingTime(segmentList, position))
-                } else {
-                    visibility = View.GONE
+            if(segment.train != null){
+                binding.segment = segment
+                binding.refundSegmentStatus =
+                    trip?.refund_applications?.let { getRefundSegmentStatus(it, segment.id) }
+                binding.inWayTimeTV.text = parseMinutesToTime(segment.train.in_way_minutes)
+                setViewsByStatus(defineSegmentStatus(segment), segment)
+                binding.trainTransferTV.apply {
+                    if(segmentList.size > position+1) {
+                        visibility = View.VISIBLE
+                        setSpannedText(this, getWaitingTime(segmentList, position))
+                    } else {
+                        visibility = View.GONE
+                    }
                 }
+            }else{
+                binding.noSegmentInfoCL.isVisible = true
+                binding.fullSegmentInfoCL.isVisible = false
             }
         }
 
@@ -63,7 +66,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             lateinit var segmentStatus: SegmentStatus
             when(segment.status){
                 Constants.STATUS_OPENED -> {
-                    segmentStatus = if(currentSegment.active_process.equals(Constants.WATCHING)){
+                    segmentStatus = if(segment.active_process.equals(Constants.WATCHING)){
                         SegmentStatus.ON_THE_WAITING_LIST
                     }else{
                         SegmentStatus.OPENED
@@ -76,7 +79,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
             return segmentStatus
         }
 
-        private fun setViewsByStatus(segmentStatus: SegmentStatus){
+        private fun setViewsByStatus(segmentStatus: SegmentStatus, segment: Segment){
             when(segmentStatus){
 
                 SegmentStatus.OPENED ->  {
@@ -99,8 +102,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                 SegmentStatus.CANCELED, SegmentStatus.RETURNED -> {
                     val textColor = App.appContext.getColor(R.color.returned_ticket_text)
                     val color = App.appContext.getColor(R.color.returned_bg)
-                    setCarriageAndPlaceNumber(textColor, currentSegment.ticket?.car_number,
-                        currentSegment.ticket?.seat_number)
+                    setCarriageAndPlaceNumber(textColor, segment.ticket?.car_number,
+                        segment.ticket?.seat_number)
                     setDirectionColor(color, R.drawable.icon_train_red,
                         R.drawable.icon_point_red)
 
@@ -114,8 +117,8 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
                 SegmentStatus.ISSUED -> {
                     val color = App.appContext.getColor(R.color.black)
                     val imageColor = App.appContext.getColor(R.color.issued_bg)
-                    setCarriageAndPlaceNumber(color, currentSegment.ticket?.car_number,
-                        currentSegment.ticket?.seat_number)
+                    setCarriageAndPlaceNumber(color, segment.ticket?.car_number,
+                        segment.ticket?.seat_number)
                     setDirectionColor(imageColor, R.drawable.icon_train_green,
                         R.drawable.icon_point_green)
                 }
@@ -141,21 +144,25 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
         }
 
         private fun getWaitingTime(segmentList: List<Segment>, position: Int): String{
-            val arrLocalDateTime = segmentList[position].train?.arr_date_time!!.getLocalDateTimeByPattern()
-            val depLocalDateTime = segmentList[position+1].train?.dep_date_time!!.getLocalDateTimeByPattern()
-            var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)
+            return if(segmentList[position+1].train != null){
+                val arrLocalDateTime = segmentList[position].train?.arr_date_time?.getLocalDateTimeByPattern()
+                val depLocalDateTime = segmentList[position+1].train?.dep_date_time?.getLocalDateTimeByPattern()
+                var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)
 
-            val hours: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.HOURS)
-            tempDateTime = tempDateTime.plusHours(hours)
-            val minutes: Long = tempDateTime.until(depLocalDateTime, ChronoUnit.MINUTES)
-
-            return App.appContext.getString(R.string.train_transfer,
-                segmentList[position].arr_station_name, hours, minutes)
+                val hours = tempDateTime.until(depLocalDateTime, ChronoUnit.HOURS)
+                tempDateTime = tempDateTime.plusHours(hours)
+                val minutes = tempDateTime.until(depLocalDateTime, ChronoUnit.MINUTES)
+                App.appContext.getString(R.string.train_transfer_with_time,
+                    segmentList[position].arr_station_name, hours, minutes)
+            }else{
+                App.appContext.getString(R.string.train_transfer_without_time,
+                    segmentList[position].arr_station_name)
+            }
         }
 
         private fun parseMinutesToTime(inWayMinutes: Int?): String{
-            val hours = inWayMinutes!!/60
-            val minutes = inWayMinutes%60
+            val hours = inWayMinutes?.div(60)
+            val minutes = inWayMinutes?.rem(60)
             return App.appContext.getString(R.string.in_way_time, hours, minutes)
         }
 

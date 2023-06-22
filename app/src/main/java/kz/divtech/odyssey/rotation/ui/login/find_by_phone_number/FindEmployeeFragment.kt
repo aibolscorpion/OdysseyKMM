@@ -161,19 +161,27 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     }
 
     private fun openSendSmsFragment() =
-        findNavController().navigate(
-            FindEmployeeFragmentDirections.actionPhoneNumberFragmentToCodeFragment(
-                "${Config.COUNTRY_CODE}$extractedPhoneNumber",
-                dataBinding.phoneNumberET.text.toString()
-            )
-        )
+        with(findNavController()) {
+            if (R.id.phoneNumberFragment == currentDestination?.id) {
+                navigate(
+                    FindEmployeeFragmentDirections.actionPhoneNumberFragmentToCodeFragment(
+                        "${Config.COUNTRY_CODE}$extractedPhoneNumber",
+                        dataBinding.phoneNumberET.text.toString()
+                    )
+                )
+            }
+        }
 
     private fun openIINFragment() =
-        findNavController().navigate(
-            FindEmployeeFragmentDirections.actionPhoneNumberFragmentToIINFragment(
-                dataBinding.phoneNumberET.text.toString()
-            )
-        )
+        with(findNavController()) {
+            if (R.id.phoneNumberFragment == currentDestination?.id) {
+                navigate(
+                    FindEmployeeFragmentDirections.actionPhoneNumberFragmentToIINFragment(
+                        dataBinding.phoneNumberET.text.toString()
+                    )
+                )
+            }
+        }
 
     fun showTermsOfAgreementDialog(){
         with(findNavController()){

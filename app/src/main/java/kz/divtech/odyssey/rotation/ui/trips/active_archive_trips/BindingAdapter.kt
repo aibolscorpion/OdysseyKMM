@@ -189,8 +189,8 @@ object BindingAdapter {
         }
 
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
-    @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String, depStationName: String?, arrStationName: String?){
-        if(depStationName != null && arrStationName != null){
+    @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String?, depStationName: String?, arrStationName: String?){
+        if(depStationName != null && arrStationName != null && segmentStatus != null){
             val depArrStationNames = App.appContext.getString(R.string.dash_sign_btw_two_text,
                 properCase(depStationName), properCase(arrStationName)
             )
@@ -201,8 +201,8 @@ object BindingAdapter {
     }
 
     @BindingAdapter("segmentStatus", "depDateTime",  "arrDateTime")
-    @JvmStatic fun formatTime(textView: TextView, segmentStatus: String, depDateTime: String?, arrDateTime: String?){
-        if(depDateTime != null && arrDateTime != null){
+    @JvmStatic fun formatTime(textView: TextView, segmentStatus: String?, depDateTime: String?, arrDateTime: String?){
+        if(depDateTime != null && arrDateTime != null && segmentStatus != null){
             val formattedDepTime = depDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
             val formattedArrTime = arrDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
 
@@ -431,7 +431,9 @@ object BindingAdapter {
     @JvmStatic fun setCityAndTotalTimeInWay(textView: TextView, trip: Trip){
         var totalMinutes = 0
         trip.segments.forEach { segment ->
-            totalMinutes += segment.train?.in_way_minutes!!
+            segment.train?.in_way_minutes?.let {
+                totalMinutes += it
+            }
         }
         val hours = totalMinutes/60
         val minutes = totalMinutes%60
@@ -442,12 +444,12 @@ object BindingAdapter {
     }
 
     @BindingAdapter("depArrDate")
-    @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String){
+    @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String?){
         textView.text = dateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN)
     }
 
     @BindingAdapter("depArrTime")
-    @JvmStatic fun setDepArrTime(textView: TextView, dateTime: String){
+    @JvmStatic fun setDepArrTime(textView: TextView, dateTime: String?){
         textView.text = dateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
     }
 

@@ -204,7 +204,8 @@
     <string name="ticket_not_found">Билет не найден</string>
     <string name="no_app_for_view_pdf">У вас нет приложения для открытия pdf файла</string>
     <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>
-    <string name="train_transfer">Пересадка в г. %1$s: &lt;b>%2$d ч. %3$d мин.&lt;/b></string>
+    <string name="train_transfer_with_time">Пересадка в г. %1$s: &lt;b>%2$d ч. %3$d мин.&lt;/b></string>
+    <string name="train_transfer_without_time">Пересадка в г. %1$s</string>
     <string name="price">Стоимость</string>
     <string name="ticket_price">%1$d тг</string>
     <string name="total_price">Итого</string>
@@ -215,6 +216,9 @@
     <string name="status_returned_description_title">Поездка отменена !</string>
     <string name="status_partly_description_title">Поездка оформлена частично !</string>
     <string name="status_returned_partly_title">Часть билетов была оформлена, часть билетов была отменена !</string>
+
+    <string name="no_segment_info_title">Нет информации по сегменту</string>
+    <string name="no_segment_info_description">Информации по данному сегменту отсутсвтует, возможно она отобразится позже.</string>
 
 
     //Сортировка
