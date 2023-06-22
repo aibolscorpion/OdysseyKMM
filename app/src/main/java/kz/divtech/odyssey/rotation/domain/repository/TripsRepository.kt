@@ -37,8 +37,10 @@ class TripsRepository(private val dao : Dao) {
     suspend fun getNearestActiveTrip(){
         val result = RetrofitClient.getApiService().getNearestActiveTrip()
         if(result.isSuccess()){
-            result.asSuccess().value.data?.let {
+            if(result.asSuccess().value.data != null){
                 dao.refreshNearestActiveTrip(result.asSuccess().value)
+            }else{
+                dao.deleteNearestActiveTrip()
             }
         }
     }

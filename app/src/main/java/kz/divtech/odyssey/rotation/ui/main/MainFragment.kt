@@ -93,13 +93,13 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         binding.nearestTripView.segmentsRV.adapter = segmentAdapter
 
         viewModel.nearestActiveTrip.observe(viewLifecycleOwner) { trip ->
-            binding.nearestTripTV.isVisible = (trip != null)
-            binding.nearestTripView.root.isVisible = (trip != null)
-            trip?.let{
-                it.data?.let { data ->
-                    binding.trip = data
-                    segmentAdapter.setSegmentList(data)
-                }
+            val isTripAvailable = (trip != null)
+            binding.nearestTripTV.isVisible = isTripAvailable
+            binding.nearestTripView.root.isVisible = isTripAvailable
+
+            trip?.data?.let{ data ->
+                binding.trip = data
+                segmentAdapter.setSegmentList(data)
             }
         }
     }
