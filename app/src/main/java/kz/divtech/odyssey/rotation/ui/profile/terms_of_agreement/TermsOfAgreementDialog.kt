@@ -11,12 +11,12 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
@@ -54,20 +54,18 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
             }
         }
 
-        viewModel.result.observe(viewLifecycleOwner){ result ->
-            if(result.isSuccess()) {
-                val htmlText = result.asSuccess().value.string()
-                showData(htmlText)
-                viewModel.getFile().appendText(htmlText)
-            }else {
-                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
-            }
+        viewModel.failureResult.observe(viewLifecycleOwner){ result ->
+            Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
         }
 
+        viewModel.text.observe(viewLifecycleOwner){ text ->
+            showData(text)
+        }
 
         if(viewModel.getFile().exists()){
-            val htmlText = viewModel.getFile().readText()
-            showData(htmlText)
+            lifecycleScope.launch{
+                viewModel.readFile()
+            }
         }else{
             if(requireContext().isNetworkAvailable()){
                 viewModel.getUserAgreementFromServer()
