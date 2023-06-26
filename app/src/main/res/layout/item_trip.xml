@@ -63,7 +63,6 @@
                 android:src="@drawable/icons_tabs_extra_trip"
                 android:contentDescription="@string/extra_application"
                 app:layout_constraintTop_toTopOf="@id/tripStatusIV"
-                app:layout_constraintBottom_toBottomOf="@id/tripStatusIV"
                 app:layout_constraintEnd_toStartOf="@id/shiftIV" />
 
             <ImageView
