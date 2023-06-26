@@ -439,6 +439,10 @@ object BindingAdapter {
             val minutes = totalMinutes?.rem(60)
             val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
             textView.text = totalTimeInWay
+        }else{
+            trip.end_station?.name?.let {
+                textView.text = it
+            }
         }
     }
 

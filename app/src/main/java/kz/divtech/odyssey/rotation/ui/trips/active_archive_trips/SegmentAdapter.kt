@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -25,6 +27,8 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
             holder.binding.segment = segment
             holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, listOfSegments[position].id)
         }else{
+            holder.binding.segmentStationsTV.text = App.appContext.getString(
+                R.string.dash_sign_btw_two_text, segment.dep_station_name, segment.arr_station_name)
             holder.binding.noSegmentInfoLL.isVisible = true
             holder.binding.segmentInfoCL.isVisible = false
         }

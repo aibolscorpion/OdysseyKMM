@@ -107,7 +107,7 @@
     <string name="to_online_chat">в онлайн-чат</string>
     <string name="read">Прочитать</string>
     <string name="questions_answers">вопрос/ответ</string>
-    <string name="download_successful_restart_in_5_seconds">Загрузка прошла успешно. Перезапуск приложения через 5 секунд</string>
+    <string name="download_successful_restart_in_5_seconds">Перезапуск приложения через 5 секунд</string>
     <string name="in_app_update_error_result_code">Ошибка обновления! Код результата: %1$d</string>
 
     <string name="monday">Пн</string>
@@ -217,8 +217,8 @@
     <string name="status_partly_description_title">Поездка оформлена частично !</string>
     <string name="status_returned_partly_title">Часть билетов была оформлена, часть билетов была отменена !</string>
 
-    <string name="no_segment_info_title">Нет информации по сегменту</string>
-    <string name="no_segment_info_description">Информации по данному сегменту отсутсвтует, возможно она отобразится позже.</string>
+    <string name="no_train_info_title">Нет информации по поезду %1$s – %2$s</string>
+    <string name="no_train_info_desc">Ожидаем поступление информации по поезду, времени и тд.</string>
 
 
     //Сортировка

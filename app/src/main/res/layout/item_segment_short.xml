@@ -131,9 +131,10 @@
                 android:src="@drawable/icon_alert_grey"/>
 
             <TextView
+                android:id="@+id/segmentStationsTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/no_segment_info_title"
+                tools:text="@string/no_train_info_title"
                 android:layout_marginStart="6dp"
                 android:fontFamily="@font/pt_root_ui_medium"
                 android:textSize="14sp"

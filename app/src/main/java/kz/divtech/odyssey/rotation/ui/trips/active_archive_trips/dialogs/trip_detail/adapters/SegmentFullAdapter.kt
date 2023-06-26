@@ -28,7 +28,7 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
     }
 
     override fun onBindViewHolder(holder: TicketViewHolder, position: Int) {
-        holder.bind(listOfSegments[position], position)
+        holder.bind(listOfSegments[position])
     }
 
     override fun getItemCount() = listOfSegments.size
@@ -41,25 +41,34 @@ class SegmentFullAdapter : RecyclerView.Adapter<SegmentFullAdapter.TicketViewHol
 
     inner class TicketViewHolder(val binding: ItemSegmentFullBinding, private val segmentList: List<Segment>) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(segment: Segment, position: Int){
+        fun bind(segment: Segment){
             if(segment.train != null){
-                binding.segment = segment
-                binding.refundSegmentStatus =
-                    trip?.refund_applications?.let { getRefundSegmentStatus(it, segment.id) }
-                binding.inWayTimeTV.text = parseMinutesToTime(segment.train.in_way_minutes)
-                setViewsByStatus(defineSegmentStatus(segment), segment)
-                binding.trainTransferTV.apply {
-                    if(segmentList.size > position+1) {
-                        visibility = View.VISIBLE
-                        setSpannedText(this, getWaitingTime(segmentList, position))
-                    } else {
-                        visibility = View.GONE
-                    }
-                }
+                setTrainInfo(segment)
             }else{
-                binding.noSegmentInfoCL.isVisible = true
-                binding.fullSegmentInfoCL.isVisible = false
+                setNoTrainInfo(segment)
             }
+        }
+
+        private fun setTrainInfo(segment: Segment){
+            binding.segment = segment
+            binding.refundSegmentStatus =
+                trip?.refund_applications?.let { getRefundSegmentStatus(it, segment.id) }
+            binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
+            setViewsByStatus(defineSegmentStatus(segment), segment)
+            binding.trainTransferTV.apply {
+                if(segmentList.size > absoluteAdapterPosition+1) {
+                    visibility = View.VISIBLE
+                    setSpannedText(this, getWaitingTime(segmentList, absoluteAdapterPosition))
+                } else {
+                    visibility = View.GONE
+                }
+            }
+        }
+        private fun setNoTrainInfo(segment: Segment){
+            binding.titleTV.text = App.appContext.getString(R.string.no_train_info_title,
+                segment.dep_station_name, segment.arr_station_name)
+            binding.noSegmentInfoCL.isVisible = true
+            binding.fullSegmentInfoCL.isVisible = false
         }
 
         private fun defineSegmentStatus(segment: Segment): SegmentStatus {

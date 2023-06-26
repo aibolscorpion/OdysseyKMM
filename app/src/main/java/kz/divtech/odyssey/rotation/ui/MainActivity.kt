@@ -28,6 +28,7 @@ import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.Config.UPDATE_TYPE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_APPLICATION
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_DEVICE
@@ -46,7 +47,6 @@ import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 import kotlin.time.Duration.Companion.seconds
 
 
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val binding get() = _binding!!
 
     private lateinit var appUpdateManager: AppUpdateManager
-    private val updateType = AppUpdateType.IMMEDIATE
     private val updateRequestCode = 123
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -85,7 +84,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
-        if(updateType == AppUpdateType.FLEXIBLE){
+        if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
             appUpdateManager.registerListener(installStateUpdatedListener)
         }
         checkForAppUpdates()
@@ -132,9 +131,9 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
                 if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    if(updateType == AppUpdateType.IMMEDIATE){
+                    if(UPDATE_TYPE == AppUpdateType.IMMEDIATE){
                         appUpdateManager.startUpdateFlowForResult(info, this,
-                            AppUpdateOptions.newBuilder(updateType).build(), updateRequestCode)
+                            AppUpdateOptions.newBuilder(UPDATE_TYPE).build(), updateRequestCode)
                     }
                 }else if (info.installStatus() == InstallStatus.DOWNLOADED){
                     showToastForCompleteUpdate()
@@ -168,14 +167,14 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private fun checkForAppUpdates(){
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
             val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-            val isUpdateAllowed = when(updateType){
+            val isUpdateAllowed = when(UPDATE_TYPE){
                 AppUpdateType.FLEXIBLE -> info.isFlexibleUpdateAllowed
                 AppUpdateType.IMMEDIATE -> info.isImmediateUpdateAllowed
                 else -> false
             }
             if(isUpdateAvailable && isUpdateAllowed){
                 appUpdateManager.startUpdateFlowForResult(info, this,
-                    AppUpdateOptions.newBuilder(updateType).build(), updateRequestCode)
+                    AppUpdateOptions.newBuilder(UPDATE_TYPE).build(), updateRequestCode)
             }
         }
     }
@@ -185,10 +184,9 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == updateRequestCode){
             if(resultCode != RESULT_OK){
-                if(updateType == AppUpdateType.IMMEDIATE){
+                if(UPDATE_TYPE == AppUpdateType.IMMEDIATE){
                     checkForAppUpdates()
                 }
-                Timber.e(getString(R.string.in_app_update_error_result_code, resultCode))
             }
         }
     }
@@ -274,7 +272,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     override fun onDestroy() {
         super.onDestroy()
 
-        if(updateType == AppUpdateType.FLEXIBLE){
+        if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
             appUpdateManager.unregisterListener(installStateUpdatedListener)
         }
         _binding = null
