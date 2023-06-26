@@ -45,15 +45,7 @@ object BindingAdapter {
 
     @BindingAdapter("shift")
     @JvmStatic fun setImageByShift(imageView: ImageView, shift: String?){
-        when (shift) {
-            Constants.NIGHT -> {
-                imageView.visibility = View.VISIBLE
-                imageView.setImageResource(R.drawable.icons_tabs_shift_night)
-            }
-            else -> {
-                imageView.visibility = View.GONE
-            }
-        }
+        imageView.isVisible = shift == Constants.NIGHT
     }
 
     @BindingAdapter("trip")

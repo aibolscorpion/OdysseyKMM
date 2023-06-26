@@ -35,7 +35,6 @@
             android:paddingStart="16dp"
             android:paddingEnd="12dp">
 
-
             <TextView
                 android:id="@+id/directionTV"
                 android:layout_width="0dp"
@@ -47,8 +46,7 @@
                 app:direction="@{trip.direction}"
                 app:date="@{trip.date}"
                 android:singleLine="true"
-                app:layout_constraintTop_toTopOf="@id/tripStatusIV"
-                app:layout_constraintBottom_toBottomOf="@id/tripStatusIV"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/extraAppIV"
                 tools:text="На вахту, 25 Сент"/>
@@ -62,7 +60,7 @@
                 android:visibility="@{trip.is_extra() ? view.VISIBLE : view.GONE}"
                 android:src="@drawable/icons_tabs_extra_trip"
                 android:contentDescription="@string/extra_application"
-                app:layout_constraintTop_toTopOf="@id/tripStatusIV"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/shiftIV" />
 
             <ImageView
@@ -71,9 +69,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:contentDescription="@string/shift"
+                android:src="@drawable/icons_tabs_shift_night"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:shift="@{trip.shift}"
-                app:layout_constraintTop_toTopOf="@id/tripStatusIV"
-                app:layout_constraintBottom_toBottomOf="@id/tripStatusIV"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/tripStatusIV" />
 
             <ImageView
