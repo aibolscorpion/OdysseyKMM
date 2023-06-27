@@ -11,22 +11,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.Utils
 
 
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
+    private val database by lazy { AppDatabase.getDatabase(App.appContext) }
+    val employeeRepository by lazy { EmployeeRepository(database.dao()) }
     val viewModel : PersonalDataViewModel by viewModels{
-        PersonalDataViewModel.PersonalDataViewModelFactory((activity as MainActivity).employeeRepository)
+        PersonalDataViewModel.PersonalDataViewModelFactory(employeeRepository)
     }
     private var _binding: FragmentPersonalDataBinding? = null
     private val binding get() = _binding!!
