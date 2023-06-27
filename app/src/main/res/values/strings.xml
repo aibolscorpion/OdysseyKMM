@@ -223,7 +223,8 @@
 
     //Сортировка
     <string name="sort">Сортировать</string>
-    <string name="by_departure_date">По дате выезда</string>
+    <string name="sort_by_departure_date">По дате выезда</string>
+    <string name="sort_by_status">По статусу</string>
     <string name="by_departure_date_first_incoming">По дате выезда\n<font color="#808e9e" size="13">Сначала ближайшие</font></string>
     <string name="by_status_first_purchased">По статусу\n<font color="#808e9e" size="13">Сначала оформленные</font></string>
 

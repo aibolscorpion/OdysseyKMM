@@ -49,13 +49,14 @@
                     android:src="@drawable/icon_sorting" />
 
                 <TextView
+                    android:id="@+id/sortTripTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:lineSpacingExtra="10sp"
-                    android:text="@string/by_departure_date"
+                    android:text="@string/sort_by_departure_date"
                     android:textColor="#2d4461"
                     android:textSize="14sp" />
 

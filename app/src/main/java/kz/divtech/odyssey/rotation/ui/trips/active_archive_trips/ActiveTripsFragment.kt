@@ -173,11 +173,13 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     override fun onDateClicked() {
+        binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
         sortType = BY_DEPARTURE_DATE
         getTripsSortedByDate()
     }
 
     override fun onStatusClicked() {
+        binding.sortTripTV.text = getString(R.string.sort_by_status)
         sortType = BY_STATUS
         getTripsSortedByStatus()
     }
