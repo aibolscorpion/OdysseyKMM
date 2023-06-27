@@ -1,8 +1,11 @@
 package kz.divtech.odyssey.rotation.utils
 
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.LinearInterpolator
+import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -83,6 +86,18 @@ object Utils {
         val window: Window = requireActivity().window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(requireActivity(), statusBarColor)
+    }
+
+    fun ImageView.reverseInfiniteAnimation() {
+        val animator = ValueAnimator.ofFloat(0f, 360f)
+        animator.addUpdateListener { valueAnimator ->
+            val rotation = valueAnimator.animatedValue as Float
+            this.rotation = rotation
+        }
+        animator.repeatCount = ValueAnimator.INFINITE
+        animator.interpolator = LinearInterpolator()
+        animator.duration = 2000 // Set the desired duration for one cycle
+        animator.start()
     }
 
 }
