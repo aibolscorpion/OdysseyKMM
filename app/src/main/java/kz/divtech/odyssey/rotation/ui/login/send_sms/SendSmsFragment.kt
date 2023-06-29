@@ -67,7 +67,6 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                 if(response.isSuccess()) {
                     viewModel.setAuthLogId(response.asSuccess().value.auth_log_id)
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                    editTextList.isEnabled(true)
                     showKeyboard(requireContext(), editTextList[0])
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
                     val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
@@ -78,6 +77,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                 }else{
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
                 }
+                editTextList.isEnabled(true)
             }
         }
 

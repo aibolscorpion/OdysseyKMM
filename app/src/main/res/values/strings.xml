@@ -185,8 +185,7 @@
 
     //Модалка Детально о заявке
     <string name="application_id">Заявка №%1$s</string>
-    <string name="total_time_in_way">В %1$s. %2$d ч %3$d мин в пути"</string>
-    <string name="to_end_station">В %1$s"</string>
+    <string name="total_time_in_way">%1$s. %2$d ч %3$d мин в пути"</string>
     <string name="in_way">в пути</string>
     <string name="in_way_time">%1$d ч %2$d мин</string>
     <string name="in_way_time_placeholder">5 ч 20 мин</string>
