@@ -23,6 +23,11 @@ class HelpFragment : Fragment() {
 
     fun openQAFragment() = findNavController().navigate(R.id.action_global_questionsAnswersFragment)
 
-    fun openPressServiceFragment() =
-        findNavController().navigate(HelpFragmentDirections.actionHelpFragmentToNewsFragment())
+    fun openPressServiceFragment(){
+        with(findNavController()){
+            if(currentDestination?.id == R.id.helpFragment){
+                navigate(HelpFragmentDirections.actionHelpFragmentToNewsFragment())
+            }
+        }
+    }
 }

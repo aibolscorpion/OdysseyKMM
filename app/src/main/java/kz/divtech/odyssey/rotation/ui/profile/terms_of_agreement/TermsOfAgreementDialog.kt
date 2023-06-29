@@ -44,13 +44,17 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
         dataBinding.webView.webViewClient = object : WebViewClient(){
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
-                dataBinding.termsProgressBar.visibility = View.GONE
+                _dataBinding?.let {
+                    dataBinding.termsProgressBar.visibility = View.GONE
+                }
             }
 
             override fun onReceivedError(view: WebView?, request: WebResourceRequest?,
                                          error: WebResourceError?) {
                 super.onReceivedError(view, request, error)
-                dataBinding.termsProgressBar.visibility = View.GONE
+                _dataBinding?.let {
+                    dataBinding.termsProgressBar.visibility = View.GONE
+                }
             }
         }
 
