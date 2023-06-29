@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.gson.Gson
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
@@ -16,6 +17,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
@@ -53,8 +55,15 @@ class UpdatePhoneNumberFragment : Fragment() {
                 showApplicationSentDialog()
             }else if(response.isHttpException() && response.statusCode ==
                 Constants.UNPROCESSABLE_ENTITY_CODE){
-                showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
-                    getString(R.string.invalid_format_phone_number))
+                val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
+                    ValidationErrorResponse::class.java)
+                errorResponse.errors.forEach{ (field, errorMessages) ->
+                    val firstErrorMessage = errorMessages.first()
+                    if(field == "phone"){
+                        showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
+                            firstErrorMessage)
+                    }
+                }
             }else{
                 showErrorDialog()
             }

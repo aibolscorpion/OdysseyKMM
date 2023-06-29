@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.app.Constants
@@ -19,6 +20,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentEnterCodeBinding
+import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericKeyEvent
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericTextWatcher
@@ -83,11 +85,16 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
                     InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL,
                         getString(R.string.too_many_request_message, seconds))
                 }else if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
-                    InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                        getString(R.string.invalid_format_phone_number))
+                    val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
+                        ValidationErrorResponse::class.java)
+                    errorResponse.errors.forEach{ (field, errorMessages) ->
+                        val firstErrorMessage = errorMessages.first()
+                        if(field == "phone"){
+                            InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL, firstErrorMessage)
+                        }
+                    }
                 }else{
-                    InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                        "$response")
+                    InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
                 }
             }
         }
@@ -128,6 +135,7 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
     }
 
     private fun startTimer(time: Int){
+        countDownTimer?.cancel()
         val longTime = time * 1000L
         dataBinding.timerTextView.visibility = View.VISIBLE
         dataBinding.resendSmsBtn.visibility = View.INVISIBLE
