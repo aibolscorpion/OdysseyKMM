@@ -129,7 +129,8 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         }
     }
 
-    private fun startTimer(time: Int){
+    private fun startTimer(time: Int) {
+        countDownTimer?.cancel()
         val longTime = time * 1000L
         dataBinding.timerTextView.visibility = View.VISIBLE
         dataBinding.resendSmsBtn.visibility = View.INVISIBLE
