@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
@@ -32,6 +33,7 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     }
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
+    private var loadStateJob : Job? = null
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewsBinding.inflate(inflater)
@@ -81,7 +83,7 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     }
 
     private fun loadState(){
-        lifecycleScope.launch {
+        loadStateJob = lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest{ loadState ->
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
@@ -119,6 +121,7 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     override fun onDestroyView() {
         super.onDestroyView()
 
+        loadStateJob?.cancel()
         _binding = null
     }
 

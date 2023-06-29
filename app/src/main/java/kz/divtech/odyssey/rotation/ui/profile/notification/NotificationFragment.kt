@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
@@ -30,6 +31,7 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
     val adapter: NotificationPagingAdapter by lazy { NotificationPagingAdapter(this) }
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
+    private var loadStateJob: Job? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
         _binding = FragmentNotificationBinding.inflate(inflater)
@@ -57,7 +59,7 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
     }
 
     private fun loadState(){
-        lifecycleScope.launch {
+        loadStateJob = lifecycleScope.launch {
             adapter.loadStateFlow.collect{ loadState ->
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
@@ -106,6 +108,7 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
     override fun onDestroyView() {
         super.onDestroyView()
 
+        loadStateJob?.cancel()
         _binding = null
     }
 }
