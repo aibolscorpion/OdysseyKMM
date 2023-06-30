@@ -1,8 +1,11 @@
 package kz.divtech.odyssey.rotation.ui
 
 import android.Manifest.permission.POST_NOTIFICATIONS
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
@@ -11,6 +14,7 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
@@ -74,6 +78,11 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private lateinit var appUpdateManager: AppUpdateManager
     private val updateRequestCode = 123
 
+    private val connectivityManager: ConnectivityManager by lazy{
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
 
@@ -118,6 +127,20 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
         SmsRetriever.getClient(this).startSmsRetriever()
 
+        networkCallback = object: ConnectivityManager.NetworkCallback(){
+            override fun onAvailable(network: Network) {
+                runOnUiThread {
+                    binding.noInternetLL.isVisible = false
+                }
+            }
+
+            override fun onLost(network: Network) {
+                runOnUiThread{
+                    binding.noInternetLL.isVisible = true
+                }
+            }
+        }
+        connectivityManager.registerDefaultNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
     }
 
     override fun onStart() {
@@ -276,6 +299,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             appUpdateManager.unregisterListener(installStateUpdatedListener)
         }
         _binding = null
+
+        networkCallback?.let {
+            connectivityManager.unregisterNetworkCallback(it)
+        }
     }
 
 }

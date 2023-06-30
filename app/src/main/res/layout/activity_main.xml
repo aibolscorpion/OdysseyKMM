@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/main_bg"
         tools:context="kz.divtech.odyssey.rotation.ui.MainActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -18,13 +19,43 @@
             app:titleTextColor="@color/white"
             app:titleTextAppearance="@style/toolbarTitle" />
 
+        <LinearLayout
+            android:id="@+id/noInternetLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_no_internet"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="@dimen/margin"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_no_connect" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_root_ui_bold"
+                android:textSize="16sp"
+                android:textColor="#ff4e1d"
+                android:lineSpacingExtra="12sp"
+                android:layout_marginStart="12dp"
+                android:text="@string/internet_connection_is_off"/>
+
+        </LinearLayout>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mainNavHostFragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/mainToolbar"
+            app:layout_constraintTop_toBottomOf="@+id/noInternetLL"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
