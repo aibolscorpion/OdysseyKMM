@@ -4,6 +4,7 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 object LocalDateTimeUtils {
@@ -31,18 +32,18 @@ object LocalDateTimeUtils {
     fun String?.formatDateTimeToGivenPattern(givenPattern: String): String{
         var formattedDate = ""
         this?.let {
-            val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_DATE_TIME_PATTERN)
-            val parsedDateTime = LocalDateTime.parse(this, serverDateTimeFormat)
-
+            val parsedDateTime = Instant.parse(this)
+            val localDateTime = ZonedDateTime.ofInstant(parsedDateTime, ZoneId.of("UTC+6"))
             val format = DateTimeFormatter.ofPattern(givenPattern)
-            formattedDate = parsedDateTime.format(format)
+            formattedDate = localDateTime.format(format)
         }
         return formattedDate
     }
 
     fun String.getLocalDateTimeByPattern(): LocalDateTime {
-        val serverDateTimeFormat = DateTimeFormatter.ofPattern(SERVER_DATE_TIME_PATTERN)
-        return LocalDateTime.parse(this, serverDateTimeFormat)
+        val parsedDateTime = Instant.parse(this)
+        val localDateTime = ZonedDateTime.ofInstant(parsedDateTime, ZoneId.of("UTC+6"))
+        return localDateTime.toLocalDateTime()
     }
 
     fun String.getLocalDateByPattern(): LocalDate {
