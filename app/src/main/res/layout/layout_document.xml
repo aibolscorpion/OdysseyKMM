@@ -29,7 +29,6 @@
             android:text="@={document.number}"
             android:backgroundTint="@color/bottom_sheet_line"
             style="@style/profileMenuTextStyle"
-            android:inputType="number"
             tools:text="@string/document_number_placeholder"/>
 
         <TextView
