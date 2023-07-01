@@ -384,6 +384,7 @@
     <string name="invalid_email_address">Неверный адрес электронной почты</string>
     <string name="fill_your_name">Введите имя</string>
     <string name="fill_your_surname">Введите фамилию</string>
+    <string name="invalid_data">Неверные данные</string>
 
     //Страница Документы
     <string name="document">Документ</string>

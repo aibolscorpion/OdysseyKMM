@@ -22,6 +22,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
+import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.Utils
 
@@ -91,18 +92,40 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         viewModel.updatePersonalResult.observe(viewLifecycleOwner){ response ->
             if(response.isHttpException() &&
                 (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)) {
+                    showErrorMessage(requireContext(), binding.personalDataFL, getString(R.string.invalid_data))
                     val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
                         ValidationErrorResponse::class.java)
                     errorResponse.errors.forEach{ (field, errorMessages) ->
                         val firstErrorMessage = errorMessages.first()
                         when(field){
-                            "first_name" -> binding.firstNameET.error = firstErrorMessage
-                            "last_name" -> binding.lastNameET.error = firstErrorMessage
-                            "patronymic" -> binding.patronymicET.error = firstErrorMessage
-                            "first_name_en" -> binding.firstNameEngET.error = firstErrorMessage
-                            "last_name_en" -> binding.lastNameEngET.error = firstErrorMessage
-                            "iin" -> binding.iinET.error = firstErrorMessage
-                            "email" -> binding.emailET.error = firstErrorMessage
+                            "first_name" -> {
+                                binding.firstNameET.error = firstErrorMessage
+                                binding.firstNameET.requestFocus()
+                            }
+                            "last_name" -> {
+                                binding.lastNameET.error = firstErrorMessage
+                                binding.lastNameET.requestFocus()
+                            }
+                            "patronymic" -> {
+                                binding.patronymicET.error = firstErrorMessage
+                                binding.patronymicET.requestFocus()
+                            }
+                            "first_name_en" -> {
+                                binding.firstNameEngET.error = firstErrorMessage
+                                binding.firstNameEngET.requestFocus()
+                            }
+                            "last_name_en" -> {
+                                binding.lastNameEngET.error = firstErrorMessage
+                                binding.lastNameEngET.requestFocus()
+                            }
+                            "iin" -> {
+                                binding.iinET.error = firstErrorMessage
+                                binding.iinET.requestFocus()
+                            }
+                            "email" -> {
+                                binding.emailET.error = firstErrorMessage
+                                binding.emailET.requestFocus()
+                            }
                         }
                     }
             }else if(response.isFailure()){
@@ -134,6 +157,8 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         if(requireContext().isNetworkAvailable()){
             if(validatePersonalData()){
                 viewModel.employee.value?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+            }else{
+                showErrorMessage(requireContext(), binding.personalDataFL, getString(R.string.invalid_data))
             }
         }else{
             showNoInternetDialog()
@@ -143,27 +168,33 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     private fun validatePersonalData(): Boolean{
         var isValid = true
 
-        if(binding.firstNameET.text.toString().isEmpty()){
-            binding.firstNameET.error = getString(R.string.fill_your_name)
+        if(binding.emailET.text.toString().isNotEmpty()){
+            if(!isEmailValid(binding.emailET.text.toString())){
+                binding.emailET.error = getString(R.string.invalid_email_address)
+                binding.emailET.requestFocus()
+                isValid = false
+            }
+        }
+
+        if(binding.iinET.text?.length != Config.IIN_LENGTH){
+            binding.iinET.error = getString(R.string.enter_iin_fully)
+            binding.iinET.requestFocus()
             isValid = false
         }
 
         if(binding.lastNameET.text.toString().isEmpty()){
             binding.lastNameET.error = getString(R.string.fill_your_surname)
+            binding.lastNameET.requestFocus()
             isValid = false
         }
 
-        if(binding.iinET.text?.length != Config.IIN_LENGTH){
-            binding.iinET.error = getString(R.string.enter_iin_fully)
+        if(binding.firstNameET.text.toString().isEmpty()){
+            binding.firstNameET.error = getString(R.string.fill_your_name)
+            binding.firstNameET.requestFocus()
             isValid = false
         }
 
-        if(binding.emailET.text.toString().isNotEmpty()){
-            if(!isEmailValid(binding.emailET.text.toString())){
-                binding.emailET.error = getString(R.string.invalid_email_address)
-                isValid = false
-            }
-        }
+
         return isValid
     }
 

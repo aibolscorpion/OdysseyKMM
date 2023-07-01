@@ -68,6 +68,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/firstNameTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -227,6 +228,7 @@
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:inputType="number"
                             android:text="@={employee.iin}"
+                            android:maxLength="12"
                             tools:text="@string/iin_value" />
 
                         <TextView
@@ -312,6 +314,7 @@
                             android:layout_marginTop="@dimen/margin"
                             android:onClick="@{() -> personalDataFragment.openPhoneNumberFragment()}"
                             android:stateListAnimator="@null" />
+
                         <TextView
                             style="@style/keyTextStyle2"
                             android:layout_width="wrap_content"
