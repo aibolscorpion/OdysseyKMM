@@ -101,6 +101,8 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         }else{
             showNoInternetDialog()
         }
+
+        SmsRetriever.getClient(requireActivity()).startSmsRetriever()
     }
 
     private fun setupEditTexts(){

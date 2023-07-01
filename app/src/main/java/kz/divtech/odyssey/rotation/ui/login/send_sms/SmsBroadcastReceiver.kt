@@ -20,7 +20,9 @@ class SmsBroadcastReceiver() : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if(intent?.action == SmsRetriever.SMS_RETRIEVED_ACTION){
             val extras = intent.extras
-            val status = extras!![SmsRetriever.EXTRA_STATUS] as Status?
+            val status = extras?.let {
+                it[SmsRetriever.EXTRA_STATUS] as Status?
+            }
             when (status!!.statusCode) {
                 CommonStatusCodes.SUCCESS -> {
                     val sms = extras.getString(SmsRetriever.EXTRA_SMS_MESSAGE)

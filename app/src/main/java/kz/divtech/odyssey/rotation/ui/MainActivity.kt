@@ -19,7 +19,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
-import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.appupdate.AppUpdateOptions
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         checkPermission()
         ifPushNotificationSent(intent, false)
 
-        SmsRetriever.getClient(this).startSmsRetriever()
+
 
         networkCallback = object: ConnectivityManager.NetworkCallback(){
             override fun onAvailable(network: Network) {
