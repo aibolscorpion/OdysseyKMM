@@ -24,6 +24,7 @@ import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListene
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
+import java.net.UnknownHostException
 
 class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     val adapter: NewsPagingAdapter by lazy { NewsPagingAdapter(this) }
@@ -104,8 +105,10 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    Toast.makeText(requireContext(), errorState.error.toString(),
-                        Toast.LENGTH_LONG).show()
+                    if(errorState.error !is UnknownHostException){
+                        Toast.makeText(requireContext(), errorState.error.toString(),
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             }

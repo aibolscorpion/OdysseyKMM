@@ -29,6 +29,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTri
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_STATUS
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_DEPARTURE_DATE
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
+import java.net.UnknownHostException
 
 class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback,
     SortTripDialog.OnTripSortClicked, OnFilterClicked {
@@ -125,8 +126,10 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    Toast.makeText(requireContext(), errorState.error.toString(),
-                        Toast.LENGTH_LONG).show()
+                    if(errorState.error !is UnknownHostException){
+                        Toast.makeText(requireContext(), errorState.error.toString(),
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             }

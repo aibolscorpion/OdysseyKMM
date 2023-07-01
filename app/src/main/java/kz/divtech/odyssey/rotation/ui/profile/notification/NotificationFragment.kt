@@ -21,6 +21,7 @@ import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
+import java.net.UnknownHostException
 
 class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.RetryCallback {
     val isRefreshing = ObservableBoolean()
@@ -80,8 +81,10 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    Toast.makeText(requireContext(), errorState.error.toString(),
-                        Toast.LENGTH_LONG).show()
+                    if(errorState.error !is UnknownHostException){
+                        Toast.makeText(requireContext(), errorState.error.toString(),
+                            Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             }
