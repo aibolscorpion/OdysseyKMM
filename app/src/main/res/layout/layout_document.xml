@@ -29,6 +29,7 @@
             android:text="@={document.number}"
             android:backgroundTint="@color/bottom_sheet_line"
             style="@style/profileMenuTextStyle"
+            android:singleLine="true"
             tools:text="@string/document_number_placeholder"/>
 
         <TextView
@@ -82,6 +83,7 @@
             android:text="@={document.issue_by}"
             android:backgroundTint="@color/bottom_sheet_line"
             style="@style/profileMenuTextStyle"
+            android:singleLine="true"
             tools:text="@string/issue_authority_placeholder"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
