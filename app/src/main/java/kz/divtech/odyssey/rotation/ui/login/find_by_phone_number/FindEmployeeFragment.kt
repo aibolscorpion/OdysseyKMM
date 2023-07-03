@@ -66,6 +66,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as MainActivity).binding.mainActivityCL.setBackgroundColor(App.appContext.getColor(R.color.status_bar))
         viewModel.getOrgInfoFromServer()
 
         viewModel.employeeResult.observe(viewLifecycleOwner){

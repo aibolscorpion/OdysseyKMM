@@ -3,10 +3,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/mainActivityCL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/main_bg"
+        tools:background="@color/main_bg"
         tools:context="kz.divtech.odyssey.rotation.ui.MainActivity">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -30,7 +31,7 @@
             android:layout_marginTop="12dp"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
 
             <ImageView

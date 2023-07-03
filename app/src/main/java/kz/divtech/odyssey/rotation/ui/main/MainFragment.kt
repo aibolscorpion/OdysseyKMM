@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -55,6 +56,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as MainActivity).binding.mainActivityCL.setBackgroundColor(App.appContext.getColor(R.color.main_bg))
         viewModel.sendDeviceInfo()
         viewModel.getOrgInfoFromServer()
 
