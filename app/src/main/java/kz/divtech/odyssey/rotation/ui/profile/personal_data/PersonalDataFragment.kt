@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.profile.personal_data
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,9 +41,14 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     private val countrySelectionRequestKey = "countrySelectionRequestKey"
     private val countrySelectionResultKey = "countrySelectionResultKey"
 
+    @Suppress("DEPRECATION")
     private val countrySelectionResultListener = FragmentResultListener { requestKey, bundle ->
         if (requestKey == countrySelectionRequestKey) {
-            val selectedCountry = bundle.getParcelable(countrySelectionResultKey, Country::class.java)
+            val selectedCountry = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(countrySelectionResultKey, Country::class.java)
+            } else {
+                bundle.getParcelable(countrySelectionResultKey) as Country?
+            }
             selectedCountry?.let {
                 viewModel.employee.value?.country_code = it.code
             }
