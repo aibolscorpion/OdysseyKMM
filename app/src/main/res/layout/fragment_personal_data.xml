@@ -82,6 +82,7 @@
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:text="@={employee.first_name}"
+                            android:singleLine="true"
                             tools:text="@string/name_placeholder" />
 
                         <TextView
@@ -99,6 +100,7 @@
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:text="@={employee.last_name}"
+                            android:singleLine="true"
                             tools:text="@string/surname_placeholder" />
 
 
@@ -118,6 +120,7 @@
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:text="@={employee.patronymic}"
+                            android:singleLine="true"
                             tools:text="@string/father_name_placeholder" />
 
                         <TextView
@@ -135,6 +138,7 @@
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:text="@={employee.first_name_en}"
+                            android:singleLine="true"
                             tools:text="@string/name_en_placeholder" />
 
                         <TextView
@@ -152,6 +156,7 @@
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:text="@={employee.last_name_en}"
+                            android:singleLine="true"
                             tools:text="@string/surname_en_placeholder" />
 
                         <TextView
@@ -228,6 +233,7 @@
                             android:backgroundTint="@color/bottom_sheet_line"
                             android:inputType="number"
                             android:text="@={employee.iin}"
+                            android:singleLine="true"
                             android:maxLength="12"
                             tools:text="@string/iin_value" />
 
@@ -328,6 +334,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:text="@={employee.email}"
+                            android:singleLine="true"
                             android:backgroundTint="@color/bottom_sheet_line"
                             style="@style/profileMenuTextStyle" />
 
