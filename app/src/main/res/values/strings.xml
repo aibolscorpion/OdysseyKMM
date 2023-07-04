@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Odyssey Rotation</string>
+    <string name="app_name">Odyssey</string>
 
     -----------------------------------------------------------------------------------------------
     //Страница Авторизации с помощью номера телефона
     <string name="login">Войти в аккаунт</string>
     <string name="telephone_number_linked_to_odyssey_id">По номеру телефона привязанному к Odyssey ID</string>
     <string name="enter">Войти</string>
-    <string name="terms_of_service_and_user_agreement">Авторизируясь вы автоматически соглашаетесь с <font color="#40BDFF"> правилами сервиса</font> и <font color="#40BDFF">пользовательским соглашением</font> сервиса Odyssey Rotation</string>
+    <string name="terms_of_service_and_user_agreement">Авторизируясь вы автоматически соглашаетесь с <font color="#40BDFF"> правилами сервиса</font> и <font color="#40BDFF">пользовательским соглашением</font> сервиса Odyssey</string>
     <string name="telephone">Телефон</string>
     <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
     <string name="phone_number_placeholder">+7 (</string>
@@ -315,7 +315,7 @@
     //Страница Вопросы и Ответы
     <string name="what_r_u_interested_in">Что вас интересует?</string>
     <string name="question_placeholder">Могу ли я сейчас оформить ЖД-билеты самостоятельно?</string>
-    <string name="answer_placeholder">Возможность самостоятельно оформлять ЖД билеты и авиабилеты, появится в скором обновлении приложения Odyssey Rotation. Следите за новостями!</string>
+    <string name="answer_placeholder">Возможность самостоятельно оформлять ЖД билеты и авиабилеты, появится в скором обновлении приложения Odyssey. Следите за новостями!</string>
     <string name="open">Открыть</string>
     <string name="empty_faq_title">Вопросы не найдены</string>
     <string name="empty_faq_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
