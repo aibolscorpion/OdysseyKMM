@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.model.profile.employee
+package kz.divtech.odyssey.rotation.domain.model.errors
 
 data class ValidationErrorResponse(
     val errors: Map<String, List<String>>,

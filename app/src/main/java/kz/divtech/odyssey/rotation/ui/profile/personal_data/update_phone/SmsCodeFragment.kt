@@ -20,7 +20,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentEnterCodeBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
+import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericKeyEvent
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericTextWatcher
@@ -103,11 +103,6 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
             event.getContentIfNotHandled()?.let { response ->
                 if(response.isSuccess()) {
                     openPhoneUpdatedFragment()
-                }else if(response.isHttpException() && (response.statusCode == Constants.BAD_REQUEST_CODE)) {
-                    InputUtils.showErrorMessage(
-                        requireContext(), dataBinding.sendSmsFL,
-                        getString(R.string.filled_incorrect_code))
-
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)) {
                     val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
                     InputUtils.showErrorMessage(
@@ -120,6 +115,7 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
             }
         }
 
+        SmsRetriever.getClient(requireActivity()).startSmsRetriever()
     }
 
     override fun onResume() {

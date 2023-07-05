@@ -20,7 +20,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
-import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
+import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
@@ -68,7 +68,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         binding.viewModel = viewModel
 
         viewModel.employee.observe(viewLifecycleOwner){
-            it.let {
+            it?.let {
                 initialCountryCode = it.country_code
                 binding.employee = it
             }

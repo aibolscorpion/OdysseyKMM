@@ -21,7 +21,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
-import kz.divtech.odyssey.rotation.domain.model.profile.employee.ValidationErrorResponse
+import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 
