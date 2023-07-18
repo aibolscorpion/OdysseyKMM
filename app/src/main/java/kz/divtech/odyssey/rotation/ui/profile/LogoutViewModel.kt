@@ -26,6 +26,11 @@ class LogoutViewModel(
 
     val pBarVisibility = ObservableInt(View.GONE)
 
+    fun getAndInsterEmployee(){
+        viewModelScope.launch {
+            employeeRepository.getAndInstertEmployee()
+        }
+    }
     fun getNotificationsFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
@@ -41,8 +46,6 @@ class LogoutViewModel(
             pBarVisibility.set(View.GONE)
         }
     }
-
-
 
     fun deleteAllDataAsync() = viewModelScope.async{
         SharedPrefs.clearAuthToken(App.appContext)

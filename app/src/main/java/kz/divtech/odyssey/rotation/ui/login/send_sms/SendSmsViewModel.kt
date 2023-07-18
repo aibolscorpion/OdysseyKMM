@@ -8,7 +8,6 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
@@ -53,7 +52,7 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
                 val loginResponse = response.asSuccess().value
                 SharedPrefs.saveAuthToken(loginResponse.token, App.appContext)
                 SharedPrefs.saveOrganizationName(loginResponse.organization, App.appContext)
-                insertEmployeeToDB(loginResponse.employee)
+                employeeRepository.insertEmployee(loginResponse.employee)
             }
             _loginResult.value = Event(response)
             pBarVisibility.set(View.GONE)
@@ -71,9 +70,4 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
         }
     }
 
-    private fun insertEmployeeToDB(employee: Employee) {
-        viewModelScope.launch {
-            employeeRepository.insertEmployee(employee)
-        }
-    }
 }

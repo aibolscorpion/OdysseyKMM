@@ -41,7 +41,7 @@ class MainViewModel(private val tripsRepository: TripsRepository,
     fun getEmployeeFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            employeeRepository.getEmployeeFromServer()
+            employeeRepository.getAndInstertEmployee()
             pBarVisibility.set(View.GONE)
         }
 

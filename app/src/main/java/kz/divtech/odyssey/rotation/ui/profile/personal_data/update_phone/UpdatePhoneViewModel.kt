@@ -51,7 +51,7 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewMode
         viewModelScope.launch {
             val response = RetrofitClient.getApiService().updatePhoneConfirm(authRequest)
             if(response.isSuccess()) {
-                employeeRepository.getEmployeeFromServer()
+                employeeRepository.getAndInstertEmployee()
             }
             _updatedResult.value = Event(response)
             pBarVisibility.set(View.GONE)

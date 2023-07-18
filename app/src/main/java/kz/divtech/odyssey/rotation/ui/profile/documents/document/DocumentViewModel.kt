@@ -27,7 +27,7 @@ class DocumentViewModel(val employeeRepository: EmployeeRepository) : ViewModel(
             pBarVisibility.set(View.VISIBLE)
             val response = RetrofitClient.getApiService().updateDocument(document)
             if(response.isSuccess()){
-                employeeRepository.getEmployeeFromServer()
+                employeeRepository.getAndInstertEmployee()
                 _documentUpdated.value = true
             }
             _updateDocumentResult.value = response

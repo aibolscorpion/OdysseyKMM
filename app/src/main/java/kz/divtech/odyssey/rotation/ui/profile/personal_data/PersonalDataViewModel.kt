@@ -27,7 +27,7 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
         viewModelScope.launch {
             val response = employeeRepository.updateEmployee(employee)
             if(response.isSuccess()){
-                employeeRepository.getEmployeeFromServer()
+                employeeRepository.getAndInstertEmployee()
                 _personalDataUpdated.value = Event(citizenshipChanged)
             }
             _updatePersonalResult.value = response

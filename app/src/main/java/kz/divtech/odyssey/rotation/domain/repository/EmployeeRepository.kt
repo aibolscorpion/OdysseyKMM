@@ -31,7 +31,7 @@ class EmployeeRepository(private val dao: Dao) {
         dao.deleteEmployee()
     }
 
-    suspend fun getEmployeeFromServer(){
+    suspend fun getAndInstertEmployee(){
         val response = RetrofitClient.getApiService().getEmployeeInfo()
         if(response.isSuccess()){
             val employee = response.asSuccess().value.data

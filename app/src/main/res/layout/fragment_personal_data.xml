@@ -20,6 +20,7 @@
         android:layout_height="match_parent">
 
         <ScrollView
+            android:id="@+id/personalDataSV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -87,6 +88,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/lastNameTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -106,6 +108,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/patronymicTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -125,6 +128,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/firstNameEngTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -143,6 +147,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/lastNameEngTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -219,6 +224,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/iinTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -323,6 +329,7 @@
 
                         <TextView
                             style="@style/keyTextStyle2"
+                            android:id="@+id/emailTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"

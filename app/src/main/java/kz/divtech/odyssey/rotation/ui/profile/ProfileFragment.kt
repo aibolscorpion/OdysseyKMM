@@ -40,6 +40,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getAndInsterEmployee()
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let {
                 binding.employeeNameTV.text = it.full_name

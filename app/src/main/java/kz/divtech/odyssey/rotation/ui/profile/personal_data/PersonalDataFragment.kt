@@ -106,31 +106,39 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
                         when(field){
                             "first_name" -> {
                                 binding.firstNameET.error = firstErrorMessage
-                                binding.firstNameET.requestFocus()
+                                binding.personalDataSV.post {
+                                    binding.personalDataSV.smoothScrollTo(0, binding.firstNameTV.bottom)
+                                }
                             }
                             "last_name" -> {
                                 binding.lastNameET.error = firstErrorMessage
-                                binding.lastNameET.requestFocus()
+                                binding.personalDataSV.post {
+                                    binding.personalDataSV.smoothScrollTo(0, binding.lastNameTV.bottom)
+                                }
                             }
                             "patronymic" -> {
                                 binding.patronymicET.error = firstErrorMessage
-                                binding.patronymicET.requestFocus()
+                                binding.personalDataSV.post {
+                                    binding.personalDataSV.smoothScrollTo(0, binding.patronymicTV.bottom)
+                                }
                             }
                             "first_name_en" -> {
                                 binding.firstNameEngET.error = firstErrorMessage
-                                binding.firstNameEngET.requestFocus()
+                                binding.personalDataSV.post {
+                                    binding.personalDataSV.smoothScrollTo(0, binding.firstNameEngTV.bottom)
+                                }
                             }
                             "last_name_en" -> {
                                 binding.lastNameEngET.error = firstErrorMessage
-                                binding.lastNameEngET.requestFocus()
+                                binding.personalDataSV.post {
+                                    binding.personalDataSV.smoothScrollTo(0, binding.lastNameEngTV.bottom)
+                                }
                             }
                             "iin" -> {
                                 binding.iinET.error = firstErrorMessage
-                                binding.iinET.requestFocus()
                             }
                             "email" -> {
                                 binding.emailET.error = firstErrorMessage
-                                binding.emailET.requestFocus()
                             }
                         }
                     }
@@ -177,26 +185,28 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         if(binding.emailET.text.toString().isNotEmpty()){
             if(!isEmailValid(binding.emailET.text.toString())){
                 binding.emailET.error = getString(R.string.invalid_email_address)
-                binding.emailET.requestFocus()
                 isValid = false
             }
         }
 
         if(binding.iinET.text?.length != Config.IIN_LENGTH){
             binding.iinET.error = getString(R.string.enter_iin_fully)
-            binding.iinET.requestFocus()
             isValid = false
         }
 
         if(binding.lastNameET.text.toString().isEmpty()){
             binding.lastNameET.error = getString(R.string.fill_your_surname)
-            binding.lastNameET.requestFocus()
+            binding.personalDataSV.post {
+                binding.personalDataSV.smoothScrollTo(0, binding.lastNameTV.bottom)
+            }
             isValid = false
         }
 
         if(binding.firstNameET.text.toString().isEmpty()){
             binding.firstNameET.error = getString(R.string.fill_your_name)
-            binding.firstNameET.requestFocus()
+            binding.personalDataSV.post {
+                binding.personalDataSV.smoothScrollTo(0, binding.firstNameTV.bottom)
+            }
             isValid = false
         }
 
