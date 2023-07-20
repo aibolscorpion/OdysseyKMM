@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import java.net.UnknownHostException
 
 class FaqFragment : Fragment() {
     private var _binding : FragmentFaqBinding? = null
@@ -36,7 +38,7 @@ class FaqFragment : Fragment() {
 
         viewModel.faqResult.observe(viewLifecycleOwner){ result ->
             result?.let{
-                if(result.isFailure()){
+                if(result.isFailure() && result.asFailure().error !is UnknownHostException){
                     Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
                 }
             }
