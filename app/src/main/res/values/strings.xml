@@ -106,7 +106,7 @@
     <string name="questions_answers">вопрос/ответ</string>
     <string name="download_successful_restart_in_5_seconds">Перезапуск приложения через 5 секунд</string>
     <string name="in_app_update_error_result_code">Ошибка обновления! Код результата: %1$d</string>
-    <string name="internet_connection_is_off">Отсутсвует подключение к сети</string>
+    <string name="internet_connection_is_off">Отсутствует подключение к сети</string>
 
     <string name="monday">Пн</string>
     <string name="tuesday">Вт</string>

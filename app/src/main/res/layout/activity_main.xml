@@ -22,17 +22,19 @@
 
         <LinearLayout
             android:id="@+id/noInternetLL"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_no_internet"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="@dimen/margin"
+            android:padding="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/mainToolbar">
+            app:layout_constraintTop_toBottomOf="@+id/mainToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
                 android:layout_width="wrap_content"
