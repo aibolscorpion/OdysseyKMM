@@ -74,6 +74,7 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
             if(requireContext().isNetworkAvailable()){
                 viewModel.getUserAgreementFromServer()
             }else{
+                findNavController().popBackStack()
                 showNoInternetDialog()
             }
         }
