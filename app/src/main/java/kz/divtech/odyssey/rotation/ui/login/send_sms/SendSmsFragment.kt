@@ -17,6 +17,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
+import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
@@ -25,6 +26,7 @@ import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideKeyboard
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import java.net.UnknownHostException
 
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
     private val editTextList = ArrayList<EditText>()
@@ -74,7 +76,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                     startTimer(seconds)
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL,
                         getString(R.string.too_many_request_message, seconds))
-                }else{
+                }else if(response.isFailure() && response.error !is UnknownHostException){
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
                 }
                 editTextList.isEnabled(true)
