@@ -28,7 +28,6 @@ import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
-import kz.divtech.odyssey.rotation.utils.Utils.reverseInfiniteAnimation
 import java.time.temporal.ChronoUnit
 
 object BindingAdapter {
@@ -180,11 +179,10 @@ object BindingAdapter {
             Constants.REFUND_STATUS_ERROR -> imageView.setImageResource(R.drawable.icon_refund_partly_error_red)
             Constants.REFUND_STATUS_PENDING -> {
                 imageView.setImageResource(R.drawable.icon_refund_pending)
-                imageView.reverseInfiniteAnimation()
             }
             Constants.REFUND_STATUS_REJECTED -> imageView.setImageResource(R.drawable.icon_refund_rejected)
             null -> Glide.with(imageView.context).load(R.mipmap.ktzh_logo).into(imageView) }
-        }
+    }
 
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
     @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String?, depStationName: String?, arrStationName: String?){

@@ -1,10 +1,11 @@
 package kz.divtech.odyssey.rotation.utils
 
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
+import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import android.view.animation.RotateAnimation
 import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -89,15 +90,11 @@ object Utils {
     }
 
     fun ImageView.reverseInfiniteAnimation() {
-        val animator = ValueAnimator.ofFloat(0f, 360f)
-        animator.addUpdateListener { valueAnimator ->
-            val rotation = valueAnimator.animatedValue as Float
-            this.rotation = rotation
-        }
-        animator.repeatCount = ValueAnimator.INFINITE
-        animator.interpolator = LinearInterpolator()
-        animator.duration = 2000 // Set the desired duration for one cycle
-        animator.start()
+        val animation = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
+            0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        animation.duration = 2000
+        animation.interpolator = LinearInterpolator()
+        animation.repeatCount = Animation.INFINITE
+        this.startAnimation(animation)
     }
-
 }
