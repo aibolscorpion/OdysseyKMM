@@ -49,11 +49,13 @@ interface ApiService {
     @GET("applications/active")
     suspend fun getActiveTrips(@Query("page") pageIndex: Int,
                                @Query("status") status: String,
-                               @Query("direction") direction: String): Result<TripResponse>
+                               @Query("direction") direction: String,
+                               @Query("sort_by") sortBy: String): Result<TripResponse>
     @GET("applications/archive")
     suspend fun getArchiveTrips(@Query("page") pageIndex: Int,
                                 @Query("status") status: String,
-                                @Query("direction") direction: String): Result<TripResponse>
+                                @Query("direction") direction: String,
+                                @Query("sort_by") sortBy: String): Result<TripResponse>
 
     @GET("applications/{id}")
     suspend fun getTripById(@Path("id") tripId: Int): Result<SingleTrip>

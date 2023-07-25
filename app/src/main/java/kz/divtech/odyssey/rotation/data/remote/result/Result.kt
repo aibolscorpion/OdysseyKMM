@@ -1,7 +1,10 @@
 @file:Suppress("unused")
 package kz.divtech.odyssey.rotation.data.remote.result
 
+import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import okhttp3.Headers
+import java.net.UnknownHostException
 
 sealed class Result<out T> {
 
@@ -30,7 +33,12 @@ sealed class Result<out T> {
 
     sealed class Failure<E : Throwable>(open val error: E? = null) : Result<Nothing>() {
 
-        override fun toString() = "$error"
+        override fun toString(): String{
+            if(error is UnknownHostException){
+                return App.appContext.getString(R.string.no_internet_connection)
+            }
+            return "$error"
+        }
 
         class Error(override val error: Throwable) : Failure<Throwable>(error)
 

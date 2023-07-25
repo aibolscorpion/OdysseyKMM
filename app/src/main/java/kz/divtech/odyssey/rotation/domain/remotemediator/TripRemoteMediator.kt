@@ -18,7 +18,8 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTri
 class TripRemoteMediator(val dao: Dao,
                          val isActive: Boolean,
                          val status: Array<String> = arrayOf(),
-                         val direction: String = Constants.ALL_DIRECTION) : RemoteMediator<Int, Trip>() {
+                         val direction: String = Constants.ALL_DIRECTION,
+                         val sortBy: String = "date") : RemoteMediator<Int, Trip>() {
 
     private var pageIndex = 0
 
@@ -26,9 +27,11 @@ class TripRemoteMediator(val dao: Dao,
         pageIndex = getPageIndex(loadType)?:
             return MediatorResult.Success(true)
         val response = if(isActive){
-            RetrofitClient.getApiService().getActiveTrips(pageIndex, status.joinToString(","), direction)
+            RetrofitClient.getApiService().getActiveTrips(pageIndex, status.joinToString(","),
+                direction, sortBy)
         }else{
-            RetrofitClient.getApiService().getArchiveTrips(pageIndex, status.joinToString(","), direction)
+            RetrofitClient.getApiService().getArchiveTrips(pageIndex, status.joinToString(","),
+                direction, sortBy)
         }
 
         return if(response.isSuccess()){

@@ -67,13 +67,13 @@ class TripsRepository(private val dao : Dao) {
         return if(isActive){
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = true),
+                remoteMediator = TripRemoteMediator(dao, isActive = true, sortBy = "status"),
                 pagingSourceFactory = {dao.getActiveTripsSortedByStatus()}
             ).flow
         }else{
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = false),
+                remoteMediator = TripRemoteMediator(dao, isActive = false, sortBy = "status"),
                 pagingSourceFactory = {dao.getArchiveTripsSortedByStatus()}
             ).flow
         }
