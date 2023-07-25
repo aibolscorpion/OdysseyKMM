@@ -38,9 +38,9 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     val viewModel: ActiveTripsViewModel by viewModels{
         ActiveTripsViewModel.TripsViewModelFactory((activity as MainActivity).tripsRepository)
     }
-    private var sortType = BY_DEPARTURE_DATE
     private var _binding: FragmentActiveTripsBinding? = null
     private val binding get() = _binding!!
+    private var isActiveTrips: Boolean? = null
 
     companion object {
         fun newInstance(activeTrips: Boolean) =
@@ -70,18 +70,18 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     private fun getTripsSortedByDate() {
-        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
+        isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch {
             isActiveTrips?.let {
                 viewModel.getTripsSortedByDate(it).collectLatest { pagingData ->
                     adapter.submitData(pagingData)
+                    binding.tripsRV.scrollToPosition(0)
                 }
             }
         }
     }
 
     private fun getTripsSortedByStatus(){
-        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch{
             isActiveTrips?.let {
                 viewModel.getTripsSortedByStatus(it).collectLatest { pagingData ->
@@ -92,7 +92,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     private fun getFilteredTrips(){
-        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch{
             isActiveTrips?.let {
                 viewModel.getFilteredTrips(it).collectLatest { pagingData ->
@@ -103,7 +102,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     private fun loadStates(){
-        val isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest{ loadState ->
 
@@ -138,18 +136,36 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     fun refreshTrips(){
         refreshing.set(true)
-        adapter.refresh()
-        refreshing.set(false)
+        lifecycleScope.launch{
+            isActiveTrips?.let { viewModel.refreshTrips(it).collectLatest { pagingData ->
+                adapter.submitData(pagingData)
+                refreshing.set(false)
+            }}
+        }
+
     }
 
     fun openSortTripDialog(){
-        val sortTripDialog = SortTripDialog(this, sortType)
-        sortTripDialog.show(activity?.supportFragmentManager!!, "SortTripDialog")
+        val sortTripDialog = viewModel.sortType.value?.let { SortTripDialog(this, it) }
+        sortTripDialog?.show(activity?.supportFragmentManager!!, "SortTripDialog")
+
+        viewModel.sortType.observe(viewLifecycleOwner){ type ->
+            when(type){
+                BY_STATUS -> binding.sortTripTV.text = getString(R.string.sort_by_status)
+                else -> binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
+            }
+        }
+
     }
 
     fun openFilterTripDialog(){
         val filterTripDialog = FilterTripDialog(this)
         filterTripDialog.show(childFragmentManager, "FilterTripDialog")
+
+        viewModel.appliedFilterCount.observe(viewLifecycleOwner) { appliedFilterCount ->
+            binding.appliedFilterCountTV.isVisible = appliedFilterCount != 0
+            binding.appliedFilterCountTV.text = appliedFilterCount.toString()
+        }
     }
 
     override fun onTripClicked(trip: Trip?) {
@@ -177,20 +193,20 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     override fun onDateClicked() {
         binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
-        sortType = BY_DEPARTURE_DATE
+        viewModel.setSortType(BY_DEPARTURE_DATE)
+        viewModel.resetFilter()
         getTripsSortedByDate()
     }
 
     override fun onStatusClicked() {
-        binding.sortTripTV.text = getString(R.string.sort_by_status)
-        sortType = BY_STATUS
+        viewModel.setSortType(BY_STATUS)
+        viewModel.resetFilter()
         getTripsSortedByStatus()
     }
 
     override fun applyFilterClicked() {
+        viewModel.setSortType(BY_DEPARTURE_DATE)
         getFilteredTrips()
-        binding.appliedFilterCountTV.isVisible = viewModel.appliedFilterCount != 0
-        binding.appliedFilterCountTV.text = viewModel.appliedFilterCount.toString()
     }
 
 }

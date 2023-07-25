@@ -70,7 +70,7 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
     }
 
     fun applyFilter(){
-        viewModel.appliedFilterCount = 0
+        viewModel.setAppliedFilterCount(0)
         getCheckedStatusRB()
         getCheckedDirection()
         filterClicked.applyFilterClicked()
@@ -95,7 +95,7 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
 
         if(viewModel.checkedStatusList.isNotEmpty() &&
                         viewModel.checkedStatusList.size != allStatusList.size){
-            viewModel.appliedFilterCount++
+            viewModel.increaseByOneFilterCount()
         }else{
             viewModel.checkedStatusList.addAll(allStatusList)
         }
@@ -108,11 +108,11 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
                 viewModel.direction = Constants.ALL_DIRECTION
             }
             R.id.toHomeRB -> {
-                viewModel.appliedFilterCount++
+                viewModel.increaseByOneFilterCount()
                 viewModel.direction = Constants.TO_HOME
             }
             R.id.toWorkRB -> {
-                viewModel.appliedFilterCount++
+                viewModel.increaseByOneFilterCount()
                 viewModel.direction = Constants.TO_WORK
             }
         }
