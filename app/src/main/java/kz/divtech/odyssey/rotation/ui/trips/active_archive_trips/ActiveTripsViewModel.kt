@@ -18,7 +18,7 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
     private var _appliedFilterCount = MutableLiveData(0)
     val appliedFilterCount: LiveData<Int> = _appliedFilterCount
 
-    fun refreshTrips(isActive: Boolean): Flow<PagingData<Trip>> {
+    fun getFlowTrips(isActive: Boolean): Flow<PagingData<Trip>> {
         val sortedTripsFlow = when (_sortType.value) {
             SortTripType.BY_STATUS -> tripsRepository.getTripsSortedByStatus(isActive)
             else -> tripsRepository.getTripsSortedByDate(isActive)

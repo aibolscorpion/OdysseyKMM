@@ -60,12 +60,24 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         binding.thisFragment = this
         setupTripsPagingAdapter()
         loadStates()
+
+        viewModel.sortType.observe(viewLifecycleOwner){ type ->
+            when(type){
+                BY_STATUS -> binding.sortTripTV.text = getString(R.string.sort_by_status)
+                else -> binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
+            }
+        }
+
+        viewModel.appliedFilterCount.observe(viewLifecycleOwner) { appliedFilterCount ->
+            binding.appliedFilterCountTV.isVisible = appliedFilterCount != 0
+            binding.appliedFilterCountTV.text = appliedFilterCount.toString()
+        }
     }
 
     private fun setupTripsPagingAdapter(){
         binding.tripsRV.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        refreshTrips()
+        getTrips()
     }
 
     private fun loadStates(){
@@ -101,38 +113,24 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         }
     }
 
-    fun refreshTrips(){
+    fun getTrips(){
         refreshing.set(true)
         lifecycleScope.launch{
-            isActiveTrips?.let { viewModel.refreshTrips(it).collectLatest { pagingData ->
+            isActiveTrips?.let { viewModel.getFlowTrips(it).collectLatest { pagingData ->
                 adapter.submitData(pagingData)
-                binding.tripsRV.scrollToPosition(0)
-                refreshing.set(false)
             }}
         }
-
+        refreshing.set(false)
     }
 
     fun openSortTripDialog(){
         val sortTripDialog = viewModel.sortType.value?.let { SortTripDialog(this, it) }
         sortTripDialog?.show(activity?.supportFragmentManager!!, "SortTripDialog")
-
-        viewModel.sortType.observe(viewLifecycleOwner){ type ->
-            when(type){
-                BY_STATUS -> binding.sortTripTV.text = getString(R.string.sort_by_status)
-                else -> binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
-            }
-        }
     }
 
     fun openFilterTripDialog(){
         val filterTripDialog = FilterTripDialog(this)
         filterTripDialog.show(childFragmentManager, "FilterTripDialog")
-
-        viewModel.appliedFilterCount.observe(viewLifecycleOwner) { appliedFilterCount ->
-            binding.appliedFilterCountTV.isVisible = appliedFilterCount != 0
-            binding.appliedFilterCountTV.text = appliedFilterCount.toString()
-        }
     }
 
     override fun onTripClicked(trip: Trip?) {
@@ -161,18 +159,18 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
         viewModel.setSortType(BY_DEPARTURE_DATE)
         viewModel.resetFilter()
-        refreshTrips()
+        getTrips()
     }
 
     override fun onStatusClicked() {
         viewModel.setSortType(BY_STATUS)
         viewModel.resetFilter()
-        refreshTrips()
+        getTrips()
     }
 
     override fun applyFilterClicked() {
         viewModel.setSortType(BY_DEPARTURE_DATE)
-        refreshTrips()
+        getTrips()
     }
 
 }
