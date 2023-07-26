@@ -58,47 +58,14 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         super.onViewCreated(view, savedInstanceState)
 
         binding.thisFragment = this
-
         setupTripsPagingAdapter()
         loadStates()
-
     }
 
     private fun setupTripsPagingAdapter(){
         binding.tripsRV.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
-        getTripsSortedByDate()
-    }
-
-    private fun getTripsSortedByDate() {
         isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        lifecycleScope.launch {
-            isActiveTrips?.let {
-                viewModel.getTripsSortedByDate(it).collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                    binding.tripsRV.scrollToPosition(0)
-                }
-            }
-        }
-    }
-
-    private fun getTripsSortedByStatus(){
-        lifecycleScope.launch{
-            isActiveTrips?.let {
-                viewModel.getTripsSortedByStatus(it).collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
-            }
-        }
-    }
-
-    private fun getFilteredTrips(){
-        lifecycleScope.launch{
-            isActiveTrips?.let {
-                viewModel.getFilteredTrips(it).collectLatest { pagingData ->
-                    adapter.submitData(pagingData)
-                }
-            }
-        }
+        refreshTrips()
     }
 
     private fun loadStates(){
@@ -139,6 +106,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         lifecycleScope.launch{
             isActiveTrips?.let { viewModel.refreshTrips(it).collectLatest { pagingData ->
                 adapter.submitData(pagingData)
+                binding.tripsRV.scrollToPosition(0)
                 refreshing.set(false)
             }}
         }
@@ -155,7 +123,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
                 else -> binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
             }
         }
-
     }
 
     fun openFilterTripDialog(){
@@ -186,7 +153,6 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         this.arguments = Bundle()
     }
 
-
     override fun onRetryClicked() {
         adapter.retry()
     }
@@ -195,18 +161,18 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
         viewModel.setSortType(BY_DEPARTURE_DATE)
         viewModel.resetFilter()
-        getTripsSortedByDate()
+        refreshTrips()
     }
 
     override fun onStatusClicked() {
         viewModel.setSortType(BY_STATUS)
         viewModel.resetFilter()
-        getTripsSortedByStatus()
+        refreshTrips()
     }
 
     override fun applyFilterClicked() {
         viewModel.setSortType(BY_DEPARTURE_DATE)
-        getFilteredTrips()
+        refreshTrips()
     }
 
 }

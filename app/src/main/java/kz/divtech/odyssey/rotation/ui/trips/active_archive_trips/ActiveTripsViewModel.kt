@@ -2,7 +2,6 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import androidx.lifecycle.*
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -18,18 +17,6 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
 
     private var _appliedFilterCount = MutableLiveData(0)
     val appliedFilterCount: LiveData<Int> = _appliedFilterCount
-
-    fun getTripsSortedByDate(isActive: Boolean): Flow<PagingData<Trip>> {
-        return tripsRepository.getTripsSortedByDate(isActive).cachedIn(viewModelScope)
-    }
-    fun getTripsSortedByStatus(isActive: Boolean)
-            : Flow<PagingData<Trip>> {
-        return tripsRepository.getTripsSortedByStatus(isActive).cachedIn(viewModelScope)
-    }
-
-    fun getFilteredTrips(isActive: Boolean): Flow<PagingData<Trip>> {
-        return tripsRepository.getFilteredTrips(isActive, checkedStatusList.toTypedArray(), direction).cachedIn(viewModelScope)
-    }
 
     fun refreshTrips(isActive: Boolean): Flow<PagingData<Trip>> {
         val sortedTripsFlow = when (_sortType.value) {
