@@ -6,10 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
@@ -146,6 +150,15 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
                 Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.personal_data))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "PersonalDataFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     fun checkCitizenshipAndUpdate(){

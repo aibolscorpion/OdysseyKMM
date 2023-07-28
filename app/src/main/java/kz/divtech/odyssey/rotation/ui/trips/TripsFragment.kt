@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentTripsBinding
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFragment
@@ -36,6 +40,15 @@ class TripsFragment : Fragment() {
             binding.indicator.layoutParams = indicatorParams
         }
         setupViewPager()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.trips))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "TripsFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     private fun setupViewPager(){

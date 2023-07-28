@@ -4,10 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
@@ -57,6 +61,15 @@ class FindEmployeeByIINFragment : Fragment() {
         }
 
         viewModel.employeeResult
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.find_employee_by_iin))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FindEmployeeByIInFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     fun loginByIIN(){

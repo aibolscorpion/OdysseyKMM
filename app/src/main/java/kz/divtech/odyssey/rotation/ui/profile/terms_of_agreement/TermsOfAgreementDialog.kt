@@ -10,11 +10,15 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogTermsOfAgreementBinding
@@ -79,6 +83,15 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
             }
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.terms_of_agreement))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "TermsOfAgreementDialog")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     private fun showData(htmlText: String){

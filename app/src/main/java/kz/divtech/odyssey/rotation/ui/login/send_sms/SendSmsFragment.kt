@@ -7,11 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
@@ -105,6 +109,17 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         SmsRetriever.getClient(requireActivity()).startSmsRetriever()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        activity?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.send_sms_code))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "SendSmsFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
+
     private fun setupEditTexts(){
         editTextList.add(dataBinding.digitOneET)
         editTextList.add(dataBinding.digitTwoET)
@@ -165,12 +180,6 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
     fun hideContactSupportBtn(){
         dataBinding.contactSupportLLC.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        activity?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
     }
 
     override fun onPause() {

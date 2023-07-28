@@ -13,9 +13,13 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.R
@@ -96,6 +100,16 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
         super.onStart()
 
         showKeyboard(requireContext(), dataBinding.phoneNumberET)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.find_employee_by_phone_number))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FindEmployeeFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     private fun setupMaskedEditText(){

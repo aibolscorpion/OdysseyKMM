@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
@@ -68,6 +73,15 @@ class FaqFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.questions_and_answers))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "FaqFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
     override fun onDestroyView() {

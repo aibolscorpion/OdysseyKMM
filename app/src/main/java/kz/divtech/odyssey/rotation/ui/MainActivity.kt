@@ -28,6 +28,9 @@ import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
@@ -85,6 +88,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()) {}
 
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,6 +145,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             }
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
+        firebaseAnalytics = Firebase.analytics
     }
 
     override fun onStart() {

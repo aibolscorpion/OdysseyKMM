@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
@@ -12,9 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.ui.MainActivity
@@ -48,6 +53,14 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
         loadState()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.notification))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "NotificationFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
 
     private fun setupTripsPagingAdapter() {
         binding.notificationRecyclerView.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))

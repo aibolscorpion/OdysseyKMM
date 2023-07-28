@@ -446,4 +446,9 @@
     <string name="no_internet_connection">Нет соединения с интернетом</string>
     <string name="no_internet_connection_desc">Не получается обновить данные: нет подключения к сети интернет. Попробуйте позже.</string>
 
+    <string name="find_employee_by_phone_number">Поиск сотрудника по номеру телефона</string>
+    <string name="find_employee_by_iin">Поиск сотрудника по ИИН</string>
+    <string name="send_sms_code">Отправка смс кода</string>
+    <string name="update_phone_number_without_auth">Обновление номер телефона без авторизации</string>
+    <string name="update_phone_number_with_auth">Обновление номер телефона c авторизацией</string>
 </resources>

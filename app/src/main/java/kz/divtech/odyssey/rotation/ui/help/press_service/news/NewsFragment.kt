@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
 import androidx.fragment.app.Fragment
@@ -14,6 +15,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -52,6 +56,14 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
         loadState()
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val bundle = bundleOf()
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.press_service))
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS, "NewsFragment")
+        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
+    }
 
     private fun setNews(){
         binding.newsRecyclerView.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
