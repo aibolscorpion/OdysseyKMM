@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
@@ -92,7 +93,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
                     loadState.source.refresh is LoadState.NotLoading
                             || loadState.mediator?.refresh is LoadState.NotLoading
 
-                binding.tripsPBar.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                binding.tripsPBar.isVisible = loadState.mediator?.append is LoadState.Loading
 
                 binding.tripsRetryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error
                         && adapter.itemCount == 0
@@ -116,6 +117,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     fun getTrips(){
         refreshing.set(true)
         lifecycleScope.launch{
+            adapter.submitData(PagingData.empty())
             isActiveTrips?.let { viewModel.getFlowTrips(it).collectLatest { pagingData ->
                 adapter.submitData(pagingData)
             }}

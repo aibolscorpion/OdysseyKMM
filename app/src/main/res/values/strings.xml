@@ -133,7 +133,7 @@
     <string name="voucher_balance">Остаток\nпо ваучеру</string>
     <string name="zero_balance">0 ₸</string>
     <string name="spent">Потрачено</string>
-    <string name="update_date_will_be_shown_after_opening">Дата обновления ваучера отобразиться после его открытия</string>
+    <string name="update_date_will_be_shown_after_opening">Дата обновления ваучера отобразится после его открытия</string>
     <string name="operation">Операция</string>
     <string name="history">История</string>
     <string name="date">Дата</string>
@@ -228,7 +228,7 @@
     //Фильтры
     <string name="filters">Фильтры</string>
     <string name="issued">Оформлена</string>
-    <string name="partly">Частично оформлена/отменена</string>
+    <string name="partly">Частично оформлена</string>
     <string name="cancelled">Отменена</string>
     <string name="opened">Назначена</string>
     <string name="direction_for_corporate">Направление (для корпоративных)</string>
