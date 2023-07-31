@@ -24,7 +24,7 @@ class FaqRepository(private val dao: Dao) {
     }
 
     suspend fun getFaqListFromServer(): Result<List<Faq>> {
-        val response: Result<List<Faq>> = RetrofitClient.getApiService().getFAQs()
+        val response: Result<List<Faq>> = RetrofitClient.getApiProxyService().getFAQs()
         if (response.isSuccess()) {
             val faqList = response.asSuccess().value
             refreshFaq(faqList)

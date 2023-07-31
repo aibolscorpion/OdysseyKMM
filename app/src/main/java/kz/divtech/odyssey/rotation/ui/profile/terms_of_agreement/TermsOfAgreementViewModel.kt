@@ -27,7 +27,7 @@ class TermsOfAgreementViewModel: ViewModel(){
     fun getUserAgreementFromServer(){
         progressVisibility.set(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
-            val response = RetrofitClient.getApiService().getUserAgreement()
+            val response = RetrofitClient.getApiProxyService().getUserAgreement()
             if(response.isSuccess()){
                 writeFile(response.asSuccess().value.string())
                 readFile()

@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient{
 
     private fun getClient(): Retrofit {
-
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(Interceptor { chain ->
                 val request: Request = chain.request().newBuilder()
@@ -36,6 +35,22 @@ object RetrofitClient{
 
     fun getApiService() : ApiService {
         return getClient().create(ApiService::class.java)
+    }
+
+    private fun getProxyClient(): Retrofit {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+
+        return Retrofit.Builder().baseUrl(Config.PROXY_HOST+Config.API)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
+            .addCallAdapterFactory(ResultAdapterFactory())
+            .build()
+    }
+
+    fun getApiProxyService() : ApiService {
+        return getProxyClient().create(ApiService::class.java)
     }
 
 }

@@ -20,7 +20,7 @@ class OrgInfoRepository(val dao: Dao) {
     }
 
     suspend fun getOrgInfoFromServer(){
-        val response = RetrofitClient.getApiService().getOrgInfo()
+        val response = RetrofitClient.getApiProxyService().getOrgInfo()
         if(response.isSuccess()){
             val orgInfo = response.asSuccess().value
             refreshOrgInfo(orgInfo)
