@@ -3,19 +3,24 @@
     android:height="20dp"
     android:viewportWidth="20"
     android:viewportHeight="20">
-  <path
-      android:pathData="M10,10m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"
-      android:strokeAlpha="0.7"
-      android:strokeWidth="3"
-      android:fillColor="#00000000"
-      android:strokeColor="#FFF"
-      android:fillType="evenOdd"
-      android:fillAlpha="0.7"/>
-  <path
-      android:pathData="M10,2a8,8 0,0 0,-8 8"
-      android:strokeWidth="3"
-      android:fillColor="#00000000"
-      android:strokeColor="#CAA51D"
-      android:fillType="evenOdd"
-      android:strokeLineCap="round"/>
+    <group android:name="vector"
+        android:pivotX="10"
+        android:pivotY="10">
+
+    <path
+        android:pathData="M10,10m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0"
+        android:strokeAlpha="0.7"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"
+        android:strokeColor="#FFF"
+        android:fillType="evenOdd"
+        android:fillAlpha="0.7"/>
+    <path
+        android:pathData="M10,2a8,8 0,0 0,-8 8"
+        android:strokeWidth="3"
+        android:fillColor="#00000000"
+        android:strokeColor="#CAA51D"
+        android:fillType="evenOdd"
+        android:strokeLineCap="round"/>
+    </group>
 </vector>

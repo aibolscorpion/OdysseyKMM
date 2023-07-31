@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import android.graphics.Paint
+import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
@@ -178,7 +179,9 @@ object BindingAdapter {
                 imageView.setImageResource(R.drawable.icon_refund_completed)
             Constants.REFUND_STATUS_ERROR -> imageView.setImageResource(R.drawable.icon_refund_partly_error_red)
             Constants.REFUND_STATUS_PENDING -> {
-                imageView.setImageResource(R.drawable.icon_refund_pending)
+                val drawable = ContextCompat.getDrawable(imageView.context, R.drawable.animated_drawable)
+                (drawable as AnimatedVectorDrawable).start()
+                imageView.setImageDrawable(drawable)
             }
             Constants.REFUND_STATUS_REJECTED -> imageView.setImageResource(R.drawable.icon_refund_rejected)
             null -> Glide.with(imageView.context).load(R.mipmap.ktzh_logo).into(imageView) }
