@@ -2,13 +2,10 @@ package kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -45,23 +42,6 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dataBinding.webView.webViewClient = object : WebViewClient(){
-            override fun onPageFinished(view: WebView?, url: String?) {
-                super.onPageFinished(view, url)
-                _dataBinding?.let {
-                    dataBinding.termsProgressBar.visibility = View.GONE
-                }
-            }
-
-            override fun onReceivedError(view: WebView?, request: WebResourceRequest?,
-                                         error: WebResourceError?) {
-                super.onReceivedError(view, request, error)
-                _dataBinding?.let {
-                    dataBinding.termsProgressBar.visibility = View.GONE
-                }
-            }
-        }
-
         viewModel.failureResult.observe(viewLifecycleOwner){ result ->
             Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
         }
@@ -95,7 +75,7 @@ class TermsOfAgreementDialog : BottomSheetDialogFragment() {
     }
 
     private fun showData(htmlText: String){
-        dataBinding.webView.loadData(htmlText, "text/html", "UTF-8")
+        dataBinding.termsOfAgreementTV.text = Html.fromHtml(htmlText, Html.FROM_HTML_MODE_LEGACY)
     }
 
     private fun showNoInternetDialog(){

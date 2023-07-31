@@ -18,32 +18,32 @@
 
         <FrameLayout android:id="@+id/frameLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_white_bottom_sheet_dialog">
 
-            <WebView
-                android:id="@+id/webView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginTop="@dimen/two_times_margin" />
+                <TextView
+                    android:id="@+id/termsOfAgreementTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:layout_marginTop="@dimen/two_times_margin" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_close_filled_circle"
-                android:layout_marginTop="23dp"
-                android:layout_marginEnd="14dp"
-                android:layout_gravity="top|end"
-                android:onClick="@{() -> thisDialog.dismiss() }" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_close_filled_circle"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="14dp"
+                    android:layout_gravity="top|end"
+                    android:onClick="@{() -> thisDialog.dismiss() }" />
 
-            <ProgressBar
-                android:id="@+id/termsProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="@{viewModel.progressVisibility}" />
+                <ProgressBar
+                    android:id="@+id/termsProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="@{viewModel.progressVisibility}" />
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>
