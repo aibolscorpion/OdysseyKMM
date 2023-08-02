@@ -7,13 +7,14 @@ import android.widget.EditText
 
 object KeyboardUtils {
 
-    fun showKeyboard(context: Context, editText: EditText){
-        editText.requestFocus()
-        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+    fun showSoftKeyboard(context: Context, editText: EditText){
+        if(editText.requestFocus()){
+            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+        }
     }
 
-    fun hideKeyboard(context: Context, view : View){
+    fun hideSoftKeyboard(context: Context, view : View){
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }

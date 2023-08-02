@@ -52,10 +52,10 @@ class RefundReasonFragment: Fragment() {
         binding.reasonsRG.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
                 R.id.userVariantRB -> {
-                    KeyboardUtils.showKeyboard(requireContext(), binding.userVariantET)
+                    KeyboardUtils.showSoftKeyboard(requireContext(), binding.userVariantET)
                 }
                 else -> {
-                    KeyboardUtils.hideKeyboard(requireContext(), binding.userVariantET)
+                    KeyboardUtils.hideSoftKeyboard(requireContext(), binding.userVariantET)
                     binding.userVariantET.clearFocus()
                 }
             }

@@ -40,7 +40,7 @@ class PhoneNumberFragment: Fragment() {
     override fun onStart() {
         super.onStart()
 
-        KeyboardUtils.showKeyboard(requireContext(), binding.phoneNumberET)
+        KeyboardUtils.showSoftKeyboard(requireContext(), binding.phoneNumberET)
     }
 
     private fun setupMaskedEditText(){

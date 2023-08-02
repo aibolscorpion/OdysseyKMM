@@ -78,7 +78,7 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
                     viewModel.setAuthLogId(response.asSuccess().value.auth_log_id)
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
                     editTextList.isEnabled(true)
-                    KeyboardUtils.showKeyboard(requireContext(), editTextList[0])
+                    KeyboardUtils.showSoftKeyboard(requireContext(), editTextList[0])
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
                     val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
                     startTimer(seconds)
@@ -186,7 +186,7 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
             InputUtils.showErrorMessage(requireContext(), dataBinding.enterCodeCL,
                 getString(R.string.fill_all_empty_fields))
         }else{
-            KeyboardUtils.hideKeyboard(requireContext(), editTextList[editTextList.size - 1])
+            KeyboardUtils.hideSoftKeyboard(requireContext(), editTextList[editTextList.size - 1])
             val code = StringBuilder()
             editTextList.forEach { editText ->
                 code.append(editText.text)

@@ -32,7 +32,8 @@ import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigationAndStatusBar
@@ -99,7 +100,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     override fun onStart() {
         super.onStart()
 
-        showKeyboard(requireContext(), dataBinding.phoneNumberET)
+        showSoftKeyboard(requireContext(), dataBinding.phoneNumberET)
     }
 
 
@@ -133,6 +134,9 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
 
             }, object : MaskedTextChangedListener.ValueListener {
                 override fun onTextChanged(maskFilled: Boolean, extractedValue: String, formattedValue: String) {
+                    if(maskFilled){
+                        KeyboardUtils.hideSoftKeyboard(requireContext(), dataBinding.phoneNumberET)
+                    }
                     phoneNumberFilled = maskFilled
                     extractedPhoneNumber = extractedValue
 

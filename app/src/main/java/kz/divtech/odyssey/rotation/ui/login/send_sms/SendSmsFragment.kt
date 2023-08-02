@@ -27,8 +27,8 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideKeyboard
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showKeyboard
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils.hideSoftKeyboard
+import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import java.net.UnknownHostException
 
@@ -73,7 +73,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
                 if(response.isSuccess()) {
                     viewModel.setAuthLogId(response.asSuccess().value.auth_log_id)
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                    showKeyboard(requireContext(), editTextList[0])
+                    showSoftKeyboard(requireContext(), editTextList[0])
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
                     val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
                     showContactSupportBtn()
@@ -205,7 +205,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         if(ifOneOfEditTextIsEmpty()){
             showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.fill_all_empty_fields))
         }else{
-            hideKeyboard(requireContext(), editTextList[editTextList.size-1])
+            hideSoftKeyboard(requireContext(), editTextList[editTextList.size-1])
             val code = StringBuilder()
             editTextList.forEach { editText ->
                 code.append(editText.text)

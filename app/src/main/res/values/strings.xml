@@ -199,7 +199,7 @@
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
     <string name="download_ticket">Открыть билет: %1$s - %2$s</string>
     <string name="ticket_not_found">Билет не найден</string>
-    <string name="no_app_for_view_pdf">У Вас нет приложения для открытия pdf файла</string>
+    <string name="no_app_for_view_pdf">У Вас отсутствует приложение чтобы открыть pdf файл</string>
     <string name="open_downloaded_ticket">Открыть скачанный билет ?</string>
     <string name="train_transfer_with_time">Пересадка в г. %1$s: &lt;b>%2$d ч %3$d мин&lt;/b></string>
     <string name="train_transfer_without_time">Пересадка в г. %1$s</string>
