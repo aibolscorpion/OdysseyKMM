@@ -13,6 +13,7 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toActiveTripList
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTripList
+import kz.divtech.odyssey.rotation.utils.DownloadUtil
 
 @ExperimentalPagingApi
 class TripRemoteMediator(val dao: Dao,
@@ -36,6 +37,9 @@ class TripRemoteMediator(val dao: Dao,
 
         return if(response.isSuccess()){
             val trips = response.asSuccess().value.data
+            if(isActive){
+                DownloadUtil.downloadAllActiveTickets(trips)
+            }
 
             when(loadType){
                 LoadType.REFRESH ->

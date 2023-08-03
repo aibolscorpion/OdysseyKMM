@@ -8,9 +8,9 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemTicketNameBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
+import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.toDateString
 import kz.divtech.odyssey.rotation.utils.Utils.getFileSize
-import java.io.File
 
 class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInterface): RecyclerView.Adapter<TicketNameRecyclerViewAdapter.ViewHolder>() {
     private val oldTicketList = mutableListOf<Ticket>()
@@ -23,7 +23,7 @@ class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInter
        val ticket = oldTicketList[position]
        holder.binding.ticket = ticket
 
-       val file = downloadInterface.getFileByTicket(ticket)
+       val file = getFileByTicket(ticket)
        if(file.exists()){
            holder.binding.fileIV.setImageResource(R.drawable.icon_pdf_file)
            holder.binding.ticketFileDescTV.text = App.appContext.getString(
@@ -55,5 +55,4 @@ class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInter
 
 interface DownloadInterface{
     fun onTicketClicked(currentTicket: Ticket)
-    fun getFileByTicket(currentTicket: Ticket): File
 }

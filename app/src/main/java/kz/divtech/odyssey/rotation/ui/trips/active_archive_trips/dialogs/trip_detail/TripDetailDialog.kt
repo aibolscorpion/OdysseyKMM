@@ -25,6 +25,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
+import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import java.io.File
@@ -154,7 +155,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     }
 
     private fun openFileIfExists(ticket: Ticket){
-        val file = viewModel.getFileByTicket(ticket)
+        val file = getFileByTicket(ticket)
         if(file.exists()){
             openFile(file)
         }else{
