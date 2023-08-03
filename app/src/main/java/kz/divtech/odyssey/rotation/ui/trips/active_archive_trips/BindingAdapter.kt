@@ -233,7 +233,7 @@ object BindingAdapter {
                 Constants.STATUS_OPENED -> {
                     setTextColor(ContextCompat.getColor(App.appContext, R.color.grey_text_view))
                     paintFlags = 0
-                    }
+                }
 
                 Constants.STATUS_ISSUED -> {
                     setTextColor(ContextCompat.getColor(App.appContext, R.color.profile_menu_text))
@@ -270,8 +270,7 @@ object BindingAdapter {
                 }
             }
         }
-        viewGroup.visibility = if(statusSet.size == 1 && statusSet.contains(SegmentStatus.ISSUED)
-            && !trip?.is_extra!!)
+        viewGroup.visibility = if(statusSet.size == 1 && statusSet.contains(SegmentStatus.ISSUED))
                 View.GONE else View.VISIBLE
     }
 
