@@ -97,7 +97,7 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
                         viewModel.checkedStatusList.size != allStatusList.size){
             viewModel.increaseByOneFilterCount()
         }else{
-            viewModel.checkedStatusList.addAll(allStatusList)
+            viewModel.checkedStatusList.clear()
         }
 
     }
