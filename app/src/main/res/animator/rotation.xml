@@ -5,4 +5,5 @@
     android:valueFrom="0"
     android:valueTo="360"
     android:valueType="floatType"
+    android:interpolator="@android:interpolator/linear"
     android:repeatCount="infinite" />
