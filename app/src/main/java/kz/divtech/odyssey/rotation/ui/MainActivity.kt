@@ -69,6 +69,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     val notificationRepository by lazy { NotificationRepository(database.dao()) }
     val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
     val refundRepository by lazy { RefundRepository(database.dao()) }
+    val termsRepository by lazy { TermsRepository(database.dao()) }
+
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
             faqRepository, newsRepository, articleRepository,
@@ -102,6 +104,14 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
         checkForAppUpdates()
 
+        viewModel.uaConfirmedLiveData.observe(this){ isUAConfirmed ->
+            isUAConfirmed?.let {
+                if(it.not()){
+                    openTermsOfAgreementFragment()
+                }
+            }
+        }
+
         if(SharedPrefs.isLoggedIn(this)){
             openMainFragment()
         }
@@ -120,7 +130,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                 R.id.refundReasonFragment, R.id.refundListFragment,
                 R.id.refundDetailFragment, R.id.chooseTicketForOpen,
                 R.id.countryListFragment, R.id.phoneNumberFragment2,
-                R.id.smsCodeFragment ->
+                R.id.smsCodeFragment, R.id.termsOfAgreementFragment ->
                     binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
                 R.id.refundSentFragment, R.id.phoneUpdatedFragment ->
                     binding.mainToolbar.navigationIcon = null
@@ -284,6 +294,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private fun openMainFragment(){
         navController.navigate(MainActivityDirections.actionGlobalMainFragment())
+    }
+
+    private fun openTermsOfAgreementFragment(){
+        navController.navigate(MainActivityDirections.actionGlobalAuthTermsFragment())
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

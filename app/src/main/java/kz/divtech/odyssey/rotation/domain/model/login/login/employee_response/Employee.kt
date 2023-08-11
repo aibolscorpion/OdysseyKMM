@@ -31,6 +31,7 @@ data class Employee(
     var phone: String?,
     val additional_phone: String?,
     var email: String?,
+    val ua_confirmed: Boolean,
     val documents: @RawValue List<Document>
 ): Parcelable
 

@@ -16,6 +16,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Em
 
 class EmployeeRepository(private val dao: Dao) {
     val employee = dao.observeEmployee()
+    val uaConfirmed = dao.observeUAConfirmed()
 
     @WorkerThread
     suspend fun insertEmployee(employee: Employee){

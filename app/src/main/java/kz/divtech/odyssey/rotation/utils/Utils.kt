@@ -3,10 +3,6 @@ package kz.divtech.odyssey.rotation.utils
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.view.animation.Animation
-import android.view.animation.LinearInterpolator
-import android.view.animation.RotateAnimation
-import android.widget.ImageView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -69,32 +65,28 @@ object Utils {
         return Gson().fromJson(jsonString, CountryList::class.java).countries
     }
 
-    fun Fragment.hideBottomNavigationAndStatusBar(){
-        (activity as MainActivity).binding.apply {
-            mainToolbar.isVisible = false
-            bottomNavigationView.isVisible = false
-        }
+    fun Fragment.showBottomNavigation(){
+        (activity as MainActivity).binding.bottomNavigationView.isVisible = true
+    }
+    fun Fragment.hideBottomNavigation(){
+        (activity as MainActivity).binding.bottomNavigationView.isVisible = false
     }
 
-    fun Fragment.showBottomNavigationAndStatusBar(){
-        (activity as MainActivity).binding.apply {
-            mainToolbar.isVisible = true
-            bottomNavigationView.isVisible = true
-        }
+    fun Fragment.showToolbar(){
+        (activity as MainActivity).binding.mainToolbar.isVisible = true
+    }
+    fun Fragment.hideToolbar(){
+        (activity as MainActivity).binding.mainToolbar.isVisible = false
+    }
+
+    fun Fragment.setMainActivityBackgroundColor(@ColorRes color: Int){
+        (activity as MainActivity).binding.mainActivityCL.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
     }
 
     fun Fragment.changeStatusBarColor(@ColorRes statusBarColor: Int){
         val window: Window = requireActivity().window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(requireActivity(), statusBarColor)
+        window.statusBarColor = ContextCompat.getColor(requireContext(), statusBarColor)
     }
 
-    fun ImageView.reverseInfiniteAnimation() {
-        val animation = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
-            0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        animation.duration = 2000
-        animation.interpolator = LinearInterpolator()
-        animation.repeatCount = Animation.INFINITE
-        this.startAnimation(animation)
-    }
 }

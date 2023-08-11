@@ -13,7 +13,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
@@ -24,7 +23,9 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
-import kz.divtech.odyssey.rotation.utils.Utils.showBottomNavigationAndStatusBar
+import kz.divtech.odyssey.rotation.utils.Utils.setMainActivityBackgroundColor
+import kz.divtech.odyssey.rotation.utils.Utils.showBottomNavigation
+import kz.divtech.odyssey.rotation.utils.Utils.showToolbar
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -60,15 +61,17 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).binding.mainActivityCL.setBackgroundColor(App.appContext.getColor(R.color.main_bg))
         viewModel.sendDeviceInfo()
         viewModel.getOrgInfoFromServer()
 
         binding.voucherCL.setOnClickListener { openVoucherDialog() }
         binding.debtCL.setOnClickListener { openDebtDialog() }
 
-        showBottomNavigationAndStatusBar()
+        showBottomNavigation()
+        showToolbar()
         changeStatusBarColor(R.color.toolbar_bg)
+        setMainActivityBackgroundColor(R.color.main_bg)
+
         getEmployeeInfo()
         setCalendar()
         setNotifications()

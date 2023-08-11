@@ -97,6 +97,9 @@ interface ApiService {
     @POST("profile/update-phone-confirm")
     suspend fun updatePhoneConfirm(@Body authRequest : AuthRequest): Result<ResponseBody>
 
+    @POST("profile/update-ua-confirm")
+    suspend fun updateUAConfirm(): Result<ResponseBody>
+
     //Notifications
     @GET("notifications")
     suspend fun getNotifications(@Query("page") pageIndex: Int) : Result<Notifications>

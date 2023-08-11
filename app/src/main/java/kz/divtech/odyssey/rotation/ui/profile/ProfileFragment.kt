@@ -75,10 +75,10 @@ class ProfileFragment : Fragment() {
         _binding = null
     }
 
-    fun showTermsOfAgreement() {
+    fun openTermsOfAgreementFragment() {
         with(findNavController()){
             if(R.id.profileFragment == currentDestination?.id)
-                navigate(ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementDialog())
+                navigate(ProfileFragmentDirections.actionProfileFragmentToTermsOfAgreementFragment())
         }
     }
 

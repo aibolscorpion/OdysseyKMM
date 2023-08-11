@@ -11,9 +11,6 @@
         app:layout="@layout/fragment_find_employee"
         tools:layout="@layout/fragment_find_employee">
         <action
-            android:id="@+id/action_phoneNumberFragment_to_termsOfAgreementDialog"
-            app:destination="@id/termsOfAgreementDialog" />
-        <action
             android:id="@+id/action_phoneNumberFragment_to_accountDeactivatedDialog"
             app:destination="@id/accountDeactivatedDialog" />
         <action
@@ -196,21 +193,21 @@
         app:layout="@layout/fragment_profile"
         tools:layout="@layout/fragment_profile">
         <action
-            android:id="@+id/action_profileFragment_to_termsOfAgreementDialog"
-            app:destination="@id/termsOfAgreementDialog" />
-        <action
             android:id="@+id/action_profileFragment_to_documentsFragment"
             app:destination="@id/documentsFragment" />
         <action
             android:id="@+id/action_profileFragment_to_personalDataFragment"
             app:destination="@id/personalDataFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_termsOfAgreementFragment"
+            app:destination="@id/termsOfAgreementFragment" />
     </fragment>
-    <dialog
-        android:id="@+id/termsOfAgreementDialog"
-        android:name="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsOfAgreementDialog"
-        android:label="TermsOfAgreementDialog"
-        android:layout="@layout/dialog_terms_of_agreement"
-        tools:layout="@layout/dialog_terms_of_agreement" />
+    <fragment
+        android:id="@+id/termsOfAgreementFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsFragment"
+        android:label="@string/terms_of_agreement"
+        android:layout="@layout/fragment_auth_terms"
+        tools:layout="@layout/fragment_auth_terms" />
     <dialog
         android:id="@+id/writeSupportDialog"
         android:name="kz.divtech.odyssey.rotation.ui.help.contact_support.WriteSupportDialog"
@@ -552,6 +549,17 @@
     <action
         android:id="@+id/action_global_phoneNumberFragment"
         app:destination="@id/phoneNumberFragment"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/authTermsFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.AuthTermsFragment"
+        android:label="@string/terms_of_agreement"
+        android:layout="@layout/fragment_auth_terms"
+        tools:layout="@layout/fragment_auth_terms"/>
+    <action
+        android:id="@+id/action_global_authTermsFragment"
+        app:destination="@id/authTermsFragment"
         app:popUpTo="@id/main_nav_graph"
         app:popUpToInclusive="true" />
 

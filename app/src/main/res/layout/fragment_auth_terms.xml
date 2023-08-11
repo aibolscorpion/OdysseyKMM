@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="viewModel"
+            type="kz.divtech.odyssey.rotation.ui.profile.terms_of_agreement.TermsViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:paddingBottom="8dp">
+
+            <WebView
+                android:id="@+id/termsOfAgreemntWV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/accepBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/buttonStyle"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="8dp"
+                android:text="@string/accept_terms_of_agreement" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <ProgressBar
+            android:id="@+id/termsProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.progressVisibility}" />
+    </FrameLayout>
+</layout>

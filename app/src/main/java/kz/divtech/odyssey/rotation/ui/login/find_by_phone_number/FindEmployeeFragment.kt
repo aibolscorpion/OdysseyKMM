@@ -36,7 +36,9 @@ import kz.divtech.odyssey.rotation.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
-import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigationAndStatusBar
+import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigation
+import kz.divtech.odyssey.rotation.utils.Utils.hideToolbar
+import kz.divtech.odyssey.rotation.utils.Utils.setMainActivityBackgroundColor
 
 class FindEmployeeFragment : Fragment(), NotificationListener {
     private var phoneNumberFilled : Boolean = false
@@ -61,7 +63,8 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
         dataBinding.phoneNumberFragment = this
         dataBinding.viewModel = viewModel
 
-        hideBottomNavigationAndStatusBar()
+        hideBottomNavigation()
+        hideToolbar()
         changeStatusBarColor(R.color.status_bar)
         setupMaskedEditText()
 
@@ -71,7 +74,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as MainActivity).binding.mainActivityCL.setBackgroundColor(App.appContext.getColor(R.color.status_bar))
+        setMainActivityBackgroundColor(R.color.status_bar)
         viewModel.getOrgInfoFromServer()
 
         viewModel.employeeResult.observe(viewLifecycleOwner){
@@ -201,14 +204,6 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
                 )
             }
         }
-
-    fun showTermsOfAgreementDialog(){
-        with(findNavController()){
-            if(R.id.phoneNumberFragment == currentDestination?.id){
-                navigate(FindEmployeeFragmentDirections.actionPhoneNumberFragmentToTermsOfAgreementDialog())
-            }
-        }
-    }
 
     private fun showErrorDialog(){
         with(findNavController()){

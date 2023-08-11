@@ -182,4 +182,10 @@ interface Dao {
     @Query("DELETE FROM orgInfo")
     suspend fun deleteOrgInfo()
 
+    @Query("SELECT ua_confirmed FROM employee")
+    fun observeUAConfirmed() : LiveData<Boolean>
+
+    @Query("UPDATE employee SET ua_confirmed = :uaConfirmed")
+    suspend fun updateUaConfirmed(uaConfirmed: Boolean)
+
 }

@@ -90,7 +90,12 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         viewModel.loginResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
                 if(response.isSuccess()) {
-                    openMainActivity()
+                    val isConfirmed = response.asSuccess().value.employee.ua_confirmed
+                    if(isConfirmed){
+                        openMainActivity()
+                    }else{
+                        openTermsOfAgreemntFragment()
+                    }
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)) {
                     val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
                     showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.too_many_request_message, seconds))
@@ -224,6 +229,10 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
     private fun openMainActivity(){
         findNavController().navigate(SendSmsFragmentDirections.actionGlobalMainFragment())
+    }
+
+    private fun openTermsOfAgreemntFragment(){
+        findNavController().navigate(SendSmsFragmentDirections.actionGlobalAuthTermsFragment())
     }
 
     override fun onOTPReceived(code: String?) {

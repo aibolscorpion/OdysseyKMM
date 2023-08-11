@@ -58,7 +58,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.43">
 
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phoneNumberET"
                     android:layout_width="match_parent"
@@ -100,29 +99,7 @@
                 android:onClick="@{() -> phoneNumberFragment.findEmployee()}"
                 app:layout_constraintTop_toBottomOf="@+id/editTextFL"/>
 
-            <View
-                android:id="@+id/lineVw"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/line"
-                app:layout_constraintTop_toBottomOf="@+id/resendSmsBtn"
-                app:layout_constraintBottom_toTopOf="@id/userAgreementTV"
-                app:layout_constraintVertical_bias="0.95"
-                />
-
-            <TextView
-                android:id="@+id/userAgreementTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/terms_of_service_and_user_agreement"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/descriptionTextStyle"
-                android:layout_marginBottom="24dp"
-                android:onClick="@{() -> phoneNumberFragment.showTermsOfAgreementDialog()}"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/sendSmsPB"
