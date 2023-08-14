@@ -91,7 +91,7 @@ class TermsFragment : Fragment() {
     }
 
     private fun showData(htmlText: String){
-        dataBinding.termsOfAgreemntWV.loadData(htmlText, "text/html", "UTF-8")
+        dataBinding.termsOfAgreemntWV.loadDataWithBaseURL(null, htmlText, "text/html", "utf-8", null)
     }
 
     private fun showNoInternetDialog(){

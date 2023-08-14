@@ -61,8 +61,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     //Navigation Component
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.0'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.7.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
 
     //Masked EditText
     implementation 'com.github.RedMadRobot:input-mask-android:6.1.0'
@@ -91,10 +91,10 @@ dependencies {
     kapt  "androidx.room:room-compiler:2.5.2"
 
     //Jetpack Paging Library
-    implementation 'androidx.paging:paging-runtime:3.2.0'
+    implementation 'androidx.paging:paging-runtime:3.1.1'
 
     //Firebase Cloud Messaging
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.2.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
 
     //LeakCanary
