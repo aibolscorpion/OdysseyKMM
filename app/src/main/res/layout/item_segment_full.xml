@@ -225,12 +225,12 @@
                     android:textSize="14sp"
                     android:textColor="#1b344f"
                     android:lineSpacingExtra="2sp"
-                    android:text="@string/in_way_time_placeholder"
                     android:layout_marginTop="8dp"
                     android:layout_marginStart="30dp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/inWayTV"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="@string/in_way_time_placeholder" />
 
                 <TextView
                     android:id="@+id/trainNumberTV"

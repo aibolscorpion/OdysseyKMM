@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Odyssey</string>
+    <string name="app_name" translatable="false">Odyssey</string>
 
     -----------------------------------------------------------------------------------------------
     //Страница Авторизации с помощью номера телефона
@@ -7,15 +7,12 @@
     <string name="telephone_number_linked_to_odyssey_id">По номеру телефона привязанному к Odyssey ID</string>
     <string name="enter">Войти</string>
     <string name="telephone">Телефон</string>
-    <string name="phone_number_format">+7 ([000]) [000] [00] [00]</string>
-    <string name="phone_number_placeholder">+7 (</string>
+    <string name="phone_number_format" translatable="false">+7 ([000]) [000] [00] [00]</string>
+    <string name="phone_number_placeholder" translatable="false">+7 (</string>
     <string name="enter_phone_number_fully">Введите номер телефона полностью</string>
 
     // Модалка Пользовательское соглашение
     <string name="terms_of_agreement">Пользовательское соглашение</string>
-    <string name="terms_of_agreement_content_placeholder">"К основным стандартам можно отнести: стандарты чистоты (чистота зала, рабочих зон персонала, входной группы и т.д.), стандарты внешнего вида (форма персонала, обувь, прически, украшения, маникюр, макияж и т.п.), стандарты обслуживания гостей (сценарий обслуживание, конфликтные ситуации, комплименты и лояльность, встреча гостей с детьми, продажи, работа с возражениями, обратная связь с гостем и т.д.), стандарты подачи блюд и напитков (правила выноса блюд и напитков, комплиментов и угощений, время подачи), стандарты сервировки (до прихода гостя, во время его пребывания, после прощания с гостям, в перерывах между подачей блюд и т.д.)
-        \nНесмотря на то, что стандарты работы заведения, казалось бы, первостепенная вещь в ресторане, далеко не все украинские рестораторы их соблюдают.
-        \nСтандартизация сервиса и конкурентное преимущество заведения — тесно связанные вещи. Для начала нужно получить обратную связь от клиентов, чтобы понять, что и как стандартизировать.</string>
     <string name="accept_terms_of_agreement">Принять соглашение</string>
 
     //Модалка Произошла ошибка
@@ -39,7 +36,7 @@
     //Страница Ввода SMS кода
     <string name="enter_code">Введите код</string>
     <string name="code_was_sent_to_number">На номер %1$s отправлено SMS с кодом авторизации</string>
-    <string name="zero">0</string>
+    <string name="zero" translatable="false">0</string>
     <string name="resend_sms">Выслать SMS повторно</string>
     <string name="resend_sms_with_seconds">Переотправить SMS: %1$d сек</string>
     <string name="change_number">Изменить номер</string>
@@ -55,22 +52,22 @@
     <string name="enter_your_iin">Номер %1$s не найден. Пожалуйста, введите Ваш ИИН.</string>
     <string name="login_with_iin">Войти по ИИН</string>
     <string name="iin">ИИН</string>
-    <string name="iin_placeholder">_ _ _ _ _ _ _ _ _ _ _ _</string>
+    <string name="iin_placeholder" translatable="false">_ _ _ _ _ _ _ _ _ _ _ _</string>
     <string name="enter_iin_fully">Введите ИИН полностью</string>
 
     //Страница Добавить номер
     <string name="add_number">Добавить номер</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
-    <string name="employee_name_placeholder">Байжанов Нуржан Байжанулы</string>
-    <string name="employee_position_placeholder">Старший бригадир</string>
+    <string name="employee_name_placeholder" translatable="false">Байжанов Нуржан Байжанулы</string>
+    <string name="employee_position_placeholder"  translatable="false">Старший бригадир</string>
     <string name="add_phone_number">Добавить номер телефона</string>
 
     //Страница Обновить номер
     <string name="change_phone_number">Изменить номер телефона</string>
     <string name="do_you_want_to_change_iin">Для указаного ИИН уже закреплен номер телефона. Желаете его изменить ?</string>
     <string name="change_iin">Изменить ИИН</string>
-    <string name="phone_number_added">Номер успешно добавлен</string>
-    <string name="phone_number_added_content">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
+    <string name="phone_number_added" translatable="false">Номер успешно добавлен</string>
+    <string name="phone_number_added_content" translatable="false">По указаному ИИН успешно добавлен номер телефона: +7 701 399 35 38. Вы сможете войти в аккаунт используя этот номер.</string>
     <string name="go_to_login_page">Перейти на страницу входа</string>
 
     // Модалка сотрудник не найден
@@ -117,9 +114,9 @@
     <string name="sunday">Вс</string>
 
 
-    <string name="day_of_week_placeholder">Пятница</string>
-    <string name="day_of_month_placeholder">25</string>
-    <string name="month_placeholder">Ноября</string>
+    <string name="day_of_week_placeholder" translatable="false">Пятница</string>
+    <string name="day_of_month_placeholder" translatable="false">25</string>
+    <string name="month_placeholder" translatable="false">Ноября</string>
 
     <string name="you_dont_have_whatsapp">У Вас не установлено WhatsApp !</string>
     <string name="you_dont_have_telegram">У Вас не установлено Telegram !</string>
@@ -131,7 +128,7 @@
     <string name="my_voucher">Мой ваучер</string>
     <string name="your_voucher_is_not_opened">Ваш ваучер еще не открыт</string>
     <string name="voucher_balance">Остаток\nпо ваучеру</string>
-    <string name="zero_balance">0 ₸</string>
+    <string name="zero_balance" translatable="false">0 ₸</string>
     <string name="spent">Потрачено</string>
     <string name="update_date_will_be_shown_after_opening">Дата обновления ваучера отобразится после его открытия</string>
     <string name="operation">Операция</string>
@@ -158,7 +155,7 @@
     <string name="destination">Назначение</string>
     <string name="shift">Смена</string>
     <string name="trip_status">Статус поездки</string>
-    <string name="dash_sign_btw_two_text">%1$s - %2$s</string>
+    <string name="dash_sign_btw_two_text" translatable="false">%1$s - %2$s</string>
     <string name="to_work">На вахту, %1$s</string>
     <string name="to_home">Домой, %1$s</string>
     <string name="trip">Поездка, %1$s</string>
@@ -186,15 +183,15 @@
     <string name="total_time_in_way">%1$s. %2$d ч %3$d мин в пути"</string>
     <string name="in_way">в пути</string>
     <string name="in_way_time">%1$d ч %2$d мин</string>
-    <string name="in_way_time_placeholder">5 ч 20 мин</string>
+    <string name="in_way_time_placeholder"  translatable="false">5 ч 20 мин</string>
     <string name="train">поезд</string>
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
     <string name="trip_tickets">Билеты по поездке</string>
     <string name="click_to_download">Нажмите, чтобы скачать</string>
-    <string name="file_extension_modified_date_and_size">%1$s • %2$s • %3$s</string>
+    <string name="file_extension_modified_date_and_size" translatable="false">%1$s • %2$s • %3$s</string>
 
-    <string name="number_sign_before_text">№%1$s</string>
+    <string name="number_sign_before_text" translatable="false">№%1$s</string>
     <string name="tickets_are_not_purchased_2">билеты не куплены</string>
     <string name="tickets_are_on_the_waiting_list">билеты в листе ожидания</string>
     <string name="download_ticket">Открыть билет: %1$s - %2$s</string>
@@ -271,7 +268,7 @@
     <string name="train_info">КТЖ, %1$s %2$s</string>
     <string name="car_place_info">%1$s вагон • %2$s • Класс %3$s • %4$s место</string>
     <string name="refund_application_number">Заявка на возврат №%1$d</string>
-    <string name="refund_reason">«%1$s»</string>
+    <string name="refund_reason" translatable="false">«%1$s»</string>
 
     <string name="refund_status_pending_title">Заявка на рассмотрении</string>
     <string name="refund_status_process_title">Билеты отправлены на возврат</string>
@@ -313,19 +310,19 @@
 
     //Страница Вопросы и Ответы
     <string name="what_r_u_interested_in">Что Вас интересует?</string>
-    <string name="question_placeholder">Могу ли я сейчас оформить ЖД-билеты самостоятельно?</string>
-    <string name="answer_placeholder">Возможность самостоятельно оформлять ЖД билеты и авиабилеты, появится в скором обновлении приложения Odyssey. Следите за новостями!</string>
+    <string name="question_placeholder" translatable="false">Могу ли я сейчас оформить ЖД-билеты самостоятельно?</string>
+    <string name="answer_placeholder" translatable="false">Возможность самостоятельно оформлять ЖД билеты и авиабилеты, появится в скором обновлении приложения Odyssey. Следите за новостями!</string>
     <string name="open">Открыть</string>
     <string name="empty_faq_title">Вопросы не найдены</string>
     <string name="empty_faq_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
 
     //Страница Пресс Служба
     <string name="find">Найти…</string>
-    <string name="news_title_placeholder">Смертность на железной дороге в Московской области снижается на 10%</string>
-    <string name="news_content_placeholder">Губернатор Московской области Андрей Воробьев в рамках «Транспортной недели – 2020» отметил, что смертность на железной дороге в Московской области снижается на 10% в год.
+    <string name="news_title_placeholder" translatable="false">Смертность на железной дороге в Московской области снижается на 10%</string>
+    <string name="news_content_placeholder" translatable="false">Губернатор Московской области Андрей Воробьев в рамках «Транспортной недели – 2020» отметил, что смертность на железной дороге в Московской области снижается на 10% в год.
 «Снижение смертности на дорогах – это приоритет транспортной политики. И на железной дороге у нас есть задача, чтобы с 450 человек в год мы стремились к нулю. У нас есть не просто абстрактное соглашение, а план мероприятий, подкрепленный деньгами», – добавил он.
 Смертность на автомобильных дорогах области в 2 раза больше: «У нас 6–7 лет назад было порядка 2 тыс. человек, погибших на дорогах, в этом году эта цифра должна быть на уровне 750–800 человек», – сказал А. Воробьев. Он отметил, что для этого в регионе разводят транспортные потоки, ремонтируют дороги, устанавливают освещение, камеры видеофиксации, лежачих полицейских. «Этот комплекс мер позволяет людям передвигаться с большей безопасностью и комфортом», – добавил он.</string>
-    <string name="news_time_placeholder">вчера, в 13:40</string>
+    <string name="news_time_placeholder" translatable="false">вчера, в 13:40</string>
     <string name="empty_news_title">Новости не найдены</string>
     <string name="empty_news_content">Возможно их пока нет либо возникла какая-то ошибка. Попробуйте позднее.</string>
     <string name="today_at_time">СЕГОДНЯ, В %1$s</string>
@@ -348,16 +345,16 @@
     //Страница Личные данные
     <string name="main_information">Основная информация</string>
     <string name="name">Имя</string>
-    <string name="name_placeholder">Руслан</string>
+    <string name="name_placeholder" translatable="false">Руслан</string>
     <string name="surname">Фамилия</string>
-    <string name="name_en_placeholder">Ruslan</string>
-    <string name="surname_en_placeholder">Batalgaziev</string>
-    <string name="surname_placeholder">Баталгазиев</string>
+    <string name="name_en_placeholder" translatable="false">Ruslan</string>
+    <string name="surname_en_placeholder" translatable="false">Batalgaziev</string>
+    <string name="surname_placeholder" translatable="false">Баталгазиев</string>
     <string name="father_name">Отчество</string>
-    <string name="father_name_placeholder">Владимирович</string>
+    <string name="father_name_placeholder" translatable="false">Владимирович</string>
     <string name="date_of_birth">Дата рождения</string>
-    <string name="date_of_birth_placeholder">11.09.1992</string>
-    <string name="date_of_birth_without_values">%1$d.%2$d.%3$d</string>
+    <string name="date_of_birth_placeholder" translatable="false">11.09.1992</string>
+    <string name="date_of_birth_without_values" translatable="false">%1$d.%2$d.%3$d</string>
     <string name="gender">Пол</string>
     <string name="male">Мужской</string>
     <string name="female">Женский</string>
@@ -365,7 +362,7 @@
     <string name="kazakhstan">Казахстан</string>
     <string name="contact_data">Контактные данные</string>
     <string name="phone">Телефон</string>
-    <string name="phone_placeholder">+7 (701) 399 3538</string>
+    <string name="phone_placeholder" translatable="false">+7 (701) 399 3538</string>
     <string name="email">Эл. почта</string>
     <string name="save">Сохранить</string>
     <string name="citizenship_default_document_changes">Внимание! При смене гражданства измениться документ по умолчанию</string>
@@ -377,7 +374,7 @@
     <string name="enter_phone_number">Введите номер телефона</string>
     <string name="code_will_be_send_to_this_numbe">На данный номер будет отправлен СМС-код для подтверждения</string>
     <string name="continue_text">Продолжить</string>
-    <string name="phone_number_successfully_updated">Номер телефона успешно изменен"</string>
+    <string name="phone_number_successfully_updated">Номер телефона успешно изменен</string>
     <string name="use_new_phone_number_for_login">Теперь для входа в аккаунт используйте номер\n %1$s</string>
     <string name="go_back">Вернуться назад</string>
     <string name="invalid_email_address">Неверный адрес электронной почты</string>
@@ -391,12 +388,12 @@
     <string name="passport">Паспорт</string>
     <string name="residency_permit">Вид на жительство</string>
     <string name="foreign_document">Иностранный документ</string>
-    <string name="no.">№</string>
-    <string name="work_permission_number_placeholder">0005011</string>
-    <string name="expire_date_placeholder">10.07.2015 – 15.02.2021</string>
-    <string name="iin_value">9202024300975</string>
+    <string name="no." translatable="false">№</string>
+    <string name="work_permission_number_placeholder" translatable="false">0005011</string>
+    <string name="expire_date_placeholder" translatable="false">10.07.2015 – 15.02.2021</string>
+    <string name="iin_value" translatable="false">9202024300975</string>
     <string name="issue_expire_date">Выдано / срок до</string>
-    <string name="issue_expire_date_placeholder">11.09.2017 – 11.09.2027, МВД РК</string>
+    <string name="issue_expire_date_placeholder" translatable="false">11.09.2017 – 11.09.2027, МВД РК</string>
     <string name="you_have_not_filled_document_data">Вы еще не указали данные Вашего документа. Нажмите, чтобы добавить</string>
     <string name="empty_documents_title">Документы не найдены</string>
     <string name="empty_documents_content">Мы не нашли Ваших документов</string>
@@ -409,16 +406,16 @@
     <string name="status">Статус</string>
     <string name="active">Активно</string>
     <string name="permission_no.">№ разрешения</string>
-    <string name="permission_number_placeholder">0005011</string>
+    <string name="permission_number_placeholder" translatable="false">0005011</string>
     <string name="issue_date">Дата выдачи</string>
     <string name="expire_date">Срок действия</string>
-    <string name="issue_date_placeholder">11.09.2017</string>
+    <string name="issue_date_placeholder" translatable="false">11.09.2017</string>
 
     //Модалка Удостоверение личности
     <string name="issue_authority">Орган выдачи</string>
     <string name="document_number">№ документа</string>
-    <string name="document_number_placeholder">042080568</string>
-    <string name="issue_authority_placeholder">МВД РК</string>
+    <string name="document_number_placeholder" translatable="false">042080568</string>
+    <string name="issue_authority_placeholder" translatable="false">МВД РК</string>
     <string name="be_careful_when_filling_data">Будьте внимательны, при заполнении. Данные должны соответсвовать документу.</string>
 
     //Модалка Паспорт
@@ -426,9 +423,9 @@
     <string name="surname_latin">Фамилия (на латинице)</string>
 
     //Страница Уведомления
-    <string name="notification_title_placeholder">Смещение графика</string>
-    <string name="notification_content_placeholder">Новый график: 18 апреля - 9 мая 2022</string>
-    <string name="notification_time_placeholder">2 ч назад</string>
+    <string name="notification_title_placeholder"  translatable="false">Смещение графика</string>
+    <string name="notification_content_placeholder"  translatable="false">Новый график: 18 апреля - 9 мая 2022</string>
+    <string name="notification_time_placeholder"  translatable="false">2 ч назад</string>
     <string name="empty_notifications_title">Уведомления не найдены</string>
     <string name="empty_notifications_content">У Вас пока нет новых уведомлений</string>
     <string name="important_notification">Важное уведомление</string>
@@ -442,7 +439,6 @@
     <string name="turn_on">Включить</string>
     <string name="remind_later">Напомнить позже</string>
     <string name="close_and_logout_from_account">Закрыть и выйти из аккаунта</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="no_internet_connection">Нет соединения с интернетом</string>
     <string name="no_internet_connection_desc">Не получается обновить данные: нет подключения к сети интернет. Попробуйте позже.</string>
 
