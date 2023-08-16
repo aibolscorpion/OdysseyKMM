@@ -46,6 +46,10 @@ dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }
 
+ext {
+    version_room = '2.5.2'
+}
+
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
@@ -86,9 +90,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth-api-phone:18.0.1'
 
     //Room
-    implementation "androidx.room:room-ktx:2.5.2"
-    implementation "androidx.room:room-paging:2.5.2"
-    kapt  "androidx.room:room-compiler:2.5.2"
+    implementation "androidx.room:room-ktx:$version_room"
+    implementation "androidx.room:room-paging:$version_room"
+    kapt  "androidx.room:room-compiler:$version_room"
 
     //Jetpack Paging Library
     implementation 'androidx.paging:paging-runtime:3.1.1'

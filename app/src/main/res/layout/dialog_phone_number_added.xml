@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="phoneNumberAddedDialog"
@@ -31,17 +32,17 @@
                 android:id="@+id/titleTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_added"
-                style="@style/bottomSheetTitle" />
+                style="@style/bottomSheetTitle"
+                tools:text="@string/phone_number_added" />
 
             <TextView
                 android:id="@+id/contentTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/phone_number_added_content"
                 android:layout_marginTop="@dimen/margin"
                 style="@style/bottomSheetContent"
-                android:layout_marginBottom="@dimen/margin" />
+                android:layout_marginBottom="@dimen/margin"
+                tools:text="@string/phone_number_added_content" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.cardview.widget.CardView>
