@@ -10,11 +10,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.repository.TermsRepository
-import java.io.File
 
 class TermsViewModel(private val repository: TermsRepository): ViewModel(){
     private val _failureResult = MutableLiveData<Throwable>()
@@ -69,7 +66,7 @@ class TermsViewModel(private val repository: TermsRepository): ViewModel(){
         }
     }
 
-    fun getFile() = File(App.appContext.cacheDir, Constants.TERMS_FILE_NAME)
+    fun getFile() = repository.getFile()
 
     class TermsViewModelFactory(private val repository: TermsRepository): ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

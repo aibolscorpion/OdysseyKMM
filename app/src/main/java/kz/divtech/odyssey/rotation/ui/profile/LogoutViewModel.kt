@@ -17,7 +17,8 @@ class LogoutViewModel(
     private val newsRepository: NewsRepository,
     private val articleRepository: ArticleRepository,
     private val notificationRepository: NotificationRepository,
-    private val orgInfoRepository: OrgInfoRepository): ViewModel() {
+    private val orgInfoRepository: OrgInfoRepository,
+    private val termsRepository: TermsRepository): ViewModel() {
 
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee
     val uaConfirmedLiveData: LiveData<Boolean> = employeeRepository.uaConfirmed
@@ -59,6 +60,7 @@ class LogoutViewModel(
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
         val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
         val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
+        val deleteTermsFile = async { termsRepository.deleteTermsFile() }
         deleteTripsAsync.await()
         deleteNearestTripAsync.await()
         deleteEmployeeAsync.await()
@@ -67,6 +69,7 @@ class LogoutViewModel(
         deleteFullArticlesAsync.await()
         deleteNotificationsAsync.await()
         deleteOrgInfo.await()
+        deleteTermsFile.await()
     }
 
     class LogoutViewModelFactory(
@@ -76,14 +79,15 @@ class LogoutViewModel(
         private val newsRepository: NewsRepository,
         private val articleRepository: ArticleRepository,
         private val notificationRepository: NotificationRepository,
-        private val orgInfoRepository: OrgInfoRepository
+        private val orgInfoRepository: OrgInfoRepository,
+        private val termsRepository: TermsRepository
     ) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(LogoutViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")
                 return LogoutViewModel(tripsRepository, employeeRepository,
                     faqRepository, newsRepository,
-                    articleRepository, notificationRepository, orgInfoRepository) as T
+                    articleRepository, notificationRepository, orgInfoRepository, termsRepository) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class")
         }

@@ -27,7 +27,8 @@ class LoggedOutNotificationDialog : BottomSheetDialogFragment() {
             (activity as MainActivity).newsRepository,
             (activity as MainActivity).articleRepository,
             (activity as MainActivity).notificationRepository,
-            (activity as MainActivity).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository,
+            (activity as MainActivity).termsRepository)
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme

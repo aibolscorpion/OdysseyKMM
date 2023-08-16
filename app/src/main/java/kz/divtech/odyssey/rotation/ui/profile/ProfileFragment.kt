@@ -28,7 +28,8 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity).newsRepository,
             (activity as MainActivity).articleRepository,
             (activity as MainActivity).notificationRepository,
-            (activity as MainActivity).orgInfoRepository)
+            (activity as MainActivity).orgInfoRepository,
+            (activity as MainActivity).termsRepository)
     }
     private var _binding : FragmentProfileBinding? = null
     private val binding get() = _binding!!

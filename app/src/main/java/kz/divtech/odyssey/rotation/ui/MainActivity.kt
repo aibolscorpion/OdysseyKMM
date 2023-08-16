@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private val viewModel: LogoutViewModel by viewModels{
         LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
             faqRepository, newsRepository, articleRepository,
-            notificationRepository, orgInfoRepository)
+            notificationRepository, orgInfoRepository, termsRepository)
     }
     private var _binding: ActivityMainBinding? = null
     val binding get() = _binding!!
