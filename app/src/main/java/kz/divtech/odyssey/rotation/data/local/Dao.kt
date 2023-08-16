@@ -26,13 +26,20 @@ interface Dao {
 
     @Query("SELECT * FROM archive_trip ORDER BY date DESC")
     fun getArchiveTripsSortedByDate() : PagingSource<Int, Trip>
-
     @Query("SELECT * FROM active_trip " +
-        "ORDER BY case when status = 'issued' then 0 else 1 end, status")
+            "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
+            "WHEN status = 'partly' THEN 1 " +
+            "WHEN status = 'opened' THEN 2 " +
+            "WHEN status = 'returned' THEN 3 " +
+            "ELSE 4 end, date")
     fun getActiveTripsSortedByStatus() :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM archive_trip " +
-            "ORDER BY case when status = 'issued' then 0 else 1 end, status")
+            "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
+            "WHEN status = 'partly' THEN 1 " +
+            "WHEN status = 'opened' THEN 2 " +
+            "WHEN status = 'returned' THEN 3 " +
+            "ELSE 4 end, date DESC")
     fun getArchiveTripsSortedByStatus() : PagingSource<Int, Trip>
 
     @Query("SELECT * FROM active_trip WHERE (status IN (:statusType))" +
