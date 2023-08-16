@@ -1,8 +1,5 @@
 package kz.divtech.odyssey.rotation.ui.login.find_by_phone_number
 
-import android.Manifest.permission.POST_NOTIFICATIONS
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
@@ -10,9 +7,6 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,8 +23,6 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
-import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
@@ -40,7 +32,7 @@ import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.utils.Utils.hideToolbar
 import kz.divtech.odyssey.rotation.utils.Utils.setMainActivityBackgroundColor
 
-class FindEmployeeFragment : Fragment(), NotificationListener {
+class FindEmployeeFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
 
@@ -53,9 +45,6 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
             (activity as MainActivity).orgInfoRepository
         )
     }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()) {}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -97,7 +86,7 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
             }
         }
 
-        checkPermission()
+
     }
 
     override fun onStart() {
@@ -163,19 +152,6 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
     }
 
 
-    private fun checkPermission(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(ContextCompat.checkSelfPermission(requireContext(), POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED) {
-            } else if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
-                val modalBottomSheet = PermissionRationale(this)
-                activity?.supportFragmentManager?.let { modalBottomSheet.show(it, "modalBottomSheet") }
-            } else {
-                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-            }
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
 
@@ -229,9 +205,5 @@ class FindEmployeeFragment : Fragment(), NotificationListener {
         findNavController().navigate(FindEmployeeFragmentDirections.actionGlobalNoInternetDialog())
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onClickOk() {
-        requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-    }
 
 }
