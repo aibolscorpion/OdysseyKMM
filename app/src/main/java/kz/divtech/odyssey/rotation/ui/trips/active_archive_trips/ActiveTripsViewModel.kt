@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTri
 
 class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
     val checkedStatusList = mutableListOf<String>()
-    var direction = Constants.ALL_DIRECTION
+    val direction = mutableListOf(Constants.TO_WORK, Constants.TO_HOME)
 
     private var _sortType = MutableLiveData(SortTripType.BY_DEPARTURE_DATE)
     val sortType: LiveData<SortTripType> = _sortType
@@ -25,14 +25,18 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
         }
 
         return if (checkedStatusList.isNotEmpty()) {
-                tripsRepository.getFilteredTrips(isActive, checkedStatusList.toTypedArray(), direction)
+                tripsRepository.getFilteredTrips(isActive, checkedStatusList.toTypedArray(), direction.toTypedArray())
             } else {
                 sortedTripsFlow
             }
     }
 
-    fun resetFilter(){
-        direction = Constants.ALL_DIRECTION
+    fun resetFilter() {
+        direction.clear()
+        direction.apply {
+            this.clear()
+            this.addAll(listOf(Constants.TO_WORK, Constants.TO_HOME))
+        }
         checkedStatusList.clear()
         setAppliedFilterCount(0)
     }

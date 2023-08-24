@@ -60,11 +60,11 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
     }
 
     private fun setCheckedDirection(){
-        if(viewModel.direction == Constants.ALL_DIRECTION){
+        if(viewModel.direction.containsAll(listOf(Constants.TO_HOME, Constants.TO_WORK))){
             binding.bothDirectionRB.isChecked = true
-        }else if(viewModel.direction == Constants.TO_HOME){
+        }else if(viewModel.direction.contains(Constants.TO_HOME)){
             binding.toHomeRB.isChecked = true
-        }else if(viewModel.direction == Constants.TO_WORK){
+        }else if(viewModel.direction.contains(Constants.TO_WORK)){
             binding.toWorkRB.isChecked = true
         }
     }
@@ -103,17 +103,18 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
     }
 
     private fun getCheckedDirection(){
+        viewModel.direction.clear()
         when(binding.directionRG.checkedRadioButtonId){
             R.id.bothDirectionRB -> {
-                viewModel.direction = Constants.ALL_DIRECTION
+                viewModel.direction.addAll(listOf(Constants.TO_WORK, Constants.TO_HOME))
             }
             R.id.toHomeRB -> {
                 viewModel.increaseByOneFilterCount()
-                viewModel.direction = Constants.TO_HOME
+                viewModel.direction.add(Constants.TO_HOME)
             }
             R.id.toWorkRB -> {
                 viewModel.increaseByOneFilterCount()
-                viewModel.direction = Constants.TO_WORK
+                viewModel.direction.add(Constants.TO_WORK)
             }
         }
 

@@ -6,7 +6,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.app.Constants.ALL_DIRECTION
 import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
@@ -80,37 +79,20 @@ class TripsRepository(private val dao : Dao) {
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getFilteredTrips(isActive: Boolean, statusType: Array<String>, direction: String)
+    fun getFilteredTrips(isActive: Boolean, statusType: Array<String>, direction: Array<String>)
                                 : Flow<PagingData<Trip>>{
         return if(isActive){
-            if(direction == ALL_DIRECTION){
-                Pager(
-                    config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                    remoteMediator = TripRemoteMediator(dao, isActive = true, statusType),
-                    pagingSourceFactory = {dao.getFilteredActiveTripsWithAllAllDirection(statusType)}
-                ).flow
-            }else{
-                Pager(
-                    config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                    remoteMediator = TripRemoteMediator(dao, isActive = true, statusType, direction),
-                    pagingSourceFactory = {dao.getFilteredActiveTrips(statusType, direction)}
-                ).flow
-            }
+            Pager(
+                config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+                remoteMediator = TripRemoteMediator(dao, isActive = true, statusType, direction),
+                pagingSourceFactory = {dao.getFilteredActiveTrips(statusType, direction)}
+            ).flow
         }else{
-            if(direction == ALL_DIRECTION){
-                Pager(
-                    config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                    remoteMediator = TripRemoteMediator(dao, isActive = false, statusType),
-                    pagingSourceFactory = {dao.getFilteredArchiveTripsWithAllAllDirection(statusType)}
-                ).flow
-            }else{
-                Pager(
-                    config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                    remoteMediator = TripRemoteMediator(dao, isActive = false, statusType, direction),
-                    pagingSourceFactory = {dao.getFilteredArchiveTrips(statusType, direction)}
-                ).flow
-            }
-
+            Pager(
+                config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
+                remoteMediator = TripRemoteMediator(dao, isActive = false, statusType, direction),
+                pagingSourceFactory = {dao.getFilteredArchiveTrips(statusType, direction)}
+            ).flow
         }
     }
 

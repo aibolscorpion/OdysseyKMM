@@ -4,7 +4,6 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
@@ -19,7 +18,7 @@ import kz.divtech.odyssey.rotation.utils.DownloadUtil
 class TripRemoteMediator(val dao: Dao,
                          val isActive: Boolean,
                          val status: Array<String> = arrayOf(),
-                         val direction: String = Constants.ALL_DIRECTION,
+                         val direction: Array<String> = arrayOf(),
                          val sortBy: String = "date") : RemoteMediator<Int, Trip>() {
 
     private var pageIndex = 0
@@ -29,10 +28,10 @@ class TripRemoteMediator(val dao: Dao,
             return MediatorResult.Success(true)
         val response = if(isActive){
             RetrofitClient.getApiService().getActiveTrips(pageIndex, status.joinToString(","),
-                direction, sortBy)
+                direction.joinToString(","), sortBy)
         }else{
             RetrofitClient.getApiService().getArchiveTrips(pageIndex, status.joinToString(","),
-                direction, sortBy)
+                direction.joinToString(","), sortBy)
         }
 
         return if(response.isSuccess()){
