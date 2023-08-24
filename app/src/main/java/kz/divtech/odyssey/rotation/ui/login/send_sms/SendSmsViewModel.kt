@@ -12,9 +12,10 @@ import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
 import kz.divtech.odyssey.rotation.utils.Event
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveAuthToken
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveOrganizationName
 
 class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
                        private val loginRepository: LoginRepository) : ViewModel() {
@@ -50,8 +51,8 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
             val response = loginRepository.login(authRequest)
             if(response.isSuccess()) {
                 val loginResponse = response.asSuccess().value
-                SharedPrefs.saveAuthToken(loginResponse.token, App.appContext)
-                SharedPrefs.saveOrganizationName(loginResponse.organization, App.appContext)
+                App.appContext.saveAuthToken(loginResponse.token)
+                App.appContext.saveOrganizationName(loginResponse.organization)
                 employeeRepository.insertEmployee(loginResponse.employee)
             }
             _loginResult.value = Event(response)

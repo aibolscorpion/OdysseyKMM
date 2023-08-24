@@ -5,7 +5,8 @@ import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchDeviceId
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveDeviceId
 import timber.log.Timber
 import java.util.*
 
@@ -21,9 +22,9 @@ class App : Application() {
         AndroidThreeTen.init(this)
         appContext = this
 
-        if(SharedPrefs.fetchDeviceId(this).isEmpty()) {
+        if(fetchDeviceId().isEmpty()) {
             val userId = UUID.randomUUID().toString()
-            SharedPrefs.saveDeviceId(userId, this)
+            saveDeviceId(userId)
         }
     }
 

@@ -18,7 +18,7 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>
     <color name="gray_600">#FF757575</color>
-    <color name="terms_of_agreement_title">#112B46</color>
+    <color name="title_color">#112B46</color>
     <color name="bottom_sheet_content">#801B3652</color>
     <color name="link">#40BDFF</color>
     <color name="bottom_sheet_title">#081426</color>
@@ -31,7 +31,6 @@
     <color name="profile_description">#80385780</color>
     <color name="profile_menu_text">#15304D</color>
     <color name="grey_text_view">#8015304D</color>
-    <color name="bottom_line">#DEE1E6</color>
     <color name="past_day">#4D1B344F</color>
     <color name="today">#1262CB</color>
     <color name="avatar_border">#15748595</color>

@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Odyssey</string>
-
     -----------------------------------------------------------------------------------------------
     //Страница Авторизации с помощью номера телефона
     <string name="login">Войти в аккаунт</string>
@@ -59,7 +58,7 @@
     <string name="add_number">Добавить номер</string>
     <string name="found_employee_by_id">С указанным ИИН найден сотрудник</string>
     <string name="employee_name_placeholder" translatable="false">Байжанов Нуржан Байжанулы</string>
-    <string name="employee_position_placeholder"  translatable="false">Старший бригадир</string>
+    <string name="employee_position_placeholder" translatable="false">Старший бригадир</string>
     <string name="add_phone_number">Добавить номер телефона</string>
 
     //Страница Обновить номер
@@ -118,8 +117,8 @@
     <string name="day_of_month_placeholder" translatable="false">25</string>
     <string name="month_placeholder" translatable="false">Ноября</string>
 
-    <string name="you_dont_have_whatsapp">У Вас не установлено WhatsApp !</string>
-    <string name="you_dont_have_telegram">У Вас не установлено Telegram !</string>
+    <string name="you_dont_have_whatsapp">У Вас не установлен WhatsApp !</string>
+    <string name="you_dont_have_telegram">У Вас не установлен Telegram !</string>
 
     <string name="you_are_unauthorized">Вы не авторизованы !</string>
 
@@ -183,7 +182,7 @@
     <string name="total_time_in_way">%1$s. %2$d ч %3$d мин в пути"</string>
     <string name="in_way">в пути</string>
     <string name="in_way_time">%1$d ч %2$d мин</string>
-    <string name="in_way_time_placeholder"  translatable="false">5 ч 20 мин</string>
+    <string name="in_way_time_placeholder" translatable="false">5 ч 20 мин</string>
     <string name="train">поезд</string>
     <string name="railway_carriage">вагон</string>
     <string name="place">место</string>
@@ -423,9 +422,9 @@
     <string name="surname_latin">Фамилия (на латинице)</string>
 
     //Страница Уведомления
-    <string name="notification_title_placeholder"  translatable="false">Смещение графика</string>
-    <string name="notification_content_placeholder"  translatable="false">Новый график: 18 апреля - 9 мая 2022</string>
-    <string name="notification_time_placeholder"  translatable="false">2 ч назад</string>
+    <string name="notification_title_placeholder" translatable="false">Смещение графика</string>
+    <string name="notification_content_placeholder" translatable="false">Новый график: 18 апреля - 9 мая 2022</string>
+    <string name="notification_time_placeholder" translatable="false">2 ч назад</string>
     <string name="empty_notifications_title">Уведомления не найдены</string>
     <string name="empty_notifications_content">У Вас пока нет новых уведомлений</string>
     <string name="important_notification">Важное уведомление</string>
@@ -447,4 +446,12 @@
     <string name="send_sms_code">Отправка смс кода</string>
     <string name="update_phone_number_without_auth">Обновление номер телефона без авторизации</string>
     <string name="update_phone_number_with_auth">Обновление номер телефона c авторизацией</string>
+
+    <string name="change_language">Изменить язык</string>
+    <string name="kazakh" translatable="false">Қазақша</string>
+    <string name="russian" translatable="false">Русский</string>
+    <string name="english" translatable="false">English</string>
+    <string name="choose_language">Выберите язык</string>
+    <string name="choose_language_desc">Выберите язык для приложения, получения уведомлений и отображения иной информации</string>
+
 </resources>

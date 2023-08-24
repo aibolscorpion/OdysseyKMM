@@ -25,7 +25,7 @@ import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchFirebaseToken
 
 class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
@@ -102,7 +102,7 @@ class UpdatePhoneNumberFragment : Fragment() {
             if(phoneNumberFilled) {
                 val request = UpdatePhoneRequest(args.employee.id,
                     "${Config.COUNTRY_CODE}$extractedPhoneNumber",
-                    SharedPrefs.fetchFirebaseToken(requireContext()))
+                    requireContext().fetchFirebaseToken())
                 viewModel.updatePhoneNumber(request)
             } else
                 showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))

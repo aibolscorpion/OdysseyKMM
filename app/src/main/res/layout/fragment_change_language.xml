@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="thisFragment"
+            type="kz.divtech.odyssey.rotation.ui.profile.language.ChangeLanguageFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/main_bg"
+        android:orientation="vertical"
+        android:paddingTop="25dp"
+        android:paddingBottom="@dimen/margin"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin">
+
+        <TextView
+            android:id="@+id/languageTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_language"
+            android:fontFamily="@font/pt_root_ui_bold"
+            android:textSize="24sp"
+            android:textColor="@color/title_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/languagesRG"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintTop_toBottomOf="@+id/languageTitleTV">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/russianRB"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingStart="12dp"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/russian" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/kazakhRB"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingStart="12dp"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/kazakh" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/englishRB"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingStart="12dp"
+                android:fontFamily="@font/pt_root_ui_medium"
+                android:textSize="16sp"
+                android:textColor="#07213d"
+                android:lineSpacingExtra="2sp"
+                android:text="@string/english" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e4e8eb" />
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> thisFragment.changeLanuage()}"
+            style="@style/buttonStyle"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

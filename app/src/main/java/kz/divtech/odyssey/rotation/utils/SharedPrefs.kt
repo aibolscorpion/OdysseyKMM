@@ -13,74 +13,83 @@ object SharedPrefs {
     private const val USER_TOKEN = "user_token"
     private const val FIREBASE_TOKEN = "firebase_token"
 
-    fun isLoggedIn(context: Context) = fetchToken(context).isNotEmpty()
+    fun Context.isLoggedIn() = fetchToken(this).isNotEmpty()
 
     //Shared Preferences
-    private fun getSharedPrefs(context: Context): SharedPreferences {
-        return context.getSharedPreferences(BuildConfig.APPLICATION_ID,
-            Context.MODE_PRIVATE)
+    private fun Context.getSharedPrefs(): SharedPreferences {
+        return this.getSharedPreferences(BuildConfig.APPLICATION_ID, Context.MODE_PRIVATE)
     }
 
-    private fun getSharedPrefsEditor(context: Context): SharedPreferences.Editor{
-        return getSharedPrefs(context).edit()
+    private fun Context.getSharedPrefsEditor(): SharedPreferences.Editor{
+        return this.getSharedPrefs().edit()
     }
 
     //Authentication Token
-    fun saveAuthToken(token : String, context: Context){
-            getSharedPrefsEditor(context).putString(USER_TOKEN, token).apply()
+    fun Context.saveAuthToken(token : String){
+        this.getSharedPrefsEditor().putString(USER_TOKEN, token).apply()
     }
 
     private fun fetchToken(context: Context): String {
-        return getSharedPrefs(context).getString(USER_TOKEN, "")!!
+        return context.getSharedPrefs().getString(USER_TOKEN, "")!!
     }
 
-    fun getTokenWithBearer(context: Context): String {
-        fetchToken(context).let {
+    fun Context.getTokenWithBearer(): String {
+        fetchToken(this).let {
             return "$AUTHORIZATION_VALUE_PREFIX $it"
         }
     }
 
-    fun clearAuthToken(context: Context){
-        getSharedPrefsEditor(context).putString(USER_TOKEN, "").apply()
+    fun Context.clearAuthToken(){
+        this.getSharedPrefsEditor().putString(USER_TOKEN, "").apply()
     }
 
     // DeviceId
-    fun saveDeviceId(userId: String, context: Context){
-        getSharedPrefsEditor(context).putString(Config.DEVICE_ID_KEY, userId).apply()
+    fun Context.saveDeviceId(userId: String){
+        this.getSharedPrefsEditor().putString(Config.DEVICE_ID_KEY, userId).apply()
     }
 
-    fun fetchDeviceId(context: Context): String {
-        return getSharedPrefs(context).getString(Config.DEVICE_ID_KEY,"")!!
+    fun Context.fetchDeviceId(): String {
+        return this.getSharedPrefs().getString(Config.DEVICE_ID_KEY,"")!!
     }
 
     //Firebase Token
-    fun saveFirebaseToken(token: String, context: Context){
-        getSharedPrefsEditor(context).putString(FIREBASE_TOKEN, token).apply()
+    fun Context.saveFirebaseToken(token: String){
+        this.getSharedPrefsEditor().putString(FIREBASE_TOKEN, token).apply()
     }
 
-    fun fetchFirebaseToken(context: Context): String{
-        return getSharedPrefs(context).getString(FIREBASE_TOKEN, "")!!
+    fun Context.fetchFirebaseToken(): String{
+        return this.getSharedPrefs().getString(FIREBASE_TOKEN, "")!!
     }
 
     //Host
-    fun saveUrl(url: String, context: Context){
-        getSharedPrefsEditor(context).putString("URL", url).apply()
+    fun Context.saveUrl(url: String){
+        this.getSharedPrefsEditor().putString("URL", url).apply()
     }
 
-    fun fetchUrl(context: Context): String{
-        return getSharedPrefs(context).getString("URL", Config.PROXY_HOST)!!
+    fun Context.fetchUrl(): String{
+        return this.getSharedPrefs().getString("URL", Config.PROXY_HOST)!!
     }
 
-    fun clearUrl(context: Context){
-        getSharedPrefsEditor(context).putString("URL", Config.PROXY_HOST).apply()
+    fun Context.clearUrl(){
+        this.getSharedPrefsEditor().putString("URL", Config.PROXY_HOST).apply()
     }
 
-    fun saveOrganizationName(organization: Organization, context: Context){
-        getSharedPrefsEditor(context).putString("organization", organization.name).apply()
+    fun Context.saveOrganizationName(organization: Organization){
+        this.getSharedPrefsEditor().putString("organization", organization.name).apply()
     }
 
-    fun fetchOrganizationName(context: Context): String{
-        return getSharedPrefs(context).getString("organization", "")!!
+    fun Context.fetchOrganizationName(): String{
+        return this.getSharedPrefs().getString("organization", "")!!
+    }
+
+    fun Context.saveAppLanguage(languageCode: String){
+        this.getSharedPrefsEditor().putString("language", languageCode).apply()
+    }
+
+    fun Context.isAppHasLanguage() = this.fetchAppLanguage().isNotEmpty()
+
+    fun Context.fetchAppLanguage(): String {
+        return this.getSharedPrefs().getString("language", "")!!
     }
 
 }

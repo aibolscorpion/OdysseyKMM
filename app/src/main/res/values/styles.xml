@@ -99,7 +99,7 @@
     <style name="profileNameTextStyle">
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/terms_of_agreement_title</item>
+        <item name="android:textColor">@color/title_color</item>
         <item name="android:lineSpacingExtra">4sp</item>
         <item name="android:gravity">start</item>
     </style>
@@ -162,7 +162,7 @@
         <item name="android:fontFamily">@font/pt_root_ui_bold</item>
         <item name="android:textSize">20sp</item>
         <item name="android:lineSpacingExtra">6sp</item>
-        <item name="android:textColor">@color/terms_of_agreement_title</item>
+        <item name="android:textColor">@color/title_color</item>
     </style>
 
     <style name="unselected_question_title">

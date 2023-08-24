@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
+import android.content.Context
 import android.graphics.Paint
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.graphics.drawable.Drawable
@@ -29,14 +30,15 @@ import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
+import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
 import java.time.temporal.ChronoUnit
 
 object BindingAdapter {
 
     @BindingAdapter("direction","date")
     @JvmStatic fun setDirection(textView: TextView, direction: String?, date: String?) {
-        val context = App.appContext
-        val dayMonth = date.formatDateToGivenPattern(DAY_MONTH_PATTERN)
+        val context = textView.context
+        val dayMonth = date.formatDateToGivenPattern(DAY_MONTH_PATTERN, context.getAppLocale())
         textView.text = when (direction) {
             Constants.TO_WORK -> context.getString(R.string.to_work, dayMonth)
             Constants.TO_HOME -> context.getString(R.string.to_home, dayMonth)
@@ -190,7 +192,7 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depStationName", "arrStationName")
     @JvmStatic fun depArrStationNames(textView: TextView, segmentStatus: String?, depStationName: String?, arrStationName: String?){
         if(depStationName != null && arrStationName != null && segmentStatus != null){
-            val depArrStationNames = App.appContext.getString(R.string.dash_sign_btw_two_text,
+            val depArrStationNames = textView.context.getString(R.string.dash_sign_btw_two_text,
                 properCase(depStationName), properCase(arrStationName)
             )
 
@@ -205,8 +207,7 @@ object BindingAdapter {
             val formattedDepTime = depDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
             val formattedArrTime = arrDateTime.formatDateTimeToGivenPattern(HOUR_MINUTE_PATTERN)
 
-            val text = App.appContext.resources.
-                getString(R.string.dash_sign_btw_two_text, formattedDepTime, formattedArrTime)
+            val text = textView.context.getString(R.string.dash_sign_btw_two_text, formattedDepTime, formattedArrTime)
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
             textView.text = text
         }
@@ -215,7 +216,8 @@ object BindingAdapter {
     @BindingAdapter("segmentStatus", "depDateTime")
     @JvmStatic fun formatDate(textView: TextView, segmentStatus: String?, depDateTime: String?){
         if(segmentStatus != null && depDateTime != null){
-            val formattedDepDate = depDateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN)
+            val formattedDepDate = depDateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN,
+                textView.context.getAppLocale())
 
             setPaintFlagsAndColorBySegmentStatus(textView, segmentStatus)
             textView.text = formattedDepDate
@@ -324,53 +326,56 @@ object BindingAdapter {
 
     @BindingAdapter("tripDescription")
     @JvmStatic fun setDescription(textView: TextView, trip: Trip?){
+        val context = textView.context
         val strBuilder = StringBuilder()
         if (trip != null && trip.is_extra) {
-            strBuilder.append(App.appContext.getString(R.string.extra_application))
+            strBuilder.append(context.getString(R.string.extra_application))
             strBuilder.append(Constants.SPACE)
         }
         when(trip?.status){
             Constants.STATUS_OPENED -> {
                 if(trip.segments.isEmpty()){
-                    strBuilder.append(App.appContext.getString(R.string.opened_without_details_desc))
+                    strBuilder.append(context.getString(R.string.opened_without_details_desc))
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
                         trip.segments[0].active_process.equals(Constants.WATCHING)){
-                        strBuilder.append(App.appContext.getString(R.string.opened_on_the_waiting_list_desc,
-                            trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN)))
+                        strBuilder.append(context.getString(R.string.opened_on_the_waiting_list_desc,
+                            trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                                context.getAppLocale())))
                     }else{
-                        strBuilder.append(App.appContext.getString(R.string.opened_with_details_desc))
+                        strBuilder.append(context.getString(R.string.opened_with_details_desc))
                     }
                 }else {
-                    strBuilder.append(composeTextForMoreThanOneSeg(trip))
+                    strBuilder.append(context.composeTextForMoreThanOneSeg(trip))
                 }
             }
 
             Constants.STATUS_PARTLY -> {
-                strBuilder.append(composeTextForMoreThanOneSeg(trip))
+                strBuilder.append(context.composeTextForMoreThanOneSeg(trip))
             }
 
             Constants.STATUS_RETURNED -> {
                 if(trip.segments.size  == 1){
-                    strBuilder.append(App.appContext.getString(R.string.returned_fully_one_segment_desc,
+                    strBuilder.append(context.getString(R.string.returned_fully_one_segment_desc,
                         trip.segments[0].closed_reason,
-                        trip.segments[0].ticket?.returned_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
+                        trip.segments[0].ticket?.returned_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                            context.getAppLocale())
                     ))
                 }else{
-                    strBuilder.append(composeTextForMoreThanOneSeg(trip))
+                    strBuilder.append(context.composeTextForMoreThanOneSeg(trip))
                 }
             }
 
             Constants.STATUS_ISSUED -> {
                 if(trip.segments.size > 1){
-                    strBuilder.append(composeTextForMoreThanOneSeg(trip))
+                    strBuilder.append(context.composeTextForMoreThanOneSeg(trip))
                 }
             }
         }
         textView.text = strBuilder.toString()
     }
 
-    private fun composeTextForMoreThanOneSeg(trip: Trip): String{
+    private fun Context.composeTextForMoreThanOneSeg(trip: Trip): String{
         val strBuilder = StringBuilder()
         val statusSet = HashSet<SegmentStatus>()
 
@@ -380,24 +385,25 @@ object BindingAdapter {
                     Constants.STATUS_OPENED -> {
                         if(segment.active_process.equals(Constants.WATCHING)){
                             statusSet.add(SegmentStatus.ON_THE_WAITING_LIST)
-                            strBuilder.append(App.appContext.getString(
+                            strBuilder.append(this.getString(
                                 R.string.on_the_waiting_list_more_than_one_segment,
-                                segment.watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
+                                segment.watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                                this.getAppLocale())
                             ))
                         }else{
                             statusSet.add(SegmentStatus.OPENED)
-                            strBuilder.append(App.appContext.getString(R.string.opened_more_than_one_segment))
+                            strBuilder.append(this.getString(R.string.opened_more_than_one_segment))
                         }
                     }
 
                     Constants.STATUS_ISSUED -> {
                         statusSet.add(SegmentStatus.ISSUED)
-                        strBuilder.append(App.appContext.getString(R.string.issued_more_than_one_segment))
+                        strBuilder.append(this.getString(R.string.issued_more_than_one_segment))
                     }
 
                     Constants.STATUS_CANCELED, Constants.STATUS_RETURNED -> {
                         statusSet.add(SegmentStatus.RETURNED)
-                        strBuilder.append(App.appContext.getString(
+                        strBuilder.append(this.getString(
                             R.string.returned_more_than_one_segment, segment.closed_reason))
                     }
                 }
@@ -406,19 +412,20 @@ object BindingAdapter {
 
             if(statusSet.size == 1){
                 if(statusSet.contains(SegmentStatus.OPENED)) {
-                    return App.appContext.getString(R.string.opened_with_details_desc)
+                    return this.getString(R.string.opened_with_details_desc)
                 }else if(statusSet.contains(SegmentStatus.ON_THE_WAITING_LIST )) {
-                    return App.appContext.getString(R.string.opened_on_the_waiting_list_desc,
-                        trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN))
+                    return this.getString(R.string.opened_on_the_waiting_list_desc,
+                        trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                        this.getAppLocale()))
                 }else if(statusSet.contains(SegmentStatus.RETURNED)){
-                    return App.appContext.getString(
+                    return this.getString(
                         R.string.returned_fully_desc, trip.segments[0].closed_reason)
                 }else if(statusSet.contains(SegmentStatus.ISSUED)){
                     return ""
                 }
             }else if(statusSet.size == 2){
                 if(statusSet.contains(SegmentStatus.OPENED) && statusSet.contains(SegmentStatus.ISSUED)){
-                    return App.appContext.getString(R.string.issued_partly)
+                    return this.getString(R.string.issued_partly)
                 }
             }
         }
@@ -433,7 +440,7 @@ object BindingAdapter {
             val totalMinutes = firstSegmentDepLocalDateTime?.until(lastSegmentArrLocalDateTime, ChronoUnit.MINUTES)
             val hours = totalMinutes?.div(60)
             val minutes = totalMinutes?.rem(60)
-            val totalTimeInWay = App.appContext.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
+            val totalTimeInWay = textView.context.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
             textView.text = totalTimeInWay
         }else{
             trip.end_station?.name?.let {
@@ -444,7 +451,8 @@ object BindingAdapter {
 
     @BindingAdapter("depArrDate")
     @JvmStatic fun setDepArrDate(textView: TextView, dateTime: String?){
-        textView.text = dateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN)
+        textView.text = dateTime.formatDateTimeToGivenPattern(DAY_MONTH_DAY_OF_WEEK_PATTERN,
+            textView.context.getAppLocale())
     }
 
     @BindingAdapter("depArrTime")
@@ -454,6 +462,7 @@ object BindingAdapter {
 
     @BindingAdapter("refundSegmentStatus")
     @JvmStatic fun setSegmentRefundStatus(textView: TextView, refundSegmentStatus: String?){
+        val context = textView.context
         val drawable = GradientDrawable()
         drawable.shape = GradientDrawable.RECTANGLE
         drawable.cornerRadius = 6.dpToPx.toFloat()
@@ -462,21 +471,21 @@ object BindingAdapter {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_completed_process_bg))
                 textView.apply {
                     setTextColor(App.appContext.getColor(R.color.refund_status_completed_process_text))
-                    text = App.appContext.getString(R.string.segment_status_process)
+                    text = context.getString(R.string.segment_status_process)
                 }
             }
             Constants.STATUS_RETURNED -> {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_completed_process_bg))
                 textView.apply {
                     setTextColor(App.appContext.getColor(R.color.refund_status_completed_process_text))
-                    text = App.appContext.getString(R.string.segment_status_returned)
+                    text = context.getString(R.string.segment_status_returned)
                 }
             }
             Constants.REFUND_STATUS_ERROR -> {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_error_partly_bg))
                 textView.apply {
                     setTextColor(App.appContext.getColor(R.color.white))
-                    text = App.appContext.getString(R.string.segment_status_error)
+                    text = context.getString(R.string.segment_status_error)
                 }
 
             }
@@ -484,7 +493,7 @@ object BindingAdapter {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_pending_bg))
                 textView.apply {
                     setTextColor(App.appContext.getColor(R.color.refund_status_pending_text))
-                    text = App.appContext.getString(R.string.segment_status_pending)
+                    text = context.getString(R.string.segment_status_pending)
                 }
 
             }
@@ -492,7 +501,7 @@ object BindingAdapter {
                 drawable.setColor(App.appContext.getColor(R.color.refund_status_rejected_canceled_bg))
                 textView.apply {
                     setTextColor(App.appContext.getColor(R.color.refund_status_rejected_canceled_text))
-                    text = App.appContext.getString(R.string.segment_status_rejected)
+                    text = context.getString(R.string.segment_status_rejected)
                 }
             }
             null -> textView.isVisible = false

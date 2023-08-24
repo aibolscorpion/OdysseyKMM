@@ -3,7 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile.notification.push_notification
 import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveFirebaseToken
 
 
 class PushNotificationService : FirebaseMessagingService() {
@@ -18,7 +18,7 @@ class PushNotificationService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        SharedPrefs.saveFirebaseToken(token, this)
+        saveFirebaseToken(token)
         super.onNewToken(token)
     }
 

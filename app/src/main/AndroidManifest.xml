@@ -16,21 +16,23 @@
         android:theme="@style/Theme.Main"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
             android:name=".ui.MainActivity"
-            android:launchMode="singleTask"
             android:exported="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Main">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver
             android:name=".ui.login.send_sms.SmsBroadcastReceiver"
             android:exported="true"
@@ -58,13 +60,24 @@
             </intent-filter>
         </service>
 
-        <meta-data android:name="io.sentry.dsn" android:value="https://71d884fb7b18465c9b64ba81b1889a97@o4505306497220608.ingest.sentry.io/4505318380142592" />
-        <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="true" />
-        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
-        <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
-        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
-        <meta-data android:name="io.sentry.traces.profiling.sample-rate" android:value="1.0" />
-
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://71d884fb7b18465c9b64ba81b1889a97@o4505306497220608.ingest.sentry.io/4505318380142592" />
+        <meta-data
+            android:name="io.sentry.traces.user-interaction.enable"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-screenshot"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-view-hierarchy"
+            android:value="true" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0" />
+        <meta-data
+            android:name="io.sentry.traces.profiling.sample-rate"
+            android:value="1.0" />
     </application>
 
 </manifest>

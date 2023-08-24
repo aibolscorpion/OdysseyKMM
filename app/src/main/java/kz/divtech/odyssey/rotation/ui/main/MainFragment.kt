@@ -21,8 +21,9 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchOrganizationName
 import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
+import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.utils.Utils.setMainActivityBackgroundColor
 import kz.divtech.odyssey.rotation.utils.Utils.showBottomNavigation
 import kz.divtech.odyssey.rotation.utils.Utils.showToolbar
@@ -44,10 +45,6 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
     private var _binding: FragmentMainBinding? = null
     val binding get() = _binding!!
 
-    private val currentDate: LocalDate = LocalDate.now()
-    val dayOfWeek: String = currentDate.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-    val dayOfMonth = currentDate.dayOfMonth.toString()
-    val month: String = currentDate.month.getDisplayName(TextStyle.FULL, Locale.getDefault())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentMainBinding.inflate(inflater)
@@ -93,10 +90,18 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
                 binding.employeeNameTV.text = it.full_name
             }
         }
-        binding.employeeOrgTV.text = SharedPrefs.fetchOrganizationName(requireContext())
+        binding.employeeOrgTV.text = requireContext().fetchOrganizationName()
     }
 
     private fun setCalendar(){
+        val currentDate: LocalDate = LocalDate.now()
+        val dayOfWeek: String = currentDate.dayOfWeek.getDisplayName(TextStyle.FULL, requireContext().getAppLocale())
+        binding.dayOfWeekTV.text = dayOfWeek
+        val dayOfMonth = currentDate.dayOfMonth.toString()
+        binding.dayOfMonthTV.text = dayOfMonth
+        val month: String = currentDate.month.getDisplayName(TextStyle.FULL, requireContext().getAppLocale())
+        binding.monthTV.text = month
+
         binding.calendarView.dayBinder = DayAdapter()
         val currentMonth = YearMonth.now()
         val firstDayOfWeek = WeekFields.of(Locale.getDefault()).firstDayOfWeek

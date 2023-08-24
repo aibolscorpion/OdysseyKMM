@@ -23,10 +23,13 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.ui.MainActivityDirections
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.isAppHasLanguage
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.isLoggedIn
 import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.utils.Utils.hideToolbar
@@ -47,23 +50,27 @@ class FindEmployeeFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
-        dataBinding.phoneNumberFragment = this
-        dataBinding.viewModel = viewModel
 
-        hideBottomNavigation()
-        hideToolbar()
-        changeStatusBarColor(R.color.status_bar)
-        setupMaskedEditText()
-
+        if(!requireContext().isAppHasLanguage()){
+            openChooseLanguageFragment()
+        }else if(requireContext().isLoggedIn()){
+            openMainFragment()
+        }
         return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dataBinding.phoneNumberFragment = this
+        dataBinding.viewModel = viewModel
+
+        hideBottomNavigation()
+        hideToolbar()
+        changeStatusBarColor(R.color.status_bar)
         setMainActivityBackgroundColor(R.color.status_bar)
+        setupMaskedEditText()
         viewModel.getOrgInfoFromServer()
 
         viewModel.employeeResult.observe(viewLifecycleOwner){
@@ -180,6 +187,15 @@ class FindEmployeeFragment : Fragment() {
                 )
             }
         }
+
+
+    private fun openMainFragment(){
+        findNavController().navigate(MainActivityDirections.actionGlobalMainFragment())
+    }
+
+    private fun openChooseLanguageFragment(){
+        findNavController().navigate(MainActivityDirections.actionGlobalChooseLanguageFragment())
+    }
 
     private fun showErrorDialog(){
         with(findNavController()){

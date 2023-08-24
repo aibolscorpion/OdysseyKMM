@@ -8,7 +8,8 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.repository.*
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearAuthToken
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearUrl
 
 class LogoutViewModel(
     private val tripsRepository: TripsRepository,
@@ -50,8 +51,8 @@ class LogoutViewModel(
     }
 
     fun deleteAllDataAsync() = viewModelScope.async{
-        SharedPrefs.clearAuthToken(App.appContext)
-        SharedPrefs.clearUrl(App.appContext)
+        App.appContext.clearAuthToken()
+        App.appContext.clearUrl()
         val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
         val deleteNearestTripAsync = async { tripsRepository.deleteNearestActiveTrip() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }

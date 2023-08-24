@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchOrganizationName
 
 class ProfileFragment : Fragment() {
     private val viewModel: LogoutViewModel by viewModels{
@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
                 binding.employeePositionTV.text = it.position
             }
         }
-        binding.employeeOrgNameTV.text = SharedPrefs.fetchOrganizationName(requireContext())
+        binding.employeeOrgNameTV.text = requireContext().fetchOrganizationName()
 
         binding.viewModel = viewModel
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {
@@ -102,6 +102,14 @@ class ProfileFragment : Fragment() {
             if (R.id.profileFragment == currentDestination?.id)
                 navigate(R.id.action_global_notificationFragment)
         }
+
+    fun openLanguageFragment(){
+        with(findNavController()) {
+            if(R.id.profileFragment == currentDestination?.id){
+                navigate(ProfileFragmentDirections.actionProfileFragmentToLanguageFragment())
+            }
+        }
+    }
 
     private fun goToLoginPage() {
         findNavController().navigate(ProfileFragmentDirections.actionGlobalPhoneNumberFragment())

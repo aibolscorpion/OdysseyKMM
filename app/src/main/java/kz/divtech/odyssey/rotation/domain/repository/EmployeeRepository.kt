@@ -9,10 +9,10 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchFirebaseToken
 
 class EmployeeRepository(private val dao: Dao) {
     val employee = dao.observeEmployee()
@@ -46,7 +46,7 @@ class EmployeeRepository(private val dao: Dao) {
 
     suspend fun sendDeviceInfo(){
         val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
-        val deviceInfo = DeviceInfo(ANDROID, deviceType, SharedPrefs.fetchFirebaseToken(App.appContext))
+        val deviceInfo = DeviceInfo(ANDROID, deviceType, App.appContext.fetchFirebaseToken())
         RetrofitClient.getApiService().sendDeviceInfo(deviceInfo)
     }
 

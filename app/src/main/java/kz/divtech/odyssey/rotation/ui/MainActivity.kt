@@ -34,6 +34,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config.UPDATE_TYPE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.app.Constants.NOTIFICATION_TYPE_APPLICATION
@@ -48,7 +49,8 @@ import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchAppLanguage
+import kz.divtech.odyssey.rotation.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.utils.Utils.convertToNotification
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -112,10 +114,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             }
         }
 
-        if(SharedPrefs.isLoggedIn(this)){
-            openMainFragment()
-        }
-
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController, false)
 
         setSupportActionBar(binding.mainToolbar)
@@ -130,7 +128,8 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                 R.id.refundReasonFragment, R.id.refundListFragment,
                 R.id.refundDetailFragment, R.id.chooseTicketForOpen,
                 R.id.countryListFragment, R.id.phoneNumberFragment2,
-                R.id.smsCodeFragment, R.id.termsOfAgreementFragment ->
+                R.id.smsCodeFragment, R.id.termsOfAgreementFragment,
+                R.id.changeLanguageFragment ->
                     binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
                 R.id.refundSentFragment, R.id.phoneUpdatedFragment ->
                     binding.mainToolbar.navigationIcon = null
@@ -138,8 +137,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
         checkPermission()
         ifPushNotificationSent(intent, false)
-
-
 
         networkCallback = object: ConnectivityManager.NetworkCallback(){
             override fun onAvailable(network: Network) {
@@ -156,6 +153,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
         connectivityManager.registerDefaultNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
         firebaseAnalytics = Firebase.analytics
+    }
+    override fun attachBaseContext(newBase: Context?) {
+        val context = newBase?.changeAppLocale(App.appContext.fetchAppLanguage())
+        super.attachBaseContext(context)
     }
 
     override fun onStart() {
@@ -290,10 +291,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private fun showPhoneNumberChangedDialog(intent: Intent){
         navController.navigate(R.id.phoneNumberAddedDialog, intent.extras)
-    }
-
-    private fun openMainFragment(){
-        navController.navigate(MainActivityDirections.actionGlobalMainFragment())
     }
 
     private fun openTermsOfAgreementFragment(){

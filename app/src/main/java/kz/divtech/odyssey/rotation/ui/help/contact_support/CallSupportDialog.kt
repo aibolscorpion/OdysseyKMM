@@ -17,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogCallSupportBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.ContactUtil
 
 
 class CallSupportDialog : BottomSheetDialogFragment(){

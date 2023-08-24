@@ -68,7 +68,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/terms_of_agreement_title"
+                    android:textColor="@color/title_color"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="24sp"
                     android:gravity="start"

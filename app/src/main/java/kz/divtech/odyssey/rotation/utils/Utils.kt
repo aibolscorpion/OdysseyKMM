@@ -1,5 +1,7 @@
 package kz.divtech.odyssey.rotation.utils
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
@@ -17,6 +19,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotifi
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import java.io.File
+import java.util.Locale
 
 object Utils {
 
@@ -87,6 +90,15 @@ object Utils {
         val window: Window = requireActivity().window
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         window.statusBarColor = ContextCompat.getColor(requireContext(), statusBarColor)
+    }
+
+    fun Context.getAppLocale(): Locale = this.resources.configuration.locales[0]
+
+    fun Context.changeAppLocale(languageCode: String): Context {
+        val configuration: Configuration = this.resources.configuration
+        val newLocale = Locale(languageCode)
+        configuration.setLocale(newLocale)
+        return this.createConfigurationContext(configuration)
     }
 
 }

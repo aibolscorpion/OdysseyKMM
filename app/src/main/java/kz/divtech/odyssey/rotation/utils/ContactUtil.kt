@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.ui.help.contact_support
+package kz.divtech.odyssey.rotation.utils
 
 import android.content.ActivityNotFoundException
 import android.content.Intent

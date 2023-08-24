@@ -59,4 +59,8 @@ object Constants {
     const val REFUND_STATUS_PARTLY = "partly"
     const val REFUND_STATUS_ERROR = "error"
 
+    const val LNG_KAZAKH = "kk"
+    const val LNG_RUSSIAN = "ru"
+    const val LNG_ENGLISH = "en"
+
 }

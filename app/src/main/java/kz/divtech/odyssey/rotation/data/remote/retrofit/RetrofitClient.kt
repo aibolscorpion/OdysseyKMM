@@ -3,7 +3,9 @@ package kz.divtech.odyssey.rotation.data.remote.retrofit
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Config
 import kz.divtech.odyssey.rotation.data.remote.retrofit_result.ResultAdapterFactory
-import kz.divtech.odyssey.rotation.utils.SharedPrefs
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchDeviceId
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchUrl
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.getTokenWithBearer
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,8 +19,8 @@ object RetrofitClient{
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(Interceptor { chain ->
                 val request: Request = chain.request().newBuilder()
-                    .addHeader(Config.DEVICE_ID_KEY, SharedPrefs.fetchDeviceId(App.appContext))
-                    .addHeader(Config.AUTHORIZATION_KEY, SharedPrefs.getTokenWithBearer(App.appContext))
+                    .addHeader(Config.DEVICE_ID_KEY, App.appContext.fetchDeviceId())
+                    .addHeader(Config.AUTHORIZATION_KEY, App.appContext.getTokenWithBearer())
                     .build()
                 chain.proceed(request)
             })
@@ -26,7 +28,7 @@ object RetrofitClient{
             .addInterceptor(UnauthorizedInterceptor())
             .build()
 
-        return Retrofit.Builder().baseUrl(SharedPrefs.fetchUrl(App.appContext)+Config.API)
+        return Retrofit.Builder().baseUrl(App.appContext.fetchUrl()+Config.API)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())

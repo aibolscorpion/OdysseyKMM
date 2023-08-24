@@ -97,13 +97,13 @@
     <string name="in_app_update_error_result_code">Update Error! Result Code: %1$d</string>
     <string name="internet_connection_is_off">No internet connection</string>
 
-    <string name="monday">Mon</string>
-    <string name="tuesday">Tue</string>
-    <string name="wednesday">Wed</string>
-    <string name="thursday">Thu</string>
-    <string name="friday">Fri</string>
-    <string name="saturday">Sat</string>
-    <string name="sunday">Sun</string>
+    <string name="monday">Mo</string>
+    <string name="tuesday">Tu</string>
+    <string name="wednesday">We</string>
+    <string name="thursday">Th</string>
+    <string name="friday">Fr</string>
+    <string name="saturday">Sa</string>
+    <string name="sunday">Su</string>
 
     <string name="you_dont_have_whatsapp">You don\'t have WhatsApp installed!</string>
     <string name="you_dont_have_telegram">You don\'t have Telegram installed!</string>
@@ -398,4 +398,7 @@
     <string name="send_sms_code">Send SMS Code</string>
     <string name="update_phone_number_without_auth">Update Phone Number without Authorization</string>
     <string name="update_phone_number_with_auth">Update Phone Number with Authorization</string>
+    <string name="change_language">Change Language</string>
+    <string name="choose_language">Choose language</string>
+    <string name="choose_language_desc">Choose a language for the app, notifications, and other information</string>
 </resources>

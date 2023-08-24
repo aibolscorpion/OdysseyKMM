@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="start"
-                    android:textColor="@color/terms_of_agreement_title"
+                    android:textColor="@color/title_color"
                     app:date="@{trip.date}"
                     app:direction="@{trip.direction}"
                     tools:text="Домой, 27 сен" />

@@ -201,6 +201,9 @@
         <action
             android:id="@+id/action_profileFragment_to_termsOfAgreementFragment"
             app:destination="@id/termsOfAgreementFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_languageFragment"
+            app:destination="@id/changeLanguageFragment" />
     </fragment>
     <fragment
         android:id="@+id/termsOfAgreementFragment"
@@ -562,6 +565,20 @@
         app:destination="@id/authTermsFragment"
         app:popUpTo="@id/main_nav_graph"
         app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/changeLanguageFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.profile.language.ChangeLanguageFragment"
+        tools:layout="@layout/fragment_change_language"
+        android:label="@string/change_language" />
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="kz.divtech.odyssey.rotation.ui.login.language.ChooseLanguageFragment"
+        tools:layout="@layout/fragment_choose_language"
+        android:label="@string/change_language" />
+    <action
+        android:id="@+id/action_global_chooseLanguageFragment"
+        app:destination="@id/chooseLanguageFragment"
+        app:popUpTo="@id/main_nav_graph" />
 
 
 </navigation>

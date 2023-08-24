@@ -13,6 +13,7 @@ import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
+import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
 
 object RefundAppListBindingAdapter {
 
@@ -60,30 +61,31 @@ object RefundAppListBindingAdapter {
     @BindingAdapter("refundStatus")
     @JvmStatic
     fun setTitleByStatus(textView: TextView, status: String){
+        val context = textView.context
         textView.apply {
             when (status) {
                 Constants.REFUND_STATUS_PENDING -> {
-                    text = getStringRes(R.string.refund_status_pending_title)
+                    text = context.getString(R.string.refund_status_pending_title)
                     setTextColor(getColor(R.color.refund_status_pending_text))
                 }
                 Constants.REFUND_STATUS_PROCESS -> {
-                    text = getStringRes(R.string.refund_status_process_title)
+                    text = context.getString(R.string.refund_status_process_title)
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_COMPLETED -> {
-                    text = getStringRes(R.string.refund_status_completed_title)
+                    text = context.getString(R.string.refund_status_completed_title)
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_REJECTED -> {
-                    text = getStringRes(R.string.refund_status_rejected_title)
+                    text = context.getString(R.string.refund_status_rejected_title)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_CANCELED -> {
-                    text = getStringRes(R.string.refund_status_canceled_title)
+                    text = context.getString(R.string.refund_status_canceled_title)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_ERROR, Constants.REFUND_STATUS_PARTLY -> {
-                    text = App.appContext.getString(R.string.refund_status_error_partly_title)
+                    text = context.getString(R.string.refund_status_error_partly_title)
                     setTextColor(getColor(R.color.white))
                 }
             }
@@ -93,31 +95,32 @@ object RefundAppListBindingAdapter {
     @BindingAdapter("refundApp")
     @JvmStatic
     fun setDescByStatus(textView: TextView, refundApp: RefundAppItem){
-        val formattedDate = refundApp.updated_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
+        val formattedDate = refundApp.updated_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+            textView.context.getAppLocale())
         textView.apply {
             when (refundApp.status) {
                 Constants.REFUND_STATUS_PENDING -> {
-                    text = getStringRes(R.string.refund_status_pending_desс)
+                    text = context.getString(R.string.refund_status_pending_desс)
                     setTextColor(getColor(R.color.refund_status_pending_text))
                 }
                 Constants.REFUND_STATUS_PROCESS -> {
-                    text = App.appContext.getString(R.string.refund_status_process_desc, formattedDate)
+                    text = context.getString(R.string.refund_status_process_desc, formattedDate)
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_COMPLETED -> {
-                    text = App.appContext.getString(R.string.refund_status_completed_desc, formattedDate)
+                    text = context.getString(R.string.refund_status_completed_desc, formattedDate)
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_REJECTED -> {
-                    text = App.appContext.getString(R.string.refund_status_rejected_desc, refundApp.reject_reason)
+                    text = context.getString(R.string.refund_status_rejected_desc, refundApp.reject_reason)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_CANCELED -> {
-                    text = App.appContext.getString(R.string.refund_status_canceled_desc, formattedDate)
+                    text = context.getString(R.string.refund_status_canceled_desc, formattedDate)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_ERROR -> {
-                    text = App.appContext.getString(R.string.refund_status_error_desc)
+                    text = context.getString(R.string.refund_status_error_desc)
                     setTextColor(getColor(R.color.white))
                 }
                 Constants.REFUND_STATUS_PARTLY -> {
@@ -127,7 +130,7 @@ object RefundAppListBindingAdapter {
                             strBuilder.append(" ${refundApp.realSegment!![position].train?.dep_station_name} - ${refundApp.realSegment!![position].train?.arr_station_name}.")
                         }
                     }
-                    text = App.appContext.getString(R.string.refund_status_partly_desc, strBuilder)
+                    text = context.getString(R.string.refund_status_partly_desc, strBuilder)
                     setTextColor(getColor(R.color.white))
                 }
             }
@@ -141,12 +144,12 @@ object RefundAppListBindingAdapter {
 
     @BindingAdapter("refundAppCreatedDateTime")
     @JvmStatic fun setApplicationCreatedDateTime(textView: TextView, dateTime: String){
-        val formattedDateTime = dateTime.formatDateTimeToGivenPattern(DEFAULT_PATTERN)
+        val formattedDateTime = dateTime.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+            textView.context.getAppLocale())
         textView.text = formattedDateTime
     }
 
 
     private fun getColor(colorId: Int) = App.appContext.getColor(colorId)
 
-    private fun getStringRes(stringId: Int) = App.appContext.getString(stringId)
 }
