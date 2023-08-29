@@ -64,7 +64,7 @@
             <include
                 android:id="@+id/emptyNotifications"
                 layout="@layout/layout_empty_data"
-                app:emptyData="@{emptyData.NOTIFICATIONS}"
+                app:emptyData="@{emptyData}"
                 android:visibility="gone" />
 
             <ProgressBar

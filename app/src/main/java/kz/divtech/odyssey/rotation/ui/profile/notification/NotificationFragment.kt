@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
+import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
@@ -44,6 +46,9 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
 
         binding.thisFragment = this
         binding.viewModel = viewModel
+        binding.emptyData = EmptyData(ContextCompat.getDrawable(requireContext(), R.drawable.icon_notifications)!!,
+            requireContext().getString(R.string.empty_notifications_title),
+            requireContext().getString(R.string.empty_notifications_content))
         return binding.root
     }
 

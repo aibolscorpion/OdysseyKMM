@@ -40,7 +40,6 @@ class DocumentDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         val document = args.document.copy()
 
-
         when(document.type){
             Constants.ID_CARD -> {
                 val idBinding = DialogIdBinding.inflate(inflater)

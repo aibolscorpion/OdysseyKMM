@@ -379,7 +379,7 @@
     <fragment
         android:id="@+id/chooseTicketRefundFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.ChooseTicketRefundFragment"
-        android:label="Возврат по заявке"
+        android:label="@string/create_application_to_refund"
         tools:layout="@layout/fragment_choose_ticket_refund">
         <action
             android:id="@+id/action_chooseTicketRefundFragment_to_refundReasonFragment"
@@ -394,7 +394,7 @@
     <fragment
         android:id="@+id/refundReasonFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.RefundReasonFragment"
-        android:label="Возврат по заявке"
+        android:label="@string/create_application_to_refund"
         tools:layout="@layout/fragment_refund_reason" >
         <action
             android:id="@+id/action_refundReasonFragment_to_refundSendFragment"
@@ -411,7 +411,7 @@
     <fragment
         android:id="@+id/refundSentFragment"
         android:name="kz.divtech.odyssey.rotation.ui.trips.refund.application.create.RefundSentFragment"
-        android:label="Возврат по заявке"
+        android:label="@string/refund_tickets"
         tools:layout="@layout/fragment_refund_sent" >
         <action
             android:id="@+id/action_refundSentFragment_to_tripsFragment"
@@ -475,7 +475,7 @@
     <fragment
         android:id="@+id/chooseTicketForOpen"
         android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.ChooseTicketForOpen"
-        android:label="Билеты по поездке"
+        android:label="@string/trip_tickets"
         tools:layout="@layout/fragment_choose_ticket_for_open" >
         <argument
             android:name="issuedTickets"
@@ -484,7 +484,7 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="kz.divtech.odyssey.rotation.ui.search.SearchFragment"
-        android:label="Поиск билетов"
+        android:label="@string/ticket_search"
         tools:layout="@layout/fragment_search"/>
     <dialog
         android:id="@+id/defDocumentChangedDialog"
@@ -574,7 +574,7 @@
         android:id="@+id/chooseLanguageFragment"
         android:name="kz.divtech.odyssey.rotation.ui.login.language.ChooseLanguageFragment"
         tools:layout="@layout/fragment_choose_language"
-        android:label="@string/change_language" />
+        android:label="@string/choose_language" />
     <action
         android:id="@+id/action_global_chooseLanguageFragment"
         app:destination="@id/chooseLanguageFragment"

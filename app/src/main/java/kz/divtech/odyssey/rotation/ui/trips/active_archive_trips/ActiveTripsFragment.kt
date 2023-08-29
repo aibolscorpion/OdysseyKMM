@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
@@ -86,7 +87,15 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
             adapter.loadStateFlow.collectLatest{ loadState ->
 
                 val isListEmpty = loadState.refresh is LoadState.NotLoading && adapter.itemCount == 0
-                binding.emptyData = if(isActiveTrips!!) EmptyData.ACTIVE_TRIPS else EmptyData.ARCHIVE_TRIPS
+                val activeTripsEmptyData = EmptyData(ContextCompat.getDrawable(requireContext(), R.drawable.icon_travel)!!,
+                        requireContext().getString(R.string.empty_active_trips_title),
+                        requireContext().getString(R.string.empty_active_trips_content))
+
+                val archiveTripsEmptyData = EmptyData(ContextCompat.getDrawable(requireContext(), R.drawable.icon_travel)!!,
+                    requireContext().getString(R.string.empty_archive_trips_title),
+                    requireContext().getString(R.string.empty_archive_trips_content))
+
+                binding.emptyData = if(isActiveTrips!!) activeTripsEmptyData else archiveTripsEmptyData
                 binding.emptyTrips.root.isVisible = isListEmpty
 
                 binding.tripsRV.isVisible =
@@ -158,20 +167,16 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     }
 
     override fun onDateClicked() {
-        binding.sortTripTV.text = getString(R.string.sort_by_departure_date)
         viewModel.setSortType(BY_DEPARTURE_DATE)
-        viewModel.resetFilter()
         getTrips()
     }
 
     override fun onStatusClicked() {
         viewModel.setSortType(BY_STATUS)
-        viewModel.resetFilter()
         getTrips()
     }
 
     override fun applyFilterClicked() {
-        viewModel.setSortType(BY_DEPARTURE_DATE)
         getTrips()
     }
 

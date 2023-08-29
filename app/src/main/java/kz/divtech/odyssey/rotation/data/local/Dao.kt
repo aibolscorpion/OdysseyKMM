@@ -21,34 +21,32 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 @androidx.room.Dao
 interface Dao {
     //Trips
-    @Query("SELECT * FROM active_trip ORDER BY date ASC")
-    fun getActiveTripsSortedByDate() :  PagingSource<Int, Trip>
-
-    @Query("SELECT * FROM archive_trip ORDER BY date DESC")
-    fun getArchiveTripsSortedByDate() : PagingSource<Int, Trip>
     @Query("SELECT * FROM active_trip " +
+            "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
+            "ORDER BY date ASC")
+    fun getActiveTripsSortedByDate(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
+
+    @Query("SELECT * FROM archive_trip " +
+            "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
+            "ORDER BY date DESC")
+    fun getArchiveTripsSortedByDate(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
+    @Query("SELECT * FROM active_trip " +
+            "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
             "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
             "WHEN status = 'partly' THEN 1 " +
             "WHEN status = 'opened' THEN 2 " +
             "WHEN status = 'returned' THEN 3 " +
-            "ELSE 4 end, date")
-    fun getActiveTripsSortedByStatus() :  PagingSource<Int, Trip>
+            "ELSE 4 end, date ASC")
+    fun getActiveTripsSortedByStatus(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
 
     @Query("SELECT * FROM archive_trip " +
+            "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
             "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
             "WHEN status = 'partly' THEN 1 " +
             "WHEN status = 'opened' THEN 2 " +
             "WHEN status = 'returned' THEN 3 " +
             "ELSE 4 end, date DESC")
-    fun getArchiveTripsSortedByStatus() : PagingSource<Int, Trip>
-
-    @Query("SELECT * FROM active_trip WHERE (status IN (:statusType))" +
-            " AND (direction IN (:direction))")
-    fun getFilteredActiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
-
-    @Query("SELECT * FROM archive_trip WHERE (status IN (:statusType))" +
-            " AND (direction IN (:direction))")
-    fun getFilteredArchiveTrips(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
+    fun getArchiveTripsSortedByStatus(statusType: Array<String>, direction: Array<String>) : PagingSource<Int, Trip>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertActiveTrips(data: List<ActiveTrip>)

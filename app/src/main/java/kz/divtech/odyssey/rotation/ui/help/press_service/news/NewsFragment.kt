@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.databinding.ObservableBoolean
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
+import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
@@ -44,6 +46,9 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
         _binding = FragmentNewsBinding.inflate(inflater)
         binding.viewModel = viewModel
         binding.thisFragment = this
+        binding.emptyData = EmptyData(ContextCompat.getDrawable(requireContext(), R.drawable.icon_news)!!,
+            requireContext().getString(R.string.empty_news_title),
+            requireContext().getString(R.string.empty_news_content))
 
         return binding.root
     }

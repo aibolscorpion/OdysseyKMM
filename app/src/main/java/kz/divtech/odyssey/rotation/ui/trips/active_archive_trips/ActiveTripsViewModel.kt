@@ -9,7 +9,8 @@ import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType
 
 class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
-    val checkedStatusList = mutableListOf<String>()
+    val checkedStatusList = mutableListOf(Constants.STATUS_ISSUED, Constants.STATUS_OPENED,
+        Constants.STATUS_PARTLY, Constants.STATUS_RETURNED)
     val direction = mutableListOf(Constants.TO_WORK, Constants.TO_HOME)
 
     private var _sortType = MutableLiveData(SortTripType.BY_DEPARTURE_DATE)
@@ -19,26 +20,13 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
     val appliedFilterCount: LiveData<Int> = _appliedFilterCount
 
     fun getFlowTrips(isActive: Boolean): Flow<PagingData<Trip>> {
-        val sortedTripsFlow = when (_sortType.value) {
-            SortTripType.BY_STATUS -> tripsRepository.getTripsSortedByStatus(isActive)
-            else -> tripsRepository.getTripsSortedByDate(isActive)
+        return if(_sortType.value == SortTripType.BY_DEPARTURE_DATE) {
+            tripsRepository.getTripsSortedByDate(isActive, checkedStatusList.toTypedArray(),
+                direction.toTypedArray())
+        }else{
+            tripsRepository.getTripsSortedByStatus(
+                isActive, checkedStatusList.toTypedArray(), direction.toTypedArray())
         }
-
-        return if (checkedStatusList.isNotEmpty()) {
-                tripsRepository.getFilteredTrips(isActive, checkedStatusList.toTypedArray(), direction.toTypedArray())
-            } else {
-                sortedTripsFlow
-            }
-    }
-
-    fun resetFilter() {
-        direction.clear()
-        direction.apply {
-            this.clear()
-            this.addAll(listOf(Constants.TO_WORK, Constants.TO_HOME))
-        }
-        checkedStatusList.clear()
-        setAppliedFilterCount(0)
     }
 
     fun setAppliedFilterCount(count: Int){

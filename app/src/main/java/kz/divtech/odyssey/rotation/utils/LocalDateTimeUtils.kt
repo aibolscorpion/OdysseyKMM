@@ -18,6 +18,7 @@ object LocalDateTimeUtils {
     const val DAY_MONTH_PATTERN = "d MMM"
     const val HOUR_MINUTE_PATTERN = "HH:mm"
     const val DAY_MONTH_HOUR_MINUTE_PATTERN = "d MMM HH:mm"
+    const val DAY_MONTH_NAME_YEAR_PATTERN = "d MMM yyyy"
 
     fun String?.formatDateToGivenPattern(givenPattern: String, locale: Locale = Locale(LNG_RUSSIAN)): String{
         var formattedDate = ""
@@ -53,9 +54,9 @@ object LocalDateTimeUtils {
         return LocalDate.parse(this, serverDateTimeFormat)
     }
 
-    fun Long.toDateString(): String {
+    fun Long.toDateString(locale: Locale = Locale(LNG_RUSSIAN)): String {
         val date = Instant.ofEpochMilli(this).atZone(ZoneId.systemDefault()).toLocalDate()
-        val format = DateTimeFormatter.ofPattern("d MMM yyyy")
+        val format = DateTimeFormatter.ofPattern(DAY_MONTH_NAME_YEAR_PATTERN, locale)
         return format.format(date)
     }
 }

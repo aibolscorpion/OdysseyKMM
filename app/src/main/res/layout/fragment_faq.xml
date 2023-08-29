@@ -68,7 +68,7 @@
             <include
                 android:id="@+id/emptyFaq"
                 layout="@layout/layout_empty_data"
-                app:emptyData="@{emptyData.FAQ}"
+                app:emptyData="@{emptyData}"
                 android:visibility="gone" />
 
             <ProgressBar

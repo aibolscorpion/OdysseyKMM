@@ -70,7 +70,7 @@
                 <include
                     android:id="@+id/emptyNews"
                     layout="@layout/layout_empty_data"
-                    app:emptyData="@{emptyData.NEWS}"
+                    app:emptyData="@{emptyData}"
                     android:visibility="gone" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

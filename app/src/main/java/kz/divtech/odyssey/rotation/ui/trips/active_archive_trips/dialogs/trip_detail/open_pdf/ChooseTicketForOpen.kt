@@ -25,7 +25,7 @@ import java.io.File
 class ChooseTicketForOpen : Fragment(), DownloadInterface {
     private var _binding: FragmentChooseTicketForOpenBinding? = null
     private val binding get() = _binding!!
-    val adapter by lazy { TicketNameRecyclerViewAdapter(this) }
+    val adapter by lazy { TicketNameRecyclerViewAdapter(this, requireContext()) }
     val args: ChooseTicketForOpenArgs by navArgs()
     val viewModel: OpenTicketViewModel by viewModels()
 

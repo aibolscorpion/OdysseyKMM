@@ -45,53 +45,37 @@ class TripsRepository(private val dao : Dao) {
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getTripsSortedByDate(isActive: Boolean): Flow<PagingData<Trip>>{
+    fun getTripsSortedByDate(isActive: Boolean, statusType: Array<String>, direction: Array<String>):
+            Flow<PagingData<Trip>>{
         return if(isActive){
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
                 remoteMediator = TripRemoteMediator(dao, isActive = true),
-                pagingSourceFactory = {dao.getActiveTripsSortedByDate()}
+                pagingSourceFactory = {dao.getActiveTripsSortedByDate(statusType, direction)}
             ).flow
         }else{
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
                 remoteMediator = TripRemoteMediator(dao, isActive = false),
-                pagingSourceFactory = {dao.getArchiveTripsSortedByDate()}
+                pagingSourceFactory = {dao.getArchiveTripsSortedByDate(statusType, direction)}
             ).flow
         }
     }
 
     @OptIn(ExperimentalPagingApi::class)
-    fun getTripsSortedByStatus(isActive: Boolean): Flow<PagingData<Trip>>{
+    fun getTripsSortedByStatus(isActive: Boolean, statusType: Array<String>, direction: Array<String>):
+            Flow<PagingData<Trip>>{
         return if(isActive){
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
                 remoteMediator = TripRemoteMediator(dao, isActive = true, sortBy = "status"),
-                pagingSourceFactory = {dao.getActiveTripsSortedByStatus()}
+                pagingSourceFactory = {dao.getActiveTripsSortedByStatus(statusType, direction)}
             ).flow
         }else{
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
                 remoteMediator = TripRemoteMediator(dao, isActive = false, sortBy = "status"),
-                pagingSourceFactory = {dao.getArchiveTripsSortedByStatus()}
-            ).flow
-        }
-    }
-
-    @OptIn(ExperimentalPagingApi::class)
-    fun getFilteredTrips(isActive: Boolean, statusType: Array<String>, direction: Array<String>)
-                                : Flow<PagingData<Trip>>{
-        return if(isActive){
-            Pager(
-                config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = true, statusType, direction),
-                pagingSourceFactory = {dao.getFilteredActiveTrips(statusType, direction)}
-            ).flow
-        }else{
-            Pager(
-                config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = false, statusType, direction),
-                pagingSourceFactory = {dao.getFilteredArchiveTrips(statusType, direction)}
+                pagingSourceFactory = {dao.getArchiveTripsSortedByStatus(statusType, direction)}
             ).flow
         }
     }

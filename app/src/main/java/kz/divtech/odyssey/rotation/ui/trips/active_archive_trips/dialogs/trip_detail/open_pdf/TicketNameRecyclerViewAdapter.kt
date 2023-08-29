@@ -1,18 +1,20 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf
 
+import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.ItemTicketNameBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.toDateString
+import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.utils.Utils.getFileSize
 
-class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInterface): RecyclerView.Adapter<TicketNameRecyclerViewAdapter.ViewHolder>() {
+class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInterface,
+        val context: Context): RecyclerView.Adapter<TicketNameRecyclerViewAdapter.ViewHolder>() {
     private val oldTicketList = mutableListOf<Ticket>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,12 +28,12 @@ class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInter
        val file = getFileByTicket(ticket)
        if(file.exists()){
            holder.binding.fileIV.setImageResource(R.drawable.icon_pdf_file)
-           holder.binding.ticketFileDescTV.text = App.appContext.getString(
+           holder.binding.ticketFileDescTV.text = context.getString(
                R.string.file_extension_modified_date_and_size, file.extension,
-               file.lastModified().toDateString(), file.getFileSize())
+               file.lastModified().toDateString(context.getAppLocale()), file.getFileSize())
        }else{
            holder.binding.fileIV.setImageResource(R.drawable.icon_download)
-           holder.binding.ticketFileDescTV.text = App.appContext.getString(R.string.click_to_download)
+           holder.binding.ticketFileDescTV.text = context.getString(R.string.click_to_download)
        }
 
         holder.binding.root.setOnClickListener{

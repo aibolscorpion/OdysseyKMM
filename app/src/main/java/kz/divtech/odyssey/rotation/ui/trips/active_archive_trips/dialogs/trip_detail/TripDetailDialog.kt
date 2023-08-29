@@ -72,7 +72,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     }
 
     private fun setSegmentFullRV(){
-        val tripDetailAdapter = SegmentFullAdapter()
+        val tripDetailAdapter = SegmentFullAdapter(requireContext())
         tripDetailAdapter.setSegmentList(args.trip)
         dataBinding.segmentDetailRV.adapter = tripDetailAdapter
     }

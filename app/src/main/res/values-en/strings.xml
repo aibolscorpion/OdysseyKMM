@@ -271,6 +271,7 @@
     <string name="segment_status_error">Refund error</string>
 
     // Search Page
+    <string name="ticket_search">Ticket search</string>
     <string name="ticket_purchase_under_development">The ticket purchase section is currently under development</string>
     <string name="soon_you_will_be_able_to_buy_ticket">You will soon be able to purchase air and railway tickets within the Odyssey app. We will notify you when this section becomes operational.</string>
     <string name="go_to_main_page">Go to the main page</string>

@@ -337,7 +337,7 @@ object BindingAdapter {
                 if(trip.segments.isEmpty()){
                     strBuilder.append(context.getString(R.string.opened_without_details_desc))
                 }else if(trip.segments.size == 1){
-                    if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
+                    if(trip.segments[0].status == Constants.STATUS_OPENED &&
                         trip.segments[0].active_process.equals(Constants.WATCHING)){
                         strBuilder.append(context.getString(R.string.opened_on_the_waiting_list_desc,
                             trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,

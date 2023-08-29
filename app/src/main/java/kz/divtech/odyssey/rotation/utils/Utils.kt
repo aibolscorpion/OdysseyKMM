@@ -13,11 +13,14 @@ import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.app.Constants.LNG_ENGLISH
+import kz.divtech.odyssey.rotation.app.Constants.LNG_KAZAKH
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
+import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchAppLanguage
 import java.io.File
 import java.util.Locale
 
@@ -63,7 +66,12 @@ object Utils {
     }
 
     fun getCountryList(): List<Country>{
-        val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
+        val rawId = when(App.appContext.fetchAppLanguage()){
+            LNG_KAZAKH -> R.raw.countries
+            LNG_ENGLISH -> R.raw.countries_en
+            else -> R.raw.countries
+        }
+        val jsonString = App.appContext.resources.openRawResource(rawId).bufferedReader().
             use { it.readText() }
         return Gson().fromJson(jsonString, CountryList::class.java).countries
     }

@@ -292,6 +292,7 @@
 
     -----------------------------------------------------------------------------------------------
     //Страница Поиск
+    <string name="ticket_search">Поиск билетов</string>
     <string name="ticket_purchase_under_development">Раздел покупки билетов сейчас в разработке</string>
     <string name="soon_you_will_be_able_to_buy_ticket">Совсем скоро Вы сможете покупать авиа и ЖД билеты в приложении. Мы уведомим Вас когда раздел заработает.</string>
     <string name="go_to_main_page">Вернуться на главную</string>
