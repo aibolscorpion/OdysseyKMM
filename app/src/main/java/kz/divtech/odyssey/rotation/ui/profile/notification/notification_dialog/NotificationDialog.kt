@@ -36,10 +36,8 @@ class NotificationDialog : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = DialogNotificationBinding.inflate(layoutInflater)
-
         binding.notification = args.notification
         binding.thisDialog = this
-
         return binding.root
     }
 
@@ -63,7 +61,7 @@ class NotificationDialog : BottomSheetDialogFragment() {
                         }
                         Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
                             findNavController().navigate(NotificationDialogDirections.
-                            actionGlobalRefundListFragment(null, trip.data))
+                                actionGlobalRefundListFragment(null, trip.data))
                         }
                     }
                 }else{

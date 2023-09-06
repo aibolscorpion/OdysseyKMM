@@ -455,4 +455,6 @@
     <string name="choose_language">Выберите язык</string>
     <string name="choose_language_desc">Выберите язык для приложения, получения уведомлений и отображения иной информации</string>
 
+    <string name="not_granted_write_external_storage_permission">Вы должны предоставить разрешение на запись во внешнее хранилище. Без разрешения приложение не будет работать корректно.</string>
+
 </resources>

@@ -17,7 +17,7 @@ import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.databinding.FragmentChooseTicketForOpenBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialogDirections
-import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
+import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.getFile
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 import java.io.File
@@ -32,8 +32,8 @@ class ChooseTicketForOpen : Fragment(), DownloadInterface {
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if(viewModel.downloadIdList.contains(id)){
-                val ticket = viewModel.ticketMap[id]
+            if(viewModel.downloadIds.contains(id)){
+                val ticket = viewModel.tickets[id]
                 val position = args.issuedTickets.indexOf(ticket)
                 adapter.notifyItemChanged(position)
             }
@@ -74,12 +74,13 @@ class ChooseTicketForOpen : Fragment(), DownloadInterface {
     }
 
     override fun onTicketClicked(currentTicket: Ticket) {
-        val file = getFileByTicket(currentTicket)
+        val file = currentTicket.getFile()
+
         if(file.exists()){
             openFile(file)
         }else{
             if(requireContext().isNetworkAvailable()){
-                viewModel.downloadTicketByUrl(currentTicket)
+                viewModel.downloadTicketByURL(currentTicket)
             }else{
                 showErrorDialog()
             }

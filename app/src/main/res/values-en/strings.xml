@@ -402,4 +402,6 @@
     <string name="change_language">Change Language</string>
     <string name="choose_language">Choose language</string>
     <string name="choose_language_desc">Choose a language for the app, notifications, and other information</string>
+    <string name="not_granted_write_external_storage_permission">You need to grant permission for writing to external storage. Without permission, the application will not function correctly.</string>
+
 </resources>

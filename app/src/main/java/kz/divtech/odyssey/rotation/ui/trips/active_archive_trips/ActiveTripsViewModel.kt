@@ -34,7 +34,7 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
     }
 
     fun increaseByOneFilterCount(){
-        _appliedFilterCount.value = _appliedFilterCount.value?.let { it +1 }
+        _appliedFilterCount.value = _appliedFilterCount.value?.plus(1)
     }
 
     fun setSortType(type: SortTripType){

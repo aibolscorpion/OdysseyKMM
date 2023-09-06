@@ -2,20 +2,23 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_d
 
 import androidx.lifecycle.ViewModel
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
-import kz.divtech.odyssey.rotation.utils.DownloadUtil.downloadTicket
-import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
+import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.download
+import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.getFile
 import java.io.File
 
 class OpenTicketViewModel : ViewModel(){
-    val fileMap = mutableMapOf<Long, File>()
-    val ticketMap = mutableMapOf<Long, Ticket>()
-    var downloadIdList = mutableListOf<Long>()
+    private val fileMap = mutableMapOf<Long, File?>()
+    private val ticketMap = mutableMapOf<Long, Ticket>()
+    private val downloadIdList = mutableListOf<Long>()
 
-    fun downloadTicketByUrl(ticket: Ticket){
-        downloadTicket(ticket)?.let {
-            downloadIdList.add(it)
-            fileMap[it]= getFileByTicket(ticket)
-            ticketMap[it] = ticket
+    val files: Map<Long, File?> get() = fileMap
+    val tickets: Map<Long, Ticket> get() = ticketMap
+    val downloadIds: List<Long> get() = downloadIdList
+    fun downloadTicketByURL(ticket: Ticket){
+        ticket.download().let { downloadId ->
+            downloadIdList.add(downloadId)
+            fileMap[downloadId]= ticket.getFile()
+            ticketMap[downloadId] = ticket
         }
     }
 

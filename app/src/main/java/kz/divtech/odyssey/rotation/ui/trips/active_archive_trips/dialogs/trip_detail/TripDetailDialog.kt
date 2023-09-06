@@ -25,7 +25,7 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
-import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
+import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.getFile
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
 import java.io.File
@@ -42,8 +42,8 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
             val id = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
-            if(viewModel.downloadIdList.contains(id)){
-                viewModel.fileMap[id]?.let { openFile(it) }
+            if(viewModel.downloadIds.contains(id)){
+                viewModel.files[id]?.let { openFile(it) }
             }
         }
     }
@@ -155,12 +155,12 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     }
 
     private fun openFileIfExists(ticket: Ticket){
-        val file = getFileByTicket(ticket)
+        val file = ticket.getFile()
         if(file.exists()){
             openFile(file)
         }else{
             if(requireContext().isNetworkAvailable()){
-                viewModel.downloadTicketByUrl(ticket)
+                viewModel.downloadTicketByURL(ticket)
             }else{
                 showErrorDialog()
             }

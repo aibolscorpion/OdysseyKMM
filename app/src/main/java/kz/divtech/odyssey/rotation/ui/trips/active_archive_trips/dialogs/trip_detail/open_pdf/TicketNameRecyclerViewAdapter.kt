@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ItemTicketNameBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
-import kz.divtech.odyssey.rotation.utils.DownloadUtil.getFileByTicket
+import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.getFile
 import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.toDateString
 import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.utils.Utils.getFileSize
@@ -25,16 +25,16 @@ class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInter
        val ticket = oldTicketList[position]
        holder.binding.ticket = ticket
 
-       val file = getFileByTicket(ticket)
-       if(file.exists()){
-           holder.binding.fileIV.setImageResource(R.drawable.icon_pdf_file)
-           holder.binding.ticketFileDescTV.text = context.getString(
-               R.string.file_extension_modified_date_and_size, file.extension,
-               file.lastModified().toDateString(context.getAppLocale()), file.getFileSize())
-       }else{
-           holder.binding.fileIV.setImageResource(R.drawable.icon_download)
-           holder.binding.ticketFileDescTV.text = context.getString(R.string.click_to_download)
-       }
+       val file = ticket.getFile()
+        if(file.exists()){
+            holder.binding.fileIV.setImageResource(R.drawable.icon_pdf_file)
+            holder.binding.ticketFileDescTV.text = context.getString(
+                R.string.file_extension_modified_date_and_size, file.extension,
+                file.lastModified().toDateString(context.getAppLocale()), file.getFileSize())
+        }else{
+            holder.binding.fileIV.setImageResource(R.drawable.icon_download)
+            holder.binding.ticketFileDescTV.text = context.getString(R.string.click_to_download)
+        }
 
         holder.binding.root.setOnClickListener{
             downloadInterface.onTicketClicked(ticket)
