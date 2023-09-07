@@ -1,0 +1,1409 @@
+{
+  "countries":
+  [
+    {
+      "id": 0,
+      "name": "Танымал",
+      "code": "POP",
+      "iata_code": ""
+    },
+    {
+      "id": 1,
+      "name": "Қазақстан",
+      "code": "KAZ",
+      "iata_code": "KZ"
+    },
+    {
+      "id": 2,
+      "name": "Ресей",
+      "code": "RUS",
+      "iata_code": "RU"
+    },
+    {
+      "id": 3,
+      "name": "Қырғызстан",
+      "code": "KGZ",
+      "iata_code": "KG"
+    },
+    {
+      "id": 4,
+      "name": "Өзбекстан",
+      "code": "UZB",
+      "iata_code": "UZ"
+    },
+    {
+      "id": 5,
+      "name": "Қытай",
+      "code": "CHN",
+      "iata_code": "CN"
+    },
+    {
+      "id": 0,
+      "name": "Барлық",
+      "code": "ALL",
+      "iata_code": ""
+    },
+    {
+      "id": 6,
+      "name": "Абхазия",
+      "code": "ABH",
+      "iata_code": "AB"
+    },
+    {
+      "id": 7,
+      "name": "Аустралия",
+      "code": "AUS",
+      "iata_code": "AU"
+    },
+    {
+      "id": 8,
+      "name": "Аустрия",
+      "code": "AUT",
+      "iata_code": "AT"
+    },
+    {
+      "id": 9,
+      "name": "Әзірбайжан",
+      "code": "AZE",
+      "iata_code": "AZ"
+    },
+    {
+      "id": 10,
+      "name": "Албания",
+      "code": "ALB",
+      "iata_code": "AL"
+    },
+    {
+      "id": 11,
+      "name": "Алжир",
+      "code": "DZA",
+      "iata_code": "DZ"
+    },
+    {
+      "id": 12,
+      "name": "Американ Виргин аралдары",
+      "code": "VIR",
+      "iata_code": "VI"
+    },
+    {
+      "id": 13,
+      "name": "Американдық Самоа",
+      "code": "ASM",
+      "iata_code": "AS"
+    },
+    {
+      "id": 14,
+      "name": "Ангилья",
+      "code": "AIA",
+      "iata_code": "AI"
+    },
+    {
+      "id": 15,
+      "name": "Ангола",
+      "code": "AGO",
+      "iata_code": "AO"
+    },
+    {
+      "id": 16,
+      "name": "Андорра",
+      "code": "AND",
+      "iata_code": "AD"
+    },
+    {
+      "id": 17,
+      "name": "Антарктида",
+      "code": "ATA",
+      "iata_code": "AQ"
+    },
+    {
+      "id": 18,
+      "name": "Антигуа және Барбуда",
+      "code": "ATG",
+      "iata_code": "AG"
+    },
+    {
+      "id": 19,
+      "name": "Аргентина",
+      "code": "ARG",
+      "iata_code": "AR"
+    },
+    {
+      "id": 20,
+      "name": "Армения",
+      "code": "ARM",
+      "iata_code": "AM"
+    },
+    {
+      "id": 21,
+      "name": "Аруба",
+      "code": "ABW",
+      "iata_code": "AW"
+    },
+    {
+      "id": 22,
+      "name": "Ауғанстан",
+      "code": "AFG",
+      "iata_code": "AF"
+    },
+    {
+      "id": 23,
+      "name": "Багамдар",
+      "code": "BHS",
+      "iata_code": "BS"
+    },
+    {
+      "id": 24,
+      "name": "Бангладеш",
+      "code": "BGD",
+      "iata_code": "BD"
+    },
+    {
+      "id": 25,
+      "name": "Барбадос",
+      "code": "BRB",
+      "iata_code": "BB"
+    },
+    {
+      "id": 26,
+      "name": "Бахрейн",
+      "code": "BHR",
+      "iata_code": "BH"
+    },
+    {
+      "id": 27,
+      "name": "Беларусь",
+      "code": "BLR",
+      "iata_code": "BY"
+    },
+    {
+      "id": 28,
+      "name": "Белиз",
+      "code": "BLZ",
+      "iata_code": "BZ"
+    },
+    {
+      "id": 29,
+      "name": "Бельгия",
+      "code": "BEL",
+      "iata_code": "BE"
+    },
+    {
+      "id": 30,
+      "name": "Бенин",
+      "code": "BEN",
+      "iata_code": "BJ"
+    },
+    {
+      "id": 31,
+      "name": "Бермуд аралдары",
+      "code": "BMU",
+      "iata_code": "BM"
+    },
+    {
+      "id": 32,
+      "name": "Болгария",
+      "code": "BGR",
+      "iata_code": "BG"
+    },
+    {
+      "id": 33,
+      "name": "Боливия",
+      "code": "BOL",
+      "iata_code": "BO"
+    },
+    {
+      "id": 34,
+      "name": "Бонэйр, Синт-Эстатиус және Саба",
+      "code": "BES",
+      "iata_code": "BQ"
+    },
+    {
+      "id": 35,
+      "name": "Босния және Герцеговина",
+      "code": "BIH",
+      "iata_code": "BA"
+    },
+    {
+      "id": 36,
+      "name": "Ботсвана",
+      "code": "BWA",
+      "iata_code": "BW"
+    },
+    {
+      "id": 37,
+      "name": "Бразилия",
+      "code": "BRA",
+      "iata_code": "BR"
+    },
+    {
+      "id": 38,
+      "name": "Британ Виргин аралдары",
+      "code": "VGB",
+      "iata_code": "VG"
+    },
+    {
+      "id": 39,
+      "name": "Бруней",
+      "code": "BRN",
+      "iata_code": "BN"
+    },
+    {
+      "id": 40,
+      "name": "Буркина-Фасо",
+      "code": "BFA",
+      "iata_code": "BF"
+    },
+    {
+      "id": 41,
+      "name": "Бурунди",
+      "code": "BDI",
+      "iata_code": "BI"
+    },
+    {
+      "id": 42,
+      "name": "Бутан",
+      "code": "BTN",
+      "iata_code": "BT"
+    },
+    {
+      "id": 43,
+      "name": "Вануату",
+      "code": "VUT",
+      "iata_code": "VU"
+    },
+    {
+      "id": 44,
+      "name": "Ватикан",
+      "code": "VAT",
+      "iata_code": "VA"
+    },
+    {
+      "id": 45,
+      "name": "Ұлыбритания",
+      "code": "GBR",
+      "iata_code": "GB"
+    },
+    {
+      "id": 46,
+      "name": "Мажарстан",
+      "code": "HUN",
+      "iata_code": "HU"
+    },
+    {
+      "id": 47,
+      "name": "Венесуэла",
+      "code": "VEN",
+      "iata_code": "VE"
+    },
+    {
+      "id": 48,
+      "name": "АҚШ сыртқы кіші аралдары",
+      "code": "UMI",
+      "iata_code": "UM"
+    },
+    {
+      "id": 49,
+      "name": "Вьетнам",
+      "code": "VNM",
+      "iata_code": "VN"
+    },
+    {
+      "id": 50,
+      "name": "Габон",
+      "code": "GAB",
+      "iata_code": "GA"
+    },
+    {
+      "id": 51,
+      "name": "Гаити",
+      "code": "HTI",
+      "iata_code": "HT"
+    },
+    {
+      "id": 52,
+      "name": "Гайана",
+      "code": "GUY",
+      "iata_code": "GY"
+    },
+    {
+      "id": 53,
+      "name": "Гамбия",
+      "code": "GMB",
+      "iata_code": "GM"
+    },
+    {
+      "id": 54,
+      "name": "Гана",
+      "code": "GHA",
+      "iata_code": "GH"
+    },
+    {
+      "id": 55,
+      "name": "Гваделупа",
+      "code": "GLP",
+      "iata_code": "GP"
+    },
+    {
+      "id": 56,
+      "name": "Гватемала",
+      "code": "GTM",
+      "iata_code": "GT"
+    },
+    {
+      "id": 57,
+      "name": "Гвинея",
+      "code": "GIN",
+      "iata_code": "GN"
+    },
+    {
+      "id": 58,
+      "name": "Гвинея-Бисау",
+      "code": "GNB",
+      "iata_code": "GW"
+    },
+    {
+      "id": 59,
+      "name": "Германия",
+      "code": "DEU",
+      "iata_code": "DE"
+    },
+    {
+      "id": 60,
+      "name": "Гибралтар",
+      "code": "GIB",
+      "iata_code": "GI"
+    },
+    {
+      "id": 61,
+      "name": "Гондурас",
+      "code": "HND",
+      "iata_code": "HN"
+    },
+    {
+      "id": 62,
+      "name": "Гонконг",
+      "code": "HKG",
+      "iata_code": "HK"
+    },
+    {
+      "id": 63,
+      "name": "Гренада",
+      "code": "GRD",
+      "iata_code": "GD"
+    },
+    {
+      "id": 64,
+      "name": "Гренландия",
+      "code": "GRL",
+      "iata_code": "GL"
+    },
+    {
+      "id": 65,
+      "name": "Грекия",
+      "code": "GRC",
+      "iata_code": "GR"
+    },
+    {
+      "id": 66,
+      "name": "Грузия",
+      "code": "GEO",
+      "iata_code": "GE"
+    },
+    {
+      "id": 67,
+      "name": "Гуам",
+      "code": "GUM",
+      "iata_code": "GU"
+    },
+    {
+      "id": 68,
+      "name": "Дания",
+      "code": "DNK",
+      "iata_code": "DK"
+    },
+    {
+      "id": 69,
+      "name": "Шығыс Тимор",
+      "code": "TLS",
+      "iata_code": "TL"
+    },
+    {
+      "id": 70,
+      "name": "Конго Демократиялық Республикасы",
+      "code": "COD",
+      "iata_code": "CD"
+    },
+    {
+      "id": 71,
+      "name": "Джибути",
+      "code": "DJI",
+      "iata_code": "DJ"
+    },
+    {
+      "id": 72,
+      "name": "Доминика",
+      "code": "DMA",
+      "iata_code": "DM"
+    },
+    {
+      "id": 73,
+      "name": "Доминикана",
+      "code": "DOM",
+      "iata_code": "DO"
+    },
+    {
+      "id": 74,
+      "name": "Мысыр",
+      "code": "EGY",
+      "iata_code": "EG"
+    },
+    {
+      "id": 75,
+      "name": "Замбия",
+      "code": "ZMB",
+      "iata_code": "ZM"
+    },
+    {
+      "id": 76,
+      "name": "Зимбабве",
+      "code": "ZWE",
+      "iata_code": "ZW"
+    },
+    {
+      "id": 77,
+      "name": "Израиль",
+      "code": "ISR",
+      "iata_code": "IL"
+    },
+    {
+      "id": 78,
+      "name": "Үндістан",
+      "code": "IND",
+      "iata_code": "IN"
+    },
+    {
+      "id": 79,
+      "name": "Индонезия",
+      "code": "IDN",
+      "iata_code": "ID"
+    },
+    {
+      "id": 80,
+      "name": "Иордания",
+      "code": "JOR",
+      "iata_code": "JO"
+    },
+    {
+      "id": 81,
+      "name": "Ирак",
+      "code": "IRQ",
+      "iata_code": "IQ"
+    },
+    {
+      "id": 82,
+      "name": "Иран",
+      "code": "IRN",
+      "iata_code": "IR"
+    },
+    {
+      "id": 83,
+      "name": "Ирландия",
+      "code": "IRL",
+      "iata_code": "IE"
+    },
+    {
+      "id": 84,
+      "name": "Исландия",
+      "code": "ISL",
+      "iata_code": "IS"
+    },
+    {
+      "id": 85,
+      "name": "Испания",
+      "code": "ESP",
+      "iata_code": "ES"
+    },
+    {
+      "id": 86,
+      "name": "Италия",
+      "code": "ITA",
+      "iata_code": "IT"
+    },
+    {
+      "id": 87,
+      "name": "Йемен",
+      "code": "YEM",
+      "iata_code": "YE"
+    },
+    {
+      "id": 88,
+      "name": "Кабо-Верде",
+      "code": "CPV",
+      "iata_code": "CV"
+    },
+    {
+      "id": 89,
+      "name": "Кайман аралдары",
+      "code": "CYM",
+      "iata_code": "KY"
+    },
+    {
+      "id": 90,
+      "name": "Камбоджа",
+      "code": "KHM",
+      "iata_code": "KH"
+    },
+    {
+      "id": 91,
+      "name": "Камерун",
+      "code": "CMR",
+      "iata_code": "CM"
+    },
+    {
+      "id": 92,
+      "name": "Канада",
+      "code": "CAN",
+      "iata_code": "CA"
+    },
+    {
+      "id": 93,
+      "name": "Катар",
+      "code": "QAT",
+      "iata_code": "QA"
+    },
+    {
+      "id": 94,
+      "name": "Кения",
+      "code": "KEN",
+      "iata_code": "KE"
+    },
+    {
+      "id": 95,
+      "name": "Кипр",
+      "code": "CYP",
+      "iata_code": "CY"
+    },
+    {
+      "id": 96,
+      "name": "Кирибати",
+      "code": "KIR",
+      "iata_code": "KI"
+    },
+    {
+      "id": 97,
+      "name": "Кокос аралдары",
+      "code": "CCK",
+      "iata_code": "CC"
+    },
+    {
+      "id": 98,
+      "name": "Колумбия",
+      "code": "COL",
+      "iata_code": "CO"
+    },
+    {
+      "id": 99,
+      "name": "Коморлар",
+      "code": "COM",
+      "iata_code": "KM"
+    },
+    {
+      "id": 100,
+      "name": "Коста-Рика",
+      "code": "CRI",
+      "iata_code": "CR"
+    },
+    {
+      "id": 101,
+      "name": "Кот-д Ивуар",
+      "code": "CIV",
+      "iata_code": "CI"
+    },
+    {
+      "id": 102,
+      "name": "Куба",
+      "code": "CUB",
+      "iata_code": "CU"
+    },
+    {
+      "id": 103,
+      "name": "Кувейт",
+      "code": "KWT",
+      "iata_code": "KW"
+    },
+    {
+      "id": 104,
+      "name": "Кюрасао",
+      "code": "CUW",
+      "iata_code": "CW"
+    },
+    {
+      "id": 105,
+      "name": "Лаос",
+      "code": "LAO",
+      "iata_code": "LA"
+    },
+    {
+      "id": 106,
+      "name": "Латвия",
+      "code": "LVA",
+      "iata_code": "LV"
+    },
+    {
+      "id": 107,
+      "name": "Лесото",
+      "code": "LSO",
+      "iata_code": "LS"
+    },
+    {
+      "id": 108,
+      "name": "Либерия",
+      "code": "LBR",
+      "iata_code": "LR"
+    },
+    {
+      "id": 109,
+      "name": "Ливан",
+      "code": "LBN",
+      "iata_code": "LB"
+    },
+    {
+      "id": 110,
+      "name": "Ливия",
+      "code": "LBY",
+      "iata_code": "LY"
+    },
+    {
+      "id": 111,
+      "name": "Литва",
+      "code": "LTU",
+      "iata_code": "LT"
+    },
+    {
+      "id": 112,
+      "name": "Лихтенштейн",
+      "code": "LIE",
+      "iata_code": "LI"
+    },
+    {
+      "id": 113,
+      "name": "Люксембург",
+      "code": "LUX",
+      "iata_code": "LU"
+    },
+    {
+      "id": 114,
+      "name": "Маврикий",
+      "code": "MUS",
+      "iata_code": "MU"
+    },
+    {
+      "id": 115,
+      "name": "Мавритания",
+      "code": "MRT",
+      "iata_code": "MR"
+    },
+    {
+      "id": 116,
+      "name": "Мадагаскар",
+      "code": "MDG",
+      "iata_code": "MG"
+    },
+    {
+      "id": 117,
+      "name": "Майотта арал",
+      "code": "MYT",
+      "iata_code": "YT"
+    },
+    {
+      "id": 118,
+      "name": "Макао",
+      "code": "MAC",
+      "iata_code": "MO"
+    },
+    {
+      "id": 119,
+      "name": "Македония",
+      "code": "MKD",
+      "iata_code": "MK"
+    },
+    {
+      "id": 120,
+      "name": "Малави",
+      "code": "MWI",
+      "iata_code": "MW"
+    },
+    {
+      "id": 121,
+      "name": "Малайзия",
+      "code": "MYS",
+      "iata_code": "MY"
+    },
+    {
+      "id": 122,
+      "name": "Мали",
+      "code": "MLI",
+      "iata_code": "ML"
+    },
+    {
+      "id": 123,
+      "name": "Мальдивтер",
+      "code": "MDV",
+      "iata_code": "MV"
+    },
+    {
+      "id": 124,
+      "name": "Мальта",
+      "code": "MLT",
+      "iata_code": "MT"
+    },
+    {
+      "id": 125,
+      "name": "Марокко",
+      "code": "MAR",
+      "iata_code": "MA"
+    },
+    {
+      "id": 126,
+      "name": "Мартиника",
+      "code": "MTQ",
+      "iata_code": "MQ"
+    },
+    {
+      "id": 127,
+      "name": "Маршаллдар",
+      "code": "MHL",
+      "iata_code": "MH"
+    },
+    {
+      "id": 128,
+      "name": "Мексика",
+      "code": "MEX",
+      "iata_code": "MX"
+    },
+    {
+      "id": 129,
+      "name": "Микронезия",
+      "code": "FSM",
+      "iata_code": "FM"
+    },
+    {
+      "id": 130,
+      "name": "Мозамбик",
+      "code": "MOZ",
+      "iata_code": "MZ"
+    },
+    {
+      "id": 131,
+      "name": "Молдова",
+      "code": "MDA",
+      "iata_code": "MD"
+    },
+    {
+      "id": 132,
+      "name": "Монако",
+      "code": "MCO",
+      "iata_code": "MC"
+    },
+    {
+      "id": 133,
+      "name": "Монголия",
+      "code": "MNG",
+      "iata_code": "MN"
+    },
+    {
+      "id": 134,
+      "name": "Монсеррат",
+      "code": "MSR",
+      "iata_code": "MS"
+    },
+    {
+      "id": 135,
+      "name": "Мьянма",
+      "code": "MMR",
+      "iata_code": "MM"
+    },
+    {
+      "id": 136,
+      "name": "Намибия",
+      "code": "NAM",
+      "iata_code": "NA"
+    },
+    {
+      "id": 137,
+      "name": "Науру",
+      "code": "NRU",
+      "iata_code": "NR"
+    },
+    {
+      "id": 138,
+      "name": "Непал",
+      "code": "NPL",
+      "iata_code": "NP"
+    },
+    {
+      "id": 139,
+      "name": "Нигер",
+      "code": "NER",
+      "iata_code": "NE"
+    },
+    {
+      "id": 140,
+      "name": "Нигерия",
+      "code": "NGA",
+      "iata_code": "NG"
+    },
+    {
+      "id": 141,
+      "name": "Нидерланд",
+      "code": "NLD",
+      "iata_code": "NL"
+    },
+    {
+      "id": 142,
+      "name": "Никарагуа",
+      "code": "NIC",
+      "iata_code": "NI"
+    },
+    {
+      "id": 143,
+      "name": "Ниуэ",
+      "code": "NIU",
+      "iata_code": "NU"
+    },
+    {
+      "id": 144,
+      "name": "Жаңа Зеландия",
+      "code": "NZL",
+      "iata_code": "NZ"
+    },
+    {
+      "id": 145,
+      "name": "Жаңа Каледония",
+      "code": "NCL",
+      "iata_code": "NC"
+    },
+    {
+      "id": 146,
+      "name": "Норвегия",
+      "code": "NOR",
+      "iata_code": "NO"
+    },
+    {
+      "id": 147,
+      "name": "Норфолк Айленд",
+      "code": "NFK",
+      "iata_code": "NF"
+    },
+    {
+      "id": 148,
+      "name": "Біріккен Араб Әмірліктері",
+      "code": "ARE",
+      "iata_code": "AE"
+    },
+    {
+      "id": 149,
+      "name": "Оман",
+      "code": "OMN",
+      "iata_code": "OM"
+    },
+    {
+      "id": 150,
+      "name": "Остров Мэн",
+      "code": "IMN",
+      "iata_code": "IM"
+    },
+    {
+      "id": 151,
+      "name": "Остров святой Елены",
+      "code": "SHN",
+      "iata_code": "SH"
+    },
+    {
+      "id": 152,
+      "name": "Кука Аралдары",
+      "code": "COK",
+      "iata_code": "CK"
+    },
+    {
+      "id": 153,
+      "name": "Пәкістан",
+      "code": "PAK",
+      "iata_code": "PK"
+    },
+    {
+      "id": 154,
+      "name": "Палау",
+      "code": "PLW",
+      "iata_code": "PW"
+    },
+    {
+      "id": 155,
+      "name": "Палестин автономиясы",
+      "code": "PSE",
+      "iata_code": "PS"
+    },
+    {
+      "id": 156,
+      "name": "Панама",
+      "code": "PAN",
+      "iata_code": "PA"
+    },
+    {
+      "id": 157,
+      "name": "Папуа-Новая Гвинея",
+      "code": "PNG",
+      "iata_code": "PG"
+    },
+    {
+      "id": 158,
+      "name": "Парагвай",
+      "code": "PRY",
+      "iata_code": "PY"
+    },
+    {
+      "id": 159,
+      "name": "Перу",
+      "code": "PER",
+      "iata_code": "PE"
+    },
+    {
+      "id": 160,
+      "name": "Питкэрн аралдары",
+      "code": "PCN",
+      "iata_code": "PN"
+    },
+    {
+      "id": 161,
+      "name": "Польша",
+      "code": "POL",
+      "iata_code": "PL"
+    },
+    {
+      "id": 162,
+      "name": "Португалия",
+      "code": "PRT",
+      "iata_code": "PT"
+    },
+    {
+      "id": 163,
+      "name": "Пуэрто Рико",
+      "code": "PRI",
+      "iata_code": "PR"
+    },
+    {
+      "id": 164,
+      "name": "Реюньон",
+      "code": "REU",
+      "iata_code": "RE"
+    },
+    {
+      "id": 165,
+      "name": "Рождества аралы (AU)",
+      "code": "CXR",
+      "iata_code": "CX"
+    },
+    {
+      "id": 166,
+      "name": "Руанда",
+      "code": "RWA",
+      "iata_code": "RW"
+    },
+    {
+      "id": 167,
+      "name": "Румыния",
+      "code": "ROU",
+      "iata_code": "RO"
+    },
+    {
+      "id": 168,
+      "name": "Сальвадор",
+      "code": "SLV",
+      "iata_code": "SV"
+    },
+    {
+      "id": 169,
+      "name": "Самоа",
+      "code": "WSM",
+      "iata_code": "WS"
+    },
+    {
+      "id": 170,
+      "name": "Сан Марино",
+      "code": "SMR",
+      "iata_code": "SM"
+    },
+    {
+      "id": 171,
+      "name": "Сан-Томе және Принсипи",
+      "code": "STP",
+      "iata_code": "ST"
+    },
+    {
+      "id": 172,
+      "name": "Сауд Арабиясы",
+      "code": "SAU",
+      "iata_code": "SA"
+    },
+    {
+      "id": 173,
+      "name": "Свазиленд",
+      "code": "SWZ",
+      "iata_code": "SZ"
+    },
+    {
+      "id": 174,
+      "name": "Солтүстік Корея",
+      "code": "PRK",
+      "iata_code": "KP"
+    },
+    {
+      "id": 175,
+      "name": "Сейшельдер",
+      "code": "SYC",
+      "iata_code": "SC"
+    },
+    {
+      "id": 176,
+      "name": "Сен-Бартелеми",
+      "code": "BLM",
+      "iata_code": "BL"
+    },
+    {
+      "id": 177,
+      "name": "Сенегал",
+      "code": "SEN",
+      "iata_code": "SN"
+    },
+    {
+      "id": 178,
+      "name": "Сен-Мартен",
+      "code": "SXM",
+      "iata_code": "MF"
+    },
+    {
+      "id": 179,
+      "name": "Сен-Пьер және Микелон",
+      "code": "SPM",
+      "iata_code": "PM"
+    },
+    {
+      "id": 180,
+      "name": "Сент-Винсент және Гренадины",
+      "code": "VCT",
+      "iata_code": "VC"
+    },
+    {
+      "id": 181,
+      "name": "Сент-Китс және Невис",
+      "code": "KNA",
+      "iata_code": "KN"
+    },
+    {
+      "id": 182,
+      "name": "Сент-Люсия",
+      "code": "LCA",
+      "iata_code": "LC"
+    },
+    {
+      "id": 183,
+      "name": "Сербия",
+      "code": "SRB",
+      "iata_code": "RS"
+    },
+    {
+      "id": 184,
+      "name": "Сингапур",
+      "code": "SGP",
+      "iata_code": "SG"
+    },
+    {
+      "id": 185,
+      "name": "Сирия",
+      "code": "SYR",
+      "iata_code": "SY"
+    },
+    {
+      "id": 186,
+      "name": "Словакия",
+      "code": "SVK",
+      "iata_code": "SK"
+    },
+    {
+      "id": 187,
+      "name": "Словения",
+      "code": "SVN",
+      "iata_code": "SI"
+    },
+    {
+      "id": 188,
+      "name": "Америка Құрама Штаттары",
+      "code": "USA",
+      "iata_code": "US"
+    },
+    {
+      "id": 189,
+      "name": "Соломондар",
+      "code": "SLB",
+      "iata_code": "SB"
+    },
+    {
+      "id": 190,
+      "name": "Сомали",
+      "code": "SOM",
+      "iata_code": "SO"
+    },
+    {
+      "id": 191,
+      "name": "Судан",
+      "code": "SDN",
+      "iata_code": "SD"
+    },
+    {
+      "id": 192,
+      "name": "Суринам",
+      "code": "SUR",
+      "iata_code": "SR"
+    },
+    {
+      "id": 193,
+      "name": "Сьерра-Леоне",
+      "code": "SLE",
+      "iata_code": "SL"
+    },
+    {
+      "id": 194,
+      "name": "Тәжікстан",
+      "code": "TJK",
+      "iata_code": "TJ"
+    },
+    {
+      "id": 195,
+      "name": "Тайланд",
+      "code": "THA",
+      "iata_code": "TH"
+    },
+    {
+      "id": 196,
+      "name": "Танзания",
+      "code": "TZA",
+      "iata_code": "TZ"
+    },
+    {
+      "id": 197,
+      "name": "Теркс және Кайкос",
+      "code": "TCA",
+      "iata_code": "TC"
+    },
+    {
+      "id": 198,
+      "name": "Того",
+      "code": "TGO",
+      "iata_code": "TG"
+    },
+    {
+      "id": 199,
+      "name": "Тонга",
+      "code": "TON",
+      "iata_code": "TO"
+    },
+    {
+      "id": 200,
+      "name": "Тринидад және Тобаго",
+      "code": "TTO",
+      "iata_code": "TT"
+    },
+    {
+      "id": 201,
+      "name": "Тувалу",
+      "code": "TUV",
+      "iata_code": "TV"
+    },
+    {
+      "id": 202,
+      "name": "Тунис",
+      "code": "TUN",
+      "iata_code": "TN"
+    },
+    {
+      "id": 203,
+      "name": "Түрікменстан",
+      "code": "TKM",
+      "iata_code": "TM"
+    },
+    {
+      "id": 204,
+      "name": "Түркия",
+      "code": "TUR",
+      "iata_code": "TR"
+    },
+    {
+      "id": 205,
+      "name": "Уганда",
+      "code": "UGA",
+      "iata_code": "UG"
+    },
+    {
+      "id": 206,
+      "name": "Украина",
+      "code": "UKR",
+      "iata_code": "UA"
+    },
+    {
+      "id": 207,
+      "name": "Уругвай",
+      "code": "URY",
+      "iata_code": "UY"
+    },
+    {
+      "id": 208,
+      "name": "Фарерские острова",
+      "code": "FRO",
+      "iata_code": "FO"
+    },
+    {
+      "id": 209,
+      "name": "Фиджи",
+      "code": "FJI",
+      "iata_code": "FJ"
+    },
+    {
+      "id": 210,
+      "name": "Филиппиндер",
+      "code": "PHL",
+      "iata_code": "PH"
+    },
+    {
+      "id": 211,
+      "name": "Финляндия",
+      "code": "FIN",
+      "iata_code": "FI"
+    },
+    {
+      "id": 212,
+      "name": "Фоклендтер",
+      "code": "FLK",
+      "iata_code": "FK"
+    },
+    {
+      "id": 213,
+      "name": "Франция",
+      "code": "FRA",
+      "iata_code": "FR"
+    },
+    {
+      "id": 214,
+      "name": "Французская Полинезия",
+      "code": "PYF",
+      "iata_code": "PF"
+    },
+    {
+      "id": 215,
+      "name": "Хорватия",
+      "code": "HRV",
+      "iata_code": "HR"
+    },
+    {
+      "id": 216,
+      "name": "Орталық Африка Республикасы",
+      "code": "CAF",
+      "iata_code": "CF"
+    },
+    {
+      "id": 217,
+      "name": "Чад",
+      "code": "TCD",
+      "iata_code": "TD"
+    },
+    {
+      "id": 218,
+      "name": "Черногория",
+      "code": "MNE",
+      "iata_code": "ME"
+    },
+    {
+      "id": 219,
+      "name": "Чехия",
+      "code": "CZE",
+      "iata_code": "CZ"
+    },
+    {
+      "id": 220,
+      "name": "Чили",
+      "code": "CHL",
+      "iata_code": "CL"
+    },
+    {
+      "id": 221,
+      "name": "Швейцария",
+      "code": "CHE",
+      "iata_code": "CH"
+    },
+    {
+      "id": 222,
+      "name": "Швеция",
+      "code": "SWE",
+      "iata_code": "SE"
+    },
+    {
+      "id": 223,
+      "name": "Шри-Ланка",
+      "code": "LKA",
+      "iata_code": "LK"
+    },
+    {
+      "id": 224,
+      "name": "Эквадор",
+      "code": "ECU",
+      "iata_code": "EC"
+    },
+    {
+      "id": 225,
+      "name": "Экваторлық Гвинея",
+      "code": "GNQ",
+      "iata_code": "GQ"
+    },
+    {
+      "id": 226,
+      "name": "Эритрея",
+      "code": "ERI",
+      "iata_code": "ER"
+    },
+    {
+      "id": 227,
+      "name": "Эстония",
+      "code": "EST",
+      "iata_code": "EE"
+    },
+    {
+      "id": 228,
+      "name": "Эфиопия",
+      "code": "ETH",
+      "iata_code": "ET"
+    },
+    {
+      "id": 229,
+      "name": "Оңтүстік Корея",
+      "code": "KOR",
+      "iata_code": "KR"
+    },
+    {
+      "id": 230,
+      "name": "Оңтүстік Африка Республикасы",
+      "code": "ZAF",
+      "iata_code": "ZA"
+    },
+    {
+      "id": 231,
+      "name": "Ямайка",
+      "code": "JAM",
+      "iata_code": "JM"
+    },
+    {
+      "id": 232,
+      "name": "Жапония",
+      "code": "JPN",
+      "iata_code": "JP"
+    }
+  ]
+}
