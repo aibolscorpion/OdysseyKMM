@@ -1,10 +1,15 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -51,6 +56,19 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
             }
     }
 
+    private val requestPermissionLauncher: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                getTrips()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.not_granted_write_external_storage_permission,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentActiveTripsBinding.inflate(inflater)
         return binding.root
@@ -79,7 +97,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     private fun setupTripsPagingAdapter(){
         binding.tripsRV.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         isActiveTrips = arguments?.getBoolean(Constants.ACTIVE_TRIPS)
-        getTrips()
+        getTripsIfPermissionIsGranted()
     }
 
     private fun loadStates(){
@@ -123,7 +141,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         }
     }
 
-    fun getTrips(){
+    private fun getTrips(){
         refreshing.set(true)
         lifecycleScope.launch{
             adapter.submitData(PagingData.empty())
@@ -132,6 +150,18 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
             }}
         }
         refreshing.set(false)
+    }
+
+
+    fun getTripsIfPermissionIsGranted(){
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
+            if (ContextCompat.checkSelfPermission(requireContext(), WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(WRITE_EXTERNAL_STORAGE)
+            }else{
+                getTrips()
+            }
+        }
     }
 
     fun openSortTripDialog(){
@@ -168,16 +198,16 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
 
     override fun onDateClicked() {
         viewModel.setSortType(BY_DEPARTURE_DATE)
-        getTrips()
+        getTripsIfPermissionIsGranted()
     }
 
     override fun onStatusClicked() {
         viewModel.setSortType(BY_STATUS)
-        getTrips()
+        getTripsIfPermissionIsGranted()
     }
 
     override fun applyFilterClicked() {
-        getTrips()
+        getTripsIfPermissionIsGranted()
     }
 
 }

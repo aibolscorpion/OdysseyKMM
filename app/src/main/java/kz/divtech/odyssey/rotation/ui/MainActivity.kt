@@ -1,6 +1,5 @@
 package kz.divtech.odyssey.rotation.ui
 
-import android.Manifest
 import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
 import android.content.Intent
@@ -14,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -96,9 +94,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    companion object {
-        private const val REQUEST_CODE_WRITE_EXTERNAL_STORAGE = 1001
-    }
 
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,7 +155,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         connectivityManager.registerDefaultNetworkCallback(networkCallback as ConnectivityManager.NetworkCallback)
         firebaseAnalytics = Firebase.analytics
 
-        checkWriteExternalStoragePermission()
     }
     override fun attachBaseContext(newBase: Context?) {
         val context = newBase?.changeAppLocale(App.appContext.fetchAppLanguage())
@@ -177,39 +171,17 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.onResume()
 
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
-                if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
-                    if(UPDATE_TYPE == AppUpdateType.IMMEDIATE){
-                        appUpdateManager.startUpdateFlowForResult(info, this,
-                            AppUpdateOptions.newBuilder(UPDATE_TYPE).build(), updateRequestCode)
-                    }
-                }else if (info.installStatus() == InstallStatus.DOWNLOADED){
-                    showToastForCompleteUpdate()
+            if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
+                if(UPDATE_TYPE == AppUpdateType.IMMEDIATE){
+                    appUpdateManager.startUpdateFlowForResult(info, this,
+                        AppUpdateOptions.newBuilder(UPDATE_TYPE).build(), updateRequestCode)
                 }
+            }else if (info.installStatus() == InstallStatus.DOWNLOADED){
+                showToastForCompleteUpdate()
             }
+        }
     }
 
-    private fun checkWriteExternalStoragePermission(){
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.Q){
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE_WRITE_EXTERNAL_STORAGE)
-            }
-        }
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_WRITE_EXTERNAL_STORAGE) {
-            if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, R.string.not_granted_write_external_storage_permission,
-                    Toast.LENGTH_LONG).show()
-            }
-        }
-    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -263,13 +235,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private fun checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) ==
+            if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) !=
                 PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             } else if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                 val modalBottomSheet = PermissionRationale(this)
                 modalBottomSheet.show(supportFragmentManager, "modalBottomSheet")
-            } else {
-                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
         }
     }

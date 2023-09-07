@@ -15,7 +15,6 @@ object Config {
     const val AUTHORIZATION_KEY = "Authorization"
     const val AUTHORIZATION_VALUE_PREFIX = "Bearer"
     const val IIN_LENGTH = 12
-    const val ticketFileExtension = ".pdf"
     const val CALL = "tel:"
     const val WHATSAPP_PACKAGE_NAME = "com.whatsapp"
     const val WHATSAPP = "https://wa.me/"
