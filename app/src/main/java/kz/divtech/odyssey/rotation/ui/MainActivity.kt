@@ -235,12 +235,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private fun checkPermission(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) !=
-                PackageManager.PERMISSION_GRANTED) {
-                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-            } else if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
+            if (shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)) {
                 val modalBottomSheet = PermissionRationale(this)
                 modalBottomSheet.show(supportFragmentManager, "modalBottomSheet")
+            }else if(ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED) {
+                requestPermissionLauncher.launch(POST_NOTIFICATIONS)
             }
         }
     }
