@@ -161,6 +161,8 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
             }else{
                 getTrips()
             }
+        }else{
+            getTrips()
         }
     }
 
