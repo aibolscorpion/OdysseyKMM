@@ -142,13 +142,17 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         networkCallback = object: ConnectivityManager.NetworkCallback(){
             override fun onAvailable(network: Network) {
                 runOnUiThread {
-                    binding.noInternetLL.isVisible = false
+                    _binding?.let {
+                        binding.noInternetLL.isVisible = false
+                    }
                 }
             }
 
             override fun onLost(network: Network) {
                 runOnUiThread{
-                    binding.noInternetLL.isVisible = true
+                    _binding?.let {
+                        binding.noInternetLL.isVisible = true
+                    }
                 }
             }
         }
