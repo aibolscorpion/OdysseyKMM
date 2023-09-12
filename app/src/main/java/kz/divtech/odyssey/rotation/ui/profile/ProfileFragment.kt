@@ -103,14 +103,6 @@ class ProfileFragment : Fragment() {
                 navigate(R.id.action_global_notificationFragment)
         }
 
-    fun openLanguageFragment(){
-        with(findNavController()) {
-            if(R.id.profileFragment == currentDestination?.id){
-                navigate(ProfileFragmentDirections.actionProfileFragmentToLanguageFragment())
-            }
-        }
-    }
-
     private fun goToLoginPage() {
         findNavController().navigate(ProfileFragmentDirections.actionGlobalPhoneNumberFragment())
     }

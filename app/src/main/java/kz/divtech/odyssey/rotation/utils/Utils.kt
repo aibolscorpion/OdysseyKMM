@@ -67,8 +67,6 @@ object Utils {
 
     fun getCountryList(): List<Country>{
         val rawId = when(App.appContext.fetchAppLanguage()){
-            LNG_KAZAKH -> R.raw.countries_kk
-            LNG_ENGLISH -> R.raw.countries_en
             else -> R.raw.countries
         }
         val jsonString = App.appContext.resources.openRawResource(rawId).bufferedReader().

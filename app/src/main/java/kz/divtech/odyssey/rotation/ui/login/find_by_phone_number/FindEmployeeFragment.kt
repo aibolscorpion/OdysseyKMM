@@ -52,9 +52,7 @@ class FindEmployeeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
 
-        if(!requireContext().isAppHasLanguage()){
-            openChooseLanguageFragment()
-        }else if(requireContext().isLoggedIn()){
+       if(requireContext().isLoggedIn()){
             openMainFragment()
         }
         return dataBinding.root
@@ -191,10 +189,6 @@ class FindEmployeeFragment : Fragment() {
 
     private fun openMainFragment(){
         findNavController().navigate(MainActivityDirections.actionGlobalMainFragment())
-    }
-
-    private fun openChooseLanguageFragment(){
-        findNavController().navigate(MainActivityDirections.actionGlobalChooseLanguageFragment())
     }
 
     private fun showErrorDialog(){

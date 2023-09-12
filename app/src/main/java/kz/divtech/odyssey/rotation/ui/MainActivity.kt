@@ -129,8 +129,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
                 R.id.refundReasonFragment, R.id.refundListFragment,
                 R.id.refundDetailFragment, R.id.chooseTicketForOpen,
                 R.id.countryListFragment, R.id.phoneNumberFragment2,
-                R.id.smsCodeFragment, R.id.termsOfAgreementFragment,
-                R.id.changeLanguageFragment ->
+                R.id.smsCodeFragment, R.id.termsOfAgreementFragment ->
                     binding.mainToolbar.setNavigationIcon(R.drawable.icons_tabs_back)
                 R.id.refundSentFragment, R.id.phoneUpdatedFragment ->
                     binding.mainToolbar.navigationIcon = null
