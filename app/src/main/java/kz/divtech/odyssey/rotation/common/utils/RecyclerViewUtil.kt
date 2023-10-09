@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable

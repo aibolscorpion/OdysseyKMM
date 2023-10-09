@@ -1,11 +1,11 @@
 package kz.divtech.odyssey.rotation.data.remote.retrofit
 
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.retrofit_result.ResultAdapterFactory
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchDeviceId
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchUrl
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.getTokenWithBearer
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchDeviceId
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchUrl
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.getTokenWithBearer
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -28,7 +28,7 @@ object RetrofitClient{
             .addInterceptor(UnauthorizedInterceptor())
             .build()
 
-        return Retrofit.Builder().baseUrl(App.appContext.fetchUrl()+Config.API)
+        return Retrofit.Builder().baseUrl(App.appContext.fetchUrl()+ Config.API)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())
@@ -44,7 +44,7 @@ object RetrofitClient{
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
-        return Retrofit.Builder().baseUrl(Config.PROXY_HOST+Config.API)
+        return Retrofit.Builder().baseUrl(Config.PROXY_HOST+ Config.API)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())

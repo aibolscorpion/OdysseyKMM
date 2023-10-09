@@ -17,17 +17,17 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
-import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil.getFile
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateByPattern
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.getFile
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateByPattern
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import java.io.File
 import java.time.LocalDate
 

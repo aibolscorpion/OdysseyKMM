@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle

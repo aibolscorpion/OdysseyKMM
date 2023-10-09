@@ -14,8 +14,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Config
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -26,9 +26,9 @@ import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericKeyEvent
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericTextWatcher
 import kz.divtech.odyssey.rotation.ui.login.send_sms.OnFilledListener
 import kz.divtech.odyssey.rotation.ui.login.send_sms.SmsBroadcastReceiver
-import kz.divtech.odyssey.rotation.utils.InputUtils
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.InputUtils
+import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener  {
     private var _dataBinding: FragmentEnterCodeBinding? = null

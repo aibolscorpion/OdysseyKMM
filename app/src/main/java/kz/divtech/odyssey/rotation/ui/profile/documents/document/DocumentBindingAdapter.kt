@@ -12,12 +12,12 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.SERVER_DATE_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
-import kz.divtech.odyssey.rotation.utils.Utils.getCountryList
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_YEAR_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.SERVER_DATE_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateToGivenPattern
+import kz.divtech.odyssey.rotation.common.utils.Utils.getCountryList
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

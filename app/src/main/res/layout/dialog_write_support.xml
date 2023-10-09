@@ -9,7 +9,7 @@
 
         <variable
             name="contactSupport"
-            type="kz.divtech.odyssey.rotation.utils.ContactUtil" />
+            type="kz.divtech.odyssey.rotation.common.utils.ContactUtil" />
     </data>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/frameLayout"

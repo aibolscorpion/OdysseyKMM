@@ -17,20 +17,20 @@ import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundAppListBindingAdapter.dpToPx
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateToGivenPattern
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
-import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DEFAULT_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.HOUR_MINUTE_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateToGivenPattern
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
+import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 import java.time.temporal.ChronoUnit
 
 object BindingAdapter {
@@ -95,7 +95,8 @@ object BindingAdapter {
         var layerDrawable: LayerDrawable? = null
         when (trip.segments.size) {
             2 -> {
-                layerDrawable = ContextCompat.getDrawable(App.appContext,
+                layerDrawable = ContextCompat.getDrawable(
+                    App.appContext,
                     R.drawable.drawable_two_segments) as LayerDrawable
 
                 trip.segments.forEachIndexed { index, segment ->
@@ -111,7 +112,8 @@ object BindingAdapter {
 
             }
             3 -> {
-                layerDrawable = ContextCompat.getDrawable(App.appContext,
+                layerDrawable = ContextCompat.getDrawable(
+                    App.appContext,
                     R.drawable.drawable_three_segments) as LayerDrawable
                 trip.segments.forEachIndexed { index, segment ->
                     val iconBg = when(index) {

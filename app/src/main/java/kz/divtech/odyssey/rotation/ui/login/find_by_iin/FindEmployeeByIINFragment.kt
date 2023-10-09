@@ -13,14 +13,14 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
-import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 class FindEmployeeByIINFragment : Fragment() {
     private val viewModel: FindEmployeeByIINViewModel by viewModels{

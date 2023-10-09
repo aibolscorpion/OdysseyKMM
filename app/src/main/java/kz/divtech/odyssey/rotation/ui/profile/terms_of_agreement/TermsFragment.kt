@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentAuthTermsBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 class TermsFragment : Fragment() {
     val viewModel: TermsViewModel by viewModels{

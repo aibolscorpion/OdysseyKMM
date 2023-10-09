@@ -1,11 +1,11 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import java.io.File

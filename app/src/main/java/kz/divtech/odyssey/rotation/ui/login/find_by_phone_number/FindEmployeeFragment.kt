@@ -15,25 +15,24 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.redmadrobot.inputmask.MaskedTextChangedListener
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.MainActivityDirections
-import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils.showSoftKeyboard
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.isAppHasLanguage
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.isLoggedIn
-import kz.divtech.odyssey.rotation.utils.Utils.changeStatusBarColor
-import kz.divtech.odyssey.rotation.utils.Utils.hideBottomNavigation
-import kz.divtech.odyssey.rotation.utils.Utils.hideToolbar
-import kz.divtech.odyssey.rotation.utils.Utils.setMainActivityBackgroundColor
+import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.showSoftKeyboard
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.isLoggedIn
+import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
+import kz.divtech.odyssey.rotation.common.utils.Utils.hideBottomNavigation
+import kz.divtech.odyssey.rotation.common.utils.Utils.hideToolbar
+import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
 
 class FindEmployeeFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false

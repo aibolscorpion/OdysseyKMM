@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -6,7 +6,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 
 object ContactUtil {
 

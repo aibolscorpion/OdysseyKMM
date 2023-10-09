@@ -2,7 +2,7 @@
 package kz.divtech.odyssey.rotation.data.remote.result
 
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import okhttp3.Headers
 import java.net.UnknownHostException
 

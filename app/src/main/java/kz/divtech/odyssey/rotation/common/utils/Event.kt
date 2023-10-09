@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 open class Event<out T>(private val content: T) {
 

@@ -16,8 +16,8 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 class RefundReasonFragment: Fragment() {
     private val args : RefundReasonFragmentArgs by navArgs()

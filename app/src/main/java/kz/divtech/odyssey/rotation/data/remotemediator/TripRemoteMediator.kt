@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toActiveTripList
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTripList
-import kz.divtech.odyssey.rotation.utils.TicketDownloadUtil
+import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil
 
 @ExperimentalPagingApi
 class TripRemoteMediator(val dao: Dao,

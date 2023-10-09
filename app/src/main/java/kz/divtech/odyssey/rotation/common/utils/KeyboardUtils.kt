@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.content.Context
 import android.view.View

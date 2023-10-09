@@ -1,6 +1,6 @@
 package kz.divtech.odyssey.rotation.data.remote.retrofit
 
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Constants
 import okhttp3.Interceptor
 import okhttp3.Response
 import org.greenrobot.eventbus.EventBus

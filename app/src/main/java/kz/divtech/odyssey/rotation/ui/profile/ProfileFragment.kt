@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchOrganizationName
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchOrganizationName
 
 class ProfileFragment : Fragment() {
     private val viewModel: LogoutViewModel by viewModels{

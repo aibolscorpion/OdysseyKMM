@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhone2Binding
-import kz.divtech.odyssey.rotation.utils.InputUtils
-import kz.divtech.odyssey.rotation.utils.KeyboardUtils
+import kz.divtech.odyssey.rotation.common.utils.InputUtils
+import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 
 class PhoneNumberFragment: Fragment() {
     private var phoneNumberFilled : Boolean = false

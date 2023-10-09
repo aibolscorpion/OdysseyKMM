@@ -3,7 +3,7 @@ package kz.divtech.odyssey.rotation.data.repository
 import androidx.annotation.WorkerThread
 import androidx.paging.*
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.app.Constants.NEWS_PAGE_SIZE
+import kz.divtech.odyssey.rotation.common.Constants.NEWS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.rotation.data.remotemediator.NewsRemoteMediator

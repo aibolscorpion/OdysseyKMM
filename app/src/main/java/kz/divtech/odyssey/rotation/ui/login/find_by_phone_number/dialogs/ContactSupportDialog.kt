@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogContactSupportBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.contact_support.ContactSupportViewModel
-import kz.divtech.odyssey.rotation.utils.ContactUtil
+import kz.divtech.odyssey.rotation.common.utils.ContactUtil
 
 
 class ContactSupportDialog : BottomSheetDialogFragment() {

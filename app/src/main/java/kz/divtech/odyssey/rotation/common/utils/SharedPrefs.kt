@@ -1,10 +1,10 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.content.Context
 import android.content.SharedPreferences
 import kz.divtech.odyssey.rotation.BuildConfig
-import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.app.Config.AUTHORIZATION_VALUE_PREFIX
+import kz.divtech.odyssey.rotation.common.Config
+import kz.divtech.odyssey.rotation.common.Config.AUTHORIZATION_VALUE_PREFIX
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Organization
 
 

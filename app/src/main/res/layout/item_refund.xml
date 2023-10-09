@@ -6,7 +6,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
         <variable
             name="constants"
-            type="kz.divtech.odyssey.rotation.app.Constants" />
+            type="kz.divtech.odyssey.rotation.common.Constants" />
     </data>
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"

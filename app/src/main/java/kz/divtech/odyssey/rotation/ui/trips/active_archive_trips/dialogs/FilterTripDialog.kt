@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFilterBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsViewModel
@@ -17,7 +17,8 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsView
 class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetDialogFragment() {
     lateinit var binding : FragmentFilterBinding
     lateinit var viewModel: ActiveTripsViewModel
-    private val allStatusList = listOf(Constants.STATUS_ISSUED, Constants.STATUS_RETURNED,
+    private val allStatusList = listOf(
+        Constants.STATUS_ISSUED, Constants.STATUS_RETURNED,
         Constants.STATUS_OPENED, Constants.STATUS_PARTLY)
 
     override fun getTheme() = R.style.BottomSheetDialogTheme

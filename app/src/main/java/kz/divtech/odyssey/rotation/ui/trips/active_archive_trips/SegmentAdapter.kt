@@ -6,11 +6,11 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
-import kz.divtech.odyssey.rotation.utils.Utils.getRefundSegmentStatus
+import kz.divtech.odyssey.rotation.common.utils.Utils.getRefundSegmentStatus
 
 class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
     private val listOfSegments = ArrayList<Segment>()

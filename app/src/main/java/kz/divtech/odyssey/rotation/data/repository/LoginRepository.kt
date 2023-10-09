@@ -1,6 +1,6 @@
 package kz.divtech.odyssey.rotation.data.repository
 
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest

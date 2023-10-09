@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.Config
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
@@ -16,7 +16,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.utils.Event
+import kz.divtech.odyssey.rotation.common.utils.Event
 import okhttp3.ResponseBody
 
 class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewModel() {

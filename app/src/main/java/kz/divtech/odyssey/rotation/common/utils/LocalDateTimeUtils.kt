@@ -1,6 +1,6 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
-import kz.divtech.odyssey.rotation.app.Constants.LNG_RUSSIAN
+import kz.divtech.odyssey.rotation.common.Constants.LNG_RUSSIAN
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

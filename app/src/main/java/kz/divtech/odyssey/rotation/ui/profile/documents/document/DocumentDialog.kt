@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
@@ -23,7 +23,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 
 class DocumentDialog : BottomSheetDialogFragment() {

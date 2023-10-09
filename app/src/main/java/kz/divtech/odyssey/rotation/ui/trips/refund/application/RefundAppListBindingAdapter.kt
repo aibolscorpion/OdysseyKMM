@@ -8,12 +8,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DEFAULT_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
-import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DEFAULT_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
+import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 
 object RefundAppListBindingAdapter {
 

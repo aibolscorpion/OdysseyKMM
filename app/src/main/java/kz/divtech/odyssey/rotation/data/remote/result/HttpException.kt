@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.data.remote.result
 
 import com.google.gson.Gson
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.errors.BadRequest
 import okhttp3.Headers
 import okhttp3.ResponseBody

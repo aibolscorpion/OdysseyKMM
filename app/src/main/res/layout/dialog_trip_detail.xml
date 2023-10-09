@@ -11,7 +11,7 @@
             type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
         <variable
             name="constants"
-            type="kz.divtech.odyssey.rotation.app.Constants" />
+            type="kz.divtech.odyssey.rotation.common.Constants" />
         <variable
             name="view"
             type="android.view.View" />

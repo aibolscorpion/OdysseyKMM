@@ -12,11 +12,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Constants.ID_CARD
-import kz.divtech.odyssey.rotation.app.Constants.KAZAKHSTAN_CODE
-import kz.divtech.odyssey.rotation.app.Constants.PASSPORT
-import kz.divtech.odyssey.rotation.app.Constants.RESIDENCE
-import kz.divtech.odyssey.rotation.app.Constants.FOREIGN
+import kz.divtech.odyssey.rotation.common.Constants.ID_CARD
+import kz.divtech.odyssey.rotation.common.Constants.KAZAKHSTAN_CODE
+import kz.divtech.odyssey.rotation.common.Constants.PASSPORT
+import kz.divtech.odyssey.rotation.common.Constants.RESIDENCE
+import kz.divtech.odyssey.rotation.common.Constants.FOREIGN
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee

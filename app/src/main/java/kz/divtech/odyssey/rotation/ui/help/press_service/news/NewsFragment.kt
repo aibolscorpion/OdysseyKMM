@@ -29,7 +29,7 @@ import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
-import kz.divtech.odyssey.rotation.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
+import kz.divtech.odyssey.rotation.common.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 import java.net.UnknownHostException
 
 class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {

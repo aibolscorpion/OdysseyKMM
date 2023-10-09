@@ -5,7 +5,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.FaqRepository
@@ -15,8 +15,8 @@ import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearAuthToken
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearUrl
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.clearAuthToken
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.clearUrl
 
 class LogoutViewModel(
     private val tripsRepository: TripsRepository,

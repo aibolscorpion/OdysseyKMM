@@ -8,7 +8,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
-import kz.divtech.odyssey.rotation.utils.Event
+import kz.divtech.odyssey.rotation.common.utils.Event
 
 class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepository,
                             private val orgInfoRepository: OrgInfoRepository

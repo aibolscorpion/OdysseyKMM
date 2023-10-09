@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.app
+package kz.divtech.odyssey.rotation.common
 
 object Constants {
     const val DEACTIVATED_EMPLOYEE = "dismissed"

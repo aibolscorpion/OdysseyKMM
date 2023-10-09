@@ -1,11 +1,11 @@
 package kz.divtech.odyssey.rotation.data.repository
 
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearUrl
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveUrl
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.clearUrl
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveUrl
 
 class FindEmployeeRepository {
     suspend fun findByPhoneNumber(phoneNumber:String) : Result<EmployeeResult>{

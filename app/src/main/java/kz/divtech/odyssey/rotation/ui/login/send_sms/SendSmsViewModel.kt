@@ -4,18 +4,18 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.LoginRepository
-import kz.divtech.odyssey.rotation.utils.Event
+import kz.divtech.odyssey.rotation.common.utils.Event
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveAuthToken
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveOrganizationName
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveAuthToken
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveOrganizationName
 
 class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
                        private val loginRepository: LoginRepository

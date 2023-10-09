@@ -1,12 +1,12 @@
-package kz.divtech.odyssey.rotation.app
+package kz.divtech.odyssey.rotation.common
 
 import android.app.Application
 import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
 import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.LoginRepository
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchDeviceId
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveDeviceId
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchDeviceId
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveDeviceId
 import timber.log.Timber
 import java.util.*
 

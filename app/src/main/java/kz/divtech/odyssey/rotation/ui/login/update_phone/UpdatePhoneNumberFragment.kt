@@ -15,17 +15,17 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.Config
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchFirebaseToken
+import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchFirebaseToken
 
 class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false

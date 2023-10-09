@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
-import kz.divtech.odyssey.rotation.utils.Event
+import kz.divtech.odyssey.rotation.common.utils.Event
 
 class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
     private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()

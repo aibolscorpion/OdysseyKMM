@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.app
+package kz.divtech.odyssey.rotation.common
 
 import com.google.android.play.core.install.model.AppUpdateType
 

@@ -3,9 +3,9 @@ package kz.divtech.odyssey.rotation.ui.trips.refund.application.create
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.DAY_MONTH_HOUR_MINUTE_PATTERN
-import kz.divtech.odyssey.rotation.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
-import kz.divtech.odyssey.rotation.utils.Utils.getAppLocale
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_HOUR_MINUTE_PATTERN
+import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
+import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 
 object RefundBindingAdapter {
 

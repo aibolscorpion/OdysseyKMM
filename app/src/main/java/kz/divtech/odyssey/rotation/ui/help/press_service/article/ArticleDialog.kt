@@ -15,7 +15,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
 
 class ArticleDialog : BottomSheetDialogFragment() {

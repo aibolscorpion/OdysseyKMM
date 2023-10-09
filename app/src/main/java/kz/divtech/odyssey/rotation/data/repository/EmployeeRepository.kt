@@ -2,8 +2,8 @@ package kz.divtech.odyssey.rotation.data.repository
 
 import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants.ANDROID
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants.ANDROID
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRe
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchFirebaseToken
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchFirebaseToken
 
 class EmployeeRepository(private val dao: Dao) {
     val employee = dao.observeEmployee()

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.utils
+package kz.divtech.odyssey.rotation.common.utils
 
 import android.content.Context
 import android.content.res.Configuration
@@ -11,16 +11,14 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Constants
-import kz.divtech.odyssey.rotation.app.Constants.LNG_ENGLISH
-import kz.divtech.odyssey.rotation.app.Constants.LNG_KAZAKH
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchAppLanguage
+import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchAppLanguage
 import java.io.File
 import java.util.Locale
 

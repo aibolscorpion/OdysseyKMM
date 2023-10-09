@@ -16,9 +16,9 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.app.App
-import kz.divtech.odyssey.rotation.app.Config
-import kz.divtech.odyssey.rotation.app.Constants
+import kz.divtech.odyssey.rotation.common.App
+import kz.divtech.odyssey.rotation.common.Config
+import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
@@ -26,10 +26,10 @@ import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
-import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
-import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.utils.Utils
+import kz.divtech.odyssey.rotation.common.utils.InputUtils.isEmailValid
+import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
+import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.common.utils.Utils
 
 
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {

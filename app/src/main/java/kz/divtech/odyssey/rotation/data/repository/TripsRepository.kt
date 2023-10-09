@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.app.Constants.TRIPS_PAGE_SIZE
+import kz.divtech.odyssey.rotation.common.Constants.TRIPS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
