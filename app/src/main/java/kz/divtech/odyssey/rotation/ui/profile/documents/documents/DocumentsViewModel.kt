@@ -2,7 +2,7 @@ package kz.divtech.odyssey.rotation.ui.profile.documents.documents
 
 import androidx.lifecycle.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 
 class DocumentsViewModel(employeeRepository: EmployeeRepository) : ViewModel() {
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee

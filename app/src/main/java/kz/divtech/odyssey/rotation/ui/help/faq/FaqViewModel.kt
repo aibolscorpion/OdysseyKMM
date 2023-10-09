@@ -6,7 +6,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
-import kz.divtech.odyssey.rotation.domain.repository.FaqRepository
+import kz.divtech.odyssey.rotation.data.repository.FaqRepository
 import kz.divtech.odyssey.rotation.data.remote.result.*
 
 class FaqViewModel(val repository: FaqRepository): ViewModel() {

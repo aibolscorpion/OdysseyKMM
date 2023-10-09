@@ -6,12 +6,13 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
-import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.OrgInfoRepository
+import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.utils.Event
 
 class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepository,
-                        private val orgInfoRepository: OrgInfoRepository) : ViewModel() {
+                            private val orgInfoRepository: OrgInfoRepository
+) : ViewModel() {
     private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()
     val employeeResult : LiveData<Event<Result<EmployeeResult>>> = _employeeResult
 
@@ -35,7 +36,8 @@ class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepo
 
 
     class FindEmployeeViewModelFactory(private val findEmployeeRepository: FindEmployeeRepository,
-        private val orgInfoRepository: OrgInfoRepository): ViewModelProvider.Factory{
+                                       private val orgInfoRepository: OrgInfoRepository
+    ): ViewModelProvider.Factory{
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(FindEmployeeViewModel::class.java)){

@@ -5,7 +5,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 

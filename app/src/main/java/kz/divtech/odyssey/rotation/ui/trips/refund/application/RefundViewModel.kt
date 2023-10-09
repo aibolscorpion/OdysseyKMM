@@ -3,7 +3,7 @@ package kz.divtech.odyssey.rotation.ui.trips.refund.application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.Result
-import kz.divtech.odyssey.rotation.domain.repository.RefundRepository
+import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import okhttp3.ResponseBody
 
 class RefundViewModel(val repository: RefundRepository) : ViewModel() {

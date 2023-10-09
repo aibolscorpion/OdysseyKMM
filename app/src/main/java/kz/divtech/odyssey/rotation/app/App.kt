@@ -3,8 +3,8 @@ package kz.divtech.odyssey.rotation.app
 import android.app.Application
 import android.content.Context
 import com.jakewharton.threetenabp.AndroidThreeTen
-import kz.divtech.odyssey.rotation.domain.repository.FindEmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
+import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.utils.SharedPrefs.fetchDeviceId
 import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveDeviceId
 import timber.log.Timber

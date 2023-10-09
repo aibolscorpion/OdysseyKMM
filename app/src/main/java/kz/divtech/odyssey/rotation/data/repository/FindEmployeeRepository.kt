@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.repository
+package kz.divtech.odyssey.rotation.data.repository
 
 import kz.divtech.odyssey.rotation.app.App
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient

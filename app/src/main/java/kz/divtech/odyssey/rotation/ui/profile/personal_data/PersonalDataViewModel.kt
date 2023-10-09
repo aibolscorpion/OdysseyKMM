@@ -6,7 +6,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.Event
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*

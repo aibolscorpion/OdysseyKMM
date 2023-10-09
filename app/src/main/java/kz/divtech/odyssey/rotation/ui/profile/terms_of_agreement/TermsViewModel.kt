@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.domain.repository.TermsRepository
+import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 
 class TermsViewModel(private val repository: TermsRepository): ViewModel(){
     private val _failureResult = MutableLiveData<Throwable>()

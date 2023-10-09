@@ -6,8 +6,15 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.app.App
+import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.FaqRepository
+import kz.divtech.odyssey.rotation.data.repository.NewsRepository
+import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
+import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
+import kz.divtech.odyssey.rotation.data.repository.TermsRepository
+import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.domain.repository.*
 import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearAuthToken
 import kz.divtech.odyssey.rotation.utils.SharedPrefs.clearUrl
 
@@ -19,7 +26,8 @@ class LogoutViewModel(
     private val articleRepository: ArticleRepository,
     private val notificationRepository: NotificationRepository,
     private val orgInfoRepository: OrgInfoRepository,
-    private val termsRepository: TermsRepository): ViewModel() {
+    private val termsRepository: TermsRepository
+): ViewModel() {
 
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee
     val uaConfirmedLiveData: LiveData<Boolean> = employeeRepository.uaConfirmed

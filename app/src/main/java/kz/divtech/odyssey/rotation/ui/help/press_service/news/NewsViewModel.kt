@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
-import kz.divtech.odyssey.rotation.domain.repository.NewsRepository
+import kz.divtech.odyssey.rotation.data.repository.NewsRepository
 
 class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel() {
 

@@ -7,15 +7,16 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.NotificationRepository
-import kz.divtech.odyssey.rotation.domain.repository.OrgInfoRepository
-import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
+import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
+import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 
 class MainViewModel(private val tripsRepository: TripsRepository,
                     private val employeeRepository: EmployeeRepository,
                     private val notificationRepository: NotificationRepository,
-                    private val orgInfoRepository: OrgInfoRepository) : ViewModel() {
+                    private val orgInfoRepository: OrgInfoRepository
+) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee
@@ -54,8 +55,9 @@ class MainViewModel(private val tripsRepository: TripsRepository,
 
     class MainViewModelFactory(private val tripsRepository: TripsRepository,
                                private val employeeRepository: EmployeeRepository,
-                                private val notificationRepository: NotificationRepository,
-                                private val orgInfoRepository: OrgInfoRepository) : ViewModelProvider.Factory{
+                               private val notificationRepository: NotificationRepository,
+                               private val orgInfoRepository: OrgInfoRepository
+    ) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(MainViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")

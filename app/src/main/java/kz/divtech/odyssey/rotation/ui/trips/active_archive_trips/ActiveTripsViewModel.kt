@@ -5,7 +5,7 @@ import androidx.paging.PagingData
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.app.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
-import kz.divtech.odyssey.rotation.domain.repository.TripsRepository
+import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType
 
 class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {

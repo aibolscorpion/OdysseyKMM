@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.repository
+package kz.divtech.odyssey.rotation.data.repository
 
 import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
@@ -14,7 +14,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
-import kz.divtech.odyssey.rotation.domain.remotemediator.TripRemoteMediator
+import kz.divtech.odyssey.rotation.data.remotemediator.TripRemoteMediator
 
 class TripsRepository(private val dao : Dao) {
     val nearestActiveTrip = dao.getNearestActiveTrip()

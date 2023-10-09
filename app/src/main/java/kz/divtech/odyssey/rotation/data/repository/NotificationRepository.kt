@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.repository
+package kz.divtech.odyssey.rotation.data.repository
 
 import androidx.annotation.WorkerThread
 import androidx.paging.ExperimentalPagingApi
@@ -12,7 +12,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.domain.remotemediator.NotificationRemoteMediator
+import kz.divtech.odyssey.rotation.data.remotemediator.NotificationRemoteMediator
 
 class NotificationRepository(private val dao: Dao) {
     val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()

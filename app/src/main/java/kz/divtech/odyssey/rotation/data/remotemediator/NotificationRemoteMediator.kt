@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.remotemediator
+package kz.divtech.odyssey.rotation.data.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -9,31 +9,33 @@ import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
+import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 
-@ExperimentalPagingApi
-class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() {
+
+@OptIn(ExperimentalPagingApi::class)
+class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notification>() {
     private var pageIndex = 0
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, Article>): MediatorResult {
-
+    override suspend fun load(loadType: LoadType, state: PagingState<Int, Notification>)
+    : MediatorResult {
         pageIndex = getPageIndex(loadType) ?:
-        return MediatorResult.Success(endOfPaginationReached = true)
+            return MediatorResult.Success(endOfPaginationReached = true)
 
-        val response = RetrofitClient.getApiService().getArticles(pageIndex)
+        val response = RetrofitClient.getApiService().getNotifications(pageIndex)
         return if(response.isSuccess()){
-            val news = response.asSuccess().value.data
-            when(loadType){
-                LoadType.REFRESH -> dao.refreshNews(news)
-                else -> dao.insertNews(news)
+            val notifications = response.asSuccess().value.data
+            when(loadType) {
+                LoadType.REFRESH -> dao.refreshNotifications(notifications)
+                else -> dao.insertNotifications(notifications)
             }
-            MediatorResult.Success(news.size < state.config.pageSize)
+            MediatorResult.Success(notifications.size < state.config.pageSize)
         }else{
             MediatorResult.Error(response.asFailure().error!!)
         }
     }
 
-    private fun getPageIndex(loadType: LoadType): Int?{
+    private fun getPageIndex(loadType: LoadType): Int? {
+
         return when(loadType){
             LoadType.REFRESH -> 1
             LoadType.PREPEND -> null

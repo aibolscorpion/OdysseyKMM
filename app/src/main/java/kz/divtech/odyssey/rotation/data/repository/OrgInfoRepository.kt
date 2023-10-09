@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.repository
+package kz.divtech.odyssey.rotation.data.repository
 
 import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao

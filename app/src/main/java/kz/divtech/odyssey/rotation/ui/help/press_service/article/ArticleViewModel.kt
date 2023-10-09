@@ -5,7 +5,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
-import kz.divtech.odyssey.rotation.domain.repository.ArticleRepository
+import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticleResponse
 

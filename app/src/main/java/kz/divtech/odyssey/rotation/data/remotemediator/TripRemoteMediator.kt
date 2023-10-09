@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.remotemediator
+package kz.divtech.odyssey.rotation.data.remotemediator
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType

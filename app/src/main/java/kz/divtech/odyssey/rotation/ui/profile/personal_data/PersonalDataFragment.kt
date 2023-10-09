@@ -25,7 +25,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.utils.NetworkUtils.isNetworkAvailable

@@ -9,8 +9,8 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.domain.repository.LoginRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.utils.Event
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
@@ -18,7 +18,8 @@ import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveAuthToken
 import kz.divtech.odyssey.rotation.utils.SharedPrefs.saveOrganizationName
 
 class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
-                       private val loginRepository: LoginRepository) : ViewModel() {
+                       private val loginRepository: LoginRepository
+) : ViewModel() {
 
     private var authLogId: Int = 0
 
@@ -61,7 +62,8 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
     }
 
     class FillCodeViewModelFactory(private val employeeRepository: EmployeeRepository,
-        private val loginRepository: LoginRepository) : ViewModelProvider.Factory{
+                                   private val loginRepository: LoginRepository
+    ) : ViewModelProvider.Factory{
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if(modelClass.isAssignableFrom(SendSmsViewModel::class.java)){
                 @Suppress("UNCHECKED_CAST")

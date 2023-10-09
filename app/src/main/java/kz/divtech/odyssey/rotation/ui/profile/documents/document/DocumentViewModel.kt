@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
-import kz.divtech.odyssey.rotation.domain.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 
