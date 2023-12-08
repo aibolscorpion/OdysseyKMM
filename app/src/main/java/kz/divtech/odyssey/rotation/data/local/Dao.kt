@@ -55,10 +55,10 @@ interface Dao {
     suspend fun insertArchiveTrips(data: List<ArchiveTrip>)
 
     @Query("DELETE FROM active_trip")
-    suspend fun deleteActiveTrips()
+    suspend fun deleteActiveTrips(): Int
 
     @Query("DELETE FROM archive_trip")
-    suspend fun deleteArchiveTrips()
+    suspend fun deleteArchiveTrips(): Int
 
     @Transaction
     suspend fun refreshActiveTrips(data: List<ActiveTrip>){
@@ -76,10 +76,10 @@ interface Dao {
     fun getNearestActiveTrip(): Flow<SingleTrip>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertNearestActiveTrip(data: SingleTrip?)
+    suspend fun insertNearestActiveTrip(data: SingleTrip)
 
     @Query("DELETE FROM nearest_active_trip")
-    suspend fun deleteNearestActiveTrip()
+    suspend fun deleteNearestActiveTrip(): Int
 
     @Transaction
     suspend fun refreshNearestActiveTrip(data: SingleTrip){
@@ -95,7 +95,7 @@ interface Dao {
     suspend fun insertEmployee(employee: Employee)
 
     @Query("DELETE FROM employee")
-    suspend fun deleteEmployee()
+    suspend fun deleteEmployee(): Int
 
     //FAQ
     @Query("SELECT * FROM faq")
@@ -105,7 +105,7 @@ interface Dao {
     suspend fun insertFAQ(faqList: List<Faq>)
 
     @Query("DELETE FROM faq")
-    suspend fun deleteFAQ()
+    suspend fun deleteFAQ(): Int
 
     @Query("SELECT * FROM faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%'")
     suspend fun searchFAQ(searchQuery: String) : List<Faq>
@@ -124,7 +124,7 @@ interface Dao {
     suspend fun insertNews(articleList: List<Article>)
 
     @Query("DELETE FROM article")
-    suspend fun deleteNews()
+    suspend fun deleteNews(): Int
 
     @Query("SELECT * FROM article WHERE title LIKE '%'||:searchQuery||'%' OR" +
             " short_content LIKE '%'||:searchQuery||'%'")
@@ -144,7 +144,7 @@ interface Dao {
     suspend fun insertFullArticle(fullArticle: FullArticle)
 
     @Query("DELETE FROM full_article")
-    suspend fun deleteFullArticles()
+    suspend fun deleteFullArticles(): Int
 
     //Notifications
     @Query("SELECT * FROM notification ORDER BY created_at DESC")
@@ -157,7 +157,7 @@ interface Dao {
     suspend fun insertNotifications(notificationList: List<Notification>)
 
     @Query("DELETE FROM notification")
-    suspend fun deleteNotifications()
+    suspend fun deleteNotifications(): Int
 
     @Transaction
     suspend fun refreshNotifications(notificationList: List<Notification>){
@@ -179,7 +179,7 @@ interface Dao {
     }
 
     @Query("DELETE FROM orgInfo")
-    suspend fun deleteOrgInfo()
+    suspend fun deleteOrgInfo(): Int
 
     @Query("SELECT ua_confirmed FROM employee")
     fun observeUAConfirmed() : LiveData<Boolean>

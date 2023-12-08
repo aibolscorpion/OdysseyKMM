@@ -1,6 +1,9 @@
 package kz.divtech.odyssey.rotation.ui.login.send_sms
 
+import android.annotation.SuppressLint
+import android.content.Context.RECEIVER_NOT_EXPORTED
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -114,10 +117,15 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         SmsRetriever.getClient(requireActivity()).startSmsRetriever()
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
 
-        activity?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), RECEIVER_NOT_EXPORTED)
+        }else{
+            context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
+        }
 
         val bundle = bundleOf()
         bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME, getString(R.string.send_sms_code))
