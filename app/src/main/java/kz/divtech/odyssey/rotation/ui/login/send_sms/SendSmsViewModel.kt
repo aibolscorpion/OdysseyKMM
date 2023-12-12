@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.login.send_sms
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
@@ -16,9 +17,11 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveAuthToken
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveOrganizationName
+import javax.inject.Inject
 
-class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
-                       private val loginRepository: LoginRepository
+@HiltViewModel
+class SendSmsViewModel @Inject constructor(private val employeeRepository: EmployeeRepository,
+                                           private val loginRepository: LoginRepository
 ) : ViewModel() {
 
     private var authLogId: Int = 0
@@ -61,16 +64,5 @@ class SendSmsViewModel(private val employeeRepository: EmployeeRepository,
         }
     }
 
-    class FillCodeViewModelFactory(private val employeeRepository: EmployeeRepository,
-                                   private val loginRepository: LoginRepository
-    ) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(SendSmsViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return SendSmsViewModel(employeeRepository, loginRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 
 }

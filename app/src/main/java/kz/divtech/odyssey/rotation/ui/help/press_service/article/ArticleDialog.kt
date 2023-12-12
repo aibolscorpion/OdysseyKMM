@@ -11,18 +11,16 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
-
+@AndroidEntryPoint
 class ArticleDialog : BottomSheetDialogFragment() {
     private val args: ArticleDialogArgs by navArgs()
-    val viewModel: ArticleViewModel by viewModels{
-        ArticleViewModel.ArticleViewModelFactory((activity as MainActivity).articleRepository)
-    }
+    val viewModel: ArticleViewModel by viewModels()
     private var _dataBinding: DialogArticleBinding? = null
     private val dataBinding get() = _dataBinding!!
 

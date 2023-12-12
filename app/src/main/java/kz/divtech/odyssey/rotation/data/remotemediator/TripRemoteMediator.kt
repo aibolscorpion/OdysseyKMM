@@ -8,14 +8,15 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toActiveTripList
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.toArchiveTripList
 import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 
 @ExperimentalPagingApi
 class TripRemoteMediator(val dao: Dao,
+                         private val apiService: ApiService,
                          val isActive: Boolean,
                          val status: Array<String> = arrayOf(),
                          val direction: Array<String> = arrayOf(),
@@ -27,10 +28,10 @@ class TripRemoteMediator(val dao: Dao,
         pageIndex = getPageIndex(loadType)?:
             return MediatorResult.Success(true)
         val response = if(isActive){
-            RetrofitClient.getApiService().getActiveTrips(pageIndex, status.joinToString(","),
+            apiService.getActiveTrips(pageIndex, status.joinToString(","),
                 direction.joinToString(","), sortBy)
         }else{
-            RetrofitClient.getApiService().getArchiveTrips(pageIndex, status.joinToString(","),
+            apiService.getArchiveTrips(pageIndex, status.joinToString(","),
                 direction.joinToString(","), sortBy)
         }
 

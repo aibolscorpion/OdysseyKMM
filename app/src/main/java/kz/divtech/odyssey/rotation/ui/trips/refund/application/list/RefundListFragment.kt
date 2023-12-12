@@ -13,22 +13,21 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundListBinding
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 
+@AndroidEntryPoint
 class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
     private var _binding: FragmentRefundListBinding? = null
     private val binding get() = _binding!!
     private val args: RefundListFragmentArgs by navArgs()
     val adapter : RefundListAdapter by lazy { RefundListAdapter(this) }
-    val viewModel: RefundViewModel by viewModels{
-        RefundViewModel.RefundViewModelFactory((activity as MainActivity).refundRepository)
-    }
+    val viewModel: RefundViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

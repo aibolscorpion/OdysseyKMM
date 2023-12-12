@@ -12,8 +12,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -22,11 +22,9 @@ import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeSh
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
+@AndroidEntryPoint
 class FindEmployeeByIINFragment : Fragment() {
-    private val viewModel: FindEmployeeByIINViewModel by viewModels{
-        FindEmployeeByIINViewModel.FindEmployeeByIINViewModelFactory(
-            (activity?.application as App).findEmployeeRepository)
-    }
+    private val viewModel: FindEmployeeByIINViewModel by viewModels()
     private val args: FindEmployeeByIINFragmentArgs by navArgs()
     private var _binding: FragmentFindEmployeeByIinBinding? = null
     private val binding get() = _binding!!

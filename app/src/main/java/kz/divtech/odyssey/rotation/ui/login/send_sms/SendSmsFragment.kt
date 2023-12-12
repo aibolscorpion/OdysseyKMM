@@ -19,34 +19,29 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.hideSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import java.net.UnknownHostException
 
+@AndroidEntryPoint
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
     private val editTextList = ArrayList<EditText>()
     private var _dataBinding: FragmentSendSmsBinding? = null
     internal val dataBinding  get() = _dataBinding!!
 
     private var countDownTimer : CountDownTimer?= null
-    private val viewModel: SendSmsViewModel by activityViewModels{
-        SendSmsViewModel.FillCodeViewModelFactory(
-            (activity as MainActivity).employeeRepository,
-            (activity?.application as App).loginRepository
-        )
-    }
+    private val viewModel: SendSmsViewModel by activityViewModels()
     private var smsReceiver: SmsBroadcastReceiver? = null
     val args: SendSmsFragmentArgs by navArgs()
 

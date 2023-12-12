@@ -8,12 +8,12 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 
 
 @OptIn(ExperimentalPagingApi::class)
-class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notification>() {
+class NotificationRemoteMediator(private val dao: Dao, private val apiService: ApiService) : RemoteMediator<Int, Notification>() {
     private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Notification>)
@@ -21,7 +21,7 @@ class NotificationRemoteMediator(val dao: Dao) : RemoteMediator<Int, Notificatio
         pageIndex = getPageIndex(loadType) ?:
             return MediatorResult.Success(endOfPaginationReached = true)
 
-        val response = RetrofitClient.getApiService().getNotifications(pageIndex)
+        val response = apiService.getNotifications(pageIndex)
         return if(response.isSuccess()){
             val notifications = response.asSuccess().value.data
             when(loadType) {

@@ -14,21 +14,20 @@ import androidx.lifecycle.lifecycleScope
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import java.net.UnknownHostException
 
+@AndroidEntryPoint
 class FaqFragment : Fragment() {
     private var _binding : FragmentFaqBinding? = null
     private val binding get() = _binding!!
-    internal val viewModel: FaqViewModel by viewModels {
-            FaqViewModel.FaqViewModelFactory((activity as MainActivity).faqRepository)
-    }
+    internal val viewModel: FaqViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFaqBinding.inflate(inflater)

@@ -3,13 +3,16 @@ package kz.divtech.odyssey.rotation.ui.login.update_phone
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import javax.inject.Inject
 
-class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository) : ViewModel() {
+@HiltViewModel
+class UpdatePhoneViewModel @Inject constructor(val employeeRepository: EmployeeRepository) : ViewModel() {
     private val _updatePhoneResult = MutableLiveData<Result<ResponseBody>>()
     val updatePhoneResult: LiveData<Result<ResponseBody>> = _updatePhoneResult
 
@@ -24,14 +27,4 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository) : ViewMod
         }
     }
 
-    class UpdatePhoneViewModelFactory(private val employeeRepository: EmployeeRepository)
-        : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(UpdatePhoneViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return UpdatePhoneViewModel(employeeRepository) as T
-            }
-            throw IllegalArgumentException("Unknown viewModel class")
-        }
-    }
 }

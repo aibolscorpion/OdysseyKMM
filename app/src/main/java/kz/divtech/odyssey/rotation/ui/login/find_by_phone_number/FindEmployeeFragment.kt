@@ -15,14 +15,13 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.redmadrobot.inputmask.MaskedTextChangedListener
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.MainActivityDirections
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
@@ -34,6 +33,7 @@ import kz.divtech.odyssey.rotation.common.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideToolbar
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
 
+@AndroidEntryPoint
 class FindEmployeeFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
@@ -41,12 +41,7 @@ class FindEmployeeFragment : Fragment() {
     private var _dataBinding: FragmentFindEmployeeBinding? = null
     val dataBinding get() = _dataBinding!!
 
-    private val viewModel: FindEmployeeViewModel by viewModels{
-        FindEmployeeViewModel.FindEmployeeViewModelFactory(
-            (activity?.application as App).findEmployeeRepository,
-            (activity as MainActivity).orgInfoRepository
-        )
-    }
+    private val viewModel: FindEmployeeViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)

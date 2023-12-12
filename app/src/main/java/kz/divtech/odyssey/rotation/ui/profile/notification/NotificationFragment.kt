@@ -17,6 +17,7 @@ import androidx.paging.LoadState
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -24,18 +25,15 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
 import java.net.UnknownHostException
 
+@AndroidEntryPoint
 class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.RetryCallback {
     val isRefreshing = ObservableBoolean()
-    val viewModel: NotificationViewModel by viewModels {
-        NotificationViewModel.NotificationViewModelFactory(
-            (activity as MainActivity).notificationRepository)
-    }
+    val viewModel: NotificationViewModel by viewModels()
     val adapter: NotificationPagingAdapter by lazy { NotificationPagingAdapter(this) }
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!

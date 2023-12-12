@@ -2,13 +2,16 @@ package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips
 
 import androidx.lifecycle.*
 import androidx.paging.PagingData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType
+import javax.inject.Inject
 
-class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewModel() {
+@HiltViewModel
+class ActiveTripsViewModel @Inject constructor(private val tripsRepository: TripsRepository) : ViewModel() {
     val checkedStatusList = mutableListOf(
         Constants.STATUS_ISSUED, Constants.STATUS_OPENED,
         Constants.STATUS_PARTLY, Constants.STATUS_RETURNED)
@@ -40,16 +43,6 @@ class ActiveTripsViewModel(private val tripsRepository: TripsRepository) : ViewM
 
     fun setSortType(type: SortTripType){
         _sortType.value = type
-    }
-
-    class TripsViewModelFactory(private val repository: TripsRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(ActiveTripsViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return ActiveTripsViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
     }
 
 }

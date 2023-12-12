@@ -15,29 +15,23 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.common.utils.Utils
 
-
+@AndroidEntryPoint
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
-    private val database by lazy { AppDatabase.getDatabase(App.appContext) }
-    val employeeRepository by lazy { EmployeeRepository(database.dao()) }
-    val viewModel : PersonalDataViewModel by viewModels{
-        PersonalDataViewModel.PersonalDataViewModelFactory(employeeRepository)
-    }
+    val viewModel : PersonalDataViewModel by viewModels()
     private var _binding: FragmentPersonalDataBinding? = null
     private val binding get() = _binding!!
     private var initialCountryCode: String? = null

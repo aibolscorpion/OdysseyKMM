@@ -4,10 +4,10 @@ import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 
-class OrgInfoRepository(val dao: Dao) {
+class OrgInfoRepository(val dao: Dao, private val apiService: ApiService) {
     val orgInfo = dao.observeOrgInfo()
 
     suspend fun deleteOrgInfo(){
@@ -20,7 +20,7 @@ class OrgInfoRepository(val dao: Dao) {
     }
 
     suspend fun getOrgInfoFromServer(){
-        val response = RetrofitClient.getApiProxyService().getOrgInfo()
+        val response = apiService.getOrgInfo()
         if(response.isSuccess()){
             val orgInfo = response.asSuccess().value
             refreshOrgInfo(orgInfo)

@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentFilterBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsViewModel
 
+@AndroidEntryPoint
 class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetDialogFragment() {
     lateinit var binding : FragmentFilterBinding
     lateinit var viewModel: ActiveTripsViewModel
@@ -36,8 +37,7 @@ class FilterTripDialog(private val filterClicked: OnFilterClicked): BottomSheetD
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = ActiveTripsViewModel.TripsViewModelFactory((activity as MainActivity).tripsRepository)
-        viewModel = ViewModelProvider(requireParentFragment(), factory)[ActiveTripsViewModel::class.java]
+        viewModel = ViewModelProvider(requireParentFragment())[ActiveTripsViewModel::class.java]
 
         setCheckedStatusRB()
         setCheckedDirection()

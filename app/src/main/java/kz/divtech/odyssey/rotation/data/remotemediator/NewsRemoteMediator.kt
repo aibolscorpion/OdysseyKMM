@@ -8,11 +8,12 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asFailure
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
 
 @ExperimentalPagingApi
-class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() {
+class NewsRemoteMediator(private val dao: Dao,
+                         private val apiService: ApiService) : RemoteMediator<Int, Article>() {
     private var pageIndex = 0
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Article>): MediatorResult {
@@ -20,7 +21,7 @@ class NewsRemoteMediator(private val dao: Dao) : RemoteMediator<Int, Article>() 
         pageIndex = getPageIndex(loadType) ?:
         return MediatorResult.Success(endOfPaginationReached = true)
 
-        val response = RetrofitClient.getApiService().getArticles(pageIndex)
+        val response = apiService.getArticles(pageIndex)
         return if(response.isSuccess()){
             val news = response.asSuccess().value.data
             when(loadType){

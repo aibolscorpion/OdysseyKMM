@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.common.Constants
@@ -24,7 +25,6 @@ import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentEnterCodeBinding
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericKeyEvent
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericTextWatcher
 import kz.divtech.odyssey.rotation.ui.login.send_sms.OnFilledListener
@@ -33,14 +33,12 @@ import kz.divtech.odyssey.rotation.common.utils.InputUtils
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
+@AndroidEntryPoint
 class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener  {
     private var _dataBinding: FragmentEnterCodeBinding? = null
     internal val dataBinding get() = _dataBinding!!
     val args: SmsCodeFragmentArgs by navArgs()
-    val viewModel: UpdatePhoneViewModel by viewModels{
-        UpdatePhoneViewModel.UpdatePhoneViewModelFactory(
-            (activity as MainActivity).employeeRepository)
-    }
+    val viewModel: UpdatePhoneViewModel by viewModels()
     private val editTextList = ArrayList<EditText>()
     private var countDownTimer : CountDownTimer?= null
     private var smsReceiver: SmsBroadcastReceiver? = null

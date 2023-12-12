@@ -4,10 +4,10 @@ import androidx.annotation.WorkerThread
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 
-class FaqRepository(private val dao: Dao) {
+class FaqRepository(private val dao: Dao, private val apiService: ApiService) {
     val faqList: Flow<List<Faq>> = dao.observeFaqList()
 
     suspend fun searchFaq(searchQuery: String) = dao.searchFAQ(searchQuery)
@@ -24,7 +24,7 @@ class FaqRepository(private val dao: Dao) {
     }
 
     suspend fun getFaqListFromServer(): Result<List<Faq>> {
-        val response: Result<List<Faq>> = RetrofitClient.getApiProxyService().getFAQs()
+        val response: Result<List<Faq>> = apiService.getFAQs()
         if (response.isSuccess()) {
             val faqList = response.asSuccess().value
             refreshFaq(faqList)

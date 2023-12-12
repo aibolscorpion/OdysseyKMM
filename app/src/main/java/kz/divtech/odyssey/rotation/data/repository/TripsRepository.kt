@@ -11,15 +11,15 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.data.remotemediator.TripRemoteMediator
 
-class TripsRepository(private val dao : Dao) {
+class TripsRepository(private val dao : Dao, private val apiService: ApiService) {
     val nearestActiveTrip = dao.getNearestActiveTrip()
     suspend fun getTripById(id: Int): Result<SingleTrip> {
-        return RetrofitClient.getApiService().getTripById(id)
+        return apiService.getTripById(id)
     }
 
     @WorkerThread
@@ -34,7 +34,7 @@ class TripsRepository(private val dao : Dao) {
     }
 
     suspend fun getNearestActiveTrip(){
-        val result = RetrofitClient.getApiService().getNearestActiveTrip()
+        val result = apiService.getNearestActiveTrip()
         if(result.isSuccess()){
             if(result.asSuccess().value.data != null){
                 dao.refreshNearestActiveTrip(result.asSuccess().value)
@@ -50,13 +50,13 @@ class TripsRepository(private val dao : Dao) {
         return if(isActive){
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = true),
+                remoteMediator = TripRemoteMediator(dao, apiService, isActive = true),
                 pagingSourceFactory = {dao.getActiveTripsSortedByDate(statusType, direction)}
             ).flow
         }else{
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = false),
+                remoteMediator = TripRemoteMediator(dao, apiService, isActive = false),
                 pagingSourceFactory = {dao.getArchiveTripsSortedByDate(statusType, direction)}
             ).flow
         }
@@ -68,13 +68,13 @@ class TripsRepository(private val dao : Dao) {
         return if(isActive){
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = true, sortBy = "status"),
+                remoteMediator = TripRemoteMediator(dao, apiService, isActive = true, sortBy = "status"),
                 pagingSourceFactory = {dao.getActiveTripsSortedByStatus(statusType, direction)}
             ).flow
         }else{
             Pager(
                 config = PagingConfig(pageSize = TRIPS_PAGE_SIZE),
-                remoteMediator = TripRemoteMediator(dao, isActive = false, sortBy = "status"),
+                remoteMediator = TripRemoteMediator(dao, apiService, isActive = false, sortBy = "status"),
                 pagingSourceFactory = {dao.getArchiveTripsSortedByStatus(statusType, direction)}
             ).flow
         }

@@ -12,11 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
@@ -33,15 +33,9 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-
+@AndroidEntryPoint
 class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTripListener{
-    val viewModel : MainViewModel by viewModels {
-        MainViewModel.MainViewModelFactory(
-            (activity as MainActivity).tripsRepository,
-            (activity as MainActivity).employeeRepository,
-            (activity as MainActivity).notificationRepository,
-            (activity as MainActivity).orgInfoRepository)
-    }
+    val viewModel : MainViewModel by viewModels()
     private var _binding: FragmentMainBinding? = null
     val binding get() = _binding!!
 

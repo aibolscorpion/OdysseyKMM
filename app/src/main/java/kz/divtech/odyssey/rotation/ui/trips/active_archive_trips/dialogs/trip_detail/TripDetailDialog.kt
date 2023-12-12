@@ -1,8 +1,11 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.DownloadManager
 import android.content.*
+import android.content.Context.RECEIVER_NOT_EXPORTED
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +40,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     private val args: TripDetailDialogArgs by navArgs()
     private lateinit var dataBinding: DialogTripDetailBinding
     val viewModel: OpenTicketViewModel by viewModels()
-    var ticketList = mutableListOf<Ticket>()
+    private var ticketList = mutableListOf<Ticket>()
 
     private val pdfDownloadedReceiver =  object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -56,6 +59,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
         return dataBinding.root
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,7 +69,12 @@ class TripDetailDialog : BottomSheetDialogFragment() {
         dataBinding.trip = args.trip
         dataBinding.showTicketsTV.isVisible = ticketList.isNotEmpty()
 
-        requireActivity().registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context?.registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), RECEIVER_NOT_EXPORTED)
+        }else{
+            context?.registerReceiver(pdfDownloadedReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
+        }
+
         setSegmentFullRV()
         setTicketPriceRV()
         setRefundButtons()

@@ -3,13 +3,16 @@ package kz.divtech.odyssey.rotation.ui.login.find_by_iin
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
+import javax.inject.Inject
 
-class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
+@HiltViewModel
+class FindEmployeeByIINViewModel @Inject constructor(private val findEmployeeRepository: FindEmployeeRepository) : ViewModel() {
     private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()
     val employeeResult: LiveData<Event<Result<EmployeeResult>>> = _employeeResult
 
@@ -24,14 +27,4 @@ class FindEmployeeByIINViewModel(private val findEmployeeRepository: FindEmploye
         }
     }
 
-
-    class FindEmployeeByIINViewModelFactory(private val findEmployeeRepository: FindEmployeeRepository): ViewModelProvider.Factory{
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(FindEmployeeByIINViewModel::class.java)){
-                return FindEmployeeByIINViewModel(findEmployeeRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }

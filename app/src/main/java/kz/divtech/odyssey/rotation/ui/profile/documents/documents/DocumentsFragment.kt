@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants.ID_CARD
 import kz.divtech.odyssey.rotation.common.Constants.KAZAKHSTAN_CODE
@@ -20,16 +21,14 @@ import kz.divtech.odyssey.rotation.common.Constants.FOREIGN
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.ui.MainActivity
 
+@AndroidEntryPoint
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     private val citizenDocumentList = listOf(ID_CARD, PASSPORT)
     private val foreignerDocumentList = listOf(PASSPORT, RESIDENCE, FOREIGN)
 
     private var currentEmployee: Employee? = null
-    private val viewModel : DocumentsViewModel by viewModels{
-        DocumentsViewModel.DocumentsViewModelFactory((activity as MainActivity).employeeRepository)
-    }
+    private val viewModel : DocumentsViewModel by viewModels()
     private var _binding: FragmentDocumentsBinding? = null
     private val binding get() = _binding!!
 

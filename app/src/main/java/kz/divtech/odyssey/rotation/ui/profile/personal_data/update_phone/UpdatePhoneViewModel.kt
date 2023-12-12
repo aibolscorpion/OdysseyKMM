@@ -5,21 +5,24 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
-class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
+@HiltViewModel
+class UpdatePhoneViewModel @Inject constructor(val employeeRepository: EmployeeRepository,
+       @kz.divtech.odyssey.rotation.di.ApiService private val baseService: ApiService): ViewModel() {
     private var authLogId: Int = 0
 
     private val _smsCodeResult = MutableLiveData<Event<Result<CodeResponse>>>()
@@ -38,7 +41,7 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewMode
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
-            val response = RetrofitClient.getApiService().updatePhoneNumberWithAuth(codeRequest)
+            val response = baseService.updatePhoneNumberWithAuth(codeRequest)
             _smsCodeResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
@@ -49,7 +52,7 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewMode
         val authRequest = AuthRequest("", code, authLogId)
 
         viewModelScope.launch {
-            val response = RetrofitClient.getApiService().updatePhoneConfirm(authRequest)
+            val response = baseService.updatePhoneConfirm(authRequest)
             if(response.isSuccess()) {
                 employeeRepository.getAndInstertEmployee()
             }
@@ -58,14 +61,5 @@ class UpdatePhoneViewModel(val employeeRepository: EmployeeRepository): ViewMode
         }
     }
 
-    class UpdatePhoneViewModelFactory(private val repository: EmployeeRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(UpdatePhoneViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return UpdatePhoneViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 
 }

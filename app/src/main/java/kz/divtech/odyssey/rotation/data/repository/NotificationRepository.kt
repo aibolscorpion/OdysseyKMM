@@ -10,11 +10,11 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATIONS_PAGE_SIZE
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.data.remotemediator.NotificationRemoteMediator
 
-class NotificationRepository(private val dao: Dao) {
+class NotificationRepository(private val dao: Dao,private val apiService: ApiService) {
     val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()
 
     @WorkerThread
@@ -29,11 +29,11 @@ class NotificationRepository(private val dao: Dao) {
 
     suspend fun markNotificationAsRead(id: String){
         val map = mutableMapOf("notification_id" to id)
-        RetrofitClient.getApiService().markAsReadNotificationById(map)
+        apiService.markAsReadNotificationById(map)
     }
 
     suspend fun getNotificationFromFirstPage(){
-        val response = RetrofitClient.getApiService().getNotifications(1)
+        val response = apiService.getNotifications(1)
         if(response.isSuccess()){
             val notifications = response.asSuccess().value.data
             refreshNotifications(notifications)
@@ -44,7 +44,7 @@ class NotificationRepository(private val dao: Dao) {
     fun getPagingNotifications(): Flow<PagingData<Notification>>{
         return Pager(
             config = PagingConfig(pageSize = NOTIFICATIONS_PAGE_SIZE),
-            remoteMediator = NotificationRemoteMediator(dao),
+            remoteMediator = NotificationRemoteMediator(dao, apiService),
             pagingSourceFactory = { dao.getNotificationPagingSource() }
         ).flow
     }

@@ -1,20 +1,13 @@
 package kz.divtech.odyssey.rotation.ui.profile.documents.documents
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import javax.inject.Inject
 
-class DocumentsViewModel(employeeRepository: EmployeeRepository) : ViewModel() {
+@HiltViewModel
+class DocumentsViewModel @Inject constructor(employeeRepository: EmployeeRepository) : ViewModel() {
     val employeeLiveData: LiveData<Employee> = employeeRepository.employee
-
-    class DocumentsViewModelFactory(private val employeeRepository: EmployeeRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(DocumentsViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return DocumentsViewModel(employeeRepository) as T
-            }
-            throw IllegalArgumentException("Unknown viewModel class")
-        }
-    }
 
 }

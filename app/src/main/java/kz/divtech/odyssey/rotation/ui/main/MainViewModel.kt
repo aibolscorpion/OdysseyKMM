@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.main
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
@@ -11,11 +12,13 @@ import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
+import javax.inject.Inject
 
-class MainViewModel(private val tripsRepository: TripsRepository,
-                    private val employeeRepository: EmployeeRepository,
-                    private val notificationRepository: NotificationRepository,
-                    private val orgInfoRepository: OrgInfoRepository
+@HiltViewModel
+class MainViewModel @Inject constructor(private val tripsRepository: TripsRepository,
+                                        private val employeeRepository: EmployeeRepository,
+                                        private val notificationRepository: NotificationRepository,
+                                        private val orgInfoRepository: OrgInfoRepository
 ) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
@@ -53,18 +56,5 @@ class MainViewModel(private val tripsRepository: TripsRepository,
             pBarVisibility.set(View.GONE)
         }
 
-    class MainViewModelFactory(private val tripsRepository: TripsRepository,
-                               private val employeeRepository: EmployeeRepository,
-                               private val notificationRepository: NotificationRepository,
-                               private val orgInfoRepository: OrgInfoRepository
-    ) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(MainViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return MainViewModel(tripsRepository, employeeRepository, notificationRepository, orgInfoRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 
 }

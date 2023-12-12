@@ -4,12 +4,15 @@ import android.view.View
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.data.repository.FaqRepository
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import javax.inject.Inject
 
-class FaqViewModel(val repository: FaqRepository): ViewModel() {
+@HiltViewModel
+class FaqViewModel @Inject constructor(val repository: FaqRepository): ViewModel() {
     private val _faqResult = MutableLiveData<Result<List<Faq>>?>()
     val faqResult: LiveData<Result<List<Faq>>?> = _faqResult
     val faqLiveData : LiveData<List<Faq>> = repository.faqList.asLiveData()
@@ -34,14 +37,4 @@ class FaqViewModel(val repository: FaqRepository): ViewModel() {
 
     suspend fun searchFaqFromDB(searchQuery: String) = repository.searchFaq(searchQuery)
 
-
-    class FaqViewModelFactory(val repository: FaqRepository): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(FaqViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return FaqViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown viewModel class")
-        }
-    }
 }

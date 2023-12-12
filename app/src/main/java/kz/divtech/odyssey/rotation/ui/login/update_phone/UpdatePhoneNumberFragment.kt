@@ -14,6 +14,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.redmadrobot.inputmask.MaskedTextChangedListener
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.common.Constants
@@ -22,20 +23,18 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchFirebaseToken
 
+@AndroidEntryPoint
 class UpdatePhoneNumberFragment : Fragment() {
     private var phoneNumberFilled : Boolean = false
     private var extractedPhoneNumber: String? = null
     private var _dataBinding : FragmentUpdatePhoneBinding? = null
     private val dataBinding get() = _dataBinding!!
     val args : UpdatePhoneNumberFragmentArgs by navArgs()
-    private val viewModel: UpdatePhoneViewModel by viewModels{
-        UpdatePhoneViewModel.UpdatePhoneViewModelFactory((activity as MainActivity).employeeRepository)
-    }
+    private val viewModel: UpdatePhoneViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 

@@ -3,15 +3,18 @@ package kz.divtech.odyssey.rotation.ui.login.find_by_phone_number
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
+import javax.inject.Inject
 
-class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepository,
-                            private val orgInfoRepository: OrgInfoRepository
+@HiltViewModel
+class FindEmployeeViewModel @Inject constructor(private val findEmployeeRepository: FindEmployeeRepository,
+                                                private val orgInfoRepository: OrgInfoRepository
 ) : ViewModel() {
     private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()
     val employeeResult : LiveData<Event<Result<EmployeeResult>>> = _employeeResult
@@ -33,20 +36,5 @@ class FindEmployeeViewModel(private val findEmployeeRepository: FindEmployeeRepo
             orgInfoRepository.getOrgInfoFromServer()
             pBarVisibility.set(View.GONE)
         }
-
-
-    class FindEmployeeViewModelFactory(private val findEmployeeRepository: FindEmployeeRepository,
-                                       private val orgInfoRepository: OrgInfoRepository
-    ): ViewModelProvider.Factory{
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(FindEmployeeViewModel::class.java)){
-                return FindEmployeeViewModel(findEmployeeRepository, orgInfoRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
-
-
 
 }

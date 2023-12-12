@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.isFailure
@@ -22,15 +23,12 @@ import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
-
+@AndroidEntryPoint
 class DocumentDialog : BottomSheetDialogFragment() {
     private val args: DocumentDialogArgs by navArgs()
-    val viewModel : DocumentViewModel by viewModels{
-        DocumentViewModel.DocumentViewModelFactory((activity as MainActivity).employeeRepository)
-    }
+    val viewModel : DocumentViewModel by viewModels()
     private var docNumberET: EditText? = null
     private var issuedByET: EditText? = null
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme

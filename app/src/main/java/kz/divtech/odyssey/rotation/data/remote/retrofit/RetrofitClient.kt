@@ -1,11 +1,11 @@
 package kz.divtech.odyssey.rotation.data.remote.retrofit
 
-import kz.divtech.odyssey.rotation.common.App
+import android.content.Context
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.data.remote.retrofit_result.ResultAdapterFactory
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchDeviceId
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchUrl
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.getTokenWithBearer
+import kz.divtech.odyssey.rotation.data.remote.retrofit_result.ResultAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -13,14 +13,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient{
+object RetrofitClient {
 
-    private fun getClient(): Retrofit {
+    fun getApiService(context: Context): ApiService{
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(Interceptor { chain ->
                 val request: Request = chain.request().newBuilder()
-                    .addHeader(Config.DEVICE_ID_KEY, App.appContext.fetchDeviceId())
-                    .addHeader(Config.AUTHORIZATION_KEY, App.appContext.getTokenWithBearer())
+                    .addHeader(Config.DEVICE_ID_KEY, context.fetchDeviceId())
+                    .addHeader(Config.AUTHORIZATION_KEY, context.getTokenWithBearer())
                     .build()
                 chain.proceed(request)
             })
@@ -28,18 +28,15 @@ object RetrofitClient{
             .addInterceptor(UnauthorizedInterceptor())
             .build()
 
-        return Retrofit.Builder().baseUrl(App.appContext.fetchUrl()+ Config.API)
+        return Retrofit.Builder().baseUrl(context.fetchUrl()+ Config.API)
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())
             .build()
+            .create(ApiService::class.java)
     }
 
-    fun getApiService() : ApiService {
-        return getClient().create(ApiService::class.java)
-    }
-
-    private fun getProxyClient(): Retrofit {
+    fun getProxyService(): ApiService{
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
@@ -49,10 +46,6 @@ object RetrofitClient{
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())
             .build()
+            .create(ApiService::class.java)
     }
-
-    fun getApiProxyService() : ApiService {
-        return getProxyClient().create(ApiService::class.java)
-    }
-
 }

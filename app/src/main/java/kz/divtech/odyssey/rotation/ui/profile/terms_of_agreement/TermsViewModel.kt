@@ -5,15 +5,17 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
+import javax.inject.Inject
 
-class TermsViewModel(private val repository: TermsRepository): ViewModel(){
+@HiltViewModel
+class TermsViewModel @Inject constructor(private val repository: TermsRepository): ViewModel(){
     private val _failureResult = MutableLiveData<Throwable>()
     val failureResult: LiveData<Throwable> = _failureResult
 
@@ -68,13 +70,4 @@ class TermsViewModel(private val repository: TermsRepository): ViewModel(){
 
     fun getFile() = repository.getFile()
 
-    class TermsViewModelFactory(private val repository: TermsRepository): ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(TermsViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return TermsViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown viewModel class")
-        }
-    }
 }

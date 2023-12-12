@@ -1,12 +1,15 @@
 package kz.divtech.odyssey.rotation.ui.trips.refund.application
 
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import okhttp3.ResponseBody
+import javax.inject.Inject
 
-class RefundViewModel(val repository: RefundRepository) : ViewModel() {
+@HiltViewModel
+class RefundViewModel @Inject constructor(val repository: RefundRepository) : ViewModel() {
     private val _sendRefundResult = MutableLiveData<Result<Map<String, Int>>>()
     val sendRefundResult: LiveData<Result<Map<String, Int>>> = _sendRefundResult
 
@@ -24,16 +27,5 @@ class RefundViewModel(val repository: RefundRepository) : ViewModel() {
             _cancelRefundResult.value = repository.cancelRefund(refundId)
         }
     }
-
-    class RefundViewModelFactory(private val repository: RefundRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(RefundViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return RefundViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
-
 
 }

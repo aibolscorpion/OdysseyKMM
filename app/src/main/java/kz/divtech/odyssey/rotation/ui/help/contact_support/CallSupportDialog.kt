@@ -14,17 +14,15 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogCallSupportBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.ContactUtil
 
 
+@AndroidEntryPoint
 class CallSupportDialog : BottomSheetDialogFragment(){
-    val viewModel: ContactSupportViewModel by viewModels{
-        ContactSupportViewModel.ContactSupportViewModelFactory(
-            (activity as MainActivity).orgInfoRepository)
-    }
+    val viewModel: ContactSupportViewModel by viewModels()
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 

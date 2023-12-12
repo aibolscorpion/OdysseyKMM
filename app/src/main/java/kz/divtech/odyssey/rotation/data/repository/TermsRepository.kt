@@ -5,19 +5,19 @@ import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import okhttp3.ResponseBody
 import java.io.File
 
-class TermsRepository(val dao: Dao) {
+class TermsRepository(val dao: Dao, private val apiService: ApiService, private val proxyService: ApiService) {
     val uaConfirmed = dao.observeUAConfirmed()
 
     suspend fun getTermsOfAgreement(): Result<ResponseBody> {
-        return RetrofitClient.getApiProxyService().getUserAgreement()
+        return proxyService.getUserAgreement()
     }
 
     suspend fun updateUAConfirm(): Result<ResponseBody>{
-        val response = RetrofitClient.getApiService().updateUAConfirm()
+        val response = apiService.updateUAConfirm()
         if(response.isSuccess()){
             dao.updateUaConfirmed(true)
         }

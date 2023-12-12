@@ -19,28 +19,30 @@ import androidx.paging.PagingData
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.common.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
 import java.net.UnknownHostException
 
+@AndroidEntryPoint
 class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
     val adapter: NewsPagingAdapter by lazy { NewsPagingAdapter(this) }
     val isRefreshing = ObservableBoolean()
-    val viewModel: NewsViewModel by viewModels{
-        NewsViewModel.ViewModelFactory((activity as MainActivity).newsRepository)
-    }
+
+    val viewModel: NewsViewModel by viewModels()
+
     private var _binding: FragmentNewsBinding? = null
     private val binding get() = _binding!!
     private var loadStateJob : Job? = null
+
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentNewsBinding.inflate(inflater)

@@ -10,21 +10,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
+@AndroidEntryPoint
 class RefundReasonFragment: Fragment() {
     private val args : RefundReasonFragmentArgs by navArgs()
     lateinit var binding: FragmentRefundReasonBinding
-    val viewModel: RefundViewModel by viewModels{
-        RefundViewModel.RefundViewModelFactory((activity as MainActivity).refundRepository)
-    }
+    val viewModel: RefundViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

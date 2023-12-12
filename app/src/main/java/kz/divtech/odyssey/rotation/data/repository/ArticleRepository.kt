@@ -5,12 +5,12 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticleResponse
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 
-class ArticleRepository(private val dao: Dao) {
+class ArticleRepository(private val dao: Dao, private val apiService: ApiService) {
 
     fun getArticleById(id: Int): Flow<FullArticle> {
         return dao.observeArticleById(id)
@@ -27,7 +27,7 @@ class ArticleRepository(private val dao: Dao) {
     }
 
     suspend fun getArticleByIdFromServer(articleId: Int): Result<FullArticleResponse>{
-        val response = RetrofitClient.getApiService().getArticleById(articleId)
+        val response = apiService.getArticleById(articleId)
         if(response.isSuccess()){
             val fullArticle = response.asSuccess().value.data
             insertFullArticle(fullArticle)
@@ -37,7 +37,7 @@ class ArticleRepository(private val dao: Dao) {
 
 
     suspend fun markArticleAsRead(id: Int){
-        RetrofitClient.getApiService().markAsReadArticleById(id)
+        apiService.markAsReadArticleById(id)
     }
 
 }

@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile.personal_data
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
@@ -10,8 +11,10 @@ import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import javax.inject.Inject
 
-class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewModel() {
+@HiltViewModel
+class PersonalDataViewModel @Inject constructor(val employeeRepository: EmployeeRepository): ViewModel() {
     val employee = employeeRepository.employee
     val pBarVisibility = ObservableInt(View.GONE)
 
@@ -32,16 +35,6 @@ class PersonalDataViewModel(val employeeRepository: EmployeeRepository): ViewMod
             }
             _updatePersonalResult.value = response
             pBarVisibility.set(View.GONE)
-        }
-    }
-
-    class PersonalDataViewModelFactory(private val repository: EmployeeRepository) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(PersonalDataViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return PersonalDataViewModel(repository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
 }

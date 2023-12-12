@@ -8,18 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogContactSupportBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.ui.help.contact_support.ContactSupportViewModel
 import kz.divtech.odyssey.rotation.common.utils.ContactUtil
 
 
+@AndroidEntryPoint
 class ContactSupportDialog : BottomSheetDialogFragment() {
-    val viewModel: ContactSupportViewModel by viewModels{
-        ContactSupportViewModel.ContactSupportViewModelFactory(
-            (activity as MainActivity).orgInfoRepository)
-    }
+    val viewModel: ContactSupportViewModel by viewModels()
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)

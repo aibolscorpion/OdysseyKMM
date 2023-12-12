@@ -3,6 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile
 import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.App
@@ -17,8 +18,10 @@ import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.clearAuthToken
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.clearUrl
+import javax.inject.Inject
 
-class LogoutViewModel(
+@HiltViewModel
+class LogoutViewModel @Inject constructor(
     private val tripsRepository: TripsRepository,
     private val employeeRepository: EmployeeRepository,
     private val faqRepository: FaqRepository,
@@ -81,25 +84,5 @@ class LogoutViewModel(
         deleteTermsFile.await()
     }
 
-    class LogoutViewModelFactory(
-        private val tripsRepository: TripsRepository,
-        private val employeeRepository: EmployeeRepository,
-        private val faqRepository: FaqRepository,
-        private val newsRepository: NewsRepository,
-        private val articleRepository: ArticleRepository,
-        private val notificationRepository: NotificationRepository,
-        private val orgInfoRepository: OrgInfoRepository,
-        private val termsRepository: TermsRepository
-    ) : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if(modelClass.isAssignableFrom(LogoutViewModel::class.java)){
-                @Suppress("UNCHECKED_CAST")
-                return LogoutViewModel(tripsRepository, employeeRepository,
-                    faqRepository, newsRepository,
-                    articleRepository, notificationRepository, orgInfoRepository, termsRepository) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 
 }

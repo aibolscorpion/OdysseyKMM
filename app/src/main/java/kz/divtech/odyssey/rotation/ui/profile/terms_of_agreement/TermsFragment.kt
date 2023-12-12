@@ -18,16 +18,15 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentAuthTermsBinding
-import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
+@AndroidEntryPoint
 class TermsFragment : Fragment() {
-    val viewModel: TermsViewModel by viewModels{
-        TermsViewModel.TermsViewModelFactory((activity as MainActivity).termsRepository)
-    }
+    val viewModel: TermsViewModel by viewModels()
     private var _dataBinding: FragmentAuthTermsBinding? = null
     val dataBinding get() = _dataBinding!!
 

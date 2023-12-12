@@ -31,6 +31,7 @@ import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
@@ -41,17 +42,7 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_APPLICATIO
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_TICKET
-import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
-import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
-import kz.divtech.odyssey.rotation.data.repository.FaqRepository
-import kz.divtech.odyssey.rotation.data.repository.NewsRepository
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
-import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
-import kz.divtech.odyssey.rotation.data.repository.RefundRepository
-import kz.divtech.odyssey.rotation.data.repository.TermsRepository
-import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
@@ -65,27 +56,13 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import kotlin.time.Duration.Companion.seconds
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NotificationListener {
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.mainNavHostFragment)
                 as NavHostFragment).navController }
-    private val database by lazy { AppDatabase.getDatabase(applicationContext) }
-    val tripsRepository by lazy { TripsRepository(database.dao()) }
-    val employeeRepository by lazy { EmployeeRepository(database.dao()) }
-    val faqRepository by lazy { FaqRepository(database.dao()) }
-    val newsRepository by lazy { NewsRepository(database.dao()) }
-    val articleRepository by lazy { ArticleRepository(database.dao()) }
-    val notificationRepository by lazy { NotificationRepository(database.dao()) }
-    val orgInfoRepository by lazy { OrgInfoRepository(database.dao()) }
-    val refundRepository by lazy { RefundRepository(database.dao()) }
-    val termsRepository by lazy { TermsRepository(database.dao()) }
 
-    private val viewModel: LogoutViewModel by viewModels{
-        LogoutViewModel.LogoutViewModelFactory(tripsRepository, employeeRepository,
-            faqRepository, newsRepository, articleRepository,
-            notificationRepository, orgInfoRepository, termsRepository)
-    }
+    private val viewModel: LogoutViewModel by viewModels()
     private var _binding: ActivityMainBinding? = null
     val binding get() = _binding!!
 
