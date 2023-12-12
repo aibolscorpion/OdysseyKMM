@@ -50,13 +50,16 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Per
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
+import kz.divtech.odyssey.shared.data.repository.FindEmployeeRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), NotificationListener {
+
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.mainNavHostFragment)
                 as NavHostFragment).navController }
@@ -82,8 +85,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        val repository = FindEmployeeRepository()
+        lifecycleScope.launch {
+            Timber.i("${repository.findByPhoneNumber("77475551993")}")
+        }
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
