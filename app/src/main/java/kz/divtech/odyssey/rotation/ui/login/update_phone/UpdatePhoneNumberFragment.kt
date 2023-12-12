@@ -25,7 +25,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRe
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchFirebaseToken
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchFirebaseToken
 
 @AndroidEntryPoint
 class UpdatePhoneNumberFragment : Fragment() {

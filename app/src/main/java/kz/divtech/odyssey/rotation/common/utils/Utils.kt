@@ -18,7 +18,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchAppLanguage
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import java.io.File
 import java.util.Locale
 

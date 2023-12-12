@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchOrganizationName
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchOrganizationName
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {

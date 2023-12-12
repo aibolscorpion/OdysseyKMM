@@ -27,7 +27,7 @@ import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.isLoggedIn
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.isLoggedIn
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideToolbar

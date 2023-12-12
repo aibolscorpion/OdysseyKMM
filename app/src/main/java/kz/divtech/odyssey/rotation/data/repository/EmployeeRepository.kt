@@ -10,7 +10,7 @@ import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRe
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchFirebaseToken
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchFirebaseToken
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 
 class EmployeeRepository(private val dao: Dao, private val apiService: ApiService) {

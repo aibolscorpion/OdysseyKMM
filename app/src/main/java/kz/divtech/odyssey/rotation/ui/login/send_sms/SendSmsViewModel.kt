@@ -14,8 +14,8 @@ import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveAuthToken
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveOrganizationName
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveAuthToken
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveOrganizationName
 import javax.inject.Inject
 
 @HiltViewModel

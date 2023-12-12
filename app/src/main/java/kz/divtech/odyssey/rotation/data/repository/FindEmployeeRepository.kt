@@ -2,7 +2,7 @@ package kz.divtech.odyssey.rotation.data.repository
 
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveUrl
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveUrl
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 
 class FindEmployeeRepository(private val apiService: ApiService) {

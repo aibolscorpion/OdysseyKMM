@@ -3,7 +3,7 @@ package kz.divtech.odyssey.rotation.ui.profile.notification.push_notification
 import android.content.Intent
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveFirebaseToken
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveFirebaseToken
 
 
 class PushNotificationService : FirebaseMessagingService() {

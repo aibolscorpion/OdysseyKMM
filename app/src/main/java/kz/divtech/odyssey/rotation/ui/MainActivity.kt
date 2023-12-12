@@ -47,7 +47,7 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotifi
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchAppLanguage
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
 import org.greenrobot.eventbus.EventBus

@@ -21,7 +21,7 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchOrganizationName
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchOrganizationName
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor

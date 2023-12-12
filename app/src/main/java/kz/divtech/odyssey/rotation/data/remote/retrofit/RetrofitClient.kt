@@ -1,9 +1,9 @@
 package kz.divtech.odyssey.rotation.data.remote.retrofit
 
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchDeviceId
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.fetchUrl
-import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.getTokenWithBearer
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchDeviceId
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchUrl
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.getTokenWithBearer
 import kz.divtech.odyssey.rotation.data.remote.retrofit_result.ResultAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

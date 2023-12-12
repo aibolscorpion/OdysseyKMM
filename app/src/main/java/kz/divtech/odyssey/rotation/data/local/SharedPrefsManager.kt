@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.common.utils
+package kz.divtech.odyssey.rotation.data.local
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.common.Config.AUTHORIZATION_VALUE_PREFIX
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Organization
 
 
-object SharedPrefs {
+object SharedPrefsManager {
 
     private const val USER_TOKEN = "user_token"
     private const val FIREBASE_TOKEN = "firebase_token"
