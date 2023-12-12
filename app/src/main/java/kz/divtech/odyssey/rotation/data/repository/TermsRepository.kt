@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import okhttp3.ResponseBody
 import java.io.File
 
-class TermsRepository(val dao: Dao, private val apiService: ApiService, private val proxyService: ApiService) {
+class TermsRepository(private val dao: Dao, private val apiService: ApiService, private val proxyService: ApiService) {
     val uaConfirmed = dao.observeUAConfirmed()
 
     suspend fun getTermsOfAgreement(): Result<ResponseBody> {

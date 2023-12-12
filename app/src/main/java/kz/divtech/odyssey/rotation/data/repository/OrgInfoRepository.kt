@@ -7,7 +7,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 
-class OrgInfoRepository(val dao: Dao, private val apiService: ApiService) {
+class OrgInfoRepository(private val dao: Dao, private val apiService: ApiService) {
     val orgInfo = dao.observeOrgInfo()
 
     suspend fun deleteOrgInfo(){

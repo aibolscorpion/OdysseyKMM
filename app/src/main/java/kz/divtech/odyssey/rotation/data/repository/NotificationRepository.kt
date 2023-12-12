@@ -14,7 +14,7 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.data.remotemediator.NotificationRemoteMediator
 
-class NotificationRepository(private val dao: Dao,private val apiService: ApiService) {
+class NotificationRepository(private val dao: Dao, private val apiService: ApiService) {
     val notifications: Flow<List<Notification>> = dao.observeThreeNotifications()
 
     @WorkerThread

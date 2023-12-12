@@ -5,9 +5,8 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveUrl
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
-import kz.divtech.odyssey.rotation.di.ProxyService
 
-class FindEmployeeRepository(@ProxyService private val apiService: ApiService) {
+class FindEmployeeRepository(private val apiService: ApiService) {
     suspend fun findByPhoneNumber(phoneNumber:String) : Result<EmployeeResult>{
         val response = apiService.getEmployeeByPhone(phoneNumber)
         if(response.isSuccess() && response.asSuccess().value.exists){
