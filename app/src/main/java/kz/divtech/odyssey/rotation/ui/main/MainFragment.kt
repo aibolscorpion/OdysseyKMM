@@ -84,7 +84,7 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
                 binding.employeeNameTV.text = it.full_name
             }
         }
-        binding.employeeOrgTV.text = requireContext().fetchOrganizationName()
+        binding.employeeOrgTV.text = fetchOrganizationName()
     }
 
     private fun setCalendar(){

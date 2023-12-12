@@ -46,7 +46,7 @@ class FindEmployeeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
 
-       if(requireContext().isLoggedIn()){
+       if(isLoggedIn()){
             openMainFragment()
         }
         return dataBinding.root

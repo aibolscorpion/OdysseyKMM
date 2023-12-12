@@ -101,7 +101,7 @@ class UpdatePhoneNumberFragment : Fragment() {
             if(phoneNumberFilled) {
                 val request = UpdatePhoneRequest(args.employee.id,
                     "${Config.COUNTRY_CODE}$extractedPhoneNumber",
-                    requireContext().fetchFirebaseToken())
+                    fetchFirebaseToken())
                 viewModel.updatePhoneNumber(request)
             } else
                 showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))

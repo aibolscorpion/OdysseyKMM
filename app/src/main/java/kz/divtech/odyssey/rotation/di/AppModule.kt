@@ -93,8 +93,8 @@ object AppModule {
 
     @kz.divtech.odyssey.rotation.di.ApiService
     @Provides
-    fun provideApiService(@ApplicationContext context: Context) : ApiService {
-        return RetrofitClient.getApiService(context)
+    fun provideApiService() : ApiService {
+        return RetrofitClient.getApiService()
     }
 
     @ProxyService

@@ -2,7 +2,6 @@ package kz.divtech.odyssey.rotation.data.repository
 
 import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants.ANDROID
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
@@ -46,7 +45,7 @@ class EmployeeRepository(private val dao: Dao, private val apiService: ApiServic
 
     suspend fun sendDeviceInfo(){
         val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
-        val deviceInfo = DeviceInfo(ANDROID, deviceType, App.appContext.fetchFirebaseToken())
+        val deviceInfo = DeviceInfo(ANDROID, deviceType, fetchFirebaseToken())
         apiService.sendDeviceInfo(deviceInfo)
     }
 

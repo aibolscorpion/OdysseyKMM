@@ -64,7 +64,7 @@ object Utils {
     }
 
     fun getCountryList(): List<Country>{
-        val rawId = when(App.appContext.fetchAppLanguage()){
+        val rawId = when(fetchAppLanguage()){
             else -> R.raw.countries
         }
         val jsonString = App.appContext.resources.openRawResource(rawId).bufferedReader().

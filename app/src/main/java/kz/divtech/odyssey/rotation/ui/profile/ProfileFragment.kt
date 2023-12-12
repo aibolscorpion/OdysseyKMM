@@ -44,7 +44,7 @@ class ProfileFragment : Fragment() {
                 binding.employeePositionTV.text = it.position
             }
         }
-        binding.employeeOrgNameTV.text = requireContext().fetchOrganizationName()
+        binding.employeeOrgNameTV.text = fetchOrganizationName()
 
         binding.viewModel = viewModel
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {

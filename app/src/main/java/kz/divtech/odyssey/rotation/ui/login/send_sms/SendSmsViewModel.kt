@@ -5,7 +5,6 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
@@ -55,8 +54,8 @@ class SendSmsViewModel @Inject constructor(private val employeeRepository: Emplo
             val response = loginRepository.login(authRequest)
             if(response.isSuccess()) {
                 val loginResponse = response.asSuccess().value
-                App.appContext.saveAuthToken(loginResponse.token)
-                App.appContext.saveOrganizationName(loginResponse.organization)
+                saveAuthToken(loginResponse.token)
+                saveOrganizationName(loginResponse.organization)
                 employeeRepository.insertEmployee(loginResponse.employee)
             }
             _loginResult.value = Event(response)

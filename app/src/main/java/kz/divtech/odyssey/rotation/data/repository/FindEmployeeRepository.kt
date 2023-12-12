@@ -1,6 +1,5 @@
 package kz.divtech.odyssey.rotation.data.repository
 
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.common.utils.SharedPrefs.saveUrl
@@ -11,7 +10,7 @@ class FindEmployeeRepository(private val apiService: ApiService) {
         val response = apiService.getEmployeeByPhone(phoneNumber)
         if(response.isSuccess() && response.asSuccess().value.exists){
             val baseUrl = response.asSuccess().value.url
-            App.appContext.saveUrl(baseUrl)
+            saveUrl(baseUrl)
         }
         return response
     }
@@ -20,7 +19,7 @@ class FindEmployeeRepository(private val apiService: ApiService) {
         val response = apiService.getEmployeeByIIN(iin)
         if(response.isSuccess() && response.asSuccess().value.exists){
             val baseUrl = response.asSuccess().value.url
-            App.appContext.saveUrl(baseUrl)
+            saveUrl(baseUrl)
         }
         return  response
     }

@@ -6,7 +6,6 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.FaqRepository
@@ -62,8 +61,8 @@ class LogoutViewModel @Inject constructor(
     }
 
     fun deleteAllDataAsync() = viewModelScope.async{
-        App.appContext.clearAuthToken()
-        App.appContext.clearUrl()
+        clearAuthToken()
+        clearUrl()
         val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
         val deleteNearestTripAsync = async { tripsRepository.deleteNearestActiveTrip() }
         val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }

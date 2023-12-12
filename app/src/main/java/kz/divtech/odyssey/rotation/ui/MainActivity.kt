@@ -35,7 +35,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Config.UPDATE_TYPE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_DATA_TITLE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_APPLICATION
@@ -145,7 +144,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     }
     override fun attachBaseContext(newBase: Context?) {
-        val context = newBase?.changeAppLocale(App.appContext.fetchAppLanguage())
+        val context = newBase?.changeAppLocale(fetchAppLanguage())
         super.attachBaseContext(context)
     }
 
