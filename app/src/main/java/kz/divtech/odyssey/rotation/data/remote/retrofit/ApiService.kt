@@ -3,7 +3,6 @@ package kz.divtech.odyssey.rotation.data.remote.retrofit
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
-import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.News
 import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notifications
@@ -11,27 +10,16 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.TripResponse
 import okhttp3.ResponseBody
 import retrofit2.http.*
 import kz.divtech.odyssey.rotation.data.remote.result.Result
-import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 import kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticleResponse
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
-import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.profile.employee.SingleEmployee
 import kz.divtech.odyssey.rotation.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 
 interface ApiService {
-    @GET("user-agreement")
-    suspend fun getUserAgreement(): Result<ResponseBody>
-
-    @GET("get-employee-by-phone")
-    suspend fun getEmployeeByPhone(@Query("phone") phone: String): Result<EmployeeResult>
-
-    @GET("get-employee-by-iin")
-    suspend fun getEmployeeByIIN(@Query("iin") iin: String): Result<EmployeeResult>
-
     //login
     @POST("send-sms-code")
     suspend fun sendSms(@Body codeRequest: CodeRequest): Result<CodeResponse>
@@ -67,9 +55,6 @@ interface ApiService {
     @POST("refund-applications/{id}/cancel")
     suspend fun cancelRefund(@Path("id") refundId: Int) : Result<ResponseBody>
 
-    //FAQ
-    @GET("faqs")
-    suspend fun getFAQs() : Result<List<Faq>>
 
     //Articles
     @GET("articles")
@@ -83,10 +68,10 @@ interface ApiService {
 
     //Profile
     @GET("profile")
-    suspend fun getEmployeeInfo() : Result<SingleEmployee>
+    suspend fun getProfile() : Result<SingleEmployee>
 
     @POST("profile")
-    suspend fun updateEmployee(@Body employee: Employee): Result<ResponseBody>
+    suspend fun updateProfile(@Body employee: Employee): Result<ResponseBody>
 
     @POST("profile/update-document")
     suspend fun updateDocument(@Body document: Document): Result<ResponseBody>
@@ -115,7 +100,5 @@ interface ApiService {
     @POST("fix-device")
     suspend fun sendDeviceInfo(@Body deviceInfo: DeviceInfo): Result<ResponseBody>
 
-    @GET("get-app-info")
-    suspend fun getOrgInfo(): Result<OrgInfo>
 
 }

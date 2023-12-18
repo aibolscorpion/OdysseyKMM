@@ -4,10 +4,10 @@ import androidx.annotation.WorkerThread
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import kz.divtech.odyssey.rotation.domain.model.OrgInfo
 
-class OrgInfoRepository(private val dao: Dao, private val apiService: ApiService) {
+class OrgInfoRepository(private val dao: Dao, private val apiService: ProxyApiService) {
     val orgInfo = dao.observeOrgInfo()
 
     suspend fun deleteOrgInfo(){

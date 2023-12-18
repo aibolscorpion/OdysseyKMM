@@ -89,13 +89,13 @@ interface Dao {
 
     //Employee
     @Query("SELECT * FROM employee")
-    fun observeEmployee(): LiveData<Employee>
+    fun observeProfile(): LiveData<Employee>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEmployee(employee: Employee)
+    suspend fun insertProfile(employee: Employee)
 
     @Query("DELETE FROM employee")
-    suspend fun deleteEmployee(): Int
+    suspend fun deleteProfile(): Int
 
     //FAQ
     @Query("SELECT * FROM faq")

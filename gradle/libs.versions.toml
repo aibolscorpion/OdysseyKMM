@@ -1,5 +1,6 @@
 [versions]
 agp = "8.1.3"
+datastore-preferences-core = "1.0.0"
 hilt = "2.48.1"
 kotlin = "1.9.20"
 constraintlayout = "2.1.4"
@@ -29,6 +30,7 @@ play-services-auth-api-phone = "18.0.1"
 play-services-auth = "20.7.0"
 retrofit = "2.9.0"
 room = "2.6.1"
+slf4j-simple = "2.0.9"
 timber = "5.0.1"
 coroutines = "1.7.3"
 
@@ -42,6 +44,7 @@ constraintlayout = { module = "androidx.constraintlayout:constraintlayout", vers
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core-ktx" }
+datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore-preferences-core" }
 desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso-core" }
 eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
@@ -74,10 +77,12 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j-simple" }
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version = "3.2.0" }
+datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version = "1.1.0-alpha07" }
 
 
 [plugins]

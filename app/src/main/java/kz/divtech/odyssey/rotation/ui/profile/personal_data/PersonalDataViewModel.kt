@@ -7,15 +7,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
 import okhttp3.ResponseBody
 import kz.divtech.odyssey.rotation.data.remote.result.*
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonalDataViewModel @Inject constructor(val employeeRepository: EmployeeRepository): ViewModel() {
-    val employee = employeeRepository.employee
+class PersonalDataViewModel @Inject constructor(val profileRepository: ProfileRepository): ViewModel() {
+    val employee = profileRepository.employee
     val pBarVisibility = ObservableInt(View.GONE)
 
     private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
@@ -28,9 +28,9 @@ class PersonalDataViewModel @Inject constructor(val employeeRepository: Employee
     fun updatePersonalData(employee: Employee, citizenshipChanged: Boolean){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            val response = employeeRepository.updateEmployee(employee)
+            val response = profileRepository.updateProfile(employee)
             if(response.isSuccess()){
-                employeeRepository.getAndInstertEmployee()
+                profileRepository.getAndInsertProfile()
                 _personalDataUpdated.value = Event(citizenshipChanged)
             }
             _updatePersonalResult.value = response

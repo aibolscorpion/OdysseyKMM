@@ -6,10 +6,11 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.result.Result
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
+import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import okhttp3.ResponseBody
 import java.io.File
 
-class TermsRepository(private val dao: Dao, private val apiService: ApiService, private val proxyService: ApiService) {
+class TermsRepository(private val dao: Dao, private val apiService: ApiService, private val proxyService: ProxyApiService) {
     val uaConfirmed = dao.observeUAConfirmed()
 
     suspend fun getTermsOfAgreement(): Result<ResponseBody> {

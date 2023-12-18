@@ -35,7 +35,7 @@ object RetrofitClient {
             .create(ApiService::class.java)
     }
 
-    fun getProxyService(): ApiService{
+    fun getProxyService(): ProxyApiService{
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
@@ -45,6 +45,6 @@ object RetrofitClient {
             .client(okHttpClient)
             .addCallAdapterFactory(ResultAdapterFactory())
             .build()
-            .create(ApiService::class.java)
+            .create(ProxyApiService::class.java)
     }
 }

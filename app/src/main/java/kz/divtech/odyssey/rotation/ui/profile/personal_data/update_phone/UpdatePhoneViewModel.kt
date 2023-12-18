@@ -14,15 +14,15 @@ import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
-class UpdatePhoneViewModel @Inject constructor(val employeeRepository: EmployeeRepository,
-       @kz.divtech.odyssey.rotation.di.ApiService private val baseService: ApiService): ViewModel() {
+class UpdatePhoneViewModel @Inject constructor(val profileRepository: ProfileRepository,
+                                               private val apiService: ApiService): ViewModel() {
     private var authLogId: Int = 0
 
     private val _smsCodeResult = MutableLiveData<Event<Result<CodeResponse>>>()
@@ -41,7 +41,7 @@ class UpdatePhoneViewModel @Inject constructor(val employeeRepository: EmployeeR
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
-            val response = baseService.updatePhoneNumberWithAuth(codeRequest)
+            val response = apiService.updatePhoneNumberWithAuth(codeRequest)
             _smsCodeResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
@@ -52,9 +52,9 @@ class UpdatePhoneViewModel @Inject constructor(val employeeRepository: EmployeeR
         val authRequest = AuthRequest("", code, authLogId)
 
         viewModelScope.launch {
-            val response = baseService.updatePhoneConfirm(authRequest)
+            val response = apiService.updatePhoneConfirm(authRequest)
             if(response.isSuccess()) {
-                employeeRepository.getAndInstertEmployee()
+                profileRepository.getAndInsertProfile()
             }
             _updatedResult.value = Event(response)
             pBarVisibility.set(View.GONE)

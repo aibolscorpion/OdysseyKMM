@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.FaqRepository
 import kz.divtech.odyssey.rotation.data.repository.NewsRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
@@ -17,22 +17,24 @@ import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearUrl
+import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class LogoutViewModel @Inject constructor(
     private val tripsRepository: TripsRepository,
-    private val employeeRepository: EmployeeRepository,
+    private val profileRepository: ProfileRepository,
     private val faqRepository: FaqRepository,
     private val newsRepository: NewsRepository,
     private val articleRepository: ArticleRepository,
     private val notificationRepository: NotificationRepository,
     private val orgInfoRepository: OrgInfoRepository,
-    private val termsRepository: TermsRepository
+    private val termsRepository: TermsRepository,
+    private val loginRepository: LoginRepository
 ): ViewModel() {
 
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee
-    val uaConfirmedLiveData: LiveData<Boolean> = employeeRepository.uaConfirmed
+    val employeeLiveData: LiveData<Employee> = profileRepository.employee
+    val uaConfirmedLiveData: LiveData<Boolean> = profileRepository.uaConfirmed
 
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
@@ -41,7 +43,7 @@ class LogoutViewModel @Inject constructor(
 
     fun getAndInsterEmployee(){
         viewModelScope.launch {
-            employeeRepository.getAndInstertEmployee()
+            profileRepository.getAndInsertProfile()
         }
     }
     fun getNotificationsFromServer() =
@@ -54,7 +56,7 @@ class LogoutViewModel @Inject constructor(
     fun logoutFromServer(){
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            employeeRepository.logoutFromServer()
+            loginRepository.logoutFromServer()
             _isSuccessfullyLoggedOut.value = true
             pBarVisibility.set(View.GONE)
         }
@@ -65,7 +67,7 @@ class LogoutViewModel @Inject constructor(
         clearUrl()
         val deleteTripsAsync = async { tripsRepository.deleteAllTrips() }
         val deleteNearestTripAsync = async { tripsRepository.deleteNearestActiveTrip() }
-        val deleteEmployeeAsync = async { employeeRepository.deleteEmployee() }
+        val deleteEmployeeAsync = async { profileRepository.deleteProfile() }
         val deleteFaqAsync = async { faqRepository.deleteFaq() }
         val deleteNewsAsync = async { newsRepository.deleteNews() }
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }

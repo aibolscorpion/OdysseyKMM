@@ -18,4 +18,8 @@ class LoginRepository(private val apiService: ApiService) {
     suspend fun login(authRequest: AuthRequest): Result<LoginResponse>{
         return apiService.login(authRequest)
     }
+
+    suspend fun logoutFromServer(){
+        apiService.logout()
+    }
 }

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.shared.domain
+package kz.divtech.odyssey.shared.domain.model.search_employee
 
 import kotlinx.serialization.Serializable
 

@@ -5,28 +5,37 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.common.Constants
+import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
+import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val tripsRepository: TripsRepository,
-                                        private val employeeRepository: EmployeeRepository,
+                                        private val profileRepository: ProfileRepository,
                                         private val notificationRepository: NotificationRepository,
                                         private val orgInfoRepository: OrgInfoRepository
 ) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
-    val employeeLiveData: LiveData<Employee> = employeeRepository.employee
+    val employeeLiveData: LiveData<Employee> = profileRepository.employee
     val nearestActiveTrip: LiveData<SingleTrip> = tripsRepository.nearestActiveTrip.asLiveData()
     val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
 
-    fun sendDeviceInfo() = viewModelScope.launch { employeeRepository.sendDeviceInfo() }
+    fun sendDeviceInfo() = viewModelScope.launch {
+        val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
+        val deviceInfo = DeviceInfo(Constants.ANDROID,
+                                    deviceType,
+            SharedPrefsManager.fetchFirebaseToken())
+        profileRepository.sendDeviceInfo(deviceInfo)
+    }
 
     fun getOrgInfoFromServer() =
         viewModelScope.launch {
@@ -45,7 +54,7 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
     fun getEmployeeFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            employeeRepository.getAndInstertEmployee()
+            profileRepository.getAndInsertProfile()
             pBarVisibility.set(View.GONE)
         }
 

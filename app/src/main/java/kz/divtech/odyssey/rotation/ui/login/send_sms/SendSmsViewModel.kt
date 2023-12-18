@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.*
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
-import kz.divtech.odyssey.rotation.data.repository.EmployeeRepository
+import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
 import kz.divtech.odyssey.rotation.data.remote.result.*
@@ -19,7 +19,7 @@ import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveOrganizatio
 import javax.inject.Inject
 
 @HiltViewModel
-class SendSmsViewModel @Inject constructor(private val employeeRepository: EmployeeRepository,
+class SendSmsViewModel @Inject constructor(private val profileRepository: ProfileRepository,
                                            private val loginRepository: LoginRepository
 ) : ViewModel() {
 
@@ -56,7 +56,7 @@ class SendSmsViewModel @Inject constructor(private val employeeRepository: Emplo
                 val loginResponse = response.asSuccess().value
                 saveAuthToken(loginResponse.token)
                 saveOrganizationName(loginResponse.organization)
-                employeeRepository.insertEmployee(loginResponse.employee)
+                profileRepository.insertProfile(loginResponse.employee)
             }
             _loginResult.value = Event(response)
             pBarVisibility.set(View.GONE)

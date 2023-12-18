@@ -123,4 +123,7 @@ dependencies {
     implementation libs.hilt.android
     kapt libs.hilt.android.compiler
 
+    //ktor
+    implementation libs.ktor.client.android
+
 }
