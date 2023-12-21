@@ -14,10 +14,10 @@ import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.domain.model.login.AuthRequest
-import kz.divtech.odyssey.shared.domain.model.login.employee_response.LoginResponse
-import kz.divtech.odyssey.shared.domain.model.sendsms.CodeRequest
-import kz.divtech.odyssey.shared.domain.model.sendsms.CodeResponse
+import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
+import kz.divtech.odyssey.shared.domain.model.auth.login.employee_response.LoginResponse
+import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeRequest
+import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
 import kz.divtech.odyssey.shared.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(private val httpClient: HttpClient): LoginRepository {

@@ -24,6 +24,7 @@ import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
 import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 
 @AndroidEntryPoint
 class DocumentDialog : BottomSheetDialogFragment() {
@@ -85,13 +86,11 @@ class DocumentDialog : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.documentUpdated.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
-            dismiss()
-        }
-
         viewModel.updateDocumentResult.observe(viewLifecycleOwner){ response ->
-            if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
+            if(response.isSuccess()){
+                Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
+                dismiss()
+            }else if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
                 val errorResponse =
                     Gson().fromJson(response.error.errorBody?.string(), ValidationErrorResponse::class.java)
                 errorResponse.errors.forEach{ (field, errorMessages) ->

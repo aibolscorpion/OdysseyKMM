@@ -31,7 +31,6 @@ data class Trip(
     val only_bus_transfer: Boolean,
     val segments: List<Segment>,
     val refund_applications: List<RefundAppItem>
-
 ) : Parcelable
 
 fun List<Trip>.toActiveTripList() =

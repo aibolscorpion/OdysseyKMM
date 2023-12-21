@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.ktor.client.logging)
             implementation(libs.slf4j.simple)
             implementation(libs.datastore.preferences.core)
+            implementation(libs.paging.common)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
@@ -54,6 +55,6 @@ android {
     }
 }
 dependencies {
-    implementation("androidx.core:core-ktx:+")
+    implementation(libs.core.ktx)
     implementation(libs.transport.runtime)
 }

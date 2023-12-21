@@ -11,7 +11,7 @@ import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.remote.MainApi
-import kz.divtech.odyssey.shared.domain.model.search_employee.EmployeeResult
+import kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeResult
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
 
 class FindEmployeeRepositoryImpl(private val httpClient: HttpClient = MainApi.httpClient): FindEmployeeRepository {

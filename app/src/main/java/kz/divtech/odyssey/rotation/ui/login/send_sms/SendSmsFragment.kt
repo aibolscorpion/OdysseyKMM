@@ -69,7 +69,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         viewModel.smsCodeResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
                 if(response.isSuccess()) {
-                    viewModel.setAuthLogId(response.asSuccess().value.auth_log_id)
+                    viewModel.setAuthLogId(response.asSuccess().value.authLogId)
                     startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
                     showSoftKeyboard(requireContext(), editTextList[0])
                 }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){

@@ -8,21 +8,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.remote.result.Result
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.domain.model.login.login.AuthRequest
-import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeRequest
 import kz.divtech.odyssey.rotation.domain.model.login.sendsms.CodeResponse
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
-import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
 @HiltViewModel
-class UpdatePhoneViewModel @Inject constructor(val profileRepository: ProfileRepository,
-                                               private val apiService: ApiService): ViewModel() {
+class UpdatePhoneViewModel @Inject constructor(val profileRepository: ProfileRepository): ViewModel() {
     private var authLogId: Int = 0
 
     private val _smsCodeResult = MutableLiveData<Event<Result<CodeResponse>>>()
@@ -40,8 +35,7 @@ class UpdatePhoneViewModel @Inject constructor(val profileRepository: ProfileRep
     fun requestSmsCode(phoneNumber: String){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
-            val response = apiService.updatePhoneNumberWithAuth(codeRequest)
+            val response = profileRepository.updatePhoneWithAuth(phoneNumber)
             _smsCodeResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }
@@ -49,13 +43,9 @@ class UpdatePhoneViewModel @Inject constructor(val profileRepository: ProfileRep
 
     fun confirmUpdate(code: String){
         pBarVisibility.set(View.VISIBLE)
-        val authRequest = AuthRequest("", code, authLogId)
-
         viewModelScope.launch {
-            val response = apiService.updatePhoneConfirm(authRequest)
-            if(response.isSuccess()) {
-                profileRepository.getAndInsertProfile()
-            }
+            val authRequest = AuthRequest("", code, authLogId)
+            val response = profileRepository.updatePhoneConfirm(authRequest)
             _updatedResult.value = Event(response)
             pBarVisibility.set(View.GONE)
         }

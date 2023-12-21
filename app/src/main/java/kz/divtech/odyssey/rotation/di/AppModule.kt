@@ -28,9 +28,13 @@ import kz.divtech.odyssey.shared.data.repository.ArticleRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.ProfileRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.FaqRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.LoginRepositoryImpl
+import kz.divtech.odyssey.shared.data.repository.NewsRepositoryImpl
+import kz.divtech.odyssey.shared.data.repository.NotificationsRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.OrgInfoRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.RefundRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.TermsRepositoryImpl
+import kz.divtech.odyssey.shared.data.repository.TripsRepositoryImpl
+import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Singleton
 
 @Module
@@ -162,4 +166,23 @@ object AppModule {
     fun provideSharedProfileRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.ProfileRepository{
         return ProfileRepositoryImpl(httpClient)
     }
+
+    @Provides
+    @Singleton
+    fun provideSharedNotificationsRepository(httpClient: HttpClient): NotificationsRepository{
+        return NotificationsRepositoryImpl(httpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedTripsRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.TripsRepository{
+        return TripsRepositoryImpl(httpClient)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedNewsRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.NewsRepository{
+        return NewsRepositoryImpl(httpClient)
+    }
+
 }

@@ -6,5 +6,5 @@ import kz.divtech.odyssey.rotation.domain.model.trips.response.Meta
 data class Notifications(
     val data: List<Notification>,
     val meta: Meta,
-    val link: Links
+    val links: Links
 )

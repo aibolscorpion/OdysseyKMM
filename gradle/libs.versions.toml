@@ -10,7 +10,7 @@ junit = "4.13.2"
 appcompat = "1.6.1"
 ktor = "2.3.5"
 leakcanary-android = "2.10"
-material = "1.10.0"
+material = "1.11.0"
 app-update = "2.1.0"
 calendarview = "0.3.2"
 advanced-radio-group = "1.0.0"
@@ -24,7 +24,7 @@ input-mask-android = "6.1.0"
 legacy-support-v4 = "1.0.0"
 lifecycle-livedata-ktx = "2.6.2"
 logging-interceptor = "5.0.0-alpha.10"
-navigation = "2.7.5"
+navigation = "2.7.6"
 paging-runtime-ktx = "3.2.1"
 play-services-auth-api-phone = "18.0.1"
 play-services-auth = "20.7.0"
@@ -83,6 +83,7 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version = "3.2.0" }
 datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version = "1.1.0-alpha07" }
+paging-common = { module = "app.cash.paging:paging-common", version = "3.3.0-alpha02-0.4.0"}
 
 
 [plugins]

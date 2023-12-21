@@ -1,3 +1,7 @@
 package kz.divtech.odyssey.rotation.domain.model.login.sendsms
 
-data class CodeResponse(val auth_log_id: Int)
+import com.google.gson.annotations.SerializedName
+
+data class CodeResponse(
+    @SerializedName("auth_log_id")
+    val authLogId: Int)

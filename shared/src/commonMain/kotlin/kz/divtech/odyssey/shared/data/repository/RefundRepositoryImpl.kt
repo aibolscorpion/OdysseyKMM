@@ -13,8 +13,8 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.domain.model.refund.RefundAppResponse
-import kz.divtech.odyssey.shared.domain.model.refund.RefundApplication
+import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundAppResponse
+import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.shared.domain.repository.RefundRepository
 
 class RefundRepositoryImpl(private val httpClient: HttpClient): RefundRepository {

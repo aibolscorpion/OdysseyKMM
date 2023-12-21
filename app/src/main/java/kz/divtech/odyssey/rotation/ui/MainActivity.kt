@@ -50,13 +50,9 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Per
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
-import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
-import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
-import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
@@ -84,18 +80,10 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
 
-    @Inject
-    lateinit var repository: ProfileRepository
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        lifecycleScope.launch {
-            Timber.i("repository = ${repository.updatePhoneNumberWihoutAuth(UpdatePhoneRequest(
-                employeeId = 45942, "77475551993", "token"
-            ))}")
-        }
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){

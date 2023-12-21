@@ -9,7 +9,7 @@ import io.ktor.client.request.url
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.domain.model.Faq
+import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 
 class FaqRepositoryImpl(private val httpClient: HttpClient): FaqRepository {

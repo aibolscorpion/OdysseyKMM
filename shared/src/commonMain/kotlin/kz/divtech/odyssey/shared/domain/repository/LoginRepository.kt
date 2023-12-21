@@ -2,9 +2,9 @@ package kz.divtech.odyssey.shared.domain.repository
 
 import io.ktor.client.statement.HttpResponse
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.domain.model.login.AuthRequest
-import kz.divtech.odyssey.shared.domain.model.login.employee_response.LoginResponse
-import kz.divtech.odyssey.shared.domain.model.sendsms.CodeResponse
+import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
+import kz.divtech.odyssey.shared.domain.model.auth.login.employee_response.LoginResponse
+import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
 
 interface LoginRepository {
     suspend fun requestSmsCode(phoneNumber: String): Resource<CodeResponse>
