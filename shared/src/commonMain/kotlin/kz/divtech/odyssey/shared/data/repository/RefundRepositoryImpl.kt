@@ -12,17 +12,19 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundAppResponse
 import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.shared.domain.repository.RefundRepository
 
-class RefundRepositoryImpl(private val httpClient: HttpClient): RefundRepository {
+class RefundRepositoryImpl(private val httpClient: HttpClient,
+                           private val dataStoreManager: DataStoreManager): RefundRepository {
     override suspend fun sendApplicationToRefund(application: RefundApplication): Resource<RefundAppResponse> {
         return try {
            val result: RefundAppResponse =  httpClient.post {
                 contentType(ContentType.Application.Json)
-                url(HttpRoutes.SEND_APPLICATION_TO_REFUND)
+                url(HttpRoutes(dataStoreManager).sendApplicationToRefund())
                 setBody(application)
             }.body()
             Resource.Success(result)
@@ -40,7 +42,7 @@ class RefundRepositoryImpl(private val httpClient: HttpClient): RefundRepository
     override suspend fun cancelRefund(id: Int): Resource<HttpResponse> {
         return try {
             val result = httpClient.post {
-                url(HttpRoutes.cancelRefundById(id))
+                url(HttpRoutes(dataStoreManager).cancelRefundById(id))
             }
             Resource.Success(result)
         } catch (e: ClientRequestException) {

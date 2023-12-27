@@ -15,11 +15,13 @@ import io.ktor.client.request.url
 import io.ktor.http.isSuccess
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Constants
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.trips.response.TripResponse
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 
 class TripsPagingSource(private val httpClient: HttpClient,
+                        private val dataStoreManager: DataStoreManager,
                         val isActive: Boolean,
                         val status: Array<String> = arrayOf(),
                         val direction: Array<String> = arrayOf(),
@@ -31,9 +33,9 @@ class TripsPagingSource(private val httpClient: HttpClient,
         try {
             val httpResponse = httpClient.get{
                 if(isActive){
-                    url(HttpRoutes.GET_ACTIVE_TRIPS)
+                    url(HttpRoutes(dataStoreManager).getActiveTrips())
                 }else{
-                    url(HttpRoutes.GET_ARCHIVE_TRIPS)
+                    url(HttpRoutes(dataStoreManager).getArchiveTrips())
                 }
                 parameter("page", page)
                 parameter("status", status.joinToString(","))

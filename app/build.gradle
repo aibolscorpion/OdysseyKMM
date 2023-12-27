@@ -126,4 +126,6 @@ dependencies {
     //ktor
     implementation libs.ktor.client.android
 
+    implementation libs.datastore.preferences.core
+
 }

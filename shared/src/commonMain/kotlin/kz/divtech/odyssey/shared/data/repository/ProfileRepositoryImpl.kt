@@ -14,6 +14,7 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
@@ -25,11 +26,12 @@ import kz.divtech.odyssey.shared.domain.model.profile.Profile
 import kz.divtech.odyssey.shared.domain.model.profile.ProfileResponse
 import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 
-class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileRepository {
+class ProfileRepositoryImpl(private val httpClient: HttpClient,
+                            private val dataStoreManager: DataStoreManager): ProfileRepository {
     override suspend fun getProfile(): Resource<ProfileResponse> {
         return try {
             val result: ProfileResponse = httpClient.get{
-                url(HttpRoutes.PROFILE)
+                url(HttpRoutes(dataStoreManager).profile())
             }.body()
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
@@ -46,7 +48,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
     override suspend fun updateProfile(profile: Profile): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.PROFILE)
+                url(HttpRoutes(dataStoreManager).profile())
                 contentType(ContentType.Application.Json)
                 setBody(profile)
             }
@@ -65,7 +67,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
     override suspend fun sendDeviceInfo(deviceInfo: DeviceInfo): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.SEND_DEVICE_INFO)
+                url(HttpRoutes(dataStoreManager).sendDeviceInfo())
                 contentType(ContentType.Application.Json)
                 setBody(deviceInfo)
             }
@@ -84,7 +86,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
     override suspend fun updateDocument(document: Document): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.UPDATE_DOCUMENT)
+                url(HttpRoutes(dataStoreManager).updateDocument())
                 contentType(ContentType.Application.Json)
                 setBody(document)
             }
@@ -104,7 +106,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
     override suspend fun updatePhoneNumberWihoutAuth(phoneRequest: UpdatePhoneRequest): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.UPDATE_PHONE_WITHOUT_AUTH)
+                url(HttpRoutes(dataStoreManager).updatePhoneWithoutAuth())
                 contentType(ContentType.Application.Json)
                 setBody(phoneRequest)
             }
@@ -124,7 +126,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
         val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
         return try {
             val response: HttpResponse = httpClient.post{
-                url(HttpRoutes.UPDATE_PHONE_WITH_AUTH)
+                url(HttpRoutes(dataStoreManager).updatePhoneWithAuth())
                 contentType(ContentType.Application.Json)
                 setBody(codeRequest)
             }
@@ -148,7 +150,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient): ProfileReposito
     override suspend fun updatePhoneConfirm(authRequest: AuthRequest): Resource<HttpResponse> {
         return try {
             val result: HttpResponse = httpClient.post{
-                url(HttpRoutes.UPDATE_PHONE_WITH_AUTH_CONFIRM)
+                url(HttpRoutes(dataStoreManager).updatePhoneWithAuthConfirm())
                 contentType(ContentType.Application.Json)
                 setBody(authRequest)
             }

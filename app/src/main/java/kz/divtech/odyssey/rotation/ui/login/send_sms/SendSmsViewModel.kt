@@ -16,11 +16,13 @@ import kz.divtech.odyssey.rotation.data.remote.result.*
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.LoginResponse
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.saveOrganizationName
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import javax.inject.Inject
 
 @HiltViewModel
 class SendSmsViewModel @Inject constructor(private val profileRepository: ProfileRepository,
-                                           private val loginRepository: LoginRepository
+                                           private val loginRepository: LoginRepository,
+                                           private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     private var authLogId: Int = 0
@@ -55,6 +57,7 @@ class SendSmsViewModel @Inject constructor(private val profileRepository: Profil
             if(response.isSuccess()) {
                 val loginResponse = response.asSuccess().value
                 saveAuthToken(loginResponse.token)
+                dataStoreManager.saveAuthToken(loginResponse.token)
                 saveOrganizationName(loginResponse.organization)
                 profileRepository.insertProfile(loginResponse.employee)
             }

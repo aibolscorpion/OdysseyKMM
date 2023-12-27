@@ -13,16 +13,17 @@ kotlin {
         }
     }
     
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
-            baseName = "shared"
-            isStatic = true
-        }
-    }
+//    listOf(
+//        iosX64(),
+//        iosArm64(),
+//        iosSimulatorArm64()
+//    ).forEach {
+//        it.binaries.framework {
+//            baseName = "shared"
+//            isStatic = true
+//
+//        }
+//    }
 
     sourceSets {
         commonMain.dependencies {
@@ -32,15 +33,15 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.ktor.client.logging)
             implementation(libs.slf4j.simple)
-            implementation(libs.datastore.preferences.core)
             implementation(libs.paging.common)
+            implementation(libs.datastore.preferences.core)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
         }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
+//        iosMain.dependencies {
+//            implementation(libs.ktor.client.darwin)
+//        }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

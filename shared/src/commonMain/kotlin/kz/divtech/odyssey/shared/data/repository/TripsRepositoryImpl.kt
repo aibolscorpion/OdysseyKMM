@@ -13,17 +13,19 @@ import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Constants
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.repository.pagingSource.TripsPagingSource
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 
-class TripsRepositoryImpl(private val httpClient: HttpClient): TripsRepository {
+class TripsRepositoryImpl(private val httpClient: HttpClient,
+                          private val dataStoreManager: DataStoreManager): TripsRepository {
     override suspend fun getTripById(tripId: Int): Resource<SingleTrip> {
         return try {
             val result: SingleTrip = httpClient.get {
-                url(HttpRoutes.getTripById(tripId))
+                url(HttpRoutes(dataStoreManager).getTripById(tripId))
             }.body()
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
@@ -40,7 +42,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient): TripsRepository {
     override suspend fun getNearestActiveTrip(): Resource<SingleTrip> {
         return try {
             val result: SingleTrip = httpClient.get {
-                url(HttpRoutes.GET_NEAREST_ACTIVE_TRIP)
+                url(HttpRoutes(dataStoreManager).getNearestActiveTrip())
             }.body()
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
@@ -62,7 +64,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient): TripsRepository {
         val pagingConfig = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE,
             initialLoadSize = Constants.TRIPS_PAGE_SIZE * 3)
         return Pager(pagingConfig) {
-            TripsPagingSource(httpClient, isActive = true, statusType, direction)
+            TripsPagingSource(httpClient, dataStoreManager,isActive = isActive, statusType, direction)
         }.flow
     }
 
@@ -74,7 +76,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient): TripsRepository {
         val pagingConfig = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE,
             initialLoadSize = Constants.TRIPS_PAGE_SIZE * 3)
         return Pager(pagingConfig) {
-            TripsPagingSource(httpClient, isActive = false, statusType, direction, sortBy = "status")
+            TripsPagingSource(httpClient, dataStoreManager, isActive = isActive, statusType, direction, sortBy = "status")
         }.flow
     }
 

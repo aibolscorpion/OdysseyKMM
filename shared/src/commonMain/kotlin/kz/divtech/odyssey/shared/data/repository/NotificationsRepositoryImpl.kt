@@ -19,6 +19,7 @@ import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Constants.NOTIFICATION_PAGE_SIZE
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.repository.pagingSource.NotificationPagingSource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.MarkNotification
@@ -26,11 +27,12 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notifications
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 
-class NotificationsRepositoryImpl(private val httpClient: HttpClient): NotificationsRepository {
+class NotificationsRepositoryImpl(private val httpClient: HttpClient,
+                                  private val dataStoreManager: DataStoreManager): NotificationsRepository {
     override suspend fun getNotificationsFirstPage(): Resource<Notifications> {
         return try {
             val result: Notifications = httpClient.get {
-                url(HttpRoutes.GET_NOTIFICATIONS)
+                url(HttpRoutes(dataStoreManager).getNotifications())
                 parameter("page", 1)
             }.body()
             Resource.Success(data = result)
@@ -49,7 +51,7 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient): Notificat
         return try {
             val notification = MarkNotification(notificationId)
             val result = httpClient.post{
-                url(HttpRoutes.MARK_NOTIFICATION_AS_READ)
+                url(HttpRoutes(dataStoreManager).markNotificationAsRead())
                 contentType(ContentType.Application.Json)
                 setBody(notification)
             }
@@ -69,7 +71,7 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient): Notificat
         val pagingConfig = PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE,
             initialLoadSize = NOTIFICATION_PAGE_SIZE * 3)
         return Pager(pagingConfig) {
-            NotificationPagingSource(httpClient)
+            NotificationPagingSource(httpClient, dataStoreManager)
         }.flow
     }
 }

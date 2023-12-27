@@ -9,18 +9,20 @@ import io.ktor.client.request.parameter
 import io.ktor.client.request.url
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.data.remote.MainApi
 import kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeResult
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
 
-class FindEmployeeRepositoryImpl(private val httpClient: HttpClient = MainApi.httpClient): FindEmployeeRepository {
+class FindEmployeeRepositoryImpl(private val httpClient: HttpClient,
+        private val dataStoreManager: DataStoreManager): FindEmployeeRepository {
     override suspend fun findByPhoneNumber(phoneNumber: String) : Resource<EmployeeResult> {
         return try {
             val result: EmployeeResult = httpClient.get{
                 url(HttpRoutes.GET_EMPLOYEE_BY_PHONE)
                 parameter("phone", phoneNumber)
             }.body()
+            result.url?.let { dataStoreManager.saveBaseUrl(it) }
             Resource.Success(result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -39,6 +41,7 @@ class FindEmployeeRepositoryImpl(private val httpClient: HttpClient = MainApi.ht
                 url(HttpRoutes.GET_EMPLOYEE_BY_IIN)
                 parameter("iin", iin)
             }.body()
+            result.url?.let { dataStoreManager.saveBaseUrl(it) }
             Resource.Success(result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)

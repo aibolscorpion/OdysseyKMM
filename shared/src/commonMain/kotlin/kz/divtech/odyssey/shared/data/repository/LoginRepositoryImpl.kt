@@ -13,6 +13,7 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
 import kz.divtech.odyssey.shared.domain.model.auth.login.employee_response.LoginResponse
@@ -20,12 +21,13 @@ import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeRequest
 import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
 import kz.divtech.odyssey.shared.domain.repository.LoginRepository
 
-class LoginRepositoryImpl(private val httpClient: HttpClient): LoginRepository {
+class LoginRepositoryImpl(private val httpClient: HttpClient,
+                          private val dataStoreManager: DataStoreManager): LoginRepository {
     override suspend fun requestSmsCode(phoneNumber: String): Resource<CodeResponse> {
         val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
         return try {
             val response: HttpResponse = httpClient.post{
-                url(HttpRoutes.REQUEST_SMS_CODE)
+                url(HttpRoutes(dataStoreManager).requestSmsCode())
                 contentType(ContentType.Application.Json)
                 setBody(codeRequest)
             }
@@ -49,10 +51,12 @@ class LoginRepositoryImpl(private val httpClient: HttpClient): LoginRepository {
     override suspend fun login(authRequest: AuthRequest): Resource<LoginResponse> {
         return try {
              val result: LoginResponse = httpClient.post{
-                url(HttpRoutes.LOGIN)
+                url(HttpRoutes(dataStoreManager).login())
                 contentType(ContentType.Application.Json)
                 setBody(authRequest)
             }.body()
+            dataStoreManager.saveAuthToken(result.token)
+            dataStoreManager.saveOrganizationName(result.organization.name)
             Resource.Success(data = result)
         }catch (e: ClientRequestException){
             Resource.Error(message = e.response.status.description)
@@ -68,7 +72,7 @@ class LoginRepositoryImpl(private val httpClient: HttpClient): LoginRepository {
     override suspend fun logout(): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.LOGOUT)
+                url(HttpRoutes(dataStoreManager).logout())
             }
             Resource.Success(data = result)
         }catch (e: ClientRequestException){

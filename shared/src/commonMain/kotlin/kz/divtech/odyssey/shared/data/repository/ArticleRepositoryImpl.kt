@@ -10,15 +10,17 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticleReponse
 import kz.divtech.odyssey.shared.domain.repository.ArticleRepository
 
-class ArticleRepositoryImpl(private val httpClient: HttpClient): ArticleRepository {
+class ArticleRepositoryImpl(private val httpClient: HttpClient,
+                            private val dataStoreManager: DataStoreManager): ArticleRepository {
     override suspend fun getArticleById(id: Int): Resource<FullArticleReponse> {
         return try {
             val result: FullArticleReponse = httpClient.get{
-                url(HttpRoutes.getArticleById(id))
+                url(HttpRoutes(dataStoreManager).getArticleById(id))
             }.body()
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
@@ -35,7 +37,7 @@ class ArticleRepositoryImpl(private val httpClient: HttpClient): ArticleReposito
     override suspend fun markArticleAsRead(id: Int): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.markArticleAsRead(id))
+                url(HttpRoutes(dataStoreManager).markArticleAsRead(id))
             }
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {

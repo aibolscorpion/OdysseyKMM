@@ -1,37 +1,47 @@
 package kz.divtech.odyssey.shared.data.remote
 
-object HttpRoutes {
-    private const val PROXY_URL  = "https://proxy.odyssey.kz/api"
-    const val GET_TERMS_OF_AGREEMENT = "$PROXY_URL/user-agreement"
-    const val GET_EMPLOYEE_BY_PHONE = "$PROXY_URL/get-employee-by-phone"
-    const val GET_EMPLOYEE_BY_IIN = "$PROXY_URL/get-employee-by-iin"
-    const val GET_ORG_INFO = "$PROXY_URL/get-app-info"
-    const val GET_FAQ_LIST = "$PROXY_URL/faqs"
+import kotlinx.coroutines.flow.first
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 
-    const val TMP_PTRAVELS_URL = "https://tmp.ptravels.kz/api"
-    const val REQUEST_SMS_CODE = "$TMP_PTRAVELS_URL/send-sms-code"
-    const val LOGIN = "$TMP_PTRAVELS_URL/login"
-    const val LOGOUT = "$TMP_PTRAVELS_URL/logout"
-    const val GET_NEWS = "$TMP_PTRAVELS_URL/articles"
-    fun getArticleById(id: Int) = "$TMP_PTRAVELS_URL/articles/$id"
-    fun markArticleAsRead(id: Int) = "$TMP_PTRAVELS_URL/articles/$id/mark-as-read"
-    const val SEND_APPLICATION_TO_REFUND = "$TMP_PTRAVELS_URL/refund-applications"
-    fun cancelRefundById(id: Int) = "$TMP_PTRAVELS_URL/refund-applications/$id/cancel"
-    const val PROFILE = "$TMP_PTRAVELS_URL/profile"
-    const val UPDATE_UA_CONFIRM = "$TMP_PTRAVELS_URL/profile/update-ua-confirm"
-    const val SEND_DEVICE_INFO = "$TMP_PTRAVELS_URL/fix-device"
-    const val UPDATE_PHONE_WITHOUT_AUTH = "$TMP_PTRAVELS_URL/update-phone-request"
-    const val GET_NOTIFICATIONS = "$TMP_PTRAVELS_URL/notifications"
-    const val MARK_NOTIFICATION_AS_READ = "$TMP_PTRAVELS_URL/notifications/mark-as-read"
-    fun getTripById(id: Int) = "$TMP_PTRAVELS_URL/applications/$id"
-    const val GET_NEAREST_ACTIVE_TRIP = "$TMP_PTRAVELS_URL/applications/get-nearest-active-app"
+class HttpRoutes(private val dataStoreManager: DataStoreManager) {
 
-    const val UPDATE_PHONE_WITH_AUTH = "$TMP_PTRAVELS_URL/profile/update-phone"
-    const val UPDATE_PHONE_WITH_AUTH_CONFIRM = "$TMP_PTRAVELS_URL/profile/update-phone-confirm"
+    private suspend fun getBaseUrl(): String {
+        return "${dataStoreManager.getBaseUrl().first()}/api"
+    }
+    suspend fun requestSmsCode() =  "${getBaseUrl()}/send-sms-code"
+    suspend fun login() =  "${getBaseUrl()}/login"
+    suspend fun logout() =  "${getBaseUrl()}/logout"
+    suspend fun getNews() =  "${getBaseUrl()}/articles"
+    suspend fun getArticleById(id: Int) =  "${getBaseUrl()}/articles/$id"
+    suspend fun markArticleAsRead(id: Int) =  "${getBaseUrl()}/articles/$id/mark-as-read"
+    suspend fun sendApplicationToRefund() =   "${getBaseUrl()}/refund-applications"
+    suspend fun cancelRefundById(id: Int) =   "${getBaseUrl()}/refund-applications/$id/cancel"
+    suspend fun profile() =  "${getBaseUrl()}/profile"
+    suspend fun updateUAConfirm() = "${getBaseUrl()}/profile/update-ua-confirm"
+    suspend fun sendDeviceInfo() =  "${getBaseUrl()}/fix-device"
+    suspend fun updatePhoneWithoutAuth() =  "${getBaseUrl()}/update-phone-request"
+    suspend fun getNotifications() =  "${getBaseUrl()}/notifications"
+    suspend fun markNotificationAsRead() =  "${getBaseUrl()}/notifications/mark-as-read"
+    suspend fun getTripById(id: Int): String{
+        return "${getBaseUrl()}/applications/$id"
+    }
+    suspend fun getNearestActiveTrip() =  "${getBaseUrl()}/applications/get-nearest-active-app"
 
-    const val UPDATE_DOCUMENT = "$TMP_PTRAVELS_URL/profile/update-document"
+    suspend fun updatePhoneWithAuth() =  "${getBaseUrl()}/profile/update-phone"
+    suspend fun updatePhoneWithAuthConfirm() =  "${getBaseUrl()}/profile/update-phone-confirm"
 
-    const val GET_ACTIVE_TRIPS = "$TMP_PTRAVELS_URL/applications/active"
-    const val GET_ARCHIVE_TRIPS = "$TMP_PTRAVELS_URL/applications/archive"
+    suspend fun updateDocument() =  "${getBaseUrl()}/profile/update-document"
+
+    suspend fun getActiveTrips() =  "${getBaseUrl()}/applications/active"
+    suspend fun getArchiveTrips() = "${getBaseUrl()}/applications/archive"
+
+    companion object {
+        private const val PROXY_URL  = "https://proxy.odyssey.kz/api"
+        const val GET_TERMS_OF_AGREEMENT = "${PROXY_URL}/user-agreement"
+        const val GET_EMPLOYEE_BY_PHONE = "${PROXY_URL}/get-employee-by-phone"
+        const val GET_EMPLOYEE_BY_IIN = "${PROXY_URL}/get-employee-by-iin"
+        const val GET_ORG_INFO = "${PROXY_URL}/get-app-info"
+        const val GET_FAQ_LIST = "${PROXY_URL}/faqs"
+    }
 
 }

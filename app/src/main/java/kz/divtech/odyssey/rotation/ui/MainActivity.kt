@@ -50,9 +50,13 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Per
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.UUID
+import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
@@ -79,11 +83,25 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
+//    @Inject
+//    lateinit var repository: FindEmployeeRepository
+    @Inject
+    lateinit var tripsRepository: TripsRepository
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        createDeviceIdIfNotExists(dataStoreManager)
+
+        lifecycleScope.launch {
+//            repository.findByPhoneNumber("77475551993")
+            tripsRepository.getTripById(81007)
+        }
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
@@ -265,6 +283,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
+    private fun createDeviceIdIfNotExists(dataStoreManager: DataStoreManager){
+        lifecycleScope.launch {
+            val deviceId = UUID.randomUUID().toString()
+            dataStoreManager.saveDeviceId(deviceId)
+        }
+    }
 
     private fun openNotificationDialog(notification: PushNotification){
         navController.navigate(MainActivityDirections.actionGlobalNotificationDialog(notification))

@@ -14,7 +14,6 @@ object SharedPrefsManager {
     private const val USER_TOKEN = "user_token"
     private const val FIREBASE_TOKEN = "firebase_token"
 
-    fun isLoggedIn() = fetchToken().isNotEmpty()
 
     //Shared Preferences
     private fun getSharedPrefs(): SharedPreferences {
@@ -33,6 +32,8 @@ object SharedPrefsManager {
     private fun fetchToken(): String {
         return getSharedPrefs().getString(USER_TOKEN, "")!!
     }
+
+    fun isLoggedIn() = fetchToken().isNotEmpty()
 
     fun getTokenWithBearer(): String {
         fetchToken().let {

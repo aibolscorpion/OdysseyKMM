@@ -15,18 +15,19 @@ import io.ktor.client.request.url
 import io.ktor.http.isSuccess
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Constants.NEWS_PAGE_SIZE
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.shared.domain.model.help.press_service.news.News
 
-class NewsPagingSource(private val httpClient: HttpClient):
+class NewsPagingSource(private val httpClient: HttpClient, private val dataStoreManager: DataStoreManager):
     PagingSource<Int, Article>(){
     override fun getRefreshKey(state: PagingState<Int, Article>): Int?  = null
     override suspend fun load(params: PagingSourceLoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: FIRST_PAGE_INDEX
          try {
             val httpResponse = httpClient.get{
-                url(HttpRoutes.GET_NEWS)
+                url(HttpRoutes(dataStoreManager).getNews())
                 parameter("page", page)
             }
              return when{

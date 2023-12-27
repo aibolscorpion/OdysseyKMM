@@ -1,6 +1,8 @@
 package kz.divtech.odyssey.rotation.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,6 +25,8 @@ import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.LocalDataStore.createDataStore
 import kz.divtech.odyssey.shared.data.remote.MainApi
 import kz.divtech.odyssey.shared.data.repository.ArticleRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.ProfileRepositoryImpl
@@ -36,6 +40,7 @@ import kz.divtech.odyssey.shared.data.repository.TermsRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.TripsRepositoryImpl
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Singleton
+import kz.divtech.odyssey.shared.data.local.LocalDataStore.dataStoreFileName
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -116,25 +121,26 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): HttpClient{
-        return MainApi.httpClient
+    fun provideHttpClient(dataStoreManager: DataStoreManager): HttpClient{
+        return MainApi(dataStoreManager).httpClient
     }
     @Provides
     @Singleton
-    fun provideSharedFindEmployeeRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository {
-        return kz.divtech.odyssey.shared.data.repository.FindEmployeeRepositoryImpl(httpClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideSharedLoginRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.LoginRepository{
-        return LoginRepositoryImpl(httpClient)
+    fun provideSharedFindEmployeeRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository {
+        return kz.divtech.odyssey.shared.data.repository.FindEmployeeRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedTermsRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.TermsRepository{
-        return TermsRepositoryImpl(httpClient)
+    fun provideSharedLoginRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.LoginRepository{
+        return LoginRepositoryImpl(httpClient, dataStoreManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedTermsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): kz.divtech.odyssey.shared.domain.repository.TermsRepository{
+        return TermsRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
@@ -151,38 +157,57 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedArticleRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.ArticleRepository{
-        return ArticleRepositoryImpl(httpClient)
+    fun provideSharedArticleRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.ArticleRepository{
+        return ArticleRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedRefundRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.RefundRepository{
-        return RefundRepositoryImpl(httpClient)
+    fun provideSharedRefundRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.RefundRepository{
+        return RefundRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedProfileRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.ProfileRepository{
-        return ProfileRepositoryImpl(httpClient)
+    fun provideSharedProfileRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.ProfileRepository{
+        return ProfileRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedNotificationsRepository(httpClient: HttpClient): NotificationsRepository{
-        return NotificationsRepositoryImpl(httpClient)
+    fun provideSharedNotificationsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): NotificationsRepository{
+        return NotificationsRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedTripsRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.TripsRepository{
-        return TripsRepositoryImpl(httpClient)
+    fun provideSharedTripsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.TripsRepository{
+        return TripsRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedNewsRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.NewsRepository{
-        return NewsRepositoryImpl(httpClient)
+    fun provideSharedNewsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+            kz.divtech.odyssey.shared.domain.repository.NewsRepository{
+        return NewsRepositoryImpl(httpClient, dataStoreManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
+        return createDataStore(
+            producePath = { context.filesDir.resolve(dataStoreFileName).absoluteFile }
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager{
+        return DataStoreManager(dataStore)
     }
 
 }

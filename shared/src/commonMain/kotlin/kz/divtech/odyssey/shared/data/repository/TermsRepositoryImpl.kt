@@ -10,10 +10,12 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.repository.TermsRepository
 
-class TermsRepositoryImpl(private val httpClient: HttpClient): TermsRepository {
+class TermsRepositoryImpl(private val httpClient: HttpClient,
+                          private val dataStoreManager: DataStoreManager): TermsRepository {
 
     override suspend fun getTermsOfAgreement(): Resource<String> {
         return try {
@@ -33,7 +35,7 @@ class TermsRepositoryImpl(private val httpClient: HttpClient): TermsRepository {
     override suspend fun updateUAConfirm(): Resource<HttpResponse> {
         return try {
             val result = httpClient.post{
-                url(HttpRoutes.UPDATE_UA_CONFIRM)
+                url(HttpRoutes(dataStoreManager).updateUAConfirm())
             }
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
