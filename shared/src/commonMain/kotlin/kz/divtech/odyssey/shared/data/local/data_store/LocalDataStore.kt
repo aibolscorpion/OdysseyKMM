@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.shared.data.local
+package kz.divtech.odyssey.shared.data.local.data_store
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory

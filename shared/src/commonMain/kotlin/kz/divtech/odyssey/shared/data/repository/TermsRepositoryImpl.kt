@@ -10,12 +10,13 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.repository.TermsRepository
 
 class TermsRepositoryImpl(private val httpClient: HttpClient,
-                          private val dataStoreManager: DataStoreManager): TermsRepository {
+                          private val dataStoreManager: DataStoreManager
+): TermsRepository {
 
     override suspend fun getTermsOfAgreement(): Resource<String> {
         return try {

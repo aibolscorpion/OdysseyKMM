@@ -10,13 +10,14 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticleReponse
 import kz.divtech.odyssey.shared.domain.repository.ArticleRepository
 
 class ArticleRepositoryImpl(private val httpClient: HttpClient,
-                            private val dataStoreManager: DataStoreManager): ArticleRepository {
+                            private val dataStoreManager: DataStoreManager
+): ArticleRepository {
     override suspend fun getArticleById(id: Int): Resource<FullArticleReponse> {
         return try {
             val result: FullArticleReponse = httpClient.get{

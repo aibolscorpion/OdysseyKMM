@@ -50,7 +50,8 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Per
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -91,6 +92,9 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
+    @Inject
+    lateinit var orgInfoDataSource: OrgInfoDataSource
+
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +106,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 //            repository.findByPhoneNumber("77475551993")
             tripsRepository.getTripById(81007)
         }
+
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){

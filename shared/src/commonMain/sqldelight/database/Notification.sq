@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `Notification` (
+`notification_id` TEXT NOT NULL PRIMARY KEY,
+`notification_type` TEXT NOT NULL,
+`notifiable_type` TEXT NOT NULL,
+`created_at` TEXT NOT NULL,
+`updated_at` TEXT NOT NULL,
+`read_at` TEXT,
+`id` INTEGER NOT NULL,
+`title` TEXT NOT NULL,
+`content` TEXT NOT NULL,
+`is_important` INTEGER NOT NULL,
+`type` TEXT NOT NULL,
+`application_id` INTEGER NOT NULL,
+`segment_id` INTEGER);

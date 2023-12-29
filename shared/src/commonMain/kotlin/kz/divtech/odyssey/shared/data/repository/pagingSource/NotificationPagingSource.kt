@@ -15,13 +15,14 @@ import io.ktor.client.request.url
 import io.ktor.http.isSuccess
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Constants.NOTIFICATION_PAGE_SIZE
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notifications
 
 class NotificationPagingSource(private val httpClient: HttpClient,
-                               private val dataStoreManager: DataStoreManager):
+                               private val dataStoreManager: DataStoreManager
+):
     PagingSource<Int, Notification>(){
     override fun getRefreshKey(state: PagingState<Int, Notification>): Int?  = null
     override suspend fun load(params: PagingSourceLoadParams<Int>): LoadResult<Int, Notification> {

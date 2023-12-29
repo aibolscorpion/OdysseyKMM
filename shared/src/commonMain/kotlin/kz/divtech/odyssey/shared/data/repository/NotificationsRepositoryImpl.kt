@@ -19,7 +19,7 @@ import io.ktor.utils.io.errors.IOException
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Constants.NOTIFICATION_PAGE_SIZE
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.repository.pagingSource.NotificationPagingSource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.MarkNotification
@@ -28,7 +28,8 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 
 class NotificationsRepositoryImpl(private val httpClient: HttpClient,
-                                  private val dataStoreManager: DataStoreManager): NotificationsRepository {
+                                  private val dataStoreManager: DataStoreManager
+): NotificationsRepository {
     override suspend fun getNotificationsFirstPage(): Resource<Notifications> {
         return try {
             val result: Notifications = httpClient.get {

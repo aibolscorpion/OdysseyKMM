@@ -1,0 +1,23 @@
+CREATE TABLE IF NOT EXISTS `Faq` (
+`id` INTEGER PRIMARY KEY,
+`question` TEXT,
+`answer` TEXT,
+`createdAt` TEXT,
+`updatedAt` TEXT);
+
+getFaqList:
+SELECT * FROM Faq;
+
+insertFaqList:
+INSERT OR REPLACE INTO Faq(id, question, answer, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?);
+
+deleteFaqList:
+DELETE FROM Faq;
+
+searchFaqByText:
+SELECT * FROM Faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%';
+
+BEGIN TRANSACTION;
+DELETE FROM Faq;
+INSERT OR REPLACE INTO Faq(id, question, answer, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?);
+COMMIT;

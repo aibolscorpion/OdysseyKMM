@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kz.divtech.odyssey.shared.common.Config
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 
 class MainApi(dataStoreManager: DataStoreManager) {
      @OptIn(ExperimentalSerializationApi::class)

@@ -1,8 +1,8 @@
 [versions]
 agp = "8.1.3"
 datastore-preferences = "1.1.0-alpha07"
-hilt = "2.48.1"
-kotlin = "1.9.20"
+hilt = "2.50"
+kotlin = "1.9.21"
 constraintlayout = "2.1.4"
 androidx-junit = "1.1.5"
 espresso-core = "3.5.1"
@@ -33,6 +33,10 @@ room = "2.6.1"
 slf4j-simple = "2.0.9"
 timber = "5.0.1"
 coroutines = "1.7.3"
+sqldelight = "2.0.1"
+sentry = "3.8.0"
+google-servies = "4.4.0"
+ksp = "1.9.20-1.0.14"
 
 
 [libraries]
@@ -97,6 +101,8 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt"
 
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version = "3.2.0" }
 
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight"}
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 
 
 [plugins]
@@ -106,3 +112,11 @@ kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin"}
+sentry = { id = "io.sentry.android.gradle", version.ref = "sentry"}
+safeArgs = { id = "androidx.navigation.safeargs", version.ref = "navigation"}
+googleServices = { id = "com.google.gms.google-services", version.ref = "google-servies"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight"}

@@ -1,13 +1,13 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    id 'androidx.navigation.safeargs.kotlin'
-    id "kotlin-parcelize"
-    id 'kotlin-kapt'
-    id 'com.google.devtools.ksp'
-    id 'com.google.gms.google-services'
-    id "io.sentry.android.gradle" version "3.8.0"
-    id "com.google.dagger.hilt.android"
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.safeArgs)
+    alias(libs.plugins.parcelize)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.sentry)
+    alias(libs.plugins.hilt)
 }
 android {
     namespace 'kz.divtech.odyssey.rotation'
@@ -121,7 +121,7 @@ dependencies {
 
     //Dagger - Hilt
     implementation libs.hilt.android
-    kapt libs.hilt.android.compiler
+    ksp libs.hilt.android.compiler
 
     //ktor
     implementation libs.ktor.client.android

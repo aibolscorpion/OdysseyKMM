@@ -1,0 +1,20 @@
+CREATE TABLE  full_article(
+'id' INTEGER NOT NULL PRIMARY KEY,
+`title` TEXT NOT NULL,
+`short_content` TEXT NOT NULL,
+`is_important` INTEGER NOT NULL,
+`published_on` TEXT NOT NULL,
+`tags` TEXT NOT NULL,
+`read_on` TEXT,
+`content` TEXT);
+
+getArticleByid:
+SELECT * FROM full_article WHERE id = ?;
+--
+insertArticle:
+INSERT OR REPLACE INTO full_article(
+    id, title, short_content, is_important, published_on, tags, read_on, content
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+--
+deleteFullArticles:
+DELETE FROM full_article;

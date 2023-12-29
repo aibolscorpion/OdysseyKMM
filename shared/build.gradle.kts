@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -21,7 +22,6 @@ kotlin {
 //        it.binaries.framework {
 //            baseName = "shared"
 //            isStatic = true
-//
 //        }
 //    }
 
@@ -35,9 +35,11 @@ kotlin {
             implementation(libs.slf4j.simple)
             implementation(libs.paging.common)
             implementation(libs.datastore.preferences.core)
+            implementation(libs.sqldelight.runtime)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
+            implementation(libs.sqldelight.android.driver)
         }
 //        iosMain.dependencies {
 //            implementation(libs.ktor.client.darwin)
@@ -48,6 +50,13 @@ kotlin {
     }
 }
 
+sqldelight{
+    databases{
+        create("OdysseyDatabase"){
+            packageName.set("kz.divtech.odssey.database")
+        }
+    }
+}
 android {
     namespace = "kz.divtech.odyssey.shared"
     compileSdk = 34

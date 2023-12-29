@@ -12,14 +12,15 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundAppResponse
 import kz.divtech.odyssey.shared.domain.model.trips.refund.create.RefundApplication
 import kz.divtech.odyssey.shared.domain.repository.RefundRepository
 
 class RefundRepositoryImpl(private val httpClient: HttpClient,
-                           private val dataStoreManager: DataStoreManager): RefundRepository {
+                           private val dataStoreManager: DataStoreManager
+): RefundRepository {
     override suspend fun sendApplicationToRefund(application: RefundApplication): Resource<RefundAppResponse> {
         return try {
            val result: RefundAppResponse =  httpClient.post {

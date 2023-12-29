@@ -3,12 +3,14 @@ package kz.divtech.odyssey.rotation.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import app.cash.sqldelight.db.SqlDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
+import kz.divtech.odssey.database.OdysseyDatabase
 import kz.divtech.odyssey.rotation.data.local.AppDatabase
 import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
@@ -25,8 +27,10 @@ import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
-import kz.divtech.odyssey.shared.data.local.LocalDataStore.createDataStore
+import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
+import kz.divtech.odyssey.shared.data.local.data_source.org_info.SqlDelightOrgInfoDataSource
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.createDataStore
 import kz.divtech.odyssey.shared.data.remote.MainApi
 import kz.divtech.odyssey.shared.data.repository.ArticleRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.ProfileRepositoryImpl
@@ -40,7 +44,8 @@ import kz.divtech.odyssey.shared.data.repository.TermsRepositoryImpl
 import kz.divtech.odyssey.shared.data.repository.TripsRepositoryImpl
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Singleton
-import kz.divtech.odyssey.shared.data.local.LocalDataStore.dataStoreFileName
+import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.dataStoreFileName
+import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -145,8 +150,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedOrgInfoRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository{
-        return OrgInfoRepositoryImpl(httpClient)
+    fun provideSharedOrgInfoRepository(httpClient: HttpClient, dataSource: OrgInfoDataSource): kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository{
+        return OrgInfoRepositoryImpl(httpClient, dataSource)
     }
 
     @Provides
@@ -206,8 +211,20 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager{
+    fun provideSharedDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager {
         return DataStoreManager(dataStore)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSqlDriver(@ApplicationContext context: Context): SqlDriver{
+        return DatabaseDriverFactory(context).createDriver()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrgInfoDataSource(sqlDriver: SqlDriver): OrgInfoDataSource{
+        return SqlDelightOrgInfoDataSource(OdysseyDatabase(sqlDriver))
     }
 
 }

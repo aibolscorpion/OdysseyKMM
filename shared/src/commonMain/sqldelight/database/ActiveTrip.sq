@@ -1,0 +1,44 @@
+CREATE TABLE IF NOT EXISTS `active_trip` (
+`id` INTEGER NOT NULL PRIMARY KEY,
+`is_extra` INTEGER NOT NULL,
+`direction` TEXT,
+`shift` TEXT,
+`date` TEXT NOT NULL,
+`status` TEXT NOT NULL,
+`created_at` TEXT NOT NULL,
+`updated_at` TEXT NOT NULL,
+`issued_at` TEXT,
+`only_bus_transfer` INTEGER NOT NULL,
+`segments` TEXT NOT NULL,
+`refund_applications` TEXT NOT NULL,
+`start_station_code` TEXT,
+`start_station_name` TEXT,
+`end_station_code` TEXT,
+`end_station_name` TEXT);
+
+
+-- @Query("SELECT * FROM active_trip " +
+-- "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
+-- "ORDER BY date ASC")
+-- fun getActiveTripsSortedByDate(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
+--
+-- @Query("SELECT * FROM active_trip " +
+-- "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
+-- "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
+-- "WHEN status = 'partly' THEN 1 " +
+-- "WHEN status = 'opened' THEN 2 " +
+-- "WHEN status = 'returned' THEN 3 " +
+-- "ELSE 4 end, date ASC")
+-- fun getActiveTripsSortedByStatus(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
+--
+-- @Insert(onConflict = OnConflictStrategy.REPLACE)
+-- suspend fun insertActiveTrips(data: List<ActiveTrip>)
+--
+-- @Query("DELETE FROM active_trip")
+-- suspend fun deleteActiveTrips(): Int
+--
+-- @Transaction
+-- suspend fun refreshActiveTrips(data: List<ActiveTrip>){
+--     deleteActiveTrips()
+--     insertActiveTrips(data)
+-- }

@@ -1,0 +1,20 @@
+CREATE TABLE OrgInfo (
+    `supportPhone` TEXT NOT NULL PRIMARY KEY,
+    `telegramId` TEXT,
+    `whatsappPhone` TEXT NOT NULL
+);
+
+
+getOrgInfo:
+SELECT * FROM OrgInfo;
+
+insertOrgInfo:
+INSERT OR REPLACE INTO OrgInfo(supportPhone, telegramId, whatsappPhone) VALUES (?,?,?);
+
+deleteOrgInfo:
+DELETE FROM OrgInfo;
+
+BEGIN TRANSACTION;
+DELETE FROM OrgInfo;
+INSERT OR REPLACE INTO OrgInfo(supportPhone, telegramId, whatsappPhone) VALUES (?,?,?);
+COMMIT;

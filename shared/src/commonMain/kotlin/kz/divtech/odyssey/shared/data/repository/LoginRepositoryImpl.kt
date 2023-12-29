@@ -13,7 +13,7 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
 import kz.divtech.odyssey.shared.domain.model.auth.login.employee_response.LoginResponse
@@ -22,7 +22,8 @@ import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
 import kz.divtech.odyssey.shared.domain.repository.LoginRepository
 
 class LoginRepositoryImpl(private val httpClient: HttpClient,
-                          private val dataStoreManager: DataStoreManager): LoginRepository {
+                          private val dataStoreManager: DataStoreManager
+): LoginRepository {
     override suspend fun requestSmsCode(phoneNumber: String): Resource<CodeResponse> {
         val codeRequest = CodeRequest(phoneNumber, Config.IS_TEST)
         return try {

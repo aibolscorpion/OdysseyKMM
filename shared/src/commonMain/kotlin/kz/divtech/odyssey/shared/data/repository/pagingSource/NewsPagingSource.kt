@@ -15,7 +15,7 @@ import io.ktor.client.request.url
 import io.ktor.http.isSuccess
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Constants.NEWS_PAGE_SIZE
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.shared.domain.model.help.press_service.news.News

@@ -14,7 +14,7 @@ import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
@@ -27,7 +27,8 @@ import kz.divtech.odyssey.shared.domain.model.profile.ProfileResponse
 import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 
 class ProfileRepositoryImpl(private val httpClient: HttpClient,
-                            private val dataStoreManager: DataStoreManager): ProfileRepository {
+                            private val dataStoreManager: DataStoreManager
+): ProfileRepository {
     override suspend fun getProfile(): Resource<ProfileResponse> {
         return try {
             val result: ProfileResponse = httpClient.get{

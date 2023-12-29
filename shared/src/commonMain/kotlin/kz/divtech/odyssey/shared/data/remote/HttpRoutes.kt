@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.shared.data.remote
 
 import kotlinx.coroutines.flow.first
-import kz.divtech.odyssey.shared.data.local.DataStoreManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 
 class HttpRoutes(private val dataStoreManager: DataStoreManager) {
 

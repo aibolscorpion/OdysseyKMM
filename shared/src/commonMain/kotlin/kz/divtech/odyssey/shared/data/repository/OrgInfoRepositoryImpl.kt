@@ -9,15 +9,18 @@ import io.ktor.client.request.url
 import io.ktor.utils.io.errors.IOException
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
+import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 import kz.divtech.odyssey.shared.domain.model.OrgInfo
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 
-class OrgInfoRepositoryImpl(private val httpClient: HttpClient): OrgInfoRepository {
+class OrgInfoRepositoryImpl(private val httpClient: HttpClient,
+                            private val dataSource: OrgInfoDataSource): OrgInfoRepository {
     override suspend fun getOrgInfo(): Resource<OrgInfo> {
         return try {
             val result: OrgInfo = httpClient.get {
                 url(HttpRoutes.GET_ORG_INFO)
             }.body()
+            insertOrgInfo(orgInfo = result)
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -29,6 +32,20 @@ class OrgInfoRepositoryImpl(private val httpClient: HttpClient): OrgInfoReposito
             Resource.Error(message = "${e.message}")
         }
     }
+
+    suspend fun getOrgInfoFromDB(): OrgInfo?{
+        return dataSource.getOrgInfo()
+    }
+
+    suspend fun insertOrgInfo(orgInfo: OrgInfo){
+        dataSource.insertOrgInfo(orgInfo)
+    }
+
+    suspend fun deleteOrgInfo(){
+        dataSource.deleteOrgInfo()
+    }
+
+
 
 
 }
