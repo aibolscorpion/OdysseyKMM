@@ -14,9 +14,12 @@ interface TripsRepository {
 
     fun getTripsSortedByStatus(isActive: Boolean, statusType: Array<String>, direction: Array<String>): Flow<PagingData<Trip>>
     suspend fun getActiveTripsSortedByDateFromDb(statusType: List<String>, direction: List<String>): List<Trip>
-    suspend fun getActiveTripsSortedByStatusFromDb(statusType: List<String>, direction: List<String>):  List<Trip>
+    suspend fun getActiveTripsSortedByStatusFromDb(statusType: List<String>, direction: List<String>): List<Trip>
     suspend fun deleteActiveTrips()
     suspend fun getArchiveTripsSortedByDateFromDb(statusType: List<String>, direction: List<String>): List<Trip>
     suspend fun getArchiveTripsSortedByStatusFromDb(statusType: List<String>, direction: List<String>):  List<Trip>
     suspend fun deleteArchiveTrips()
+
+    suspend fun getNearestTripFromBd(): Trip?
+    suspend fun deleteNearestTrip()
 }

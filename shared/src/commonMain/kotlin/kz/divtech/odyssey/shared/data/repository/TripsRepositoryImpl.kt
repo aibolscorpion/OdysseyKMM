@@ -18,6 +18,7 @@ import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.repository.pagingSource.TripsPagingSource
 import kz.divtech.odyssey.shared.domain.data_source.ActiveTripDataSource
 import kz.divtech.odyssey.shared.domain.data_source.ArchiveTripsDataSource
+import kz.divtech.odyssey.shared.domain.data_source.NearestTripDataSource
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
@@ -26,13 +27,13 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
                           private val dataStoreManager: DataStoreManager,
                           private val activeTripsDataSource: ActiveTripDataSource,
                           private val archiveTripsDataSource: ArchiveTripsDataSource,
+                          private val nearestTripDataSource: NearestTripDataSource
                           ): TripsRepository {
     override suspend fun getTripById(tripId: Int): Resource<SingleTrip> {
         return try {
             val result: SingleTrip = httpClient.get {
                 url(HttpRoutes(dataStoreManager).getTripById(tripId))
             }.body()
-            archiveTripsDataSource.insertArchiveTrips(listOf(result.data!!))
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -50,6 +51,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             val result: SingleTrip = httpClient.get {
                 url(HttpRoutes(dataStoreManager).getNearestActiveTrip())
             }.body()
+            nearestTripDataSource.refreshNearesTrip(result.data!!)
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -118,8 +120,17 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         return archiveTripsDataSource.getArchiveTripsSortedByStatus(statusType, direction)
     }
 
+
     override suspend fun deleteArchiveTrips() {
         archiveTripsDataSource.deleteArchiveTrips()
+    }
+
+    override suspend fun getNearestTripFromBd(): Trip? {
+        return nearestTripDataSource.getNearestTrip()
+    }
+
+    override suspend fun deleteNearestTrip() {
+        nearestTripDataSource.deleteNearestTrip()
     }
 
 }

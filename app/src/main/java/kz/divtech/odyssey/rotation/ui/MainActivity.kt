@@ -107,15 +107,12 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
         lifecycleScope.launch {
             repository.findByPhoneNumber("77475551993")
-            tripsRepository.getTripById(81528)
-            tripsRepository.getTripById(80986)
-            tripsRepository.getTripById(80987)
-            tripsRepository.getTripById(80952)
+            tripsRepository.getNearestActiveTrip()
             delay(4000)
-            Timber.i("${tripsRepository.getArchiveTripsSortedByDateFromDb(listOf("issued", "partly", "opened"), listOf("to-home", "to-work"))}")
+            Timber.i("${tripsRepository.getNearestTripFromBd()}")
+            tripsRepository.deleteNearestTrip()
             delay(4000)
-//            tripsRepository.deleteActiveTrips()
-//            Timber.i("${tripsRepository.getActiveTripsSortedByDateFromDb(listOf("issued", "partly", "opened"), listOf("to-home", "to-work"))}")
+            Timber.i("${tripsRepository.getNearestTripFromBd()}")
 
         }
 

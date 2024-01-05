@@ -32,6 +32,7 @@ import kz.divtech.odyssey.shared.data.local.data_source.archive_trips.SqlDelight
 import kz.divtech.odyssey.shared.data.local.data_source.employee.SqlDelightEmployeeDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.faq.SqlDelightFaqDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.full_article.SqlDelightFullArticleDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.nearest_trip.SqlDelightNearestTripDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.org_info.SqlDelightOrgInfoDataSource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.createDataStore
@@ -54,6 +55,7 @@ import kz.divtech.odyssey.shared.domain.data_source.ArchiveTripsDataSource
 import kz.divtech.odyssey.shared.domain.data_source.EmployeeDataSource
 import kz.divtech.odyssey.shared.domain.data_source.FaqDataSource
 import kz.divtech.odyssey.shared.domain.data_source.FullArticleDataSource
+import kz.divtech.odyssey.shared.domain.data_source.NearestTripDataSource
 import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 
 @Module
@@ -202,9 +204,11 @@ object AppModule {
     fun provideSharedTripsRepository(httpClient: HttpClient,
                                      dataStoreManager: DataStoreManager,
                                      activeTripDataSource: ActiveTripDataSource,
-                                     archiveTripsDataSource: ArchiveTripsDataSource):
+                                     archiveTripsDataSource: ArchiveTripsDataSource,
+                                     nearestTripDataSource: NearestTripDataSource):
             kz.divtech.odyssey.shared.domain.repository.TripsRepository{
-        return TripsRepositoryImpl(httpClient, dataStoreManager, activeTripDataSource, archiveTripsDataSource)
+        return TripsRepositoryImpl(httpClient, dataStoreManager, activeTripDataSource,
+            archiveTripsDataSource, nearestTripDataSource)
     }
 
     @Provides
@@ -269,6 +273,12 @@ object AppModule {
     @Singleton
     fun provideArchiveTripsDataSource(database: OdysseyDatabase): ArchiveTripsDataSource{
         return SqlDelightArchiveTripsTripsDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNearestActiveTripDataSource(database: OdysseyDatabase): NearestTripDataSource{
+        return SqlDelightNearestTripDataSource(database)
     }
 
 }
