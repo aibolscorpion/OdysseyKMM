@@ -5,4 +5,6 @@ import kz.divtech.odyssey.shared.domain.model.OrgInfo
 
 interface OrgInfoRepository {
     suspend fun getOrgInfo(): Resource<OrgInfo>
+    suspend fun getOrgInfoFromDB(): OrgInfo?
+    suspend fun deleteOrgInfo()
 }

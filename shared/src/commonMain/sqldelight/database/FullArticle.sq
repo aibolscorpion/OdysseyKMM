@@ -10,11 +10,11 @@ CREATE TABLE  full_article(
 
 getArticleByid:
 SELECT * FROM full_article WHERE id = ?;
---
+
 insertArticle:
 INSERT OR REPLACE INTO full_article(
     id, title, short_content, is_important, published_on, tags, read_on, content
 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
---
+
 deleteFullArticles:
 DELETE FROM full_article;

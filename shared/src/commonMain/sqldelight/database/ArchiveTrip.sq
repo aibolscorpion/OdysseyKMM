@@ -15,3 +15,29 @@ CREATE TABLE IF NOT EXISTS `archive_trip` (
 `start_station_name` TEXT,
 `end_station_code` TEXT,
 `end_station_name` TEXT);
+
+
+getArchiveTripsSortedByDate:
+SELECT * FROM archive_trip WHERE (status IN ?) AND ((direction IN ?
+AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN ? AND 'to-home'
+IN ?)) ORDER BY date DESC;
+
+getArchiveTripsSortedByStatus:
+SELECT * FROM archive_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
+OR (direction IS NULL AND 'to-work' IN ? AND 'to-home' IN ?))
+ORDER BY
+status = 'issued',
+status = 'partly',
+status = 'opened',
+status = 'returned',
+date DESC ;
+
+
+insertArchiveTrips:
+INSERT OR REPLACE INTO archive_trip(id, is_extra, direction, shift, date, status, created_at,
+ updated_at, issued_at, only_bus_transfer, segments, refund_applications, 
+ start_station_code, start_station_name, end_station_code, end_station_name) VALUES (?, ?, ?, ?, ?,
+ ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteArchiveTrips:
+DELETE FROM archive_trip;

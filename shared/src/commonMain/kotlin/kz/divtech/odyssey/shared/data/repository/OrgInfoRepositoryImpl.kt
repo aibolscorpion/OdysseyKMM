@@ -20,7 +20,7 @@ class OrgInfoRepositoryImpl(private val httpClient: HttpClient,
             val result: OrgInfo = httpClient.get {
                 url(HttpRoutes.GET_ORG_INFO)
             }.body()
-            insertOrgInfo(orgInfo = result)
+            dataSource.refreshOrgInfo(orgInfo = result)
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -33,15 +33,11 @@ class OrgInfoRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    suspend fun getOrgInfoFromDB(): OrgInfo?{
+    override suspend fun getOrgInfoFromDB(): OrgInfo?{
         return dataSource.getOrgInfo()
     }
 
-    suspend fun insertOrgInfo(orgInfo: OrgInfo){
-        dataSource.insertOrgInfo(orgInfo)
-    }
-
-    suspend fun deleteOrgInfo(){
+    override suspend fun deleteOrgInfo(){
         dataSource.deleteOrgInfo()
     }
 

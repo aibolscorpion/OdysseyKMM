@@ -3,7 +3,6 @@ package kz.divtech.odyssey.rotation.di
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import app.cash.sqldelight.db.SqlDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,6 +27,11 @@ import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
+import kz.divtech.odyssey.shared.data.local.data_source.active_trips.SqlDelightActiveTripsDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.archive_trips.SqlDelightArchiveTripsTripsDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.employee.SqlDelightEmployeeDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.faq.SqlDelightFaqDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.full_article.SqlDelightFullArticleDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.org_info.SqlDelightOrgInfoDataSource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.createDataStore
@@ -45,6 +49,11 @@ import kz.divtech.odyssey.shared.data.repository.TripsRepositoryImpl
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Singleton
 import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.dataStoreFileName
+import kz.divtech.odyssey.shared.domain.data_source.ActiveTripDataSource
+import kz.divtech.odyssey.shared.domain.data_source.ArchiveTripsDataSource
+import kz.divtech.odyssey.shared.domain.data_source.EmployeeDataSource
+import kz.divtech.odyssey.shared.domain.data_source.FaqDataSource
+import kz.divtech.odyssey.shared.domain.data_source.FullArticleDataSource
 import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 
 @Module
@@ -156,15 +165,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedFaqRepository(httpClient: HttpClient): kz.divtech.odyssey.shared.domain.repository.FaqRepository{
-        return FaqRepositoryImpl(httpClient)
+    fun provideSharedFaqRepository(httpClient: HttpClient, dataSource: FaqDataSource): kz.divtech.odyssey.shared.domain.repository.FaqRepository{
+        return FaqRepositoryImpl(httpClient, dataSource)
     }
 
     @Provides
     @Singleton
-    fun provideSharedArticleRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedArticleRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager, dataSource: FullArticleDataSource):
             kz.divtech.odyssey.shared.domain.repository.ArticleRepository{
-        return ArticleRepositoryImpl(httpClient, dataStoreManager)
+        return ArticleRepositoryImpl(httpClient, dataStoreManager, dataSource)
     }
 
     @Provides
@@ -176,9 +185,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedProfileRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedProfileRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+                                       dataSource: EmployeeDataSource):
             kz.divtech.odyssey.shared.domain.repository.ProfileRepository{
-        return ProfileRepositoryImpl(httpClient, dataStoreManager)
+        return ProfileRepositoryImpl(httpClient, dataStoreManager, dataSource)
     }
 
     @Provides
@@ -189,9 +199,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedTripsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedTripsRepository(httpClient: HttpClient,
+                                     dataStoreManager: DataStoreManager,
+                                     activeTripDataSource: ActiveTripDataSource,
+                                     archiveTripsDataSource: ArchiveTripsDataSource):
             kz.divtech.odyssey.shared.domain.repository.TripsRepository{
-        return TripsRepositoryImpl(httpClient, dataStoreManager)
+        return TripsRepositoryImpl(httpClient, dataStoreManager, activeTripDataSource, archiveTripsDataSource)
     }
 
     @Provides
@@ -217,14 +230,45 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSqlDriver(@ApplicationContext context: Context): SqlDriver{
-        return DatabaseDriverFactory(context).createDriver()
+    fun provideSharedDatabase(@ApplicationContext context: Context): OdysseyDatabase{
+        val sqlDriver = DatabaseDriverFactory(context).createDriver()
+        return OdysseyDatabase(sqlDriver)
     }
 
     @Provides
     @Singleton
-    fun provideOrgInfoDataSource(sqlDriver: SqlDriver): OrgInfoDataSource{
-        return SqlDelightOrgInfoDataSource(OdysseyDatabase(sqlDriver))
+    fun provideOrgInfoDataSource(database: OdysseyDatabase): OrgInfoDataSource{
+        return SqlDelightOrgInfoDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFullArticleDataSource(database: OdysseyDatabase): FullArticleDataSource{
+        return SqlDelightFullArticleDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFaqDataSource(database: OdysseyDatabase): FaqDataSource{
+        return SqlDelightFaqDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideEmployeeDataSource(database: OdysseyDatabase): EmployeeDataSource{
+        return SqlDelightEmployeeDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideActiveTripsDataSource(database: OdysseyDatabase): ActiveTripDataSource{
+        return SqlDelightActiveTripsDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideArchiveTripsDataSource(database: OdysseyDatabase): ArchiveTripsDataSource{
+        return SqlDelightArchiveTripsTripsDataSource(database)
     }
 
 }

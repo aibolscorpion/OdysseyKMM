@@ -51,11 +51,13 @@ import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguag
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
-import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
+import kz.divtech.odyssey.shared.domain.repository.FaqRepository
+import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -84,16 +86,17 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-//    @Inject
-//    lateinit var repository: FindEmployeeRepository
     @Inject
-    lateinit var tripsRepository: TripsRepository
+    lateinit var repository: FindEmployeeRepository
 
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
     @Inject
-    lateinit var orgInfoDataSource: OrgInfoDataSource
+    lateinit var faqRepository: FaqRepository
+
+    @Inject
+    lateinit var tripsRepository: TripsRepository
 
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,8 +106,17 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         createDeviceIdIfNotExists(dataStoreManager)
 
         lifecycleScope.launch {
-//            repository.findByPhoneNumber("77475551993")
-            tripsRepository.getTripById(81007)
+            repository.findByPhoneNumber("77475551993")
+            tripsRepository.getTripById(81528)
+            tripsRepository.getTripById(80986)
+            tripsRepository.getTripById(80987)
+            tripsRepository.getTripById(80952)
+            delay(4000)
+            Timber.i("${tripsRepository.getArchiveTripsSortedByDateFromDb(listOf("issued", "partly", "opened"), listOf("to-home", "to-work"))}")
+            delay(4000)
+//            tripsRepository.deleteActiveTrips()
+//            Timber.i("${tripsRepository.getActiveTripsSortedByDateFromDb(listOf("issued", "partly", "opened"), listOf("to-home", "to-work"))}")
+
         }
 
 

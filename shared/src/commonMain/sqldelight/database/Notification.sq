@@ -12,3 +12,17 @@ CREATE TABLE IF NOT EXISTS `Notification` (
 `type` TEXT NOT NULL,
 `application_id` INTEGER NOT NULL,
 `segment_id` INTEGER);
+
+getNotifications:
+SELECT * FROM Notification ORDER BY created_at DESC;
+
+getFirstThreeNotifications:
+SELECT * FROM Notification ORDER BY created_at DESC LIMIT 3;
+
+insertNotifications:
+INSERT OR REPLACE INTO Notification(notification_id, notification_type, notifiable_type, created_at,
+updated_at, read_at, id, title, content, is_important, type, application_id, segment_id)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteNotifications:
+DELETE FROM Notification;

@@ -16,6 +16,7 @@ import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
+import kz.divtech.odyssey.shared.domain.data_source.EmployeeDataSource
 import kz.divtech.odyssey.shared.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
 import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
@@ -27,13 +28,15 @@ import kz.divtech.odyssey.shared.domain.model.profile.ProfileResponse
 import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 
 class ProfileRepositoryImpl(private val httpClient: HttpClient,
-                            private val dataStoreManager: DataStoreManager
+                            private val dataStoreManager: DataStoreManager,
+                            private val dataSource: EmployeeDataSource
 ): ProfileRepository {
     override suspend fun getProfile(): Resource<ProfileResponse> {
         return try {
             val result: ProfileResponse = httpClient.get{
                 url(HttpRoutes(dataStoreManager).profile())
             }.body()
+            dataSource.insertProfile(result.data)
             Resource.Success(data = result)
         }catch (e: ClientRequestException) {
             Resource.Error(message = e.response.status.description)
@@ -44,6 +47,14 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
         } catch (e: Exception){
             Resource.Error(message = "${e.message}")
         }
+    }
+
+    override suspend fun getProfileFromDb(): Profile? {
+        return dataSource.getProfile()
+    }
+
+    override suspend fun deleteProfile() {
+        dataSource.deleteProfile()
     }
 
     override suspend fun updateProfile(profile: Profile): Resource<HttpResponse> {

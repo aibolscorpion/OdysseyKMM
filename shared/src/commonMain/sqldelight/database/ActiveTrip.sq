@@ -17,28 +17,26 @@ CREATE TABLE IF NOT EXISTS `active_trip` (
 `end_station_name` TEXT);
 
 
--- @Query("SELECT * FROM active_trip " +
--- "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
--- "ORDER BY date ASC")
--- fun getActiveTripsSortedByDate(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
---
--- @Query("SELECT * FROM active_trip " +
--- "WHERE (status IN (:statusType)) AND ((direction IN (:direction) AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN (:direction) AND 'to-home' IN (:direction))) " +
--- "ORDER BY CASE WHEN status = 'issued' THEN 0 " +
--- "WHEN status = 'partly' THEN 1 " +
--- "WHEN status = 'opened' THEN 2 " +
--- "WHEN status = 'returned' THEN 3 " +
--- "ELSE 4 end, date ASC")
--- fun getActiveTripsSortedByStatus(statusType: Array<String>, direction: Array<String>) :  PagingSource<Int, Trip>
---
--- @Insert(onConflict = OnConflictStrategy.REPLACE)
--- suspend fun insertActiveTrips(data: List<ActiveTrip>)
---
--- @Query("DELETE FROM active_trip")
--- suspend fun deleteActiveTrips(): Int
---
--- @Transaction
--- suspend fun refreshActiveTrips(data: List<ActiveTrip>){
---     deleteActiveTrips()
---     insertActiveTrips(data)
--- }
+getActiveTripsSortedByDate:
+SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ?
+AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN ? AND 'to-home'
+IN ?)) ORDER BY date ASC;
+
+getActiveTripsSortedByStatus:
+SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
+OR (direction IS NULL AND 'to-work' IN ? AND 'to-home' IN ?))
+ORDER BY
+status = 'issued',
+status = 'partly',
+status = 'opened',
+status = 'returned',
+date ASC;
+
+insertActiveTrips:
+INSERT OR REPLACE INTO active_trip(id, is_extra, direction, shift, date, status, created_at,
+ updated_at, issued_at, only_bus_transfer, segments, refund_applications,
+ start_station_code, start_station_name, end_station_code, end_station_name) VALUES (?, ?, ?, ?, ?,
+ ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+deleteActiveTrips:
+DELETE FROM active_trip;

@@ -1,27 +1,22 @@
 CREATE TABLE IF NOT EXISTS Article (
-    id INTEGER NOT NULL PRIMARY KEY,
-    title TEXT NOT NULL,
-    short_content TEXT NOT NULL,
-    is_important INTEGER NOT NULL,
-    published_on TEXT NOT NULL,
-    tags TEXT NOT NULL,
-    read_on TEXT
+id INTEGER NOT NULL PRIMARY KEY,
+title TEXT NOT NULL,
+short_content TEXT NOT NULL,
+is_important INTEGER NOT NULL,
+published_on TEXT NOT NULL,
+tags TEXT NOT NULL,
+read_on TEXT
 );
 
 getNewsPagingSource:
 SELECT * FROM Article ORDER BY published_on;
 
 insertNews:
-INSERT OR REPLACE INTO Article (id, title, short_content, is_important, published_on, tags, read_on) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Article (id, title, short_content, is_important, published_on, tags, read_on)
+ VALUES (?, ?, ?, ?, ?, ?, ?);
 
 deleteNews:
 DELETE FROM Article;
 
 searchByText:
 SELECT * FROM Article WHERE title LIKE '%'||:searchQuery||'%' OR short_content LIKE '%'||:searchQuery||'%';
-
-refreshNews:
-BEGIN TRANSACTION;
-DELETE FROM Article;
-INSERT OR REPLACE INTO Article (id, title, short_content, is_important, published_on, tags, read_on) VALUES (?, ?, ?, ?, ?, ?, ?);
-COMMIT;

@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `Faq` (
 getFaqList:
 SELECT * FROM Faq;
 
-insertFaqList:
+insertFaq:
 INSERT OR REPLACE INTO Faq(id, question, answer, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?);
 
 deleteFaqList:
@@ -16,8 +16,3 @@ DELETE FROM Faq;
 
 searchFaqByText:
 SELECT * FROM Faq WHERE question LIKE '%'||:searchQuery||'%' OR answer LIKE '%'||:searchQuery||'%';
-
-BEGIN TRANSACTION;
-DELETE FROM Faq;
-INSERT OR REPLACE INTO Faq(id, question, answer, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?);
-COMMIT;

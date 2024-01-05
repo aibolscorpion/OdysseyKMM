@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `Employee` (
+CREATE TABLE IF NOT EXISTS `Employee`(
 `id` INTEGER NOT NULL PRIMARY KEY,
 `full_name` TEXT NOT NULL,
 `first_name` TEXT NOT NULL,
@@ -17,3 +17,19 @@ CREATE TABLE IF NOT EXISTS `Employee` (
 `email` TEXT,
 `ua_confirmed` INTEGER NOT NULL,
 `documents` TEXT NOT NULL);
+
+getEmployee:
+SELECT * FROM Employee;
+
+insertEmployee:
+INSERT OR REPLACE INTO Employee(
+id, full_name, first_name, last_name, patronymic, first_name_en, last_name_en, birth_date, gender,
+country_code, iin, number, position, phone, additional_phone, email, ua_confirmed, documents) VALUES (
+?, ?, ?, ?,?, ?, ?, ?,
+?, ?, ?, ?,?, ?, ?, ?, ?, ?);
+
+deleteEmployee:
+DELETE FROM Employee;
+
+
+

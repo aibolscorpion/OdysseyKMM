@@ -23,4 +23,6 @@ interface ProfileRepository {
 
     suspend fun updatePhoneNumberWithAuth(phoneNumber: String): Resource<CodeResponse>
     suspend fun updatePhoneConfirm(authRequest: AuthRequest) : Resource<HttpResponse>
+    suspend fun getProfileFromDb(): Profile?
+    suspend fun deleteProfile()
 }

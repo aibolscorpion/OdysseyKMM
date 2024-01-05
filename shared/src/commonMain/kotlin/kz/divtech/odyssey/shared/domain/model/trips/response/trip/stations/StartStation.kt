@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StartStation(
-    val code: String,
-    val name: String
+    val code: String?,
+    val name: String?
 )
