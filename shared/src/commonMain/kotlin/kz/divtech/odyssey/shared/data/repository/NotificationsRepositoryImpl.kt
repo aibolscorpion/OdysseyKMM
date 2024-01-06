@@ -22,14 +22,36 @@ import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.data.repository.pagingSource.NotificationPagingSource
+import kz.divtech.odyssey.shared.domain.data_source.NotificationDataSource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.MarkNotification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notifications
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 
 class NotificationsRepositoryImpl(private val httpClient: HttpClient,
-                                  private val dataStoreManager: DataStoreManager
+                                  private val dataStoreManager: DataStoreManager,
+                                  private val dataSource: NotificationDataSource
 ): NotificationsRepository {
+    override fun getPagingNotification(): Flow<PagingData<Notification>>{
+        val pagingConfig = PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE,
+            initialLoadSize = NOTIFICATION_PAGE_SIZE * 3)
+        return Pager(pagingConfig) {
+            NotificationPagingSource(httpClient, dataStoreManager)
+        }.flow
+    }
+
+    override suspend fun getNotificationsPagingSource(): List<Notification> {
+        return dataSource.getNotificationsPagingSource()
+    }
+
+    override suspend fun getFirstThreeNotificationsFromBD(): List<Notification> {
+        return dataSource.getFirstThreeNotification()
+    }
+
+    override suspend fun deleteNoficiations() {
+        dataSource.deleteNoficiations()
+    }
+
     override suspend fun getNotificationsFirstPage(): Resource<Notifications> {
         return try {
             val result: Notifications = httpClient.get {
@@ -68,11 +90,5 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override fun getPagingNotification(): Flow<PagingData<Notification>>{
-        val pagingConfig = PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE,
-            initialLoadSize = NOTIFICATION_PAGE_SIZE * 3)
-        return Pager(pagingConfig) {
-            NotificationPagingSource(httpClient, dataStoreManager)
-        }.flow
-    }
+
 }

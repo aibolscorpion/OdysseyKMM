@@ -10,7 +10,7 @@ import kotlin.String
 public class NotificationQueries(
   driver: SqlDriver,
 ) : TransacterImpl(driver) {
-  public fun <T : Any> getNotifications(mapper: (
+  public fun <T : Any> getNotificationsPagingSource(mapper: (
     notification_id: String,
     notification_type: String,
     notifiable_type: String,
@@ -24,8 +24,9 @@ public class NotificationQueries(
     type: String,
     application_id: Long,
     segment_id: Long?,
-  ) -> T): Query<T> = Query(-778_131_574, arrayOf("Notification"), driver, "Notification.sq",
-      "getNotifications", "SELECT * FROM Notification ORDER BY created_at DESC") { cursor ->
+  ) -> T): Query<T> = Query(-878_735_503, arrayOf("Notification"), driver, "Notification.sq",
+      "getNotificationsPagingSource", "SELECT * FROM Notification ORDER BY created_at DESC") {
+      cursor ->
     mapper(
       cursor.getString(0)!!,
       cursor.getString(1)!!,
@@ -43,9 +44,9 @@ public class NotificationQueries(
     )
   }
 
-  public fun getNotifications(): Query<Notification> = getNotifications { notification_id,
-      notification_type, notifiable_type, created_at, updated_at, read_at, id, title, content,
-      is_important, type, application_id, segment_id ->
+  public fun getNotificationsPagingSource(): Query<Notification> = getNotificationsPagingSource {
+      notification_id, notification_type, notifiable_type, created_at, updated_at, read_at, id,
+      title, content, is_important, type, application_id, segment_id ->
     Notification(
       notification_id,
       notification_type,
@@ -117,7 +118,7 @@ public class NotificationQueries(
     )
   }
 
-  public fun insertNotifications(
+  public fun insertNotification(
     notification_id: String,
     notification_type: String,
     notifiable_type: String,
@@ -132,7 +133,7 @@ public class NotificationQueries(
     application_id: Long,
     segment_id: Long?,
   ) {
-    driver.execute(-1_980_833_449, """
+    driver.execute(905_933_468, """
         |INSERT OR REPLACE INTO Notification(notification_id, notification_type, notifiable_type, created_at,
         |updated_at, read_at, id, title, content, is_important, type, application_id, segment_id)
         |VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
@@ -151,7 +152,7 @@ public class NotificationQueries(
           bindLong(11, application_id)
           bindLong(12, segment_id)
         }
-    notifyQueries(-1_980_833_449) { emit ->
+    notifyQueries(905_933_468) { emit ->
       emit("Notification")
     }
   }

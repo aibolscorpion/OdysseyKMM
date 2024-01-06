@@ -2,6 +2,7 @@ package kz.divtech.odyssey.shared.domain.model.help.press_service.news
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kz.divtech.odyssey.shared.domain.model.help.press_service.article.Tag
 
 @Serializable
 data class Article(

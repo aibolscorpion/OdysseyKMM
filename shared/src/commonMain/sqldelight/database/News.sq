@@ -11,7 +11,7 @@ read_on TEXT
 getNewsPagingSource:
 SELECT * FROM Article ORDER BY published_on;
 
-insertNews:
+insertArticle:
 INSERT OR REPLACE INTO Article (id, title, short_content, is_important, published_on, tags, read_on)
  VALUES (?, ?, ?, ?, ?, ?, ?);
 

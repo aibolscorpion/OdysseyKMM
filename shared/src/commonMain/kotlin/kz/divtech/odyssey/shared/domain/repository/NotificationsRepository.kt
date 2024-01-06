@@ -13,4 +13,8 @@ interface NotificationsRepository {
     suspend fun markNotificationAsRead(notificationId: String): Resource<HttpResponse>
 
     fun getPagingNotification(): Flow<PagingData<Notification>>
+    suspend fun getNotificationsPagingSource(): List<Notification>
+    suspend fun getFirstThreeNotificationsFromBD(): List<Notification>
+
+    suspend fun deleteNoficiations()
 }

@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Constants
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.repository.pagingSource.NewsPagingSource
+import kz.divtech.odyssey.shared.domain.data_source.NewsDataSource
 import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 import kz.divtech.odyssey.shared.domain.repository.NewsRepository
 
 class NewsRepositoryImpl(private val httpClient: HttpClient,
-                         private val dataStoreManager: DataStoreManager
+                         private val dataStoreManager: DataStoreManager,
+                        private val dataSource: NewsDataSource
 ) : NewsRepository{
     override fun getPagingNews(): Flow<PagingData<Article>> {
         val pagingConfig = PagingConfig(pageSize = Constants.NEWS_PAGE_SIZE,
@@ -20,5 +22,18 @@ class NewsRepositoryImpl(private val httpClient: HttpClient,
         return Pager(pagingConfig) {
             NewsPagingSource(httpClient, dataStoreManager)
         }.flow
+    }
+
+    override suspend fun getNewsFromDb(): List<Article> {
+        return dataSource.getNews()
+    }
+
+    override suspend fun searchNewsFromDb(searchQuery: String): List<Article> {
+        return dataSource.searchNews(searchQuery)
+    }
+
+
+    override suspend fun deleteNews() {
+        dataSource.deleteNews()
     }
 }

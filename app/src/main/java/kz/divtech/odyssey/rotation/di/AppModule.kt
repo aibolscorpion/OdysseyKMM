@@ -33,6 +33,8 @@ import kz.divtech.odyssey.shared.data.local.data_source.employee.SqlDelightEmplo
 import kz.divtech.odyssey.shared.data.local.data_source.faq.SqlDelightFaqDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.full_article.SqlDelightFullArticleDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.nearest_trip.SqlDelightNearestTripDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.news.SqlDelightNewsDataSource
+import kz.divtech.odyssey.shared.data.local.data_source.notification.SqlDelightNotifcationDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.org_info.SqlDelightOrgInfoDataSource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.local.data_store.LocalDataStore.createDataStore
@@ -56,6 +58,8 @@ import kz.divtech.odyssey.shared.domain.data_source.EmployeeDataSource
 import kz.divtech.odyssey.shared.domain.data_source.FaqDataSource
 import kz.divtech.odyssey.shared.domain.data_source.FullArticleDataSource
 import kz.divtech.odyssey.shared.domain.data_source.NearestTripDataSource
+import kz.divtech.odyssey.shared.domain.data_source.NewsDataSource
+import kz.divtech.odyssey.shared.domain.data_source.NotificationDataSource
 import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 
 @Module
@@ -195,8 +199,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedNotificationsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): NotificationsRepository{
-        return NotificationsRepositoryImpl(httpClient, dataStoreManager)
+    fun provideSharedNotificationsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+                                             dataSource: NotificationDataSource): NotificationsRepository{
+        return NotificationsRepositoryImpl(httpClient, dataStoreManager, dataSource)
     }
 
     @Provides
@@ -213,9 +218,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedNewsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedNewsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+                                    newsDataSource: NewsDataSource):
             kz.divtech.odyssey.shared.domain.repository.NewsRepository{
-        return NewsRepositoryImpl(httpClient, dataStoreManager)
+        return NewsRepositoryImpl(httpClient, dataStoreManager, newsDataSource)
     }
 
     @Provides
@@ -280,5 +286,18 @@ object AppModule {
     fun provideNearestActiveTripDataSource(database: OdysseyDatabase): NearestTripDataSource{
         return SqlDelightNearestTripDataSource(database)
     }
+
+    @Provides
+    @Singleton
+    fun provideNewsDataSource(database: OdysseyDatabase): NewsDataSource{
+        return SqlDelightNewsDataSource(database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationDataSource(database: OdysseyDatabase): NotificationDataSource{
+        return SqlDelightNotifcationDataSource(database)
+    }
+
 
 }
