@@ -12,20 +12,16 @@ import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
-import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchFirebaseToken
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
 
 @AndroidEntryPoint
 class UpdatePhoneNumberFragment : Fragment() {
@@ -54,21 +50,19 @@ class UpdatePhoneNumberFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.updatePhoneResult.observe(viewLifecycleOwner){ response ->
-            if(response.isSuccess()) {
-                showApplicationSentDialog()
-            }else if(response.isHttpException() && response.statusCode ==
-                Constants.UNPROCESSABLE_ENTITY_CODE){
-                val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
-                    ValidationErrorResponse::class.java)
-                errorResponse.errors.forEach{ (field, errorMessages) ->
-                    val firstErrorMessage = errorMessages.first()
-                    if(field == "phone"){
-                        showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
-                            firstErrorMessage)
-                    }
+            when (response) {
+                is Resource.Success -> {
+                    showApplicationSentDialog()
                 }
-            }else{
-                showErrorDialog()
+
+                is Resource.Error.HttpException.UnprocessibleEntity -> {
+                    showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
+                        response.message.toString())
+                }
+
+                else -> {
+                    showErrorDialog()
+                }
             }
         }
     }

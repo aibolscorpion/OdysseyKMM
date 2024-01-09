@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.serialization)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.parcelize)
 }
 
 kotlin {

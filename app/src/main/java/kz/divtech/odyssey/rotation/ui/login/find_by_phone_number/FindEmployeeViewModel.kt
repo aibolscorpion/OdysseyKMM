@@ -5,19 +5,19 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeResult
-import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
-import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeResult
+import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
+import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class FindEmployeeViewModel @Inject constructor(private val findEmployeeRepository: FindEmployeeRepository,
                                                 private val orgInfoRepository: OrgInfoRepository
 ) : ViewModel() {
-    private val _employeeResult = MutableLiveData<Event<Result<EmployeeResult>>>()
-    val employeeResult : LiveData<Event<Result<EmployeeResult>>> = _employeeResult
+    private val _employeeResult = MutableLiveData<Event<Resource<EmployeeResult>>>()
+    val employeeResult : LiveData<Event<Resource<EmployeeResult>>> = _employeeResult
 
     val pBarVisibility = ObservableInt(View.GONE)
 
@@ -33,7 +33,7 @@ class FindEmployeeViewModel @Inject constructor(private val findEmployeeReposito
     fun getOrgInfoFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            orgInfoRepository.getOrgInfoFromServer()
+            orgInfoRepository.getOrgInfo()
             pBarVisibility.set(View.GONE)
         }
 

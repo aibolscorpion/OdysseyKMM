@@ -4,17 +4,17 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.domain.model.login.update_phone.UpdatePhoneRequest
-import okhttp3.ResponseBody
-import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
+import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class UpdatePhoneViewModel @Inject constructor(private val profileRepository: ProfileRepository) : ViewModel() {
-    private val _updatePhoneResult = MutableLiveData<Result<ResponseBody>>()
-    val updatePhoneResult: LiveData<Result<ResponseBody>> = _updatePhoneResult
+    private val _updatePhoneResult = MutableLiveData<Resource<HttpResponse>>()
+    val updatePhoneResult: LiveData<Resource<HttpResponse>> = _updatePhoneResult
 
     val pBarVisibility = ObservableInt(View.GONE)
 

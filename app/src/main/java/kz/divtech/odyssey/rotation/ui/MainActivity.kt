@@ -105,16 +105,15 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
         createDeviceIdIfNotExists(dataStoreManager)
 
-        lifecycleScope.launch {
-            repository.findByPhoneNumber("77475551993")
-            tripsRepository.getNearestActiveTrip()
-            delay(4000)
-            Timber.i("${tripsRepository.getNearestTripFromBd()}")
-            tripsRepository.deleteNearestTrip()
-            delay(4000)
-            Timber.i("${tripsRepository.getNearestTripFromBd()}")
-
-        }
+//        lifecycleScope.launch {
+//            repository.findByPhoneNumber("77475551993")
+//            tripsRepository.getNearestActiveTrip()
+//            delay(4000)
+//            Timber.i("${tripsRepository.getNearestTripFromBd()}")
+//            tripsRepository.deleteNearestTrip()
+//            delay(4000)
+//            Timber.i("${tripsRepository.getNearestTripFromBd()}")
+//        }
 
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)

@@ -6,7 +6,6 @@ import kz.divtech.odyssey.rotation.BuildConfig
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.common.Config.AUTHORIZATION_VALUE_PREFIX
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Organization
 
 
 object SharedPrefsManager {
@@ -76,8 +75,8 @@ object SharedPrefsManager {
         getSharedPrefsEditor().putString("URL", Config.PROXY_HOST).apply()
     }
 
-    fun saveOrganizationName(organization: Organization){
-        getSharedPrefsEditor().putString("organization", organization.name).apply()
+    fun saveOrganizationName(organizationName: String){
+        getSharedPrefsEditor().putString("organization", organizationName).apply()
     }
 
     fun fetchOrganizationName(): String{

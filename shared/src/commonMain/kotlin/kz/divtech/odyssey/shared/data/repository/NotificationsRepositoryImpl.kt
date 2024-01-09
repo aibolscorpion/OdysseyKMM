@@ -5,8 +5,6 @@ import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.client.request.post
@@ -59,14 +57,10 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
                 parameter("page", 1)
             }.body()
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -79,14 +73,10 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
                 setBody(notification)
             }
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 

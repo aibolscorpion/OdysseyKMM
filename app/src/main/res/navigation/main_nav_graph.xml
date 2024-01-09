@@ -136,7 +136,7 @@
             app:destination="@id/changeNumberErrorDialog" />
         <argument
             android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeShort" />
     </fragment>
 
     <action

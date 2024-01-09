@@ -15,12 +15,11 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeByIinBinding
-import kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeShort
 
 @AndroidEntryPoint
 class FindEmployeeByIINFragment : Fragment() {
@@ -44,16 +43,18 @@ class FindEmployeeByIINFragment : Fragment() {
 
         viewModel.employeeResult.observe(viewLifecycleOwner) {
             it?.getContentIfNotHandled()?.let { result ->
-                if(result.isSuccess()){
-                    val employeeResult = result.asSuccess().value
-                    if(employeeResult.exists){
-                        val employee = employeeResult.employee
-                        openUpdatePhoneNumber(employee)
-                    }else{
-                        showEmployeeNotFoundDialog()
+                if(result is Resource.Success){
+                    val employeeResult = result.data
+                    employeeResult?.let {
+                        if(employeeResult.exists){
+                            val employee = employeeResult.employee
+                            employee?.let {  it1 -> openUpdatePhoneNumber(it1) }
+                        }else{
+                            showEmployeeNotFoundDialog()
+                        }
                     }
                 }else{
-                    showErrorMessage(requireContext(), binding.searchByIINFL, "$result")
+                    showErrorMessage(requireContext(), binding.searchByIINFL, result.message.toString())
                 }
             }
         }

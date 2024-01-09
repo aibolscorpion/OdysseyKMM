@@ -18,7 +18,6 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.FaqRepository
-import kz.divtech.odyssey.rotation.data.repository.FindEmployeeRepository
 import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.data.repository.NewsRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
@@ -104,11 +103,6 @@ object AppModule {
     }
 
     @Provides
-    fun provideFindEmployeeRepository(apiService: ProxyApiService): FindEmployeeRepository{
-        return FindEmployeeRepository(apiService)
-    }
-
-    @Provides
     @Singleton
     fun provideOrgInfoRepository(dao: Dao, apiService: ProxyApiService): OrgInfoRepository{
         return OrgInfoRepository(dao, apiService)
@@ -152,9 +146,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedLoginRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedLoginRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+                                     profileRepository: kz.divtech.odyssey.shared.domain.repository.ProfileRepository):
             kz.divtech.odyssey.shared.domain.repository.LoginRepository{
-        return LoginRepositoryImpl(httpClient, dataStoreManager)
+        return LoginRepositoryImpl(httpClient, dataStoreManager, profileRepository)
     }
 
     @Provides

@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.login.update_phone.UpdatePhoneNumberFragment" />
         <variable
             name="employee"
-            type="kz.divtech.odyssey.rotation.domain.model.login.search_employee.EmployeeShort" />
+            type="kz.divtech.odyssey.shared.domain.model.auth.search_employee.EmployeeShort" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.login.update_phone.UpdatePhoneViewModel" />
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="11dp"
-                    android:text="@{employee.full_name}"
+                    android:text="@{employee.fullName}"
                     tools:text="@string/employee_name_placeholder" />
 
                 <TextView

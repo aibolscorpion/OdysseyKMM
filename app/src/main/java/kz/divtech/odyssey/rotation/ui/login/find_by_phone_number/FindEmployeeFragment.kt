@@ -19,8 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentFindEmployeeBinding
 import kz.divtech.odyssey.rotation.ui.MainActivityDirections
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
@@ -32,6 +30,7 @@ import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideToolbar
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class FindEmployeeFragment : Fragment() {
@@ -67,17 +66,19 @@ class FindEmployeeFragment : Fragment() {
 
         viewModel.employeeResult.observe(viewLifecycleOwner){
             it?.getContentIfNotHandled()?.let { result ->
-                if(result.isSuccess()){
-                    val employeeResult = result.asSuccess().value
-                    if(employeeResult.exists){
-                        val employee = employeeResult.employee
-                        if(employee.status == Constants.DEACTIVATED_EMPLOYEE){
-                            showAccountDeactivatedDialog(employee.full_name)
+                if(result is Resource.Success){
+                    val employeeResult = result.data
+                    employeeResult?.let {
+                        if(employeeResult.exists){
+                            val employee = employeeResult.employee
+                            if(employee?.status == Constants.DEACTIVATED_EMPLOYEE){
+                                showAccountDeactivatedDialog(employee.fullName)
+                            }else{
+                                openSendSmsFragment()
+                            }
                         }else{
-                            openSendSmsFragment()
+                            openIINFragment()
                         }
-                    }else{
-                        openIINFragment()
                     }
                 }else{
                     showErrorDialog()

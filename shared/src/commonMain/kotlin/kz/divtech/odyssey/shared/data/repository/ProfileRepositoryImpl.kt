@@ -2,16 +2,17 @@ package kz.divtech.odyssey.shared.data.repository
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.utils.io.errors.IOException
+import kotlinx.serialization.json.Json
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
@@ -22,6 +23,7 @@ import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
 import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
 import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeRequest
 import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
+import kz.divtech.odyssey.shared.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.shared.domain.model.profile.Document
 import kz.divtech.odyssey.shared.domain.model.profile.Profile
 import kz.divtech.odyssey.shared.domain.model.profile.ProfileResponse
@@ -38,15 +40,15 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
             }.body()
             dataSource.insertProfile(result.data)
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
+    }
+
+    override suspend fun insertProfile(profile: Profile) {
+        dataSource.insertProfile(profile)
     }
 
     override suspend fun getProfileFromDb(): Profile? {
@@ -65,14 +67,10 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 setBody(profile)
             }
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -84,14 +82,10 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 setBody(deviceInfo)
             }
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -103,14 +97,10 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 setBody(document)
             }
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -122,15 +112,28 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(phoneRequest)
             }
-            Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+            when (result.status) {
+                HttpStatusCode.OK -> {
+                    Resource.Success(data = result)
+                }
+                HttpStatusCode.UnprocessableEntity -> {
+                    val errorResponse: ValidationErrorResponse = Json.decodeFromString(result.bodyAsText())
+                    var phoneErrorText: String? = null
+                    errorResponse.errors.forEach { (field, errorMessages) ->
+                        if (field == "phone") {
+                            phoneErrorText = errorMessages.first()
+                        }
+                    }
+                    Resource.Error.HttpException.UnprocessibleEntity(phoneErrorText ?: result.status.description)
+                }
+                else -> {
+                    Resource.Error.HttpException.Exception(result.status.description)
+                }
+            }
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -142,20 +145,12 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(codeRequest)
             }
-            if(response.status.value == 200){
-                val result: CodeResponse = response.body()
-                Resource.Success(result)
-            }else{
-                Resource.Error(message = response.body())
-            }
-        }catch (e: ClientRequestException){
-            Resource.Error(message = e.response.status.description)
-        }catch (e: ServerResponseException){
-            Resource.Error(message = e.response.status.description)
+            val result: CodeResponse = response.body()
+            Resource.Success(result)
         }catch (e: IOException){
-            Resource.Error(message = "${e.message}")
+            Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -167,15 +162,12 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 setBody(authRequest)
             }
             Resource.Success(data = result)
-        }catch (e: ClientRequestException){
-            Resource.Error(message = e.response.status.description)
-        }catch (e: ServerResponseException){
-            Resource.Error(message = e.response.status.description)
         }catch (e: IOException){
-            Resource.Error(message = "${e.message}")
-        }catch (e: IOException){
-            Resource.Error(message = "${e.message}")
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
+
 
 }

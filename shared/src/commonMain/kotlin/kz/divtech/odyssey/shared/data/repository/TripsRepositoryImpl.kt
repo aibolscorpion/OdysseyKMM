@@ -5,8 +5,6 @@ import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.utils.io.errors.IOException
@@ -35,14 +33,10 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
                 url(HttpRoutes(dataStoreManager).getTripById(tripId))
             }.body()
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -53,14 +47,10 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             }.body()
             nearestTripDataSource.refreshNearesTrip(result.data!!)
             Resource.Success(data = result)
-        }catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception){
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 

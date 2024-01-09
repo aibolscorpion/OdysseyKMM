@@ -22,17 +22,12 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isFailure
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentSendSmsBinding
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.hideSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import java.net.UnknownHostException
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener {
@@ -68,18 +63,18 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
         viewModel.smsCodeResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
-                if(response.isSuccess()) {
-                    viewModel.setAuthLogId(response.asSuccess().value.authLogId)
-                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                    showSoftKeyboard(requireContext(), editTextList[0])
-                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
+                if(response is Resource.Success) {
+                    response.data?.let {
+                        viewModel.setAuthLogId(it.authLogId)
+                        startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+                        showSoftKeyboard(requireContext(), editTextList[0])
+                    }
+                }else if(response is Resource.Error.HttpException.TooManyRequest){
                     showContactSupportBtn()
-                    startTimer(seconds)
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                        getString(R.string.too_many_request_message, seconds))
-                }else if(response.isFailure() && response.error !is UnknownHostException){
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
+                    startTimer(response.seconds)
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
+                }else{
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
                 }
                 editTextList.isEnabled(true)
             }
@@ -87,18 +82,14 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
         viewModel.loginResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
-                if(response.isSuccess()) {
-                    val isConfirmed = response.asSuccess().value.employee.ua_confirmed
-                    if(isConfirmed){
-                        openMainActivity()
-                    }else{
-                        openTermsOfAgreemntFragment()
+                if(response is Resource.Success) {
+                    response.data?.let {
+                        val isConfirmed = it.profile.uaConfirmed
+                        if (isConfirmed) { openMainActivity() }
+                        else { openTermsOfAgreemntFragment() }
                     }
-                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)) {
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, getString(R.string.too_many_request_message, seconds))
                 }else{
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
+                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, "${response.message}")
                 }
             }
         }

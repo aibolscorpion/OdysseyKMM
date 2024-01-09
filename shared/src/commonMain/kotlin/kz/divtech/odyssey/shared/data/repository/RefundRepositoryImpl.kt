@@ -2,8 +2,6 @@ package kz.divtech.odyssey.shared.data.repository
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
@@ -29,14 +27,10 @@ class RefundRepositoryImpl(private val httpClient: HttpClient,
                 setBody(application)
             }.body()
             Resource.Success(result)
-        } catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception) {
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 
@@ -46,14 +40,10 @@ class RefundRepositoryImpl(private val httpClient: HttpClient,
                 url(HttpRoutes(dataStoreManager).cancelRefundById(id))
             }
             Resource.Success(result)
-        } catch (e: ClientRequestException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: ServerResponseException) {
-            Resource.Error(message = e.response.status.description)
-        } catch (e: IOException) {
-            Resource.Error(message = "${e.message}")
-        } catch (e: Exception) {
-            Resource.Error(message = "${e.message}")
+        }catch (e: IOException){
+            Resource.Error.IOException(e.message.toString())
+        }catch (e: Exception){
+            Resource.Error.Exception(e.message.toString())
         }
     }
 }
