@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemNewsBinding
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
+import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 
 class NewsPagingAdapter(private val newsListener: NewsListener) : PagingDataAdapter<Article,
         NewsPagingAdapter.ViewHolder>(NewsDiffCallBack()){

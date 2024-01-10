@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.profile.notification.paging
 
 import androidx.recyclerview.widget.DiffUtil
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 class NotificationPagingCallback() : DiffUtil.ItemCallback<Notification>() {
 

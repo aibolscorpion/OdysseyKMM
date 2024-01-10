@@ -7,15 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.DialogArticleBinding
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class ArticleDialog : BottomSheetDialogFragment() {
@@ -42,23 +44,26 @@ class ArticleDialog : BottomSheetDialogFragment() {
         val articleId = args.articleId
 
         viewModel.articleResult.observe(viewLifecycleOwner){ result ->
-            if(result.isFailure()){
-                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+            if(result is Resource.Error){
+                Toast.makeText(requireContext(), "${result.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
-        viewModel.getArticleById(articleId).observe(viewLifecycleOwner){ fullArticle ->
-            if(fullArticle != null){
-                dataBinding.fullArticle = fullArticle
-            }else{
-                if(requireContext().isNetworkAvailable()){
-                    viewModel.getArticleByIdFromServer(articleId)
-                    viewModel.markArticleAsRead(articleId)
+        lifecycleScope.launch {
+            viewModel.getArticleById(articleId).observe(viewLifecycleOwner){ fullArticle ->
+                if(fullArticle != null){
+                    dataBinding.fullArticle = fullArticle
                 }else{
-                    showNoInternetDialog()
+                    if(requireContext().isNetworkAvailable()){
+                        viewModel.getArticleByIdFromServer(articleId)
+                        viewModel.markArticleAsRead(articleId)
+                    }else{
+                        showNoInternetDialog()
+                    }
                 }
             }
         }
+
     }
 
     private fun showNoInternetDialog(){

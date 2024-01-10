@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 class NotificationAdapter(private val notificationListener: NotificationListener) : RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>() {
     private val oldNotificationList = mutableListOf<Notification>()

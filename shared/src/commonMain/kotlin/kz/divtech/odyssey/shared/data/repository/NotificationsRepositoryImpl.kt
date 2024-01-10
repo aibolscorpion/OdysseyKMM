@@ -42,7 +42,7 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
         return dataSource.getNotificationsPagingSource()
     }
 
-    override suspend fun getFirstThreeNotificationsFromBD(): List<Notification> {
+    override suspend fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>> {
         return dataSource.getFirstThreeNotification()
     }
 
@@ -56,6 +56,7 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
                 url(HttpRoutes(dataStoreManager).getNotifications())
                 parameter("page", 1)
             }.body()
+            dataSource.refreshNotifications(result.data)
             Resource.Success(data = result)
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())

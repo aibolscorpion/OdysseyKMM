@@ -15,10 +15,7 @@ import kz.divtech.odyssey.rotation.data.local.Dao
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
-import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.NewsRepository
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
@@ -66,16 +63,6 @@ object AppModule {
     fun provideDao(@ApplicationContext context: Context): Dao{
         return AppDatabase.getDatabase(context).dao()
     }
-    
-    @Provides
-    fun provideNewsRepository(dao: Dao, apiService: ApiService): NewsRepository{
-        return NewsRepository(dao, apiService)
-    }
-
-    @Provides
-    fun provideArticleRepository(dao: Dao, apiService: ApiService): ArticleRepository{
-        return ArticleRepository(dao, apiService)
-    }
 
     @Provides
     fun provideProfileRepository(dao: Dao, apiService: ApiService): ProfileRepository{
@@ -87,10 +74,6 @@ object AppModule {
         return TermsRepository(dao, apiService, proxyService)
     }
 
-    @Provides
-    fun provideNotificationRepository(dao: Dao, apiService: ApiService): NotificationRepository{
-        return NotificationRepository(dao, apiService)
-    }
 
     @Provides
     fun provideTripsRepository(dao: Dao, apiService: ApiService): TripsRepository{

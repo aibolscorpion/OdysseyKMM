@@ -1,8 +1,13 @@
 package kz.divtech.odyssey.shared.data.local.data_source.notification
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odssey.database.OdysseyDatabase
 import kz.divtech.odyssey.shared.domain.data_source.NotificationDataSource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.NotificationData
 
 class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDataSource {
     private val queries = database.notificationQueries
@@ -10,8 +15,28 @@ class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDa
         return queries.getNotificationsPagingSource().executeAsList().toNotifcationList()
     }
 
-    override suspend fun getFirstThreeNotification(): List<Notification> {
-        return queries.getFirstThreeNotifications().executeAsList().toNotifcationList()
+    override suspend fun getFirstThreeNotification(): Flow<List<Notification>> {
+        return queries.getFirstThreeNotifications(mapper = {
+             notification_id, notification_type, notifiable_type,
+             created_at, updated_at, read_at, id, title,
+             content, is_important,  type, application_id, segment_id ->
+            Notification(
+                id = notification_id,
+                data = NotificationData(
+                    id = id.toInt(),
+                    title = title,
+                    content = content,
+                    isImportant = is_important == 1L,
+                    type = type,
+                    applicationId = application_id.toInt(),
+                    segmentId = segment_id?.toInt()
+                ),
+                type = notification_type,
+                notifiableType = notifiable_type,
+                createdAt = created_at,
+                updatedAt = updated_at,
+                readAt = read_at)
+        }).asFlow().mapToList(Dispatchers.IO)
     }
 
     override suspend fun insertNotification(notifications: List<Notification>) {

@@ -11,7 +11,7 @@
             type="kz.divtech.odyssey.rotation.ui.help.press_service.article.ArticleViewModel" />
         <variable
             name="fullArticle"
-            type="kz.divtech.odyssey.rotation.domain.model.help.press_service.full_article.FullArticle" />
+            type="kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticle" />
     </data>
 
     <FrameLayout
@@ -50,7 +50,7 @@
                         android:textColor="#4D1B3652"
                         android:textAllCaps="true"
                         android:letterSpacing="0.01"
-                        app:publishedDate="@{fullArticle.published_on}"
+                        app:publishedDate="@{fullArticle.publishedOn}"
                         android:lineSpacingExtra="10sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView

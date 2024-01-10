@@ -5,7 +5,7 @@
     <data>
         <variable
             name="article"
-            type="kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article" />
+            type="kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article" />
         <variable
             name="listener"
             type="kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener" />
@@ -53,7 +53,7 @@
                 android:layout_marginTop="8dp"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="7sp"
-                android:text="@{article.short_content}"
+                android:text="@{article.shortContent}"
                 tools:text="@string/notification_content_placeholder"
                 android:maxLines="2"/>
 
@@ -67,7 +67,7 @@
                 android:textColor="#4D1B3652"
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="10sp"
-                app:publishedDate="@{article.published_on}"
+                app:publishedDate="@{article.publishedOn}"
                 android:textAllCaps="true"
                 tools:text="@string/notification_time_placeholder"/>
 

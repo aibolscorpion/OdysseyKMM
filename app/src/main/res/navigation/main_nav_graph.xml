@@ -155,7 +155,7 @@
         tools:layout="@layout/dialog_logged_out_notification">
         <argument
             android:name="notification"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification" />
     </dialog>
     <fragment
         android:id="@+id/mainFragment"
@@ -348,7 +348,7 @@
         tools:layout="@layout/dialog_notification">
         <argument
             android:name="notification"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification" />
     </dialog>
     <action
         android:id="@+id/action_global_notificationDialog"

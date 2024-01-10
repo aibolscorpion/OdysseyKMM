@@ -4,14 +4,14 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class NotificationDViewModel @Inject constructor(private val tripsRepository: TripsRepository,
-                                                 private val notificationRepository: NotificationRepository
+                                                 private val notificationRepository: NotificationsRepository
 ) : ViewModel() {
     private val _tripResult = MutableLiveData<Result<SingleTrip>>()
     val tripResult: LiveData<Result<SingleTrip>> get() = _tripResult

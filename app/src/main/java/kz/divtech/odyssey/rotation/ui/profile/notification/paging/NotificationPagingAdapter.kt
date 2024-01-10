@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemNotificationBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 class NotificationPagingAdapter(val listener: NotificationListener) :
     PagingDataAdapter<Notification, NotificationViewHolder>(NotificationPagingCallback()) {

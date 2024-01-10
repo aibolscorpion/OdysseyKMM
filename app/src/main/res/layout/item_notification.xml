@@ -5,7 +5,7 @@
     <data>
         <variable
             name="notification"
-            type="kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification" />
+            type="kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification" />
         <variable
             name="listener"
             type="kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener" />
@@ -74,7 +74,7 @@
             android:textSize="12sp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:updatedAt="@{notification.created_at}"
+            app:updatedAt="@{notification.createdAt}"
             tools:text="@string/notification_time_placeholder" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

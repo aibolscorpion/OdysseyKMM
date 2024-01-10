@@ -8,26 +8,27 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(private val tripsRepository: TripsRepository,
                                         private val profileRepository: ProfileRepository,
-                                        private val notificationRepository: NotificationRepository,
+                                        private val notificationRepository: NotificationsRepository,
                                         private val orgInfoRepository: OrgInfoRepository
 ) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
     val employeeLiveData: LiveData<Employee> = profileRepository.employee
     val nearestActiveTrip: LiveData<SingleTrip> = tripsRepository.nearestActiveTrip.asLiveData()
-    val threeNotifications: LiveData<List<Notification>> = notificationRepository.notifications.asLiveData()
+    suspend fun getThreeNotificationsFromDB(): LiveData<List<Notification>> =
+        notificationRepository.getFirstThreeNotificationsFromBD().asLiveData()
 
     fun sendDeviceInfo() = viewModelScope.launch {
         val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
@@ -61,7 +62,7 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
     fun getNotificationFromFirstPage() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationFromFirstPage()
+            notificationRepository.getNotificationsFirstPage()
             pBarVisibility.set(View.GONE)
         }
 

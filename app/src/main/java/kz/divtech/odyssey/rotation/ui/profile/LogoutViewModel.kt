@@ -6,17 +6,17 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.NewsRepository
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearUrl
+import kz.divtech.odyssey.shared.domain.repository.ArticleRepository
 import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 import kz.divtech.odyssey.shared.domain.repository.LoginRepository
+import kz.divtech.odyssey.shared.domain.repository.NewsRepository
+import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class LogoutViewModel @Inject constructor(
     private val faqRepository: FaqRepository,
     private val newsRepository: NewsRepository,
     private val articleRepository: ArticleRepository,
-    private val notificationRepository: NotificationRepository,
+    private val notificationRepository: NotificationsRepository,
     private val orgInfoRepository: OrgInfoRepository,
     private val termsRepository: TermsRepository,
     private val loginRepository: LoginRepository
@@ -49,7 +49,7 @@ class LogoutViewModel @Inject constructor(
     fun getNotificationsFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            notificationRepository.getNotificationFromFirstPage()
+            notificationRepository.getNotificationsFirstPage()
             pBarVisibility.set(View.GONE)
         }
 
@@ -71,7 +71,7 @@ class LogoutViewModel @Inject constructor(
         val deleteFaqAsync = async { faqRepository.deleteFaq() }
         val deleteNewsAsync = async { newsRepository.deleteNews() }
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
-        val deleteNotificationsAsync = async { notificationRepository.deleteNotifications() }
+        val deleteNotificationsAsync = async { notificationRepository.deleteNoficiations() }
         val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
         val deleteTermsFile = async { termsRepository.deleteTermsFile() }
         deleteTripsAsync.await()

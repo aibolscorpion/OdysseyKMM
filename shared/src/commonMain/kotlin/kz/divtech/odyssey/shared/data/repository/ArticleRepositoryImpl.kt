@@ -7,21 +7,22 @@ import io.ktor.client.request.post
 import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.data_source.FullArticleDataSource
 import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticle
-import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticleReponse
+import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticleResponse
 import kz.divtech.odyssey.shared.domain.repository.ArticleRepository
 
 class ArticleRepositoryImpl(private val httpClient: HttpClient,
                             private val dataStoreManager: DataStoreManager,
                             private val dataSource: FullArticleDataSource
 ): ArticleRepository {
-    override suspend fun getArticleById(id: Int): Resource<FullArticleReponse> {
+    override suspend fun getArticleById(id: Int): Resource<FullArticleResponse> {
         return try {
-            val result: FullArticleReponse = httpClient.get{
+            val result: FullArticleResponse = httpClient.get{
                 url(HttpRoutes(dataStoreManager).getArticleById(id))
             }.body()
             dataSource.insertArticle(result.data)
@@ -46,7 +47,7 @@ class ArticleRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getArticleFromDbById(id: Int): FullArticle? {
+    override suspend fun getArticleFromDbById(id: Int): Flow<FullArticle?> {
         return dataSource.getArticleById(id)
     }
 

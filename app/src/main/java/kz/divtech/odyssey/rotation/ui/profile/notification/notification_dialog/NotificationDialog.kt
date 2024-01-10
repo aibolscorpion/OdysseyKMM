@@ -17,8 +17,8 @@ import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
 import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
 
 @AndroidEntryPoint
 class NotificationDialog : BottomSheetDialogFragment() {

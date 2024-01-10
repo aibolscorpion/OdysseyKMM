@@ -14,7 +14,7 @@ interface NotificationsRepository {
 
     fun getPagingNotification(): Flow<PagingData<Notification>>
     suspend fun getNotificationsPagingSource(): List<Notification>
-    suspend fun getFirstThreeNotificationsFromBD(): List<Notification>
+    suspend fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>>
 
     suspend fun deleteNoficiations()
 }

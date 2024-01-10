@@ -43,7 +43,6 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_TICKET
 import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.PermissionRationale
@@ -51,6 +50,7 @@ import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguag
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository

@@ -8,14 +8,15 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
@@ -27,6 +28,8 @@ import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.showBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.showToolbar
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.convertToPushNotification
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -129,15 +132,15 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
         viewModel.getNotificationFromFirstPage()
 
-        viewModel.threeNotifications.observe(viewLifecycleOwner) { notificationList ->
+        lifecycleScope.launch {
+            viewModel.getThreeNotificationsFromDB().observe(viewLifecycleOwner) { notificationList ->
+                binding.showAllNotificationsBtn.isVisible = notificationList.isNotEmpty()
+                binding.emptyNotificationsTV.isVisible = notificationList.isEmpty()
 
-            binding.showAllNotificationsBtn.isVisible = notificationList.isNotEmpty()
-            binding.emptyNotificationsTV.isVisible = notificationList.isEmpty()
-
-            notificationList.isNotEmpty().let {
-                adapter.setNotificationList(notificationList)
+                notificationList.isNotEmpty().let {
+                    adapter.setNotificationList(notificationList)
+                }
             }
-
         }
     }
 

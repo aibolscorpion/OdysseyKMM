@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.help.press_service.news.paging
 
 import androidx.recyclerview.widget.DiffUtil
-import kz.divtech.odyssey.rotation.domain.model.help.press_service.news.Article
+import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 
 class NewsDiffCallBack : DiffUtil.ItemCallback<Article>() {
 

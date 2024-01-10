@@ -6,15 +6,15 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notification
-import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
+import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class NotificationViewModel @Inject constructor(private val notificationRepository: NotificationRepository): ViewModel() {
+class NotificationViewModel @Inject constructor(private val notificationRepository: NotificationsRepository): ViewModel() {
 
     fun getPagingNotifications(): Flow<PagingData<Notification>> {
-        return notificationRepository.getPagingNotifications()
+        return notificationRepository.getPagingNotification()
             .cachedIn(viewModelScope)
     }
 
