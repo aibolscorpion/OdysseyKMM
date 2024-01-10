@@ -1,10 +1,10 @@
 package kz.divtech.odyssey.shared.data.local.data_source.faq
 
-import database.Faq
+import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
-fun List<Faq>.toFaqList(): List<kz.divtech.odyssey.shared.domain.model.help.faq.Faq>{
+fun List<database.Faq>.toFaqList(): List<Faq>{
     return this.map {
-        kz.divtech.odyssey.shared.domain.model.help.faq.Faq(
+        Faq(
             id = it.id.toInt(),
             answer = it.answer,
             question =  it.question

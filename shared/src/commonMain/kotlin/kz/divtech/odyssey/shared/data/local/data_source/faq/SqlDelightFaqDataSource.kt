@@ -1,13 +1,19 @@
 package kz.divtech.odyssey.shared.data.local.data_source.faq
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odssey.database.OdysseyDatabase
 import kz.divtech.odyssey.shared.domain.data_source.FaqDataSource
 import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
 class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
     private val queries = database.faqQueries
-    override suspend fun getFaq(): List<Faq> {
-        return queries.getFaqList().executeAsList().toFaqList()
+    override suspend fun getFaq(): Flow<List<Faq>> {
+        return queries.getFaqList(mapper = { id, question, answer, _, _ ->
+            Faq(id.toInt(), question, answer)
+        }).asFlow().mapToList(Dispatchers.IO)
     }
 
     override suspend fun searchFaq(searchQuery: String): List<Faq> {

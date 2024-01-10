@@ -4,7 +4,7 @@
     <data>
         <variable
             name="faq"
-            type="kz.divtech.odyssey.rotation.domain.model.help.faq.Faq" />
+            type="kz.divtech.odyssey.shared.domain.model.help.faq.Faq" />
     </data>
 
     <LinearLayout

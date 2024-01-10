@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ItemFaqBinding
-import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
 class FaqAdapter : RecyclerView.Adapter<FaqAdapter.ViewHolder>() {
     private val oldFaqList = mutableListOf<Faq>()

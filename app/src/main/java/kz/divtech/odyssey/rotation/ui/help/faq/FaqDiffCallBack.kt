@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.help.faq
 
 import androidx.recyclerview.widget.DiffUtil
-import kz.divtech.odyssey.rotation.domain.model.help.faq.Faq
+import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
 class FaqDiffCallBack(private val newList: List<Faq>, private val  oldList: List<Faq>)  : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size

@@ -17,11 +17,9 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.data.remote.result.asFailure
-import kz.divtech.odyssey.rotation.data.remote.result.isFailure
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
-import java.net.UnknownHostException
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class FaqFragment : Fragment() {
@@ -47,18 +45,20 @@ class FaqFragment : Fragment() {
 
         viewModel.faqResult.observe(viewLifecycleOwner){ result ->
             result?.let{
-                if(result.isFailure() && result.asFailure().error !is UnknownHostException){
-                    Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+                if(result is Resource.Error){
+                    Toast.makeText(requireContext(), "${result.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
         viewModel.getFaqListFromServer()
 
-        viewModel.faqLiveData.observe(viewLifecycleOwner) { faqList ->
-            binding.faqSearchView.isVisible = faqList.isNotEmpty()
-            binding.emptyFaq.root.isVisible = faqList.isEmpty()
-            faqAdapter.setList(faqList)
+        lifecycleScope.launch {
+            viewModel.faqLiveData().observe(viewLifecycleOwner) { faqList ->
+                binding.faqSearchView.isVisible = faqList.isNotEmpty()
+                binding.emptyFaq.root.isVisible = faqList.isEmpty()
+                faqAdapter.setList(faqList)
+            }
         }
 
         binding.faqSearchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{

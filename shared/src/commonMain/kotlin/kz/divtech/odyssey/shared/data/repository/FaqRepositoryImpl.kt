@@ -5,6 +5,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.url
 import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
 import kz.divtech.odyssey.shared.domain.data_source.FaqDataSource
@@ -27,7 +28,7 @@ class FaqRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getFaqListFromDb(): List<Faq> {
+    override suspend fun getFaqListFromDb(): Flow<List<Faq>> {
         return dataSource.getFaq()
     }
 
