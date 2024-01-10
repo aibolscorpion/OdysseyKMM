@@ -9,12 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogCallSupportBinding
 import kz.divtech.odyssey.rotation.common.utils.ContactUtil
@@ -33,13 +35,14 @@ class CallSupportDialog : BottomSheetDialogFragment(){
         dataBinding.thisDialog = this
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        viewModel.orgInfoLiveData.observe(viewLifecycleOwner){
-            it?.let { orgInfo ->
-                dataBinding.callSupportDesc.text =
-                    getString(R.string.call_support_content, orgInfo.supportPhone)
-
-                dataBinding.callSupportBtn.setOnClickListener {
-                    ContactUtil.callSupport(this, orgInfo.supportPhone)
+        lifecycleScope.launch {
+            viewModel.getOrgInfoFromDB().observe(viewLifecycleOwner){
+                it?.let { orgInfo ->
+                    dataBinding.callSupportDesc.text =
+                        getString(R.string.call_support_content, orgInfo.supportPhone)
+                    dataBinding.callSupportBtn.setOnClickListener {
+                        ContactUtil.callSupport(requireContext(), orgInfo.supportPhone)
+                    }
                 }
             }
         }

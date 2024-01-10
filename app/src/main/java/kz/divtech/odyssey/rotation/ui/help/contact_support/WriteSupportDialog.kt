@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.DialogWriteSupportBinding
 import kz.divtech.odyssey.rotation.common.utils.ContactUtil
@@ -30,14 +32,16 @@ class WriteSupportDialog : BottomSheetDialogFragment() {
         dataBinding.thisDialog = this
         dataBinding.contactSupport = ContactUtil
 
-        viewModel.orgInfoLiveData.observe(viewLifecycleOwner){
-            it?.let { orgInfo ->
-                dataBinding.writeWhatsappBtn.setOnClickListener {
-                    ContactUtil.writeSupportOnWhatsapp(this, orgInfo.whatsappPhone)
-                }
-                dataBinding.writeTelegramBtn.setOnClickListener{
-                    orgInfo.telegramId?.let { it1 ->
-                        ContactUtil.writeSupportOnTelegram(this, it1)
+        lifecycleScope.launch {
+            viewModel.getOrgInfoFromDB().observe(viewLifecycleOwner){
+                it?.let { orgInfo ->
+                    dataBinding.writeWhatsappBtn.setOnClickListener {
+                        ContactUtil.writeSupportOnWhatsapp(requireContext(), orgInfo.whatsappPhone)
+                    }
+                    dataBinding.writeTelegramBtn.setOnClickListener{
+                        orgInfo.telegramId?.let { it1 ->
+                            ContactUtil.writeSupportOnTelegram(requireContext(), it1)
+                        }
                     }
                 }
             }

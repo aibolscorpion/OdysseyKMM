@@ -12,12 +12,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundReasonBinding
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class RefundReasonFragment: Fragment() {
@@ -38,11 +37,12 @@ class RefundReasonFragment: Fragment() {
         setRadioGroup()
 
         viewModel.sendRefundResult.observe(viewLifecycleOwner){ result ->
-            if(result.isSuccess()){
-                val refundId = result.asSuccess().value["id"]!!
-                openRefundSendFragment(refundId)
+            if(result is Resource.Success){
+                result.data?.let {
+                    openRefundSendFragment(it.id)
+                }
             }else{
-                Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${result.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

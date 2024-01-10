@@ -12,9 +12,9 @@ import kz.divtech.odyssey.rotation.domain.model.profile.notifications.Notificati
 import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
-import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
+import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,7 +40,7 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
     fun getOrgInfoFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            orgInfoRepository.getOrgInfoFromServer()
+            orgInfoRepository.getOrgInfo()
             pBarVisibility.set(View.GONE)
         }
 

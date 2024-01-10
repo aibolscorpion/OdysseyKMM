@@ -8,16 +8,16 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.FaqRepository
 import kz.divtech.odyssey.rotation.data.repository.NewsRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
-import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearUrl
-import kz.divtech.odyssey.rotation.data.repository.LoginRepository
+import kz.divtech.odyssey.shared.domain.repository.FaqRepository
+import kz.divtech.odyssey.shared.domain.repository.LoginRepository
+import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,7 +56,7 @@ class LogoutViewModel @Inject constructor(
     fun logoutFromServer(){
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            loginRepository.logoutFromServer()
+            loginRepository.logout()
             _isSuccessfullyLoggedOut.value = true
             pBarVisibility.set(View.GONE)
         }

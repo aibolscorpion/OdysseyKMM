@@ -17,12 +17,8 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.data.repository.ArticleRepository
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.FaqRepository
-import kz.divtech.odyssey.rotation.data.repository.LoginRepository
 import kz.divtech.odyssey.rotation.data.repository.NewsRepository
 import kz.divtech.odyssey.rotation.data.repository.NotificationRepository
-import kz.divtech.odyssey.rotation.data.repository.OrgInfoRepository
-import kz.divtech.odyssey.rotation.data.repository.RefundRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
@@ -87,25 +83,8 @@ object AppModule {
     }
 
     @Provides
-    fun provideLoginRepository(apiService: ApiService): LoginRepository{
-        return LoginRepository(apiService)
-    }
-
-    @Provides
     fun provideTermsRepository(dao: Dao, apiService: ApiService, proxyService: ProxyApiService): TermsRepository{
         return TermsRepository(dao, apiService, proxyService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideFaqRepository(dao: Dao, apiService: ProxyApiService): FaqRepository{
-        return FaqRepository(dao, apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideOrgInfoRepository(dao: Dao, apiService: ProxyApiService): OrgInfoRepository{
-        return OrgInfoRepository(dao, apiService)
     }
 
     @Provides
@@ -116,11 +95,6 @@ object AppModule {
     @Provides
     fun provideTripsRepository(dao: Dao, apiService: ApiService): TripsRepository{
         return TripsRepository(dao, apiService)
-    }
-
-    @Provides
-    fun provideRefundRepository(apiService: ApiService): RefundRepository{
-        return RefundRepository(apiService)
     }
 
     @Provides
