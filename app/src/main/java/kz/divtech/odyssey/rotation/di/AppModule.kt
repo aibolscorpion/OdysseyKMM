@@ -16,7 +16,6 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
 import kz.divtech.odyssey.shared.data.local.data_source.active_trips.SqlDelightActiveTripsDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.archive_trips.SqlDelightArchiveTripsTripsDataSource
@@ -69,11 +68,6 @@ object AppModule {
     }
 
     @Provides
-    fun provideTermsRepository(dao: Dao, apiService: ApiService, proxyService: ProxyApiService): TermsRepository{
-        return TermsRepository(dao, apiService, proxyService)
-    }
-
-    @Provides
     fun provideApiService() : ApiService {
         return RetrofitClient.getApiService()
     }
@@ -104,8 +98,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedTermsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): kz.divtech.odyssey.shared.domain.repository.TermsRepository{
-        return TermsRepositoryImpl(httpClient, dataStoreManager)
+    fun provideSharedTermsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+                                     employeeDataSource: EmployeeDataSource
+                                     ): kz.divtech.odyssey.shared.domain.repository.TermsRepository{
+        return TermsRepositoryImpl(httpClient, dataStoreManager, employeeDataSource)
     }
 
     @Provides

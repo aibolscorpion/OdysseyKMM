@@ -5,37 +5,39 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.divtech.odyssey.rotation.data.remote.result.*
-import kz.divtech.odyssey.rotation.data.repository.TermsRepository
+import kz.divtech.odyssey.rotation.common.Config
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.repository.TermsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class TermsViewModel @Inject constructor(private val repository: TermsRepository): ViewModel(){
-    private val _failureResult = MutableLiveData<Throwable>()
-    val failureResult: LiveData<Throwable> = _failureResult
+    private val _failureResult = MutableLiveData<String>()
+    val failureResult: LiveData<String> = _failureResult
 
     private val _text = MutableLiveData<String>()
     val text: LiveData<String> = _text
 
     val progressVisibility = ObservableInt(View.GONE)
-    val uaConfirmedLiveData = repository.uaConfirmed
+     fun getUaConfirmedFromDB() = repository.getUaConfirmedFromDB().asLiveData()
 
     fun getUserAgreementFromServer(){
         progressVisibility.set(View.VISIBLE)
         viewModelScope.launch(Dispatchers.IO) {
             val response = repository.getTermsOfAgreement()
-            if(response.isSuccess()){
-                writeFile(response.asSuccess().value.string())
-                readFile()
-            }else{
-                response.asFailure().error?.let {
-                    _failureResult.postValue(it)
+            if(response is Resource.Success){
+                response.data?.let {
+                    writeFile(it)
+                    readFile()
                 }
+            }else{
+                _failureResult.postValue(response.message.toString())
             }
             withContext(Dispatchers.Main){
                 progressVisibility.set(View.GONE)
@@ -47,10 +49,8 @@ class TermsViewModel @Inject constructor(private val repository: TermsRepository
         progressVisibility.set(View.VISIBLE)
         viewModelScope.launch {
             val response = repository.updateUAConfirm()
-            if(response.isFailure()){
-                response.asFailure().error?.let {
-                    _failureResult.postValue(it)
-                }
+            if(response is Resource.Error){
+                _failureResult.postValue(response.message.toString())
             }
             progressVisibility.set(View.GONE)
         }
@@ -58,16 +58,14 @@ class TermsViewModel @Inject constructor(private val repository: TermsRepository
 
     suspend fun readFile(){
         withContext(Dispatchers.IO){
-            _text.postValue(getFile().readText())
+            _text.postValue(Config.termsOfAgreementFile.readText())
         }
     }
 
     private suspend fun writeFile(text: String){
         withContext(Dispatchers.IO){
-            getFile().appendText(text)
+            Config.termsOfAgreementFile.appendText(text)
         }
     }
-
-    fun getFile() = repository.getFile()
 
 }

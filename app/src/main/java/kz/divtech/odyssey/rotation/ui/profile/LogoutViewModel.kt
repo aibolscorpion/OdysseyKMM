@@ -6,8 +6,8 @@ import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.TermsRepository
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearUrl
@@ -17,6 +17,7 @@ import kz.divtech.odyssey.shared.domain.repository.LoginRepository
 import kz.divtech.odyssey.shared.domain.repository.NewsRepository
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
+import kz.divtech.odyssey.shared.domain.repository.TermsRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
 
@@ -72,7 +73,7 @@ class LogoutViewModel @Inject constructor(
         val deleteFullArticlesAsync = async { articleRepository.deleteFullArticles() }
         val deleteNotificationsAsync = async { notificationRepository.deleteNoficiations() }
         val deleteOrgInfo = async { orgInfoRepository.deleteOrgInfo() }
-        val deleteTermsFile = async { termsRepository.deleteTermsFile() }
+        val deleteTermsFile = async { termsRepository.deleteTermsFile(Config.termsOfAgreementFile) }
         deleteTripsAsync.await()
         deleteEmployeeAsync.await()
         deleteFaqAsync.await()

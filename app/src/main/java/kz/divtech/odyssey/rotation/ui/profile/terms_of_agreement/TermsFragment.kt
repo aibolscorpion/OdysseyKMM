@@ -21,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
+import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentAuthTermsBinding
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 
@@ -58,14 +59,14 @@ class TermsFragment : Fragment() {
         }
 
         viewModel.failureResult.observe(viewLifecycleOwner){ result ->
-            Toast.makeText(requireContext(), "$result", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), result, Toast.LENGTH_SHORT).show()
         }
 
         viewModel.text.observe(viewLifecycleOwner){ text ->
             showData(text)
         }
 
-        if(viewModel.getFile().exists()){
+        if(Config.termsOfAgreementFile.exists()){
             lifecycleScope.launch{
                 viewModel.readFile()
             }

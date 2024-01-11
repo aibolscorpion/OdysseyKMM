@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.rotation.common
 
 import com.google.android.play.core.install.model.AppUpdateType
+import java.io.File
 
 object Config {
     const val DATABASE_NAME = "odyssey_rotation"
@@ -20,4 +21,5 @@ object Config {
     const val WHATSAPP = "https://wa.me/"
     const val TELEGRAM_PACKAGE_NAME ="org.telegram.messenger"
     const val TELEGRAM = "https://telegram.me/"
+    val termsOfAgreementFile: File = File(App.appContext.cacheDir, Constants.TERMS_FILE_NAME)
 }

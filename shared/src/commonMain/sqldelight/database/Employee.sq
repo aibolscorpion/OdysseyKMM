@@ -31,5 +31,10 @@ country_code, iin, number, position, phone, additional_phone, email, ua_confirme
 deleteEmployee:
 DELETE FROM Employee;
 
+getUAConfirmed:
+SELECT ua_confirmed FROM Employee;
+
+updateUAConfirmed:
+UPDATE Employee SET ua_confirmed = ?;
 
 

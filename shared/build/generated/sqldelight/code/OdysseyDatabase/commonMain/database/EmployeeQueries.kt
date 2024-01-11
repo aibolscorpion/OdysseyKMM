@@ -78,6 +78,11 @@ public class EmployeeQueries(
     )
   }
 
+  public fun getUAConfirmed(): Query<Long> = Query(-1_690_399_752, arrayOf("Employee"), driver,
+      "Employee.sq", "getUAConfirmed", "SELECT ua_confirmed FROM Employee") { cursor ->
+    cursor.getLong(0)!!
+  }
+
   public fun insertEmployee(
     id: Long?,
     full_name: String,
@@ -132,6 +137,15 @@ public class EmployeeQueries(
   public fun deleteEmployee() {
     driver.execute(863_857_748, """DELETE FROM Employee""", 0)
     notifyQueries(863_857_748) { emit ->
+      emit("Employee")
+    }
+  }
+
+  public fun updateUAConfirmed(ua_confirmed: Long) {
+    driver.execute(-888_115_953, """UPDATE Employee SET ua_confirmed = ?""", 1) {
+          bindLong(0, ua_confirmed)
+        }
+    notifyQueries(-888_115_953) { emit ->
       emit("Employee")
     }
   }

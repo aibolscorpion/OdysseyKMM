@@ -1,5 +1,9 @@
 package kz.divtech.odyssey.shared.data.local.data_source.employee
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToOneOrNull
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kz.divtech.odssey.database.OdysseyDatabase
@@ -38,5 +42,13 @@ class SqlDelightEmployeeDataSource(dataBase: OdysseyDatabase): EmployeeDataSourc
 
     override suspend fun deleteProfile() {
         queries.deleteEmployee()
+    }
+
+    override fun getUAConfirmed(): Flow<Long?> {
+        return queries.getUAConfirmed().asFlow().mapToOneOrNull(Dispatchers.IO)
+    }
+
+    override suspend fun updateUAConfirmed(uaConfirmed: Boolean) {
+        queries.updateUAConfirmed(if(uaConfirmed) 1L else 0L)
     }
 }
