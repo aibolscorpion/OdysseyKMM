@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ItemTicketNameBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.getFile
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.toDateString
 import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.getFileSize
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket
 
 class TicketNameRecyclerViewAdapter(private val downloadInterface: DownloadInterface,
         val context: Context): RecyclerView.Adapter<TicketNameRecyclerViewAdapter.ViewHolder>() {

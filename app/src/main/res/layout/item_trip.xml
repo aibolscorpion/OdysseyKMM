@@ -5,7 +5,7 @@
     <data>
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip" />
         <variable
             name="view"
             type="android.view.View" />
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:visibility="@{trip.is_extra() ? view.VISIBLE : view.GONE}"
+                android:visibility="@{trip.isExtra() ? view.VISIBLE : view.GONE}"
                 android:src="@drawable/icons_tabs_extra_trip"
                 android:contentDescription="@string/extra_application"
                 app:layout_constraintTop_toTopOf="parent"
@@ -94,7 +94,7 @@
                 android:textSize="14sp"
                 android:textColor="#B3748595"
                 android:lineSpacingExtra="2sp"
-                android:text="@{trip.end_station.name}"
+                android:text="@{trip.endStation.name}"
                 android:singleLine="true"
                 app:layout_constraintTop_toBottomOf="@+id/directionTV"
                 app:layout_constraintStart_toStartOf="parent"

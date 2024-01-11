@@ -27,7 +27,6 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.rotation.domain.model.EmptyData
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripDialog
@@ -36,6 +35,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTri
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_STATUS
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_DEPARTURE_DATE
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import java.net.UnknownHostException
 
 @AndroidEntryPoint

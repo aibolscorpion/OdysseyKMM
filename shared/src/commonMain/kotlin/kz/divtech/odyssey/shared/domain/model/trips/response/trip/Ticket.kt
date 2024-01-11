@@ -1,9 +1,12 @@
 package kz.divtech.odyssey.shared.domain.model.trips.response.trip
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class Ticket(
     val id: Int,
     @SerialName("express_id")
@@ -50,4 +53,4 @@ data class Ticket(
     val bookedAt: String?,
     @SerialName("ticket_url")
     val ticketUrl: String?
-)
+): Parcelable

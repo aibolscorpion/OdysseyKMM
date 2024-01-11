@@ -8,13 +8,13 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager
 import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
+import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +26,6 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
 
     val pBarVisibility = ObservableInt(View.GONE)
     val employeeLiveData: LiveData<Employee> = profileRepository.employee
-    val nearestActiveTrip: LiveData<SingleTrip> = tripsRepository.nearestActiveTrip.asLiveData()
     suspend fun getThreeNotificationsFromDB(): LiveData<List<Notification>> =
         notificationRepository.getFirstThreeNotificationsFromBD().asLiveData()
 
@@ -51,6 +50,9 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
             tripsRepository.getNearestActiveTrip()
             pBarVisibility.set(View.GONE)
         }
+
+    suspend fun getNearestActiveTripFromDb(): LiveData<Trip?> =
+        tripsRepository.getNearestTripFromBd().asLiveData()
 
     fun getEmployeeFromServer() =
         viewModelScope.launch {

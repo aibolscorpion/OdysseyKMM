@@ -23,14 +23,14 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.DialogTripDetailBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.SegmentFullAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.adapters.TicketPriceAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.OpenTicketViewModel
 import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.getFile
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateByPattern
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket
 import java.io.File
 import java.time.LocalDate
 
@@ -130,7 +130,7 @@ class TripDetailDialog : BottomSheetDialogFragment() {
     }
 
     private fun setRefundButtons(){
-        val refundApplications = args.trip.refund_applications
+        val refundApplications = args.trip.refundApplications
         dataBinding.refundCL.isVisible = refundApplications.isNotEmpty()
         dataBinding.refundApplicationSizeTV.text = refundApplications.size.toString()
 

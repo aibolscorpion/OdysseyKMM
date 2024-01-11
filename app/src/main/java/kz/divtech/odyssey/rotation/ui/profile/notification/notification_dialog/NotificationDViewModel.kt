@@ -3,18 +3,18 @@ package kz.divtech.odyssey.rotation.ui.profile.notification.notification_dialog
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.SingleTrip
-import kz.divtech.odyssey.rotation.data.repository.TripsRepository
-import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.SingleTrip
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
+import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class NotificationDViewModel @Inject constructor(private val tripsRepository: TripsRepository,
                                                  private val notificationRepository: NotificationsRepository
 ) : ViewModel() {
-    private val _tripResult = MutableLiveData<Result<SingleTrip>>()
-    val tripResult: LiveData<Result<SingleTrip>> get() = _tripResult
+    private val _tripResult = MutableLiveData<Resource<SingleTrip>>()
+    val tripResult: LiveData<Resource<SingleTrip>> get() = _tripResult
 
     fun getTripById(id: Int){
         viewModelScope.launch {

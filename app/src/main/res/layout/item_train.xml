@@ -5,7 +5,7 @@
     <data>
         <variable
             name="train"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Train"/>
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Train"/>
     </data>
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:textSize="14sp"
             android:textColor="#808e9e"
             android:lineSpacingExtra="4sp"
-            android:text="@{@string/dash_sign_btw_two_text(train.dep_station_name, train.arr_station_name)}"
+            android:text="@{@string/dash_sign_btw_two_text(train.depStationName, train.arrStationName)}"
             tools:text="Алматы 2 – Караганды"/>
 
         <TextView
@@ -34,8 +34,8 @@
             android:layout_marginTop="2dp"
             android:textColor="#808e9e"
             android:lineSpacingExtra="4sp"
-            app:ticketDepDateTime="@{train.dep_date_time}"
-            app:ticketArrDateTime="@{train.arr_date_time}"
+            app:ticketDepDateTime="@{train.depDateTime}"
+            app:ticketArrDateTime="@{train.arrDateTime}"
             tools:text="8 фев, 16:40 – 8 фев, 23:20"/>
 
     </LinearLayout>

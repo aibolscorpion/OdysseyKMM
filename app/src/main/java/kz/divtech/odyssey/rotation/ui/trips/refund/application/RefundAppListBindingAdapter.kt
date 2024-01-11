@@ -10,10 +10,10 @@ import androidx.databinding.BindingAdapter
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DEFAULT_PATTERN
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateTimeToGivenPattern
 import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
+import kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem
 
 object RefundAppListBindingAdapter {
 
@@ -95,7 +95,7 @@ object RefundAppListBindingAdapter {
     @BindingAdapter("refundApp")
     @JvmStatic
     fun setDescByStatus(textView: TextView, refundApp: RefundAppItem){
-        val formattedDate = refundApp.updated_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+        val formattedDate = refundApp.updatedAt.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
             textView.context.getAppLocale())
         textView.apply {
             when (refundApp.status) {
@@ -112,7 +112,7 @@ object RefundAppListBindingAdapter {
                     setTextColor(getColor(R.color.refund_status_completed_process_text))
                 }
                 Constants.REFUND_STATUS_REJECTED -> {
-                    text = context.getString(R.string.refund_status_rejected_desc, refundApp.reject_reason)
+                    text = context.getString(R.string.refund_status_rejected_desc, refundApp.rejectReason)
                     setTextColor(getColor(R.color.refund_status_rejected_canceled_text))
                 }
                 Constants.REFUND_STATUS_CANCELED -> {
@@ -127,7 +127,7 @@ object RefundAppListBindingAdapter {
                     val strBuilder = StringBuilder()
                     for(position in 0 until refundApp.segments.size){
                         if(refundApp.segments[position].status == Constants.REFUND_STATUS_ERROR){
-                            strBuilder.append(" ${refundApp.realSegment!![position].train?.dep_station_name} - ${refundApp.realSegment!![position].train?.arr_station_name}.")
+                            strBuilder.append(" ${refundApp.realSegment!![position].train?.depStationName} - ${refundApp.realSegment!![position].train?.arrStationName}.")
                         }
                     }
                     text = context.getString(R.string.refund_status_partly_desc, strBuilder)

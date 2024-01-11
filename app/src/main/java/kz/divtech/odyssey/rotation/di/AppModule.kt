@@ -17,7 +17,6 @@ import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
 import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.data.repository.TermsRepository
-import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
 import kz.divtech.odyssey.shared.data.local.data_source.active_trips.SqlDelightActiveTripsDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.archive_trips.SqlDelightArchiveTripsTripsDataSource
@@ -72,12 +71,6 @@ object AppModule {
     @Provides
     fun provideTermsRepository(dao: Dao, apiService: ApiService, proxyService: ProxyApiService): TermsRepository{
         return TermsRepository(dao, apiService, proxyService)
-    }
-
-
-    @Provides
-    fun provideTripsRepository(dao: Dao, apiService: ApiService): TripsRepository{
-        return TripsRepository(dao, apiService)
     }
 
     @Provides

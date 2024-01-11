@@ -4,7 +4,7 @@
     <data>
         <variable
             name="segment"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment" />
         <variable
             name="segmentStatus"
             type="kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus" />
@@ -93,7 +93,7 @@
                     android:id="@+id/departureDateTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:depArrDate="@{segment.train.dep_date_time}"
+                    app:depArrDate="@{segment.train.depDateTime}"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="16sp"
                     android:textColor="#1b344f"
@@ -125,7 +125,7 @@
                     android:id="@+id/departureTimeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:depArrTime="@{segment.train.dep_date_time}"
+                    app:depArrTime="@{segment.train.depDateTime}"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="20sp"
                     android:textColor="#1b344f"
@@ -139,7 +139,7 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{segment.train.dep_station_name}"
+                    android:text="@{segment.train.depStationName}"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="14sp"
                     android:textColor="#748595"
@@ -236,7 +236,7 @@
                     android:id="@+id/trainNumberTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/number_sign_before_text(segment.train.display_number)}"
+                    android:text="@{@string/number_sign_before_text(segment.train.displayNumber)}"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="14sp"
                     android:textColor="#1b344f"
@@ -304,7 +304,7 @@
                     android:id="@+id/arrivalDateTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:depArrDate="@{segment.train.arr_date_time}"
+                    app:depArrDate="@{segment.train.arrDateTime}"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="16sp"
                     android:textColor="#1b344f"
@@ -320,7 +320,7 @@
                     android:id="@+id/arrivalTimeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:depArrTime="@{segment.train.arr_date_time}"
+                    app:depArrTime="@{segment.train.arrDateTime}"
                     android:fontFamily="@font/pt_root_ui_bold"
                     android:textSize="20sp"
                     android:textColor="#1b344f"
@@ -335,7 +335,7 @@
                     android:id="@+id/arrStationNameTV"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@{segment.train.arr_station_name}"
+                    android:text="@{segment.train.arrStationName}"
                     android:fontFamily="@font/pt_root_ui_medium"
                     android:textSize="14sp"
                     android:textColor="#748595"

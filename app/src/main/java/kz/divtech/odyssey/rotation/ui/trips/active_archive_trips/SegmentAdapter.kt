@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentShortBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.common.utils.Utils.getRefundSegmentStatus
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 
 class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
     private val listOfSegments = ArrayList<Segment>()
@@ -27,10 +27,10 @@ class SegmentAdapter : Adapter<SegmentAdapter.SegmentViewHolder>() {
         holder.binding.segmentInfoCL.isVisible = (segment.train != null)
         if(segment.train != null){
             holder.binding.segment = segment
-            holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refund_applications!!, listOfSegments[position].id)
+            holder.binding.refundSegmentStatus = getRefundSegmentStatus(trip?.refundApplications!!, listOfSegments[position].id)
         }else{
             holder.binding.segmentStationsTV.text = App.appContext.getString(
-                R.string.dash_sign_btw_two_text, segment.dep_station_name, segment.arr_station_name)
+                R.string.dash_sign_btw_two_text, segment.depStationName, segment.arrStationName)
         }
     }
 

@@ -6,8 +6,8 @@ import android.net.Uri
 import android.os.Environment
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import java.io.File
 
 object TicketDownloadUtil {
@@ -27,7 +27,7 @@ object TicketDownloadUtil {
     }
 
     fun Ticket.download(): Long {
-        val pdfUrl = this.ticket_url
+        val pdfUrl = this.ticketUrl
         val downloadManager = App.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(pdfUrl))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
@@ -37,7 +37,7 @@ object TicketDownloadUtil {
 
 
     private fun Ticket.downloadToExternalPublicFolder(): Long {
-        val pdfUrl = this.ticket_url
+        val pdfUrl = this.ticketUrl
         val downloadManager = App.appContext.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse(pdfUrl))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
@@ -60,7 +60,7 @@ object TicketDownloadUtil {
     }
 
     private fun Ticket.getFileName(): String{
-        return "${this.id} ${this.dep_station_name} - ${this.arr_station_name}.pdf"
+        return "${this.id} ${this.depStationName} - ${this.arrStationName}.pdf"
     }
 
 }

@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.TripDetailDialog" />
         <variable
             name="trip"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip" />
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.common.Constants" />
@@ -55,7 +55,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/icons_tabs_extra_trip"
-                        android:visibility="@{trip.is_extra() ? view.VISIBLE : view.GONE}" />
+                        android:visibility="@{trip.isExtra() ? view.VISIBLE : view.GONE}" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

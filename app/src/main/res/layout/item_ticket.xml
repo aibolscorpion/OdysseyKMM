@@ -4,7 +4,7 @@
     <data>
         <variable
             name="ticket"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket" />
     </data>
     <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +45,7 @@
                     android:textColor="#07213d"
                     android:letterSpacing="0.01"
                     android:lineSpacingExtra="0sp"
-                    android:text="@{@string/dash_sign_btw_two_text(ticket.dep_station_name, ticket.arr_station_name)}"
+                    android:text="@{@string/dash_sign_btw_two_text(ticket.depStationName, ticket.arrStationName)}"
                     tools:text="Алматы 1 - Уш Тобе"/>
 
                 <TextView
@@ -57,8 +57,8 @@
                     android:textColor="#808e9e"
                     android:lineSpacingExtra="4sp"
                     android:layout_marginTop="8dp"
-                    app:trainNumber="@{ticket.train_display_number}"
-                    app:isTalgo="@{ticket.is_talgo_train}"
+                    app:trainNumber="@{ticket.trainDisplayNumber}"
+                    app:isTalgo="@{ticket.isTalgoTrain}"
                     tools:text="КТЖ, 010Т «Тальго»"/>
 
                 <TextView
@@ -70,8 +70,8 @@
                     android:textColor="#808e9e"
                     android:lineSpacingExtra="4sp"
                     android:layout_marginTop="2dp"
-                    app:ticketDepDateTime="@{ticket.dep_date_time}"
-                    app:ticketArrDateTime="@{ticket.arr_date_time}"
+                    app:ticketDepDateTime="@{ticket.depDateTime}"
+                    app:ticketArrDateTime="@{ticket.arrDateTime}"
                     tools:text="8 фев, 16:40 – 8 фев, 23:20"/>
 
                 <View
@@ -89,10 +89,10 @@
                     android:textColor="#07213d"
                     android:lineSpacingExtra="2sp"
                     android:layout_marginTop="12dp"
-                    app:carNumber="@{ticket.car_number}"
-                    app:carTypeLabel="@{ticket.car_type_label}"
-                    app:carClass="@{ticket.car_class}"
-                    app:placeNumber="@{ticket.seat_number}"
+                    app:carNumber="@{ticket.carNumber}"
+                    app:carTypeLabel="@{ticket.carTypeLabel}"
+                    app:carClass="@{ticket.carClass}"
+                    app:placeNumber="@{ticket.seatNumber}"
                     tools:text="14 вагон • Купе • Класс 1Л • 2 место"/>
 
                 <TextView
@@ -104,7 +104,7 @@
                     android:textColor="#07213d"
                     android:lineSpacingExtra="2sp"
                     android:layout_marginTop="8dp"
-                    android:text="@{@string/number_sign_before_text(String.valueOf(ticket.express_id))}"
+                    android:text="@{@string/number_sign_before_text(String.valueOf(ticket.expressId))}"
                     tools:text="№77871063639754"/>
             </LinearLayout>
         </LinearLayout>

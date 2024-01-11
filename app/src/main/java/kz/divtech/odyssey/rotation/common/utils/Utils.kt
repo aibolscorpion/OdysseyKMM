@@ -15,10 +15,10 @@ import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
+import kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem
 import java.io.File
 import java.util.Locale
 
@@ -41,7 +41,7 @@ object Utils {
         if(refundAppList.isNotEmpty()){
             refundAppList.forEach { refundAppItem ->
                 refundAppItem.segments.forEach { refundSegment ->
-                    if(refundSegment.segment_id == segmentId){
+                    if(refundSegment.segmentId == segmentId){
                         return when(refundAppItem.status){
                             Constants.REFUND_STATUS_PENDING -> Constants.REFUND_STATUS_PENDING
                             Constants.REFUND_STATUS_REJECTED -> Constants.REFUND_STATUS_REJECTED

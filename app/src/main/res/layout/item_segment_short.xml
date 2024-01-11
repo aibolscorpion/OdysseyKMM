@@ -5,7 +5,7 @@
     <data>
         <variable
             name="segment"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment" />
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.common.Constants" />
@@ -52,8 +52,8 @@
                 android:lineSpacingExtra="4sp"
                 android:layout_weight="0.5"
                 app:segmentStatus="@{segment.status}"
-                app:depStationName="@{segment.train.dep_station_name}"
-                app:arrStationName="@{segment.train.arr_station_name}"
+                app:depStationName="@{segment.train.depStationName}"
+                app:arrStationName="@{segment.train.arrStationName}"
                 android:layout_marginStart="6dp"
                 android:maxLines="2"
                 android:textAllCaps="false"
@@ -76,7 +76,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:src="@drawable/icon_tabs_on_waiting_list"
-                    android:visibility="@{segment.active_process.equals(constants.WATCHING) ? view.VISIBLE : view.GONE}"
+                    android:visibility="@{segment.activeProcess.equals(constants.WATCHING) ? view.VISIBLE : view.GONE}"
                     android:layout_marginEnd="5dp"
                     tools:visibility="visible" />
 
@@ -91,8 +91,8 @@
                     android:singleLine="true"
                     android:textAllCaps="false"
                     app:segmentStatus="@{segment.status}"
-                    app:depDateTime="@{segment.train.dep_date_time}"
-                    app:arrDateTime="@{segment.train.arr_date_time}"
+                    app:depDateTime="@{segment.train.depDateTime}"
+                    app:arrDateTime="@{segment.train.arrDateTime}"
                     tools:text="10:40 - 16:20" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -108,7 +108,7 @@
                 android:letterSpacing="-0.01"
                 android:lineSpacingExtra="6sp"
                 app:segmentStatus="@{segment.status}"
-                app:depDateTime="@{segment.train.dep_date_time}"
+                app:depDateTime="@{segment.train.depDateTime}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/trainDateTimeLL"
                 tools:text="27 окт, вт" />

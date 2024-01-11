@@ -3,7 +3,7 @@
     <data>
         <variable
             name="refundApp"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem" />
         <variable
             name="constants"
             type="kz.divtech.odyssey.rotation.common.Constants" />

@@ -17,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
@@ -30,6 +29,7 @@ import kz.divtech.odyssey.rotation.common.utils.Utils.showBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.showToolbar
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.convertToPushNotification
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import org.threeten.bp.YearMonth
 import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
@@ -112,14 +112,16 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
         val segmentAdapter = SegmentAdapter()
         binding.nearestTripView.segmentsRV.adapter = segmentAdapter
 
-        viewModel.nearestActiveTrip.observe(viewLifecycleOwner) { trip ->
-            val isTripAvailable = (trip != null)
-            binding.nearestTripTV.isVisible = isTripAvailable
-            binding.nearestTripView.root.isVisible = isTripAvailable
+        lifecycleScope.launch {
+            viewModel.getNearestActiveTripFromDb().observe(viewLifecycleOwner) { trip ->
+                val isTripAvailable = (trip != null)
+                binding.nearestTripTV.isVisible = isTripAvailable
+                binding.nearestTripView.root.isVisible = isTripAvailable
 
-            trip?.data?.let{ data ->
-                binding.trip = data
-                segmentAdapter.setSegmentList(data)
+                trip?.let{ data ->
+                    binding.trip = data
+                    segmentAdapter.setSegmentList(data)
+                }
             }
         }
     }

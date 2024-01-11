@@ -14,10 +14,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.DialogNotificationBinding
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
 
 @AndroidEntryPoint
@@ -45,20 +44,20 @@ class NotificationDialog : BottomSheetDialogFragment() {
         isCancelable = !args.notification.isImportant
 
         viewModel.tripResult.observe(viewLifecycleOwner){ result ->
-            if(result.isSuccess()){
-                val trip = result.asSuccess().value
-                if(trip.data != null){
+            if(result is Resource.Success){
+                val trip = result.data?.data
+                if(trip != null){
                     when(args.notification.type){
                         Constants.NOTIFICATION_TYPE_APPLICATION, Constants.NOTIFICATION_TYPE_TICKET -> {
-                            if(trip.data.segments.isNotEmpty()){
-                                findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip.data))
+                            if(trip.segments.isNotEmpty()){
+                                findNavController().navigate(NotificationDialogDirections.actionGlobalTripDetailDialog(trip))
                             }else{
-                                findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip.data))
+                                findNavController().navigate(NotificationDialogDirections.actionGlobalTicketsAreNotPurchasedDialog(trip))
                             }
                         }
                         Constants.NOTIFICATION_TYPE_REFUND_APPLICATION -> {
                             findNavController().navigate(NotificationDialogDirections.
-                                actionGlobalRefundListFragment(null, trip.data))
+                                actionGlobalRefundListFragment(null, trip))
                         }
                     }
                 }else{

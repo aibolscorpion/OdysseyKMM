@@ -302,15 +302,15 @@
         android:label="TripDetailDialog"
         android:layout="@layout/dialog_trip_detail"
         tools:layout="@layout/dialog_trip_detail">
-        <argument
-            android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
         <action
             android:id="@+id/action_tripDetailDialog_to_chooseTicketRefundFragment"
             app:destination="@id/chooseTicketRefundFragment" />
         <action
             android:id="@+id/action_tripDetailDialog_to_chooseTicketForOpen"
             app:destination="@id/chooseTicketForOpen" />
+        <argument
+            android:name="trip"
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip" />
     </dialog>
     <dialog
         android:id="@+id/ticketsAreNotPurchasedDialog"
@@ -320,7 +320,7 @@
         tools:layout="@layout/dialog_tickets_are_not_purchased">
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip" />
     </dialog>
     <action
         android:id="@+id/action_global_callSupportDialog"
@@ -383,7 +383,7 @@
             app:destination="@id/refundReasonFragment" />
         <argument
             android:name="issuedTickets"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment[]" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment[]" />
         <argument
             android:name="tripId"
             app:argType="integer" />
@@ -438,11 +438,11 @@
             app:destination="@id/refundDetailFragment" />
         <argument
             android:name="issuedSegmentList"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment[]"
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment[]"
             app:nullable="true" />
         <argument
             android:name="trip"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip" />
     </fragment>
     <dialog
         android:id="@+id/cancelRefundDialog"
@@ -465,10 +465,10 @@
         tools:layout="@layout/fragment_refund_detail" >
         <argument
             android:name="refundAppItem"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
-
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem" />
     </fragment>
-    <action android:id="@+id/action_global_refundListFragment" app:destination="@id/refundListFragment" />
+    <action android:id="@+id/action_global_refundListFragment"
+        app:destination="@id/refundListFragment" />
     <fragment
         android:id="@+id/chooseTicketForOpen"
         android:name="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf.ChooseTicketForOpen"
@@ -476,7 +476,7 @@
         tools:layout="@layout/fragment_choose_ticket_for_open" >
         <argument
             android:name="issuedTickets"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket[]" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket[]" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

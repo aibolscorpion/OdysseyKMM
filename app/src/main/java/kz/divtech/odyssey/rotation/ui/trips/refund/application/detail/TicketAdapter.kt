@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTicketBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
 
 class TicketAdapter : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>() {
     private val oldTicketList = mutableListOf<Segment>()

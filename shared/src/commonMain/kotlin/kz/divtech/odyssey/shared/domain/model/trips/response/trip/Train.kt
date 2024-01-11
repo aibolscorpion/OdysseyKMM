@@ -1,9 +1,12 @@
 package kz.divtech.odyssey.shared.domain.model.trips.response.trip
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class Train(
     @SerialName("arr_date_time")
     val arrDateTime: String?,
@@ -30,4 +33,4 @@ data class Train(
     val updatedAt: String?,
     @SerialName("with_el_reg")
     val withElReg: Boolean?
-)
+): Parcelable

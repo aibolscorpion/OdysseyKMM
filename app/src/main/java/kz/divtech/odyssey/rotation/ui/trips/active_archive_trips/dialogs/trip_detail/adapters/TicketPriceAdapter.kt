@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.ItemTicketPriceBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket
 
 class TicketPriceAdapter : RecyclerView.Adapter<TicketPriceAdapter.TicketPriceViewHolder>() {
     private val ticketList = mutableListOf<Ticket>()
@@ -33,7 +33,7 @@ class TicketPriceAdapter : RecyclerView.Adapter<TicketPriceAdapter.TicketPriceVi
 
         fun bind(ticket: Ticket){
             binding.departureDestinationTV.text = context.getString(
-                R.string.dash_sign_btw_two_text, ticket.dep_station_name, ticket.arr_station_name)
+                R.string.dash_sign_btw_two_text, ticket.depStationName, ticket.arrStationName)
             binding.ticketPrice.text = context.getString(R.string.ticket_price, ticket.sum)
         }
     }

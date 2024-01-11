@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemRefundBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
+import kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem
 
 class RefundListAdapter(private val btnClick: RefundBtnClick) : RecyclerView.Adapter<RefundListAdapter.ApplicationViewHolder>() {
     private val oldRefundList = mutableListOf<RefundAppItem>()

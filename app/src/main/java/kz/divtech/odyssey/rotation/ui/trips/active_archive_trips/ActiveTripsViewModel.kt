@@ -5,9 +5,9 @@ import androidx.paging.PagingData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
-import kz.divtech.odyssey.rotation.data.repository.TripsRepository
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
+import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
 
 @HiltViewModel

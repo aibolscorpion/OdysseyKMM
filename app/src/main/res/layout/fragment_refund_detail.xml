@@ -4,7 +4,7 @@
     <data>
         <variable
             name="refundAppItem"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem" />
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +45,7 @@
             android:textColor="#07213d"
             android:lineSpacingExtra="2sp"
             android:gravity="end"
-            app:refundAppCreatedDateTime="@{refundAppItem.created_at}"
+            app:refundAppCreatedDateTime="@{refundAppItem.createdAt}"
             tools:text="3 янв 2023, 16:45"/>
 
         <View

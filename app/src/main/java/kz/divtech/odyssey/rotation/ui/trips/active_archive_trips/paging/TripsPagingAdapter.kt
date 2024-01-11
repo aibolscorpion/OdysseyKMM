@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemTripBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 
 class TripsPagingAdapter(private val onTripListener: OnTripListener) : PagingDataAdapter<Trip, TripsPagingAdapter.TripViewHolder>(
     TripsDiffCallBack()

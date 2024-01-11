@@ -4,7 +4,7 @@
     <data>
         <variable
             name="ticket"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,7 +31,7 @@
             android:layout_marginStart="12dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@+id/fileIV"
-            android:text="@{@string/dash_sign_btw_two_text(ticket.dep_station_name, ticket.arr_station_name)}"
+            android:text="@{@string/dash_sign_btw_two_text(ticket.depStationName, ticket.arrStationName)}"
             tools:text="Семей – Актогай"/>
 
         <TextView

@@ -1,10 +1,13 @@
 package kz.divtech.odyssey.shared.domain.model.trips.refund.applications
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 
 @Serializable
+@Parcelize
 data class RefundSegment(
     val id: Int,
     @SerialName("segment_id")
@@ -16,4 +19,4 @@ data class RefundSegment(
     val createdAt: String,
     @SerialName("updated_at")
     val updatedAt: String
-)
+): Parcelable

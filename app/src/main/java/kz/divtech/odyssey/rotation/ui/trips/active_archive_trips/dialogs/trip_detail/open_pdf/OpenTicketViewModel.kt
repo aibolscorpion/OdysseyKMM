@@ -1,9 +1,9 @@
 package kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.trip_detail.open_pdf
 
 import androidx.lifecycle.ViewModel
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Ticket
 import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.download
 import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.getFile
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Ticket
 import java.io.File
 
 class OpenTicketViewModel : ViewModel(){

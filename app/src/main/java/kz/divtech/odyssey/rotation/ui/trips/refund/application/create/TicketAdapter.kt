@@ -9,7 +9,7 @@ import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemTicketBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
 
 class TicketAdapter(private val checkListener: OnItemCheckListener) : RecyclerView.Adapter<TicketAdapter.TicketViewHolder>(){
     private val segmentList = mutableListOf<Segment>()

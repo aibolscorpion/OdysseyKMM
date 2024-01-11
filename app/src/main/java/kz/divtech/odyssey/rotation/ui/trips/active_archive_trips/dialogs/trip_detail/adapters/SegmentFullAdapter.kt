@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import kz.divtech.odyssey.rotation.common.utils.Utils.getRefundSegmentStatus
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 
@@ -52,8 +52,8 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
         private fun setTrainInfo(segment: Segment){
             binding.segment = segment
             binding.refundSegmentStatus =
-                trip?.refund_applications?.let { getRefundSegmentStatus(it, segment.id) }
-            binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.in_way_minutes)
+                trip?.refundApplications?.let { getRefundSegmentStatus(it, segment.id) }
+            binding.inWayTimeTV.text = parseMinutesToTime(segment.train?.inWayMinutes)
             setViewsByStatus(defineSegmentStatus(segment), segment)
             binding.trainTransferTV.apply {
                 if(segmentList.size > absoluteAdapterPosition+1) {
@@ -66,7 +66,7 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
         }
         private fun setNoTrainInfo(segment: Segment){
             binding.titleTV.text = context.getString(R.string.no_train_info_title,
-                segment.dep_station_name, segment.arr_station_name)
+                segment.depStationName, segment.arrStationName)
             binding.noSegmentInfoCL.isVisible = true
             binding.fullSegmentInfoCL.isVisible = false
         }
@@ -75,7 +75,7 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
             lateinit var segmentStatus: SegmentStatus
             when(segment.status){
                 Constants.STATUS_OPENED -> {
-                    segmentStatus = if(segment.active_process.equals(Constants.WATCHING)){
+                    segmentStatus = if(segment.activeProcess.equals(Constants.WATCHING)){
                         SegmentStatus.ON_THE_WAITING_LIST
                     }else{
                         SegmentStatus.OPENED
@@ -111,8 +111,8 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
                 SegmentStatus.CANCELED, SegmentStatus.RETURNED -> {
                     val textColor = context.getColor(R.color.returned_ticket_text)
                     val color = context.getColor(R.color.returned_bg)
-                    setCarriageAndPlaceNumber(textColor, segment.ticket?.car_number,
-                        segment.ticket?.seat_number)
+                    setCarriageAndPlaceNumber(textColor, segment.ticket?.carNumber,
+                        segment.ticket?.seatNumber)
                     setDirectionColor(color, R.drawable.icon_train_red,
                         R.drawable.icon_point_red)
 
@@ -126,8 +126,8 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
                 SegmentStatus.ISSUED -> {
                     val color = context.getColor(R.color.black)
                     val imageColor = context.getColor(R.color.issued_bg)
-                    setCarriageAndPlaceNumber(color, segment.ticket?.car_number,
-                        segment.ticket?.seat_number)
+                    setCarriageAndPlaceNumber(color, segment.ticket?.carNumber,
+                        segment.ticket?.seatNumber)
                     setDirectionColor(imageColor, R.drawable.icon_train_green,
                         R.drawable.icon_point_green)
                 }
@@ -154,18 +154,18 @@ class SegmentFullAdapter(val context: Context) : RecyclerView.Adapter<SegmentFul
 
         private fun getWaitingTime(segmentList: List<Segment>, position: Int): String{
             return if(segmentList[position+1].train != null){
-                val arrLocalDateTime = segmentList[position].train?.arr_date_time?.getLocalDateTimeByPattern()
-                val depLocalDateTime = segmentList[position+1].train?.dep_date_time?.getLocalDateTimeByPattern()
+                val arrLocalDateTime = segmentList[position].train?.arrDateTime?.getLocalDateTimeByPattern()
+                val depLocalDateTime = segmentList[position+1].train?.depDateTime?.getLocalDateTimeByPattern()
                 var tempDateTime: LocalDateTime = LocalDateTime.from(arrLocalDateTime)
 
                 val hours = tempDateTime.until(depLocalDateTime, ChronoUnit.HOURS)
                 tempDateTime = tempDateTime.plusHours(hours)
                 val minutes = tempDateTime.until(depLocalDateTime, ChronoUnit.MINUTES)
                 context.getString(R.string.train_transfer_with_time,
-                    segmentList[position].arr_station_name, hours, minutes)
+                    segmentList[position].arrStationName, hours, minutes)
             }else{
                 context.getString(R.string.train_transfer_without_time,
-                    segmentList[position].arr_station_name)
+                    segmentList[position].arrStationName)
             }
         }
 

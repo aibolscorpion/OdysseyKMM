@@ -45,13 +45,21 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             val result: SingleTrip = httpClient.get {
                 url(HttpRoutes(dataStoreManager).getNearestActiveTrip())
             }.body()
-            nearestTripDataSource.refreshNearesTrip(result.data!!)
+            if(result.data != null){
+                nearestTripDataSource.refreshNearesTrip(result.data)
+            }else{
+                nearestTripDataSource.deleteNearestTrip()
+            }
             Resource.Success(data = result)
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
             Resource.Error.Exception(e.message.toString())
         }
+    }
+
+    override suspend fun getNearestTripFromBd(): Flow<Trip?> {
+        return nearestTripDataSource.getNearestTrip()
     }
 
     override fun getTripsSortedByDate(
@@ -92,10 +100,6 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         return activeTripsDataSource.getActiveTripsSortedByStatus(statusType, direction)
     }
 
-    override suspend fun deleteActiveTrips() {
-        activeTripsDataSource.deleteActiveTrips()
-    }
-
     override suspend fun getArchiveTripsSortedByDateFromDb(
         statusType: List<String>,
         direction: List<String>
@@ -110,17 +114,9 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         return archiveTripsDataSource.getArchiveTripsSortedByStatus(statusType, direction)
     }
 
-
-    override suspend fun deleteArchiveTrips() {
+    override suspend fun deleteAllTrips() {
+        activeTripsDataSource.deleteActiveTrips()
         archiveTripsDataSource.deleteArchiveTrips()
-    }
-
-    override suspend fun getNearestTripFromBd(): Trip? {
-        return nearestTripDataSource.getNearestTrip()
-    }
-
-    override suspend fun deleteNearestTrip() {
         nearestTripDataSource.deleteNearestTrip()
     }
-
 }

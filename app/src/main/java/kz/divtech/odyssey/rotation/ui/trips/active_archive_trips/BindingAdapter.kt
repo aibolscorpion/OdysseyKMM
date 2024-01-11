@@ -19,8 +19,6 @@ import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundAppListBindingAdapter.dpToPx
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
@@ -31,6 +29,8 @@ import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateTim
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.formatDateToGivenPattern
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import java.time.temporal.ChronoUnit
 
 object BindingAdapter {
@@ -59,7 +59,7 @@ object BindingAdapter {
                     imageView.setImageResource(R.drawable.icons_tabs_opened_without_details)
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status.equals(Constants.STATUS_OPENED) &&
-                        trip.segments[0].active_process.equals(Constants.WATCHING)){
+                        trip.segments[0].activeProcess.equals(Constants.WATCHING)){
                         imageView.setImageResource(R.drawable.drawable_trip_status_opened_on_the_waiting_list)
                     }else{
                         imageView.setImageResource(R.drawable.drawable_trip_status_opened_with_details)
@@ -148,10 +148,10 @@ object BindingAdapter {
     }
 
     private fun generateIconForEachSegment(segment: Segment, statusSet: HashSet<SegmentStatus>,
-            layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
+                                           layerDrawable: LayerDrawable, icon: Int, iconBgLayerListItem: GradientDrawable){
         when(segment.status){
             Constants.STATUS_OPENED -> {
-                if(segment.active_process.equals(Constants.WATCHING)){
+                if(segment.activeProcess.equals(Constants.WATCHING)){
                     statusSet.add(SegmentStatus.ON_THE_WAITING_LIST)
                     iconBgLayerListItem.setColor(ContextCompat.getColor(App.appContext, R.color.on_the_waiting_list_bg))
                 }else{
@@ -286,7 +286,7 @@ object BindingAdapter {
             trip?.segments?.forEachIndexed { _, segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED ->
-                        if(segment.active_process.equals(Constants.WATCHING)){
+                        if(segment.activeProcess.equals(Constants.WATCHING)){
                             add(SegmentStatus.ON_THE_WAITING_LIST)
                         }
                     Constants.STATUS_RETURNED -> {
@@ -330,7 +330,7 @@ object BindingAdapter {
     @JvmStatic fun setDescription(textView: TextView, trip: Trip?){
         val context = textView.context
         val strBuilder = StringBuilder()
-        if (trip != null && trip.is_extra) {
+        if (trip != null && trip.isExtra) {
             strBuilder.append(context.getString(R.string.extra_application))
             strBuilder.append(Constants.SPACE)
         }
@@ -340,9 +340,9 @@ object BindingAdapter {
                     strBuilder.append(context.getString(R.string.opened_without_details_desc))
                 }else if(trip.segments.size == 1){
                     if(trip.segments[0].status == Constants.STATUS_OPENED &&
-                        trip.segments[0].active_process.equals(Constants.WATCHING)){
+                        trip.segments[0].activeProcess.equals(Constants.WATCHING)){
                         strBuilder.append(context.getString(R.string.opened_on_the_waiting_list_desc,
-                            trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                            trip.segments[0].watcherTimeLimit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
                                 context.getAppLocale())))
                     }else{
                         strBuilder.append(context.getString(R.string.opened_with_details_desc))
@@ -359,8 +359,8 @@ object BindingAdapter {
             Constants.STATUS_RETURNED -> {
                 if(trip.segments.size  == 1){
                     strBuilder.append(context.getString(R.string.returned_fully_one_segment_desc,
-                        trip.segments[0].closed_reason,
-                        trip.segments[0].ticket?.returned_at.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                        trip.segments[0].closedReason,
+                        trip.segments[0].ticket?.returnedAt.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
                             context.getAppLocale())
                     ))
                 }else{
@@ -385,11 +385,11 @@ object BindingAdapter {
             trip.segments.forEach{ segment ->
                 when(segment.status){
                     Constants.STATUS_OPENED -> {
-                        if(segment.active_process.equals(Constants.WATCHING)){
+                        if(segment.activeProcess.equals(Constants.WATCHING)){
                             statusSet.add(SegmentStatus.ON_THE_WAITING_LIST)
                             strBuilder.append(this.getString(
                                 R.string.on_the_waiting_list_more_than_one_segment,
-                                segment.watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                                segment.watcherTimeLimit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
                                 this.getAppLocale())
                             ))
                         }else{
@@ -406,7 +406,7 @@ object BindingAdapter {
                     Constants.STATUS_CANCELED, Constants.STATUS_RETURNED -> {
                         statusSet.add(SegmentStatus.RETURNED)
                         strBuilder.append(this.getString(
-                            R.string.returned_more_than_one_segment, segment.closed_reason))
+                            R.string.returned_more_than_one_segment, segment.closedReason))
                     }
                 }
                 strBuilder.append(Constants.SPACE)
@@ -417,11 +417,11 @@ object BindingAdapter {
                     return this.getString(R.string.opened_with_details_desc)
                 }else if(statusSet.contains(SegmentStatus.ON_THE_WAITING_LIST )) {
                     return this.getString(R.string.opened_on_the_waiting_list_desc,
-                        trip.segments[0].watcher_time_limit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
+                        trip.segments[0].watcherTimeLimit.formatDateTimeToGivenPattern(DEFAULT_PATTERN,
                         this.getAppLocale()))
                 }else if(statusSet.contains(SegmentStatus.RETURNED)){
                     return this.getString(
-                        R.string.returned_fully_desc, trip.segments[0].closed_reason)
+                        R.string.returned_fully_desc, trip.segments[0].closedReason)
                 }else if(statusSet.contains(SegmentStatus.ISSUED)){
                     return ""
                 }
@@ -437,15 +437,15 @@ object BindingAdapter {
     @BindingAdapter("trip")
     @JvmStatic fun setCityAndTotalTimeInWay(textView: TextView, trip: Trip){
         if(trip.segments.first().train != null && trip.segments.last().train != null){
-            val firstSegmentDepLocalDateTime = trip.segments.first().train?.dep_date_time?.getLocalDateTimeByPattern()
-            val lastSegmentArrLocalDateTime = trip.segments.last().train?.arr_date_time?.getLocalDateTimeByPattern()
+            val firstSegmentDepLocalDateTime = trip.segments.first().train?.depDateTime?.getLocalDateTimeByPattern()
+            val lastSegmentArrLocalDateTime = trip.segments.last().train?.arrDateTime?.getLocalDateTimeByPattern()
             val totalMinutes = firstSegmentDepLocalDateTime?.until(lastSegmentArrLocalDateTime, ChronoUnit.MINUTES)
             val hours = totalMinutes?.div(60)
             val minutes = totalMinutes?.rem(60)
-            val totalTimeInWay = textView.context.getString(R.string.total_time_in_way, trip.end_station?.name, hours, minutes)
+            val totalTimeInWay = textView.context.getString(R.string.total_time_in_way, trip.endStation?.name, hours, minutes)
             textView.text = totalTimeInWay
         }else{
-            trip.end_station?.name?.let {
+            trip.endStation?.name?.let {
                 textView.text = it
             }
         }

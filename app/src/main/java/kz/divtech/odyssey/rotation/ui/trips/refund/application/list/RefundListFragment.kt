@@ -17,9 +17,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentRefundListBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.response.trip.Segment
-import kz.divtech.odyssey.rotation.domain.model.trips.refund.applications.RefundAppItem
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundViewModel
+import kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem
+import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment
 
 @AndroidEntryPoint
 class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
@@ -39,7 +39,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
         super.onViewCreated(view, savedInstanceState)
 
         binding.thisDialog = this
-        val refundAppList = args.trip.refund_applications
+        val refundAppList = args.trip.refundApplications
         assignPendingStatusToIssuedSegments(refundAppList)
         binding.createRefundAppTV.isVisible = isShownCreateRefundBtn()
         adapter.setRefundList(getRefundListWithRealSegment(refundAppList))
@@ -60,7 +60,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
             val realSegment = mutableListOf<Segment>()
             refundAppItem.segments.forEach { refundSegment ->
                 args.trip.segments.forEach { segment ->
-                    if(segment.id == refundSegment.segment_id){
+                    if(segment.id == refundSegment.segmentId){
                         realSegment.add(segment)
                     }
                 }
@@ -75,7 +75,7 @@ class RefundListFragment : Fragment(), RefundListAdapter.RefundBtnClick {
             refundList.forEach { refundAppItem ->
                 if (refundAppItem.status == Constants.REFUND_STATUS_PENDING) {
                     refundAppItem.segments.forEach { refundSegment ->
-                        if (segment.id == refundSegment.segment_id) {
+                        if (segment.id == refundSegment.segmentId) {
                             segment.status = Constants.REFUND_STATUS_PENDING
                         }
                     }
