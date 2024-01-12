@@ -57,7 +57,6 @@ import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -124,7 +123,7 @@ class MainActivity : AppCompatActivity(), NotificationListener {
 
         viewModel.uaConfirmedLiveData.observe(this){ isUAConfirmed ->
             isUAConfirmed?.let {
-                if(it.not()){
+                if(it == 0L){
                     openTermsOfAgreementFragment()
                 }
             }

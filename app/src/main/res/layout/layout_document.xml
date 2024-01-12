@@ -3,7 +3,7 @@
     <data>
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
+            type="kz.divtech.odyssey.shared.domain.model.profile.Document" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
-            app:birthDate="@={document.issue_date}"
+            app:birthDate="@={document.issueDate}"
             style="@style/profileMenuTextStyle"
             android:focusable="false"
             android:background="@drawable/bg_date_edit_text"
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="4dp"
-            app:birthDate="@={document.expire_date}"
+            app:birthDate="@={document.expireDate}"
             style="@style/profileMenuTextStyle"
             android:focusable="false"
             android:background="@drawable/bg_date_edit_text"
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="@={document.issue_by}"
+            android:text="@={document.issueBy}"
             android:backgroundTint="@color/bottom_sheet_line"
             style="@style/profileMenuTextStyle"
             android:singleLine="true"
@@ -96,7 +96,7 @@
                 android:id="@+id/defaultDocumentSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@={document.use_as_default}"
+                android:checked="@={document.useAsDefault}"
                 android:paddingEnd="11dp"
                 android:layoutDirection="ltr"
                 app:layout_constraintTop_toTopOf="parent"

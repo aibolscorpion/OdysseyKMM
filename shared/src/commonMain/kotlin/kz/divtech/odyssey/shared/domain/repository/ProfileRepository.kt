@@ -1,6 +1,7 @@
 package kz.divtech.odyssey.shared.domain.repository
 
 import io.ktor.client.statement.HttpResponse
+import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
@@ -24,6 +25,6 @@ interface ProfileRepository {
     suspend fun updatePhoneNumberWithAuth(phoneNumber: String): Resource<CodeResponse>
     suspend fun updatePhoneConfirm(authRequest: AuthRequest) : Resource<HttpResponse>
     suspend fun insertProfile(profile: Profile)
-    suspend fun getProfileFromDb(): Profile?
+    fun getProfileFromDb(): Flow<Profile?>
     suspend fun deleteProfile()
 }

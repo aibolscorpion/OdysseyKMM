@@ -7,11 +7,11 @@
             name="documentDialog"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentDialog" />
         <variable
-            name="employee"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
+            name="profile"
+            type="kz.divtech.odyssey.shared.domain.model.profile.Profile" />
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
+            type="kz.divtech.odyssey.shared.domain.model.profile.Document" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.document.DocumentViewModel" />
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="7dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.first_name}"
+                    android:text="@{profile.firstName}"
                     tools:text="@string/name_placeholder" />
 
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.last_name}"
+                    android:text="@{profile.lastName}"
                     tools:text="@string/surname_placeholder" />
 
                 <TextView
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.patronymic}"
+                    android:text="@{profile.patronymic}"
                     tools:text="@string/father_name_placeholder" />
 
                 <TextView
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    app:birthDate="@{employee.birth_date}"
+                    app:birthDate="@{profile.birthDate}"
                     tools:text="@string/date_of_birth_placeholder" />
 
 
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:backgroundTint="@color/bottom_sheet_line"
-                    android:text="@{employee.iin}"
+                    android:text="@{profile.iin}"
                     tools:text="@string/iin_value" />
 
                 <include

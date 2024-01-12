@@ -7,13 +7,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.domain.model.DeviceInfo
+import kz.divtech.odyssey.shared.domain.model.DeviceInfo
+import kz.divtech.odyssey.shared.domain.model.profile.Profile
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
+import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
 
@@ -25,7 +25,7 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
 ) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
-    val employeeLiveData: LiveData<Employee> = profileRepository.employee
+    val employeeLiveData: LiveData<Profile?> = profileRepository.getProfileFromDb().asLiveData()
     suspend fun getThreeNotificationsFromDB(): LiveData<List<Notification>> =
         notificationRepository.getFirstThreeNotificationsFromBD().asLiveData()
 
@@ -54,10 +54,10 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
     suspend fun getNearestActiveTripFromDb(): LiveData<Trip?> =
         tripsRepository.getNearestTripFromBd().asLiveData()
 
-    fun getEmployeeFromServer() =
+    fun getProfileFromServer() =
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)
-            profileRepository.getAndInsertProfile()
+            profileRepository.getProfile()
             pBarVisibility.set(View.GONE)
         }
 

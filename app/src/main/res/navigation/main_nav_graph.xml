@@ -238,11 +238,11 @@
         tools:layout="@layout/dialog_id" >
         <argument
             android:name="employee"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee"
+            app:argType="kz.divtech.odyssey.shared.domain.model.profile.Profile"
             app:nullable="true" />
         <argument
             android:name="document"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.profile.Document" />
     </dialog>
     <fragment
         android:id="@+id/personalDataFragment"

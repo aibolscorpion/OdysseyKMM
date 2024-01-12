@@ -19,15 +19,15 @@ import kz.divtech.odyssey.rotation.common.Constants.PASSPORT
 import kz.divtech.odyssey.rotation.common.Constants.RESIDENCE
 import kz.divtech.odyssey.rotation.common.Constants.FOREIGN
 import kz.divtech.odyssey.rotation.databinding.FragmentDocumentsBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
+import kz.divtech.odyssey.shared.domain.model.profile.Document
+import kz.divtech.odyssey.shared.domain.model.profile.Profile
 
 @AndroidEntryPoint
 class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
     private val citizenDocumentList = listOf(ID_CARD, PASSPORT)
     private val foreignerDocumentList = listOf(PASSPORT, RESIDENCE, FOREIGN)
 
-    private var currentEmployee: Employee? = null
+    private var currentProfile: Profile? = null
     private val viewModel : DocumentsViewModel by viewModels()
     private var _binding: FragmentDocumentsBinding? = null
     private val binding get() = _binding!!
@@ -42,12 +42,14 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
 
         val adapter = DocumentsAdapter(this)
         binding.documentsRV.adapter = adapter
-        viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            currentEmployee = employee
-            if(employee.country_code == KAZAKHSTAN_CODE){
-                adapter.setUserDocumentList(employee.documents, citizenDocumentList)
-            }else{
-                adapter.setUserDocumentList(employee.documents, foreignerDocumentList)
+        viewModel.employeeLiveData.observe(viewLifecycleOwner){ profile ->
+            profile?.let {
+                currentProfile = profile
+                if(profile.countryCode == KAZAKHSTAN_CODE){
+                    adapter.setUserDocumentList(profile.documents, citizenDocumentList)
+                }else{
+                    adapter.setUserDocumentList(profile.documents, foreignerDocumentList)
+                }
             }
         }
     }
@@ -65,7 +67,7 @@ class DocumentsFragment : Fragment(), DocumentsAdapter.DocumentListener {
         with(findNavController()){
             if(R.id.documentsFragment == currentDestination?.id){
                 navigate(DocumentsFragmentDirections.actionDocumentsFragmentToDocumentDialog(
-                    currentEmployee, document))
+                    currentProfile, document))
             }
         }
     }

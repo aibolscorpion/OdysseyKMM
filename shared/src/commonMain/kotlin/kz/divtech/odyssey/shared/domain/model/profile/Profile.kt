@@ -1,9 +1,12 @@
 package kz.divtech.odyssey.shared.domain.model.profile
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class Profile(
     val id: Int,
     @SerialName("full_name")
@@ -32,4 +35,4 @@ data class Profile(
     @SerialName("ua_confirmed")
     val uaConfirmed: Boolean,
     val documents: List<Document>
-)
+): Parcelable

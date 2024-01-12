@@ -63,18 +63,24 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
 
         viewModel.smsCodeResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
-                if(response is Resource.Success) {
-                    response.data?.let {
-                        viewModel.setAuthLogId(it.authLogId)
-                        startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                        showSoftKeyboard(requireContext(), editTextList[0])
+                when (response) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            viewModel.setAuthLogId(it.authLogId)
+                            startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+                            showSoftKeyboard(requireContext(), editTextList[0])
+                        }
                     }
-                }else if(response is Resource.Error.HttpException.TooManyRequest){
-                    showContactSupportBtn()
-                    startTimer(response.seconds)
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
-                }else{
-                    showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
+
+                    is Resource.Error.HttpException.TooManyRequest -> {
+                        showContactSupportBtn()
+                        startTimer(response.seconds)
+                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
+                    }
+
+                    else -> {
+                        showErrorMessage(requireContext(), dataBinding.sendSmsFL, response.message.toString())
+                    }
                 }
                 editTextList.isEnabled(true)
             }

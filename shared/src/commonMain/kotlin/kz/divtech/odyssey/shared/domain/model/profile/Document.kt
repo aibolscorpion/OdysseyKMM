@@ -1,9 +1,12 @@
 package kz.divtech.odyssey.shared.domain.model.profile
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Parcelize
 data class Document(
     val id: Int?,
     @SerialName("expire_date")
@@ -15,4 +18,5 @@ data class Document(
     var number: String?,
     val type: String,
     @SerialName("use_as_default")
-    var useAsDefault: Boolean)
+    var useAsDefault: Boolean
+): Parcelable

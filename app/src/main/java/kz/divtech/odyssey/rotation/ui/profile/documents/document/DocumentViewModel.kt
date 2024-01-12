@@ -7,19 +7,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
-import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import okhttp3.ResponseBody
-import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.profile.Document
+import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class DocumentViewModel @Inject constructor(val profileRepository: ProfileRepository) : ViewModel() {
     val pBarVisibility = ObservableInt(View.GONE)
 
-    private val _updateDocumentResult = MutableLiveData<Result<ResponseBody>>()
-    val updateDocumentResult: LiveData<Result<ResponseBody>> = _updateDocumentResult
+    private val _updateDocumentResult = MutableLiveData<Resource<HttpResponse>>()
+    val updateDocumentResult: LiveData<Resource<HttpResponse>> = _updateDocumentResult
     fun updateDocument(document: Document){
         viewModelScope.launch {
             pBarVisibility.set(View.VISIBLE)

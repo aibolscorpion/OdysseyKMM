@@ -7,16 +7,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearAuthToken
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.clearUrl
+import kz.divtech.odyssey.shared.domain.model.profile.Profile
 import kz.divtech.odyssey.shared.domain.repository.ArticleRepository
 import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 import kz.divtech.odyssey.shared.domain.repository.LoginRepository
 import kz.divtech.odyssey.shared.domain.repository.NewsRepository
 import kz.divtech.odyssey.shared.domain.repository.NotificationsRepository
 import kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository
+import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import kz.divtech.odyssey.shared.domain.repository.TermsRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import javax.inject.Inject
@@ -34,17 +34,17 @@ class LogoutViewModel @Inject constructor(
     private val loginRepository: LoginRepository
 ): ViewModel() {
 
-    val employeeLiveData: LiveData<Employee> = profileRepository.employee
-    val uaConfirmedLiveData: LiveData<Boolean> = profileRepository.uaConfirmed
+    val employeeLiveData: LiveData<Profile?> = profileRepository.getProfileFromDb().asLiveData()
+    val uaConfirmedLiveData: LiveData<Long?> = termsRepository.getUaConfirmedFromDB().asLiveData()
 
     private val _isSuccessfullyLoggedOut = MutableLiveData<Boolean>()
     val isSuccessfullyLoggedOut = _isSuccessfullyLoggedOut
 
     val pBarVisibility = ObservableInt(View.GONE)
 
-    fun getAndInsterEmployee(){
+    fun getProfileFromServer(){
         viewModelScope.launch {
-            profileRepository.getAndInsertProfile()
+            profileRepository.getProfile()
         }
     }
     fun getNotificationsFromServer() =

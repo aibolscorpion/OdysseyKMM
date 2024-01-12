@@ -5,7 +5,7 @@
     <data>
         <variable
             name="employee"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee" />
+            type="kz.divtech.odyssey.shared.domain.model.profile.Profile" />
         <variable
             name="personalDataFragment"
             type="kz.divtech.odyssey.rotation.ui.profile.personal_data.PersonalDataFragment" />
@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            android:text="@={employee.first_name}"
+                            android:text="@={employee.firstName}"
                             android:singleLine="true"
                             tools:text="@string/name_placeholder" />
 
@@ -101,7 +101,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            android:text="@={employee.last_name}"
+                            android:text="@={employee.lastName}"
                             android:singleLine="true"
                             tools:text="@string/surname_placeholder" />
 
@@ -141,7 +141,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            android:text="@={employee.first_name_en}"
+                            android:text="@={employee.firstNameEn}"
                             android:singleLine="true"
                             tools:text="@string/name_en_placeholder" />
 
@@ -160,7 +160,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="7dp"
                             android:backgroundTint="@color/bottom_sheet_line"
-                            android:text="@={employee.last_name_en}"
+                            android:text="@={employee.lastNameEn}"
                             android:singleLine="true"
                             tools:text="@string/surname_en_placeholder" />
 
@@ -179,7 +179,7 @@
                             android:layout_marginTop="7dp"
                             android:background="@drawable/bg_date_edit_text"
                             android:focusable="false"
-                            app:birthDate="@={employee.birth_date}"
+                            app:birthDate="@={employee.birthDate}"
                             tools:text="@string/date_of_birth_placeholder" />
 
                         <TextView
@@ -257,7 +257,7 @@
                             android:layout_marginTop="4dp"
                             android:focusable="false"
                             style="@style/profileMenuTextStyle"
-                            app:countryCode="@{employee.country_code}"
+                            app:countryCode="@{employee.countryCode}"
                             android:paddingTop="6dp"
                             android:paddingBottom="6dp"
                             app:drawableEndCompat="@drawable/icons_tabs_right_blue"

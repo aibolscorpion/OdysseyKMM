@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.domain.model.profile.Profile
 
 interface EmployeeDataSource {
-    suspend fun getProfile(): Profile?
+    fun getProfile(): Flow<Profile?>
     suspend fun insertProfile(profile: Profile)
     suspend fun deleteProfile()
     fun getUAConfirmed(): Flow<Long?>

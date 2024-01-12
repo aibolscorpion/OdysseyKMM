@@ -36,10 +36,10 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getAndInsterEmployee()
+        viewModel.getProfileFromServer()
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
             employee?.let {
-                binding.employeeNameTV.text = it.full_name
+                binding.employeeNameTV.text = it.fullName
                 binding.employeeTableNumberTV.text = it.number
                 binding.employeePositionTV.text = it.position
             }

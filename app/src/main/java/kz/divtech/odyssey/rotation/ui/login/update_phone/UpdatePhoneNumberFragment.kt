@@ -56,8 +56,12 @@ class UpdatePhoneNumberFragment : Fragment() {
                 }
 
                 is Resource.Error.HttpException.UnprocessibleEntity -> {
-                    showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
-                        response.message.toString())
+                    response.errorResponse.errors.forEach { (field, errorMessages) ->
+                        if (field == "phone") {
+                            showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL,
+                                errorMessages.first())
+                        }
+                    }
                 }
 
                 else -> {

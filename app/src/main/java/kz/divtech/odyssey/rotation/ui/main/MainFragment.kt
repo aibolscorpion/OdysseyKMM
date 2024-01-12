@@ -83,8 +83,8 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
 
     private fun getEmployeeInfo(){
         viewModel.employeeLiveData.observe(viewLifecycleOwner){ employee ->
-            employee?.let { it ->
-                binding.employeeNameTV.text = it.full_name
+            employee?.let {
+                binding.employeeNameTV.text = it.fullName
             }
         }
         binding.employeeOrgTV.text = fetchOrganizationName()

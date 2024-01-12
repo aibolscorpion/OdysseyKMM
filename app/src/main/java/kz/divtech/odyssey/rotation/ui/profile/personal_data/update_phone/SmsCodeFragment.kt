@@ -15,16 +15,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.asSuccess
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
 import kz.divtech.odyssey.rotation.databinding.FragmentEnterCodeBinding
-import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericKeyEvent
 import kz.divtech.odyssey.rotation.ui.login.send_sms.GenericTextWatcher
 import kz.divtech.odyssey.rotation.ui.login.send_sms.OnFilledListener
@@ -32,6 +26,7 @@ import kz.divtech.odyssey.rotation.ui.login.send_sms.SmsBroadcastReceiver
 import kz.divtech.odyssey.rotation.common.utils.InputUtils
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPReceiveListener  {
@@ -75,43 +70,54 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
 
         viewModel.smsCodeResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
-                if(response.isSuccess()) {
-                    viewModel.setAuthLogId(response.asSuccess().value.authLogId)
-                    startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
-                    editTextList.isEnabled(true)
-                    KeyboardUtils.showSoftKeyboard(requireContext(), editTextList[0])
-                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)){
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                    startTimer(seconds)
-                    InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                        getString(R.string.too_many_request_message, seconds))
-                }else if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
-                    val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
-                        ValidationErrorResponse::class.java)
-                    errorResponse.errors.forEach{ (field, errorMessages) ->
-                        val firstErrorMessage = errorMessages.first()
-                        if(field == "phone"){
-                            InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL, firstErrorMessage)
+                when (response) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            viewModel.setAuthLogId(it.authLogId)
+                            startTimer(Config.COUNT_DOWN_TIMER_SECONDS)
+                            editTextList.isEnabled(true)
+                            KeyboardUtils.showSoftKeyboard(requireContext(), editTextList[0])
                         }
                     }
-                }else{
-                    InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL, "$response")
+
+                    is Resource.Error.HttpException.TooManyRequest -> {
+                        startTimer(response.seconds)
+                        InputUtils.showErrorMessage(
+                            requireContext(),
+                            dataBinding.sendSmsFL,
+                            response.message.toString()
+                        )
+                    }
+
+                    is Resource.Error.HttpException.UnprocessibleEntity -> {
+                        response.errorResponse.errors.forEach { (field, errorMessages) ->
+                            if (field == "phone") {
+                                InputUtils.showErrorMessage(
+                                    requireContext(), dataBinding.sendSmsFL,
+                                    errorMessages.first()
+                                )
+                            }
+                        }
+                    }
+
+                    else -> {
+                        InputUtils.showErrorMessage(
+                            requireContext(),
+                            dataBinding.sendSmsFL,
+                            response.message.toString()
+                        )
+                    }
                 }
             }
         }
 
         viewModel.updatedResult.observe(viewLifecycleOwner){ event ->
             event.getContentIfNotHandled()?.let { response ->
-                if(response.isSuccess()) {
+                if(response is Resource.Success) {
                     openPhoneUpdatedFragment()
-                }else if(response.isHttpException() && (response.statusCode == Constants.TOO_MANY_REQUEST_CODE)) {
-                    val seconds = Integer.valueOf(response.headers?.get(Constants.RETRY_AFTER)!!)
-                    InputUtils.showErrorMessage(
-                        requireContext(), dataBinding.sendSmsFL,
-                        getString(R.string.too_many_request_message, seconds))
                 }else{
                     InputUtils.showErrorMessage(requireContext(), dataBinding.sendSmsFL,
-                        "$response")
+                        "${response.message}")
                 }
             }
         }

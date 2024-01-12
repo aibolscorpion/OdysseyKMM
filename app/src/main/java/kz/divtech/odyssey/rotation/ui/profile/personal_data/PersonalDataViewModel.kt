@@ -4,33 +4,32 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.ktor.client.statement.HttpResponse
 import kotlinx.coroutines.launch
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Employee
-import kz.divtech.odyssey.rotation.data.repository.ProfileRepository
 import kz.divtech.odyssey.rotation.common.utils.Event
-import okhttp3.ResponseBody
-import kz.divtech.odyssey.rotation.data.remote.result.*
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.profile.Profile
+import kz.divtech.odyssey.shared.domain.repository.ProfileRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class PersonalDataViewModel @Inject constructor(val profileRepository: ProfileRepository): ViewModel() {
-    val employee = profileRepository.employee
+    val employeeLiveData: LiveData<Profile?> = profileRepository.getProfileFromDb().asLiveData()
     val pBarVisibility = ObservableInt(View.GONE)
 
     private var _personalDataUpdated = MutableLiveData<Event<Boolean>>()
     val personalDataUpdated: LiveData<Event<Boolean>> = _personalDataUpdated
 
-    private val _updatePersonalResult = MutableLiveData<Result<ResponseBody>>()
-    val updatePersonalResult: LiveData<Result<ResponseBody>> = _updatePersonalResult
+    private val _updatePersonalResult = MutableLiveData<Resource<HttpResponse>>()
+    val updatePersonalResult: LiveData<Resource<HttpResponse>> = _updatePersonalResult
 
 
-    fun updatePersonalData(employee: Employee, citizenshipChanged: Boolean){
+    fun updatePersonalData(profile: Profile, citizenshipChanged: Boolean){
         pBarVisibility.set(View.VISIBLE)
         viewModelScope.launch {
-            val response = profileRepository.updateProfile(employee)
-            if(response.isSuccess()){
-                profileRepository.getAndInsertProfile()
+            val response = profileRepository.updateProfile(profile)
+            if(response is Resource.Success){
+                profileRepository.getProfile()
                 _personalDataUpdated.value = Event(citizenshipChanged)
             }
             _updatePersonalResult.value = response

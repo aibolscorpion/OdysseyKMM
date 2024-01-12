@@ -14,20 +14,16 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
-import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.isFailure
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
 import kz.divtech.odyssey.rotation.domain.model.profile.Country
-import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
 import kz.divtech.odyssey.rotation.common.utils.Utils
+import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint
 class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
@@ -48,7 +44,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
                 bundle.getParcelable(countrySelectionResultKey) as Country?
             }
             selectedCountry?.let {
-                viewModel.employee.value?.country_code = it.code
+                viewModel.employeeLiveData.value?.countryCode = it.code
             }
         }
     }
@@ -65,9 +61,9 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         binding.personalDataFragment = this
         binding.viewModel = viewModel
 
-        viewModel.employee.observe(viewLifecycleOwner){
+        viewModel.employeeLiveData.observe(viewLifecycleOwner){
             it?.let {
-                initialCountryCode = it.country_code
+                initialCountryCode = it.countryCode
                 binding.employee = it
             }
         }
@@ -94,12 +90,9 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
         )
 
         viewModel.updatePersonalResult.observe(viewLifecycleOwner){ response ->
-            if(response.isHttpException() &&
-                (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)) {
+            if(response is Resource.Error.HttpException.UnprocessibleEntity) {
                     showErrorMessage(requireContext(), binding.personalDataFL, getString(R.string.invalid_data))
-                    val errorResponse = Gson().fromJson(response.error.errorBody?.string(),
-                        ValidationErrorResponse::class.java)
-                    errorResponse.errors.forEach{ (field, errorMessages) ->
+                    response.errorResponse.errors.forEach{ (field, errorMessages) ->
                         val firstErrorMessage = errorMessages.first()
                         when(field){
                             "first_name" -> {
@@ -140,8 +133,8 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
                             }
                         }
                     }
-            }else if(response.isFailure()){
-                Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
+            }else if(response is Resource.Error){
+                Toast.makeText(requireContext(), "${response.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -156,7 +149,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     fun checkCitizenshipAndUpdate(){
-        if(initialCountryCode != viewModel.employee.value?.country_code){
+        if(initialCountryCode != viewModel.employeeLiveData.value?.countryCode){
             showDefaultDocumentChangedDialog()
         }else{
             updatePersonalData(false)
@@ -168,7 +161,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     }
 
     private fun openCountryListFragment(countryList: List<Country>){
-        viewModel.employee.value?.country_code?.let {
+        viewModel.employeeLiveData.value?.countryCode?.let {
             findNavController().navigate(PersonalDataFragmentDirections.
             actionPersonalDataFragmentToCountryListFragment(countryList.toTypedArray(), it))
         }
@@ -177,7 +170,7 @@ class PersonalDataFragment : Fragment(), UpdatePersonalDataListener {
     override fun updatePersonalData(citizenshipChanged: Boolean) {
         if(requireContext().isNetworkAvailable()){
             if(validatePersonalData()){
-                viewModel.employee.value?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
+                viewModel.employeeLiveData.value?.let { viewModel.updatePersonalData(it, citizenshipChanged) }
             }else{
                 showErrorMessage(requireContext(), binding.personalDataFL, getString(R.string.invalid_data))
             }

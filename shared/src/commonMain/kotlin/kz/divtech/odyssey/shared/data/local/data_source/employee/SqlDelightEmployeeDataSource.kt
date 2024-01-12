@@ -8,12 +8,37 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kz.divtech.odssey.database.OdysseyDatabase
 import kz.divtech.odyssey.shared.domain.data_source.EmployeeDataSource
+import kz.divtech.odyssey.shared.domain.model.profile.Document
 import kz.divtech.odyssey.shared.domain.model.profile.Profile
 
 class SqlDelightEmployeeDataSource(dataBase: OdysseyDatabase): EmployeeDataSource {
     private val queries = dataBase.employeeQueries
-    override suspend fun getProfile(): Profile? {
-        return queries.getEmployee().executeAsOneOrNull()?.toProfile()
+    override fun getProfile(): Flow<Profile?> {
+        return queries.getEmployee(mapper = { id, full_name, first_name, last_name, patronymic,
+            first_name_en, last_name_en, birth_date, gender, country_code, iin, number,
+            position, phone, additional_phone, email, ua_confirmed, documents ->
+            val documents: List<Document>  = Json.decodeFromString(documents)
+            Profile(
+                id = id.toInt(),
+                fullName = full_name,
+                firstName = first_name,
+                lastName = last_name,
+                patronymic = patronymic,
+                firstNameEn = first_name_en,
+                lastNameEn = last_name_en,
+                birthDate = birth_date,
+                gender = gender,
+                countryCode = country_code,
+                iin = iin,
+                number = number,
+                position = position,
+                phone = phone,
+                additionalPhone = additional_phone,
+                email = email,
+                uaConfirmed = ua_confirmed == 1L,
+                documents = documents
+            )
+        }).asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
     override suspend fun insertProfile(profile: Profile) {

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="document"
-            type="kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document" />
+            type="kz.divtech.odyssey.shared.domain.model.profile.Document" />
         <variable
             name="listener"
             type="kz.divtech.odyssey.rotation.ui.profile.documents.documents.DocumentsAdapter.DocumentListener" />
@@ -42,7 +42,7 @@
                 android:textSize="13sp"
                 android:textColor="#1989fa"
                 android:lineSpacingExtra="3sp"
-                android:visibility="@{document.use_as_default ? view.VISIBLE : view.GONE}"
+                android:visibility="@{document.useAsDefault ? view.VISIBLE : view.GONE}"
                 android:background="@drawable/bg_use_as_default"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
@@ -133,8 +133,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     style="@style/profileMenuTextStyle"
-                    app:issueDate="@{document.issue_date}"
-                    app:expireDate="@{document.expire_date}"
+                    app:issueDate="@{document.issueDate}"
+                    app:expireDate="@{document.expireDate}"
                     android:textSize="14sp"
                     app:layout_constraintTop_toBottomOf="@id/expireDateTV"
                     app:layout_constraintStart_toStartOf="@id/expireDateTV"

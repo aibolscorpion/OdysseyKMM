@@ -12,19 +12,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.remote.result.isFailure
-import kz.divtech.odyssey.rotation.data.remote.result.isHttpException
 import kz.divtech.odyssey.rotation.databinding.DialogIdBinding
 import kz.divtech.odyssey.rotation.databinding.DialogPassportBinding
 import kz.divtech.odyssey.rotation.databinding.DialogRecidencyPermitBinding
-import kz.divtech.odyssey.rotation.domain.model.login.login.employee_response.Document
-import kz.divtech.odyssey.rotation.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.data.remote.result.isSuccess
+import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.domain.model.profile.Document
 
 @AndroidEntryPoint
 class DocumentDialog : BottomSheetDialogFragment() {
@@ -44,7 +40,7 @@ class DocumentDialog : BottomSheetDialogFragment() {
                 val idBinding = DialogIdBinding.inflate(inflater)
                 idBinding.documentDialog = this
                 idBinding.document = document
-                idBinding.employee = args.employee
+                idBinding.profile = args.employee
                 idBinding.viewModel = viewModel
                 docNumberET = idBinding.documentLayout.docNumberET
                 issuedByET = idBinding.documentLayout.issuedByET
@@ -87,21 +83,19 @@ class DocumentDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.updateDocumentResult.observe(viewLifecycleOwner){ response ->
-            if(response.isSuccess()){
+            if(response is Resource.Success){
                 Toast.makeText(requireContext(), R.string.data_was_successfully_updated, Toast.LENGTH_LONG).show()
                 dismiss()
-            }else if(response.isHttpException() && (response.statusCode == Constants.UNPROCESSABLE_ENTITY_CODE)){
-                val errorResponse =
-                    Gson().fromJson(response.error.errorBody?.string(), ValidationErrorResponse::class.java)
-                errorResponse.errors.forEach{ (field, errorMessages) ->
+            }else if(response is Resource.Error.HttpException.UnprocessibleEntity){
+                response.errorResponse.errors.forEach{ (field, errorMessages) ->
                     val firstErrorMessage = errorMessages.first()
                     when(field){
                         "number" -> docNumberET?.let { it.error = firstErrorMessage}
                         "issue_by" -> issuedByET?.let { it.error = firstErrorMessage}
                     }
                 }
-            }else if(response.isFailure()){
-                Toast.makeText(requireContext(), "$response", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "${response.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }

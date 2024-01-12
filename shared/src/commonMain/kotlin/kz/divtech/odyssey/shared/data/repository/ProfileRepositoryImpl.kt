@@ -11,9 +11,12 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.utils.io.errors.IOException
+import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.json.Json
 import kz.divtech.odyssey.shared.common.Config
+import kz.divtech.odyssey.shared.common.Constants
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
@@ -23,6 +26,7 @@ import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
 import kz.divtech.odyssey.shared.domain.model.auth.login.AuthRequest
 import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeRequest
 import kz.divtech.odyssey.shared.domain.model.auth.sendsms.CodeResponse
+import kz.divtech.odyssey.shared.domain.model.errors.BadRequest
 import kz.divtech.odyssey.shared.domain.model.errors.ValidationErrorResponse
 import kz.divtech.odyssey.shared.domain.model.profile.Document
 import kz.divtech.odyssey.shared.domain.model.profile.Profile
@@ -51,7 +55,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
         dataSource.insertProfile(profile)
     }
 
-    override suspend fun getProfileFromDb(): Profile? {
+    override fun getProfileFromDb(): Flow<Profile?> {
         return dataSource.getProfile()
     }
 
@@ -66,7 +70,14 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(profile)
             }
-            Resource.Success(data = result)
+            if(result.status.isSuccess()){
+                Resource.Success(data = result)
+            }else if(result.status == HttpStatusCode.UnprocessableEntity){
+                val errorResponse: ValidationErrorResponse = Json.decodeFromString(result.bodyAsText())
+                Resource.Error.HttpException.UnprocessibleEntity(errorResponse)
+            }else{
+                Resource.Error.HttpException.Exception(message = result.status.description)
+            }
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
@@ -96,7 +107,15 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(document)
             }
-            Resource.Success(data = result)
+            if(result.status.isSuccess()){
+                getProfile()
+                Resource.Success(data = result)
+            }else if(result.status == HttpStatusCode.UnprocessableEntity){
+                val errorResponse: ValidationErrorResponse = Json.decodeFromString(result.bodyAsText())
+                Resource.Error.HttpException.UnprocessibleEntity(errorResponse)
+            }else{
+                Resource.Error.HttpException.Exception(message = result.status.description)
+            }
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
@@ -118,13 +137,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 }
                 HttpStatusCode.UnprocessableEntity -> {
                     val errorResponse: ValidationErrorResponse = Json.decodeFromString(result.bodyAsText())
-                    var phoneErrorText: String? = null
-                    errorResponse.errors.forEach { (field, errorMessages) ->
-                        if (field == "phone") {
-                            phoneErrorText = errorMessages.first()
-                        }
-                    }
-                    Resource.Error.HttpException.UnprocessibleEntity(phoneErrorText ?: result.status.description)
+                    Resource.Error.HttpException.UnprocessibleEntity(errorResponse)
                 }
                 else -> {
                     Resource.Error.HttpException.Exception(result.status.description)
@@ -145,8 +158,28 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(codeRequest)
             }
-            val result: CodeResponse = response.body()
-            Resource.Success(result)
+            when (response.status) {
+                HttpStatusCode.OK -> {
+                    val result: CodeResponse = response.body()
+                    Resource.Success(result)
+                }
+                HttpStatusCode.BadRequest -> {
+                    val badRequest: BadRequest = Json.decodeFromString(response.bodyAsText())
+                    Resource.Error.HttpException.BadRequest(badRequest.message)
+                }
+                HttpStatusCode.UnprocessableEntity -> {
+                    val errorResponse: ValidationErrorResponse = Json.decodeFromString(response.bodyAsText())
+                    Resource.Error.HttpException.UnprocessibleEntity(errorResponse)
+                }
+                HttpStatusCode.TooManyRequests -> {
+                    val badRequest: BadRequest = Json.decodeFromString(response.bodyAsText())
+                    val seconds = response.headers[Constants.RETRY_AFTER]!!.toInt()
+                    Resource.Error.HttpException.TooManyRequest(seconds, badRequest.message)
+                }
+                else -> {
+                    Resource.Error.HttpException.Exception(response.status.description)
+                }
+            }
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
@@ -161,7 +194,24 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
                 contentType(ContentType.Application.Json)
                 setBody(authRequest)
             }
-            Resource.Success(data = result)
+            when {
+                result.status.isSuccess() -> {
+                    getProfile()
+                    Resource.Success(data = result)
+                }
+                result.status == HttpStatusCode.TooManyRequests -> {
+                    val badRequest: BadRequest = Json.decodeFromString(result.bodyAsText())
+                    val seconds = result.headers[Constants.RETRY_AFTER]!!.toInt()
+                    Resource.Error.HttpException.TooManyRequest(seconds, badRequest.message)
+                }
+                result.status == HttpStatusCode.BadRequest -> {
+                    val badRequest: BadRequest = Json.decodeFromString(result.bodyAsText())
+                    Resource.Error.HttpException.BadRequest(badRequest.message)
+                }
+                else -> {
+                    Resource.Error.HttpException.Exception(message = result.status.description)
+                }
+            }
         }catch (e: IOException){
             Resource.Error.IOException(e.message.toString())
         }catch (e: Exception){
