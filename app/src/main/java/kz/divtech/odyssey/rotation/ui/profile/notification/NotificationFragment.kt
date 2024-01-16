@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
-import kz.divtech.odyssey.rotation.domain.model.EmptyData
+import kz.divtech.odyssey.shared.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter

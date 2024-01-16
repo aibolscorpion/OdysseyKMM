@@ -5,7 +5,7 @@
     <data>
         <variable
             name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
+            type="kz.divtech.odyssey.shared.domain.model.EmptyData" />
         <variable
             name="thisFragment"
             type="kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.ActiveTripsFragment" />

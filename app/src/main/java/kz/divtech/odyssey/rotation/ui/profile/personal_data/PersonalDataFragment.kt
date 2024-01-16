@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentPersonalDataBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.Country
+import kz.divtech.odyssey.shared.domain.model.profile.Country
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.isEmailValid
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable

@@ -1,4 +1,4 @@
-package kz.divtech.odyssey.rotation.domain.model.profile
+package kz.divtech.odyssey.shared.domain.model.profile
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

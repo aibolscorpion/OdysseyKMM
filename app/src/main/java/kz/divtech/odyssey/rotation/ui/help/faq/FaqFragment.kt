@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentFaqBinding
-import kz.divtech.odyssey.rotation.domain.model.EmptyData
+import kz.divtech.odyssey.shared.domain.model.EmptyData
 import kz.divtech.odyssey.shared.common.Resource
 
 @AndroidEntryPoint

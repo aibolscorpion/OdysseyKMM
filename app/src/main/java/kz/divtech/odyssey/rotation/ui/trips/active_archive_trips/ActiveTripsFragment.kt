@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
-import kz.divtech.odyssey.rotation.domain.model.EmptyData
+import kz.divtech.odyssey.shared.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.ui.trips.TripsFragmentDirections
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.FilterTripDialog

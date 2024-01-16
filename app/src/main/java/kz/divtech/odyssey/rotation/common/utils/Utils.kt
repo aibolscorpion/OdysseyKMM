@@ -13,8 +13,8 @@ import com.google.gson.Gson
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.domain.model.profile.Country
-import kz.divtech.odyssey.rotation.domain.model.profile.CountryList
+import kz.divtech.odyssey.shared.domain.model.profile.Country
+import kz.divtech.odyssey.shared.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.ui.MainActivity
 import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification

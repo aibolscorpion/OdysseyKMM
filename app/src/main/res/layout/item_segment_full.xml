@@ -7,7 +7,7 @@
             type="kz.divtech.odyssey.shared.domain.model.trips.response.trip.Segment" />
         <variable
             name="segmentStatus"
-            type="kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus" />
+            type="kz.divtech.odyssey.shared.domain.model.trips.SegmentStatus" />
         <variable
             name="refundSegmentStatus"
             type="String" />

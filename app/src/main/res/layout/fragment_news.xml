@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsViewModel" />
         <variable
             name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
+            type="kz.divtech.odyssey.shared.domain.model.EmptyData" />
         <variable
             name="thisFragment"
             type="kz.divtech.odyssey.rotation.ui.help.press_service.news.NewsFragment" />

@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNewsBinding
-import kz.divtech.odyssey.rotation.domain.model.EmptyData
+import kz.divtech.odyssey.shared.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListener
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter

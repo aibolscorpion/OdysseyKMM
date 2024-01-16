@@ -19,7 +19,7 @@ import com.bumptech.glide.Glide
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.App
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
+import kz.divtech.odyssey.shared.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.ui.trips.refund.application.RefundAppListBindingAdapter.dpToPx
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_DAY_OF_WEEK_PATTERN
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.DAY_MONTH_PATTERN

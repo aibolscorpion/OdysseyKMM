@@ -49,13 +49,12 @@ import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-
     @Provides
     @Singleton
     fun provideHttpClient(dataStoreManager: DataStoreManager): HttpClient{
         return MainApi(dataStoreManager).httpClient
     }
+
     @Provides
     @Singleton
     fun provideSharedFindEmployeeRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager): kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository {
@@ -72,7 +71,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedTermsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+    fun provideSharedTermsRepository(httpClient: HttpClient,
+                                     dataStoreManager: DataStoreManager,
                                      employeeDataSource: EmployeeDataSource
                                      ): kz.divtech.odyssey.shared.domain.repository.TermsRepository{
         return TermsRepositoryImpl(httpClient, dataStoreManager, employeeDataSource)
@@ -80,33 +80,39 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedOrgInfoRepository(httpClient: HttpClient, dataSource: OrgInfoDataSource): kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository{
+    fun provideSharedOrgInfoRepository(httpClient: HttpClient,
+                                       dataSource: OrgInfoDataSource): kz.divtech.odyssey.shared.domain.repository.OrgInfoRepository{
         return OrgInfoRepositoryImpl(httpClient, dataSource)
     }
 
     @Provides
     @Singleton
-    fun provideSharedFaqRepository(httpClient: HttpClient, dataSource: FaqDataSource): kz.divtech.odyssey.shared.domain.repository.FaqRepository{
+    fun provideSharedFaqRepository(httpClient: HttpClient,
+                                   dataSource: FaqDataSource): kz.divtech.odyssey.shared.domain.repository.FaqRepository{
         return FaqRepositoryImpl(httpClient, dataSource)
     }
 
     @Provides
     @Singleton
-    fun provideSharedArticleRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager, dataSource: FullArticleDataSource):
+    fun provideSharedArticleRepository(httpClient: HttpClient,
+                                       dataStoreManager: DataStoreManager,
+                                       dataSource: FullArticleDataSource):
             kz.divtech.odyssey.shared.domain.repository.ArticleRepository{
         return ArticleRepositoryImpl(httpClient, dataStoreManager, dataSource)
     }
 
     @Provides
     @Singleton
-    fun provideSharedRefundRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager):
+    fun provideSharedRefundRepository(httpClient: HttpClient,
+                                      dataStoreManager: DataStoreManager):
             kz.divtech.odyssey.shared.domain.repository.RefundRepository{
         return RefundRepositoryImpl(httpClient, dataStoreManager)
     }
 
     @Provides
     @Singleton
-    fun provideSharedProfileRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+    fun provideSharedProfileRepository(httpClient: HttpClient,
+                                       dataStoreManager: DataStoreManager,
                                        dataSource: EmployeeDataSource):
             kz.divtech.odyssey.shared.domain.repository.ProfileRepository{
         return ProfileRepositoryImpl(httpClient, dataStoreManager, dataSource)
@@ -114,7 +120,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedNotificationsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+    fun provideSharedNotificationsRepository(httpClient: HttpClient,
+                                             dataStoreManager: DataStoreManager,
                                              dataSource: NotificationDataSource): NotificationsRepository{
         return NotificationsRepositoryImpl(httpClient, dataStoreManager, dataSource)
     }
@@ -133,7 +140,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideSharedNewsRepository(httpClient: HttpClient, dataStoreManager: DataStoreManager,
+    fun provideSharedNewsRepository(httpClient: HttpClient,
+                                    dataStoreManager: DataStoreManager,
                                     newsDataSource: NewsDataSource):
             kz.divtech.odyssey.shared.domain.repository.NewsRepository{
         return NewsRepositoryImpl(httpClient, dataStoreManager, newsDataSource)
@@ -213,6 +221,5 @@ object AppModule {
     fun provideNotificationDataSource(database: OdysseyDatabase): NotificationDataSource{
         return SqlDelightNotifcationDataSource(database)
     }
-
 
 }

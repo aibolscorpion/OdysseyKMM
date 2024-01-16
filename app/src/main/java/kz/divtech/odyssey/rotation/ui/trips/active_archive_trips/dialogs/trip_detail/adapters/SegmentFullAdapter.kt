@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.rotation.databinding.ItemSegmentFullBinding
-import kz.divtech.odyssey.rotation.domain.model.trips.SegmentStatus
+import kz.divtech.odyssey.shared.domain.model.trips.SegmentStatus
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.BindingAdapter.setSpannedText
 import kz.divtech.odyssey.rotation.common.utils.LocalDateTimeUtils.getLocalDateTimeByPattern
 import kz.divtech.odyssey.rotation.common.utils.Utils.getRefundSegmentStatus

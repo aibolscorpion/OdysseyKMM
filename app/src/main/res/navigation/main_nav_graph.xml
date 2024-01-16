@@ -495,7 +495,7 @@
         tools:layout="@layout/fragment_country_list">
         <argument
             android:name="countryList"
-            app:argType="kz.divtech.odyssey.rotation.domain.model.profile.Country[]" />
+            app:argType="kz.divtech.odyssey.shared.domain.model.profile.Country[]" />
         <argument
             android:name="countryCode"
             app:argType="string" />

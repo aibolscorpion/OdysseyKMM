@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.divtech.odyssey.rotation.databinding.ItemCountryBinding
 import kz.divtech.odyssey.rotation.databinding.ItemCountryHeaderBinding
-import kz.divtech.odyssey.rotation.domain.model.profile.Country
+import kz.divtech.odyssey.shared.domain.model.profile.Country
 
 class CountryListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val countryList = mutableListOf<Country>()

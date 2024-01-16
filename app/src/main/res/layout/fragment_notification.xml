@@ -8,7 +8,7 @@
             type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationFragment" />
         <variable
             name="emptyData"
-            type="kz.divtech.odyssey.rotation.domain.model.EmptyData" />
+            type="kz.divtech.odyssey.shared.domain.model.EmptyData" />
         <variable
             name="viewModel"
             type="kz.divtech.odyssey.rotation.ui.profile.notification.NotificationViewModel" />
