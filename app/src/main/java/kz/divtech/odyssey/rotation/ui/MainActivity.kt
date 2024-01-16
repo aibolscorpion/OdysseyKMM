@@ -41,7 +41,6 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_APPLICATIO
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_TICKET
-import kz.divtech.odyssey.rotation.data.remote.retrofit.UnauthorizedEvent
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
@@ -54,9 +53,6 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotifica
 import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
 import kz.divtech.odyssey.shared.domain.repository.TripsRepository
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -178,12 +174,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         super.attachBaseContext(context)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        EventBus.getDefault().register(this)
-    }
-
     override fun onResume() {
         super.onResume()
 
@@ -286,15 +276,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onUnauthorizedEvent(e: UnauthorizedEvent){
-        Toast.makeText(this, R.string.you_are_unauthorized, Toast.LENGTH_SHORT).show()
-        lifecycleScope.launch{
-            viewModel.deleteAllDataAsync().await()
-            goToLoginPage()
-        }
-    }
-
     private fun createDeviceIdIfNotExists(dataStoreManager: DataStoreManager){
         lifecycleScope.launch {
             val deviceId = UUID.randomUUID().toString()
@@ -325,12 +306,6 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onClickOk() {
         requestPermissionLauncher.launch(POST_NOTIFICATIONS)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        EventBus.getDefault().unregister(this)
     }
 
     override fun onDestroy() {

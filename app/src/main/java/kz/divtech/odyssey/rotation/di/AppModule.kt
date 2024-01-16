@@ -10,9 +10,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import kz.divtech.odssey.database.OdysseyDatabase
-import kz.divtech.odyssey.rotation.data.remote.retrofit.ApiService
-import kz.divtech.odyssey.rotation.data.remote.retrofit.ProxyApiService
-import kz.divtech.odyssey.rotation.data.remote.retrofit.RetrofitClient
 import kz.divtech.odyssey.shared.data.local.data_source.DatabaseDriverFactory
 import kz.divtech.odyssey.shared.data.local.data_source.active_trips.SqlDelightActiveTripsDataSource
 import kz.divtech.odyssey.shared.data.local.data_source.archive_trips.SqlDelightArchiveTripsTripsDataSource
@@ -53,15 +50,6 @@ import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    @Provides
-    fun provideApiService() : ApiService {
-        return RetrofitClient.getApiService()
-    }
-
-    @Provides
-    fun provideProxyService(): ProxyApiService {
-        return RetrofitClient.getProxyService()
-    }
 
     @Provides
     @Singleton
