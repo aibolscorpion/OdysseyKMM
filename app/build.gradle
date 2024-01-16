@@ -91,11 +91,6 @@ dependencies {
     implementation libs.play.services.auth
     implementation libs.play.services.auth.api.phone
 
-    //Room
-    implementation libs.room.ktx
-    implementation libs.room.paging
-    ksp libs.room.compiler
-
     //Jetpack Paging Library
     implementation libs.paging.runtime.ktx
 
