@@ -18,6 +18,9 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
     private val tokenKey: Preferences.Key<String> = stringPreferencesKey("token")
     private val deviceIdKey: Preferences.Key<String> = stringPreferencesKey("device_id")
     private val firebaseTokenKey: Preferences.Key<String> = stringPreferencesKey("firebase_token")
+    private val languageKey: Preferences.Key<String> = stringPreferencesKey("language")
+
+    //Url
     fun getBaseUrl(): Flow<String>{
         return dataStore.data.map { preferences ->
             preferences[urlKey] ?: Config.PROXY_HOST
@@ -36,6 +39,7 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    //OrganizationName
     suspend fun saveOrganizationName(name: String){
         dataStore.edit { preferences ->
             preferences[organizationKey] = name
@@ -48,6 +52,7 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    //AuthToken
     suspend fun saveAuthToken(token: String){
         dataStore.edit { preferences ->
             preferences[tokenKey] = token
@@ -60,14 +65,21 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    suspend fun isLoggedIn(): Boolean{
-        return (getAuthToken().first()).isNotEmpty()
-    }
-
     suspend fun getTokenWithBearer(): String {
         return "$AUTHORIZATION_VALUE_PREFIX ${getAuthToken().first()}"
     }
 
+    suspend fun isLoggedIn(): Boolean{
+        return (getAuthToken().first()).isNotEmpty()
+    }
+
+    suspend fun clearAuthToken(){
+        dataStore.edit { preferences ->
+            preferences[tokenKey] = ""
+        }
+    }
+
+    //DeviceId
     fun getDeviceId(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[deviceIdKey] ?: ""
@@ -80,6 +92,7 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    //FirebaseToken
     fun getFirebaseToken(): Flow<String> {
         return dataStore.data.map { preferences ->
             preferences[firebaseTokenKey] ?: ""
@@ -92,6 +105,22 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
         }
     }
 
+    //Language
+    suspend fun saveLanguage(language: String){
+        dataStore.edit { preferences ->
+            preferences[languageKey] = language
+        }
+    }
+
+    fun getLanguage(): Flow<String>{
+        return dataStore.data.map { preferences ->
+            preferences[languageKey] ?: ""
+        }
+    }
+
+    suspend fun isAppHasLanguage(): Boolean{
+        return (getLanguage().first()).isNotEmpty()
+    }
 
 
 }

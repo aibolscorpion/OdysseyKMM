@@ -14,16 +14,21 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentProfileBinding
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchOrganizationName
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
     private val viewModel: LogoutViewModel by viewModels()
     private var _binding : FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View {
 
@@ -44,7 +49,10 @@ class ProfileFragment : Fragment() {
                 binding.employeePositionTV.text = it.position
             }
         }
-        binding.employeeOrgNameTV.text = fetchOrganizationName()
+        lifecycleScope.launch {
+            val organizationName = dataStoreManager.getOrganizationName().first()
+            binding.employeeOrgNameTV.text = organizationName
+        }
 
         binding.viewModel = viewModel
         viewModel.isSuccessfullyLoggedOut.observe(viewLifecycleOwner) {

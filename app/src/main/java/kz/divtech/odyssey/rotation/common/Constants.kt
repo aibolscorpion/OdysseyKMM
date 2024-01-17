@@ -20,21 +20,11 @@ object Constants {
     const val KAZAKHSTAN_CODE = "KAZ"
     const val MALE = "male"
     const val FEMALE = "female"
-    const val RETRY_AFTER = "Retry-After"
     const val TERMS_FILE_NAME = "TermsOfAgreement.html"
 
     const val NOTIFICATION_TYPE_TICKET = "ticket"
     const val NOTIFICATION_TYPE_APPLICATION = "application"
     const val NOTIFICATION_TYPE_REFUND_APPLICATION = "refund-application"
-
-    const val TRIPS_PAGE_SIZE = 10
-    const val NOTIFICATIONS_PAGE_SIZE = 10
-    const val NEWS_PAGE_SIZE = 5
-
-    const val BAD_REQUEST_CODE = 400
-    const val UNAUTHORIZED_CODE = 401
-    const val UNPROCESSABLE_ENTITY_CODE = 422
-    const val TOO_MANY_REQUEST_CODE = 429
 
     const val NOTIFICATION_TYPE_PHONE = "phone"
     const val NOTIFICATION_TYPE_DEVICE = "device"

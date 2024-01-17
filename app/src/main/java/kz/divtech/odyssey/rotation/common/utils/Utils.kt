@@ -16,7 +16,6 @@ import kz.divtech.odyssey.rotation.common.Constants
 import kz.divtech.odyssey.shared.domain.model.profile.Country
 import kz.divtech.odyssey.shared.domain.model.profile.CountryList
 import kz.divtech.odyssey.rotation.ui.MainActivity
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchAppLanguage
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.shared.domain.model.trips.refund.applications.RefundAppItem
 import java.io.File
@@ -64,10 +63,10 @@ object Utils {
     }
 
     fun getCountryList(): List<Country>{
-        val rawId = when(fetchAppLanguage()){
-            else -> R.raw.countries
-        }
-        val jsonString = App.appContext.resources.openRawResource(rawId).bufferedReader().
+//        val rawId = when(fetchAppLanguage()){
+//            else -> R.raw.countries
+//        }
+        val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
             use { it.readText() }
         return Gson().fromJson(jsonString, CountryList::class.java).countries
     }

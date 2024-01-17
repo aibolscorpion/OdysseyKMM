@@ -4,9 +4,10 @@ import android.view.View
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Constants
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.domain.model.DeviceInfo
 import kz.divtech.odyssey.shared.domain.model.profile.Profile
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val tripsRepository: TripsRepository,
                                         private val profileRepository: ProfileRepository,
                                         private val notificationRepository: NotificationsRepository,
-                                        private val orgInfoRepository: OrgInfoRepository
+                                        private val orgInfoRepository: OrgInfoRepository,
+                                        private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
     val pBarVisibility = ObservableInt(View.GONE)
@@ -29,12 +31,15 @@ class MainViewModel @Inject constructor(private val tripsRepository: TripsReposi
     suspend fun getThreeNotificationsFromDB(): LiveData<List<Notification>> =
         notificationRepository.getFirstThreeNotificationsFromBD().asLiveData()
 
-    fun sendDeviceInfo() = viewModelScope.launch {
-        val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
-        val deviceInfo = DeviceInfo(Constants.ANDROID,
-                                    deviceType,
-            SharedPrefsManager.fetchFirebaseToken())
-        profileRepository.sendDeviceInfo(deviceInfo)
+    fun sendDeviceInfo() {
+        viewModelScope.launch {
+            val deviceType = android.os.Build.MANUFACTURER + android.os.Build.MODEL
+            val firebaseToken = dataStoreManager.getFirebaseToken().first()
+            val deviceInfo = DeviceInfo(Constants.ANDROID,
+                deviceType,
+                firebaseToken)
+            profileRepository.sendDeviceInfo(deviceInfo)
+        }
     }
 
     fun getOrgInfoFromServer() =

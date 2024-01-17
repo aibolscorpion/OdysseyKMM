@@ -14,6 +14,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentMainBinding
@@ -21,12 +22,12 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.NotificationAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationListener
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.SegmentAdapter
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchOrganizationName
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.getAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.showBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.showToolbar
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.convertToPushNotification
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
@@ -35,12 +36,16 @@ import org.threeten.bp.temporal.WeekFields
 import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTripListener{
     val viewModel : MainViewModel by viewModels()
     private var _binding: FragmentMainBinding? = null
     val binding get() = _binding!!
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -87,7 +92,11 @@ class MainFragment : Fragment(), NotificationListener, TripsPagingAdapter.OnTrip
                 binding.employeeNameTV.text = it.fullName
             }
         }
-        binding.employeeOrgTV.text = fetchOrganizationName()
+        lifecycleScope.launch {
+            val organizationName = dataStoreManager.getOrganizationName().first()
+            binding.employeeOrgTV.text = organizationName
+        }
+
     }
 
     private fun setCalendar(){

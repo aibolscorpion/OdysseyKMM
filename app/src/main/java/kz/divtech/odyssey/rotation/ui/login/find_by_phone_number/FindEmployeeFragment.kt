@@ -10,12 +10,14 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
@@ -25,12 +27,13 @@ import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils
 import kz.divtech.odyssey.rotation.common.utils.KeyboardUtils.showSoftKeyboard
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.isLoggedIn
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeStatusBarColor
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideBottomNavigation
 import kz.divtech.odyssey.rotation.common.utils.Utils.hideToolbar
 import kz.divtech.odyssey.rotation.common.utils.Utils.setMainActivityBackgroundColor
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FindEmployeeFragment : Fragment() {
@@ -42,11 +45,16 @@ class FindEmployeeFragment : Fragment() {
 
     private val viewModel: FindEmployeeViewModel by viewModels()
 
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _dataBinding = FragmentFindEmployeeBinding.inflate(inflater)
 
-       if(isLoggedIn()){
-            openMainFragment()
+        lifecycleScope.launch {
+            if(dataStoreManager.isLoggedIn()){
+                openMainFragment()
+            }
         }
         return dataBinding.root
     }

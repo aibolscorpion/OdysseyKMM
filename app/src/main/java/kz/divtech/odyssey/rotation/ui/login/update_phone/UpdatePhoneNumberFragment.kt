@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -14,14 +15,17 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config
 import kz.divtech.odyssey.rotation.databinding.FragmentUpdatePhoneBinding
 import kz.divtech.odyssey.rotation.common.utils.InputUtils.showErrorMessage
 import kz.divtech.odyssey.rotation.common.utils.NetworkUtils.isNetworkAvailable
-import kz.divtech.odyssey.rotation.data.local.SharedPrefsManager.fetchFirebaseToken
 import kz.divtech.odyssey.shared.common.Resource
+import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.domain.model.UpdatePhoneRequest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UpdatePhoneNumberFragment : Fragment() {
@@ -31,6 +35,9 @@ class UpdatePhoneNumberFragment : Fragment() {
     private val dataBinding get() = _dataBinding!!
     val args : UpdatePhoneNumberFragmentArgs by navArgs()
     private val viewModel: UpdatePhoneViewModel by viewModels()
+
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
@@ -97,10 +104,13 @@ class UpdatePhoneNumberFragment : Fragment() {
     fun updatePhoneNumber(){
         if(requireContext().isNetworkAvailable()){
             if(phoneNumberFilled) {
-                val request = UpdatePhoneRequest(args.employee.id,
-                    "${Config.COUNTRY_CODE}$extractedPhoneNumber",
-                    fetchFirebaseToken())
-                viewModel.updatePhoneNumber(request)
+                lifecycleScope.launch {
+                    val firebaseToken = dataStoreManager.getFirebaseToken().first()
+                    val request = UpdatePhoneRequest(args.employee.id,
+                        "${Config.COUNTRY_CODE}$extractedPhoneNumber",
+                        firebaseToken)
+                    viewModel.updatePhoneNumber(request)
+                }
             } else
                 showErrorMessage(requireContext(), dataBinding.updatePhoneNumberFL, getString(R.string.enter_phone_number_fully))
         }else{
