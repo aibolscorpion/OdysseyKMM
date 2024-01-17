@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.sqldelight.runtime)
             implementation(libs.coroutines.extensions)
+            implementation(libs.sqldelight.paging3)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)

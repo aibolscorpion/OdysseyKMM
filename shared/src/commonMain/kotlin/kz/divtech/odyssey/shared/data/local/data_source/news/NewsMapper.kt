@@ -1,13 +1,13 @@
 package kz.divtech.odyssey.shared.data.local.data_source.news
 
-import database.Article
 import kotlinx.serialization.json.Json
 import kz.divtech.odyssey.shared.domain.model.help.press_service.article.Tag
+import kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article
 
-fun List<Article>.toArticleList(): List<kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article>{
+fun List<database.Article>.toArticleList(): List<Article>{
     return map{
         val tagList: List<Tag> = Json.decodeFromString(it.tags)
-        kz.divtech.odyssey.shared.domain.model.help.press_service.news.Article(
+        Article(
             id = it.id.toInt(),
             title = it.title,
             shortContent = it.short_content,

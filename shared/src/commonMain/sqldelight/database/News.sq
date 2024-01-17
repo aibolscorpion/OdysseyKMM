@@ -8,8 +8,11 @@ tags TEXT NOT NULL,
 read_on TEXT
 );
 
+countNews:
+SELECT count(*) FROM Article;
+
 getNewsPagingSource:
-SELECT * FROM Article ORDER BY published_on;
+SELECT * FROM Article ORDER BY published_on DESC LIMIT :limit OFFSET :offset;
 
 insertArticle:
 INSERT OR REPLACE INTO Article (id, title, short_content, is_important, published_on, tags, read_on)

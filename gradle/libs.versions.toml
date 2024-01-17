@@ -104,6 +104,7 @@ transport-runtime = { group = "com.google.android.datatransport", name = "transp
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight"}
 sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-paging3 = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
 
 
 [plugins]
