@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.shared.data.repository
 
+import androidx.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
@@ -13,7 +14,7 @@ import kz.divtech.odyssey.shared.common.Constants
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.data.repository.pagingSource.TripsPagingSource
+import kz.divtech.odyssey.shared.data.repository.remotemediator.TripRemoteMediator
 import kz.divtech.odyssey.shared.domain.data_source.ActiveTripDataSource
 import kz.divtech.odyssey.shared.domain.data_source.ArchiveTripsDataSource
 import kz.divtech.odyssey.shared.domain.data_source.NearestTripDataSource
@@ -62,56 +63,58 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         return nearestTripDataSource.getNearestTrip()
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun getTripsSortedByDate(
         isActive: Boolean,
         statusType: Array<String>,
         direction: Array<String>
     ): Flow<PagingData<Trip>> {
-        val pagingConfig = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE,
-            initialLoadSize = Constants.TRIPS_PAGE_SIZE * 3)
-        return Pager(pagingConfig) {
-            TripsPagingSource(httpClient, dataStoreManager,  isActive = isActive, statusType, direction)
-        }.flow
+        return if(isActive){
+            Pager(
+                config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
+                pagingSourceFactory = { activeTripsDataSource.getActiveTripsSortedByDate(statusType.toList(), direction.toList())},
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                    statusType, direction,
+                    activeTripDataSource = activeTripsDataSource,
+                    archiveTripDataSource = archiveTripsDataSource)
+            ).flow
+        }else{
+            Pager(
+                config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
+                pagingSourceFactory = { archiveTripsDataSource.getArchiveTripsSortedByDate(statusType.toList(), direction.toList())},
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                    statusType, direction,
+                    activeTripDataSource = activeTripsDataSource,
+                    archiveTripDataSource = archiveTripsDataSource)
+            ).flow
+        }
     }
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun getTripsSortedByStatus(
         isActive: Boolean,
         statusType: Array<String>,
         direction: Array<String>
     ): Flow<PagingData<Trip>> {
-        val pagingConfig = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE,
-            initialLoadSize = Constants.TRIPS_PAGE_SIZE * 3)
-        return Pager(pagingConfig) {
-            TripsPagingSource(httpClient, dataStoreManager, isActive = isActive, statusType, direction, sortBy = "status")
-        }.flow
-    }
-
-    override suspend fun getActiveTripsSortedByDateFromDb(
-        statusType: List<String>,
-        direction: List<String>
-    ): List<Trip> {
-        return activeTripsDataSource.getActiveTripsSortedByDate(statusType, direction)
-    }
-
-    override suspend fun getActiveTripsSortedByStatusFromDb(
-        statusType: List<String>,
-        direction: List<String>
-    ): List<Trip> {
-        return activeTripsDataSource.getActiveTripsSortedByStatus(statusType, direction)
-    }
-
-    override suspend fun getArchiveTripsSortedByDateFromDb(
-        statusType: List<String>,
-        direction: List<String>
-    ): List<Trip> {
-        return archiveTripsDataSource.getArchiveTripsSortedByDate(statusType, direction)
-    }
-
-    override suspend fun getArchiveTripsSortedByStatusFromDb(
-        statusType: List<String>,
-        direction: List<String>
-    ): List<Trip> {
-        return archiveTripsDataSource.getArchiveTripsSortedByStatus(statusType, direction)
+        return if(isActive){
+            Pager(
+                config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
+                pagingSourceFactory = { activeTripsDataSource.getActiveTripsSortedByStatus(statusType.toList(), direction.toList())},
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                    statusType, direction,
+                    activeTripDataSource = activeTripsDataSource,
+                    archiveTripDataSource = archiveTripsDataSource)
+            ).flow
+        }else{
+            Pager(
+                config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
+                pagingSourceFactory = { archiveTripsDataSource.getArchiveTripsSortedByStatus(statusType.toList(), direction.toList())},
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                    statusType, direction,
+                    activeTripDataSource = activeTripsDataSource,
+                    archiveTripDataSource = archiveTripsDataSource)
+            ).flow
+        }
     }
 
     override suspend fun deleteAllTrips() {

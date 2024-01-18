@@ -17,10 +17,13 @@ CREATE TABLE IF NOT EXISTS `active_trip` (
 `end_station_name` TEXT);
 
 
+countActiveTrips:
+SELECT count(*) FROM active_trip;
+
 getActiveTripsSortedByDate:
 SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ?
 AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN ? AND 'to-home'
-IN ?)) ORDER BY date ASC;
+IN ?)) ORDER BY date ASC LIMIT :limit OFFSET :offset;
 
 getActiveTripsSortedByStatus:
 SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
@@ -30,7 +33,7 @@ status = 'issued',
 status = 'partly',
 status = 'opened',
 status = 'returned',
-date ASC;
+date ASC LIMIT :limit OFFSET :offset;
 
 insertActiveTrips:
 INSERT OR REPLACE INTO active_trip(id, is_extra, direction, shift, date, status, created_at,

@@ -16,11 +16,13 @@ CREATE TABLE IF NOT EXISTS `archive_trip` (
 `end_station_code` TEXT,
 `end_station_name` TEXT);
 
+countArchiveTrips:
+SELECT count(*) FROM archive_trip;
 
 getArchiveTripsSortedByDate:
 SELECT * FROM archive_trip WHERE (status IN ?) AND ((direction IN ?
 AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN ? AND 'to-home'
-IN ?)) ORDER BY date DESC;
+IN ?)) ORDER BY date DESC LIMIT :limit OFFSET :offset;
 
 getArchiveTripsSortedByStatus:
 SELECT * FROM archive_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
@@ -30,7 +32,7 @@ status = 'issued',
 status = 'partly',
 status = 'opened',
 status = 'returned',
-date DESC ;
+date DESC LIMIT :limit OFFSET :offset;
 
 
 insertArchiveTrips:
