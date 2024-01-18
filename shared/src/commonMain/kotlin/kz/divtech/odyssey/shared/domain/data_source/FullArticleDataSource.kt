@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArticle
 
 interface FullArticleDataSource {
-    suspend fun getArticleById(id: Int) : Flow<FullArticle?>
-    suspend fun insertArticle(fullArticle: FullArticle)
-    suspend fun deleteFullArticles()
+    fun getArticleById(id: Int) : Flow<FullArticle?>
+    fun insertArticle(fullArticle: FullArticle)
+    fun deleteFullArticles()
 }

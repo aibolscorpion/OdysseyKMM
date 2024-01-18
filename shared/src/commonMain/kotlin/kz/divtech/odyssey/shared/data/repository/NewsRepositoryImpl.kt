@@ -26,12 +26,12 @@ class NewsRepositoryImpl(private val httpClient: HttpClient,
         ).flow
     }
 
-    override suspend fun searchNewsFromDb(searchQuery: String): List<Article> {
+    override fun searchNewsFromDb(searchQuery: String): List<Article> {
         return dataSource.searchNews(searchQuery)
     }
 
 
-    override suspend fun deleteNews() {
+    override fun deleteNews() {
         dataSource.deleteNews()
     }
 }

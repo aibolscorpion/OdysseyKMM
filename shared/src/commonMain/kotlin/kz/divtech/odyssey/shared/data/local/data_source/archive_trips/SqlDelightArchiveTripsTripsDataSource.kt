@@ -81,7 +81,7 @@ class SqlDelightArchiveTripsTripsDataSource(database: OdysseyDatabase): ArchiveT
         )
     }
 
-    override suspend fun insertArchiveTrips(trips: List<Trip>) {
+    override fun insertArchiveTrips(trips: List<Trip>) {
         queries.transaction {
             trips.forEach { trip ->
                 val segments = Json.encodeToString(trip.segments)
@@ -108,7 +108,7 @@ class SqlDelightArchiveTripsTripsDataSource(database: OdysseyDatabase): ArchiveT
         }
     }
 
-    override suspend fun refreshArchiveTrips(trips: List<Trip>) {
+    override fun refreshArchiveTrips(trips: List<Trip>) {
         queries.transaction {
             queries.deleteArchiveTrips()
             trips.forEach { trip ->
@@ -136,7 +136,7 @@ class SqlDelightArchiveTripsTripsDataSource(database: OdysseyDatabase): ArchiveT
         }
     }
 
-    override suspend fun deleteArchiveTrips() {
+    override fun deleteArchiveTrips() {
         queries.deleteArchiveTrips()
     }
 }

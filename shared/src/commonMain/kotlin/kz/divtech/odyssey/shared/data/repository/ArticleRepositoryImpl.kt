@@ -47,11 +47,11 @@ class ArticleRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getArticleFromDbById(id: Int): Flow<FullArticle?> {
+    override fun getArticleFromDbById(id: Int): Flow<FullArticle?> {
         return dataSource.getArticleById(id)
     }
 
-    override suspend fun deleteFullArticles() {
+    override fun deleteFullArticles() {
         dataSource.deleteFullArticles()
     }
 }

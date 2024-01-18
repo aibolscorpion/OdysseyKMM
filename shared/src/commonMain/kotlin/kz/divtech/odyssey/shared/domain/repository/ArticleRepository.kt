@@ -9,6 +9,6 @@ import kz.divtech.odyssey.shared.domain.model.help.press_service.article.FullArt
 interface ArticleRepository {
     suspend fun getArticleById(id: Int): Resource<FullArticleResponse>
     suspend fun markArticleAsRead(id: Int): Resource<HttpResponse>
-    suspend fun getArticleFromDbById(id: Int) : Flow<FullArticle?>
-    suspend fun deleteFullArticles()
+    fun getArticleFromDbById(id: Int) : Flow<FullArticle?>
+    fun deleteFullArticles()
 }

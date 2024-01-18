@@ -59,7 +59,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getNearestTripFromBd(): Flow<Trip?> {
+    override fun getNearestTripFromBd(): Flow<Trip?> {
         return nearestTripDataSource.getNearestTrip()
     }
 
@@ -117,7 +117,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun deleteAllTrips() {
+    override fun deleteAllTrips() {
         activeTripsDataSource.deleteActiveTrips()
         archiveTripsDataSource.deleteArchiveTrips()
         nearestTripDataSource.deleteNearestTrip()

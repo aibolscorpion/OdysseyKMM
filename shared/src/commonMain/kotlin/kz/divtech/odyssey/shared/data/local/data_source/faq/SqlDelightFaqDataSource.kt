@@ -10,17 +10,17 @@ import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
 class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
     private val queries = database.faqQueries
-    override suspend fun getFaq(): Flow<List<Faq>> {
+    override fun getFaq(): Flow<List<Faq>> {
         return queries.getFaqList(mapper = { id, question, answer, _, _ ->
             Faq(id.toInt(), question, answer)
         }).asFlow().mapToList(Dispatchers.IO)
     }
 
-    override suspend fun searchFaq(searchQuery: String): List<Faq> {
+    override fun searchFaq(searchQuery: String): List<Faq> {
         return queries.searchFaqByText(searchQuery).executeAsList().toFaqList()
     }
 
-    override suspend fun insertFAQ(faqList: List<Faq>) {
+    override fun insertFAQ(faqList: List<Faq>) {
         queries.transaction {
             faqList.forEach { faq ->
                 queries.insertFaq(
@@ -34,7 +34,7 @@ class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
         }
     }
 
-    override suspend fun refreshFaq(faqList: List<Faq>) {
+    override fun refreshFaq(faqList: List<Faq>) {
         queries.transaction {
             queries.deleteFaqList()
             faqList.forEach { faq ->
@@ -49,7 +49,7 @@ class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
         }
     }
 
-    override suspend fun deleteFaq() {
+    override fun deleteFaq() {
         queries.deleteFaqList()
     }
 

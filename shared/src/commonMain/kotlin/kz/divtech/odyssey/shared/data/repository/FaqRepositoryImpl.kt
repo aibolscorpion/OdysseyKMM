@@ -28,15 +28,15 @@ class FaqRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getFaqListFromDb(): Flow<List<Faq>> {
+    override fun getFaqListFromDb(): Flow<List<Faq>> {
         return dataSource.getFaq()
     }
 
-    override suspend fun searchFaqFromDb(searchQuery: String): List<Faq> {
+    override fun searchFaqFromDb(searchQuery: String): List<Faq> {
         return dataSource.searchFaq(searchQuery)
     }
 
-    override suspend fun deleteFaq() {
+    override fun deleteFaq() {
         dataSource.deleteFaq()
     }
 }

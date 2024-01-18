@@ -28,15 +28,12 @@ class OrgInfoRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun getOrgInfoFromDB(): Flow<OrgInfo?> {
+    override fun getOrgInfoFromDB(): Flow<OrgInfo?> {
         return dataSource.getOrgInfo()
     }
 
-    override suspend fun deleteOrgInfo(){
+    override fun deleteOrgInfo(){
         dataSource.deleteOrgInfo()
     }
-
-
-
 
 }

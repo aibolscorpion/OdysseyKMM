@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.domain.model.OrgInfo
 
 interface OrgInfoDataSource {
-    suspend fun getOrgInfo(): Flow<OrgInfo?>
-    suspend fun deleteOrgInfo()
-    suspend fun refreshOrgInfo(orgInfo: OrgInfo)
+    fun getOrgInfo(): Flow<OrgInfo?>
+    fun deleteOrgInfo()
+    fun refreshOrgInfo(orgInfo: OrgInfo)
 }

@@ -9,11 +9,8 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 interface NotificationsRepository {
     suspend fun getNotificationsFirstPage(): Resource<Notifications>
-
     suspend fun markNotificationAsRead(notificationId: String): Resource<HttpResponse>
-
     fun getPagingNotification(): Flow<PagingData<Notification>>
-    suspend fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>>
-
-    suspend fun deleteNoficiations()
+    fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>>
+    fun deleteNoficiations()
 }

@@ -51,7 +51,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
         }
     }
 
-    override suspend fun insertProfile(profile: Profile) {
+    override fun insertProfile(profile: Profile) {
         dataSource.insertProfile(profile)
     }
 
@@ -59,7 +59,7 @@ class ProfileRepositoryImpl(private val httpClient: HttpClient,
         return dataSource.getProfile()
     }
 
-    override suspend fun deleteProfile() {
+    override fun deleteProfile() {
         dataSource.deleteProfile()
     }
 

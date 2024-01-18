@@ -6,8 +6,8 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 interface NotificationDataSource {
     fun getNotificationsPagingSource(): PagingSource<Int, Notification>
-    suspend fun getFirstThreeNotification(): Flow<List<Notification>>
-    suspend fun insertNotification(notifications: List<Notification>)
-    suspend fun refreshNotifications(notifications: List<Notification>)
-    suspend fun deleteNoficiations()
+     fun getFirstThreeNotification(): Flow<List<Notification>>
+     fun insertNotification(notifications: List<Notification>)
+     fun refreshNotifications(notifications: List<Notification>)
+     fun deleteNoficiations()
 }

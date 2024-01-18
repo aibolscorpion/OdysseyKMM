@@ -39,11 +39,11 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
             pagingSourceFactory = { dataSource.getNotificationsPagingSource() }
         ).flow
     }
-    override suspend fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>> {
+    override fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>> {
         return dataSource.getFirstThreeNotification()
     }
 
-    override suspend fun deleteNoficiations() {
+    override fun deleteNoficiations() {
         dataSource.deleteNoficiations()
     }
 

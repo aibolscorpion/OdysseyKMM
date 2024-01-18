@@ -16,7 +16,7 @@ import kz.divtech.odyssey.shared.domain.model.trips.response.trip.stations.Start
 
 class SqlDelightNearestTripDataSource(database: OdysseyDatabase): NearestTripDataSource {
     private val queries = database.nearestActiveTripQueries
-    override suspend fun getNearestTrip(): Flow<Trip?> {
+    override fun getNearestTrip(): Flow<Trip?> {
         return queries.getNearestActiveTrip(mapper = { id, is_extra, direction, shift, date,
             status, created_at, updated_at, issued_at, only_bus_transfer, segments, refund_applications,
             start_station_code, start_station_name, end_station_code, end_station_name ->
@@ -41,7 +41,7 @@ class SqlDelightNearestTripDataSource(database: OdysseyDatabase): NearestTripDat
         }).asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
-    override suspend fun refreshNearesTrip(trip: Trip) {
+    override fun refreshNearesTrip(trip: Trip) {
         val segments = Json.encodeToString(trip.segments)
         val refundApplications = Json.encodeToString(trip.refundApplications)
         queries.transaction {
@@ -67,7 +67,7 @@ class SqlDelightNearestTripDataSource(database: OdysseyDatabase): NearestTripDat
         }
     }
 
-    override suspend fun deleteNearestTrip() {
+    override fun deleteNearestTrip() {
         queries.deleteNearestActiveTrip()
     }
 }

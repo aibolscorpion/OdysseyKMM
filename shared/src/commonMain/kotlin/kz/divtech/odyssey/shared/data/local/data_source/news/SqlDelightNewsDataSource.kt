@@ -34,11 +34,11 @@ class SqlDelightNewsDataSource(database: OdysseyDatabase): NewsDataSource {
         )
     }
 
-    override suspend fun searchNews(searchQuery: String): List<Article> {
+    override fun searchNews(searchQuery: String): List<Article> {
         return queries.searchByText(searchQuery).executeAsList().toArticleList()
     }
 
-    override suspend fun insertNews(news: List<Article>) {
+    override fun insertNews(news: List<Article>) {
         news.forEach { article ->
             val tags = Json.encodeToString(article.tags)
             queries.insertArticle(
@@ -53,7 +53,7 @@ class SqlDelightNewsDataSource(database: OdysseyDatabase): NewsDataSource {
         }
     }
 
-    override suspend fun refreshNews(news: List<Article>) {
+    override fun refreshNews(news: List<Article>) {
         queries.transaction {
             queries.deleteNews()
             news.forEach { article ->
@@ -71,7 +71,7 @@ class SqlDelightNewsDataSource(database: OdysseyDatabase): NewsDataSource {
         }
     }
 
-    override suspend fun deleteNews() {
+    override fun deleteNews() {
         queries.deleteNews()
     }
 }

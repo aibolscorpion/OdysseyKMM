@@ -4,8 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
 
 interface NearestTripDataSource {
-    suspend fun getNearestTrip(): Flow<Trip?>
-    suspend fun refreshNearesTrip(trip: Trip)
-    suspend fun deleteNearestTrip()
+    fun getNearestTrip(): Flow<Trip?>
+    fun refreshNearesTrip(trip: Trip)
+    fun deleteNearestTrip()
 
 }

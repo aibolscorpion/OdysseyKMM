@@ -41,7 +41,7 @@ class SqlDelightEmployeeDataSource(dataBase: OdysseyDatabase): EmployeeDataSourc
         }).asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
-    override suspend fun insertProfile(profile: Profile) {
+    override fun insertProfile(profile: Profile) {
         val documents = Json.encodeToString(profile.documents)
         queries.insertEmployee(
             id = profile.id.toLong(),
@@ -65,7 +65,7 @@ class SqlDelightEmployeeDataSource(dataBase: OdysseyDatabase): EmployeeDataSourc
         )
     }
 
-    override suspend fun deleteProfile() {
+    override fun deleteProfile() {
         queries.deleteEmployee()
     }
 
@@ -73,7 +73,7 @@ class SqlDelightEmployeeDataSource(dataBase: OdysseyDatabase): EmployeeDataSourc
         return queries.getUAConfirmed().asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
-    override suspend fun updateUAConfirmed(uaConfirmed: Boolean) {
+    override fun updateUAConfirmed(uaConfirmed: Boolean) {
         queries.updateUAConfirmed(if(uaConfirmed) 1L else 0L)
     }
 }

@@ -46,7 +46,7 @@ class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDa
 
     }
 
-    override suspend fun getFirstThreeNotification(): Flow<List<Notification>> {
+    override fun getFirstThreeNotification(): Flow<List<Notification>> {
         return queries.getFirstThreeNotifications(mapper = {
              notification_id, notification_type, notifiable_type,
              created_at, updated_at, read_at, id, title,
@@ -70,7 +70,7 @@ class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDa
         }).asFlow().mapToList(Dispatchers.IO)
     }
 
-    override suspend fun insertNotification(notifications: List<Notification>) {
+    override fun insertNotification(notifications: List<Notification>) {
         queries.transaction {
             notifications.forEach { notification ->
                 queries.insertNotification(
@@ -92,7 +92,7 @@ class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDa
         }
     }
 
-    override suspend fun refreshNotifications(notifications: List<Notification>) {
+    override fun refreshNotifications(notifications: List<Notification>) {
         queries.transaction {
             queries.deleteNotifications()
             notifications.forEach { notification ->
@@ -115,7 +115,7 @@ class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDa
         }
     }
 
-    override suspend fun deleteNoficiations() {
+    override fun deleteNoficiations() {
         queries.deleteNotifications()
     }
 }

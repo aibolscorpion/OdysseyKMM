@@ -11,7 +11,7 @@ import kz.divtech.odyssey.shared.domain.model.OrgInfo
 class SqlDelightOrgInfoDataSource(db: OdysseyDatabase): OrgInfoDataSource {
     private val queries = db.orgInfoQueries
 
-    override suspend fun getOrgInfo(): Flow<OrgInfo?> {
+    override fun getOrgInfo(): Flow<OrgInfo?> {
         return queries.getOrgInfo(mapper = { supportPhone, telegramId, whatsappPhone ->
                 OrgInfo(supportPhone = supportPhone,
                     telegramId = telegramId,
@@ -20,11 +20,11 @@ class SqlDelightOrgInfoDataSource(db: OdysseyDatabase): OrgInfoDataSource {
         ).asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
-    override suspend fun deleteOrgInfo() {
+    override fun deleteOrgInfo() {
         queries.deleteOrgInfo()
     }
 
-    override suspend fun refreshOrgInfo(orgInfo: OrgInfo) {
+    override fun refreshOrgInfo(orgInfo: OrgInfo) {
         queries.transaction{
             queries.deleteOrgInfo()
             queries.insertOrgInfo(orgInfo.supportPhone, orgInfo.telegramId, orgInfo.whatsappPhone)

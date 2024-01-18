@@ -81,7 +81,7 @@ class SqlDelightActiveTripsDataSource(database: OdysseyDatabase): ActiveTripData
         )
     }
 
-    override suspend fun insertActiveTrips(trips: List<Trip>) {
+    override fun insertActiveTrips(trips: List<Trip>) {
         queries.transaction {
             trips.forEach { trip ->
                 val segments = Json.encodeToString(trip.segments)
@@ -108,7 +108,7 @@ class SqlDelightActiveTripsDataSource(database: OdysseyDatabase): ActiveTripData
         }
     }
 
-    override suspend fun refreshActiveTrips(trips: List<Trip>) {
+    override fun refreshActiveTrips(trips: List<Trip>) {
         queries.transaction {
             queries.deleteActiveTrips()
             trips.forEach { trip ->
@@ -136,7 +136,7 @@ class SqlDelightActiveTripsDataSource(database: OdysseyDatabase): ActiveTripData
         }
     }
 
-    override suspend fun deleteActiveTrips() {
+    override fun deleteActiveTrips() {
         queries.deleteActiveTrips()
     }
 }

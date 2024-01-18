@@ -13,7 +13,7 @@ import kz.divtech.odyssey.shared.domain.model.help.press_service.article.Tag
 
 class SqlDelightFullArticleDataSource(database: OdysseyDatabase): FullArticleDataSource {
     private val queries = database.fullArticleQueries
-    override suspend fun getArticleById(articleId: Int): Flow<FullArticle?> {
+    override fun getArticleById(articleId: Int): Flow<FullArticle?> {
         return queries.getArticleByid(id = articleId.toLong(),
             mapper = { id, title, short_content, is_important, published_on, tags, read_on, content ->
             val tagList: List<Tag> = Json.decodeFromString(tags)
@@ -30,7 +30,7 @@ class SqlDelightFullArticleDataSource(database: OdysseyDatabase): FullArticleDat
         }).asFlow().mapToOneOrNull(Dispatchers.IO)
     }
 
-    override suspend fun insertArticle(fullArticle: FullArticle) {
+    override fun insertArticle(fullArticle: FullArticle) {
         queries.insertArticle(
             id = fullArticle.id.toLong(),
             title = fullArticle.title,
@@ -43,7 +43,7 @@ class SqlDelightFullArticleDataSource(database: OdysseyDatabase): FullArticleDat
         )
     }
 
-    override suspend fun deleteFullArticles() {
+    override fun deleteFullArticles() {
         queries.deleteFullArticles()
     }
 }

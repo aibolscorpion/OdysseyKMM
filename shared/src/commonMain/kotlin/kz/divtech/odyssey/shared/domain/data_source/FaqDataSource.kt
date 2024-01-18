@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.Flow
 import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 
 interface FaqDataSource {
-    suspend fun getFaq(): Flow<List<Faq>>
-    suspend fun searchFaq(searchQuery: String): List<Faq>
-    suspend fun insertFAQ(faqList: List<Faq>)
-    suspend fun deleteFaq()
-    suspend fun refreshFaq(faqList: List<Faq>)
+    fun getFaq(): Flow<List<Faq>>
+    fun searchFaq(searchQuery: String): List<Faq>
+    fun insertFAQ(faqList: List<Faq>)
+    fun deleteFaq()
+    fun refreshFaq(faqList: List<Faq>)
 }
