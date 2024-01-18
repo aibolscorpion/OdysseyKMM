@@ -1,7 +1,9 @@
 package kz.divtech.odyssey.shared.data.local.data_source.notification
 
+import androidx.paging.PagingSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.paging3.QueryPagingSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kz.divtech.odssey.database.OdysseyDatabase
@@ -11,8 +13,37 @@ import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 
 class SqlDelightNotifcationDataSource(database: OdysseyDatabase): NotificationDataSource {
     private val queries = database.notificationQueries
-    override suspend fun getNotificationsPagingSource(): List<Notification> {
-        return queries.getNotificationsPagingSource().executeAsList().toNotifcationList()
+    override fun getNotificationsPagingSource(): PagingSource<Int, Notification> {
+        return QueryPagingSource(
+            countQuery = queries.countNotifications(),
+            transacter = queries,
+            context = Dispatchers.IO,
+            queryProvider = { limit, offset ->
+                queries.getNotificationsPagingSource(limit, offset, mapper = { notification_id,
+                            notification_type, notifiable_type, created_at, updated_at,
+                            read_at, id, title, content, is_important, type, application_id,
+                            segment_id ->
+                    Notification(
+                        id = notification_id,
+                        data = NotificationData(
+                            id = id.toInt(),
+                            title = title,
+                            content = content,
+                            isImportant = is_important == 1L,
+                            type = type,
+                            applicationId = application_id.toInt(),
+                            segmentId = segment_id?.toInt()
+                        ),
+                        type = notification_type,
+                        notifiableType = notifiable_type,
+                        createdAt = created_at,
+                        updatedAt = updated_at,
+                        readAt = read_at
+                    )
+            })
+            }
+        )
+
     }
 
     override suspend fun getFirstThreeNotification(): Flow<List<Notification>> {

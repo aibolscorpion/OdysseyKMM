@@ -13,8 +13,11 @@ CREATE TABLE IF NOT EXISTS `Notification` (
 `application_id` INTEGER NOT NULL,
 `segment_id` INTEGER);
 
+countNotifications:
+SELECT count(*) FROM Notification;
+
 getNotificationsPagingSource:
-SELECT * FROM Notification ORDER BY created_at DESC;
+SELECT * FROM Notification ORDER BY created_at DESC LIMIT :limit OFFSET :offset;
 
 getFirstThreeNotifications:
 SELECT * FROM Notification ORDER BY created_at DESC LIMIT 3;

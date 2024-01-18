@@ -1,5 +1,6 @@
 package kz.divtech.odyssey.shared.data.repository
 
+import androidx.paging.ExperimentalPagingApi
 import app.cash.paging.Pager
 import app.cash.paging.PagingConfig
 import app.cash.paging.PagingData
@@ -19,7 +20,7 @@ import kz.divtech.odyssey.shared.common.Constants.NOTIFICATION_PAGE_SIZE
 import kz.divtech.odyssey.shared.common.Resource
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.data.remote.HttpRoutes
-import kz.divtech.odyssey.shared.data.repository.pagingSource.NotificationPagingSource
+import kz.divtech.odyssey.shared.data.repository.remotemediator.NotificationRemoteMediator
 import kz.divtech.odyssey.shared.domain.data_source.NotificationDataSource
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.MarkNotification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
@@ -30,18 +31,14 @@ class NotificationsRepositoryImpl(private val httpClient: HttpClient,
                                   private val dataStoreManager: DataStoreManager,
                                   private val dataSource: NotificationDataSource
 ): NotificationsRepository {
+    @OptIn(ExperimentalPagingApi::class)
     override fun getPagingNotification(): Flow<PagingData<Notification>>{
-        val pagingConfig = PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE,
-            initialLoadSize = NOTIFICATION_PAGE_SIZE * 3)
-        return Pager(pagingConfig) {
-            NotificationPagingSource(httpClient, dataStoreManager)
-        }.flow
+        return Pager(
+            config = PagingConfig(pageSize = NOTIFICATION_PAGE_SIZE),
+            remoteMediator = NotificationRemoteMediator(httpClient, dataSource, dataStoreManager),
+            pagingSourceFactory = { dataSource.getNotificationsPagingSource() }
+        ).flow
     }
-
-    override suspend fun getNotificationsPagingSource(): List<Notification> {
-        return dataSource.getNotificationsPagingSource()
-    }
-
     override suspend fun getFirstThreeNotificationsFromBD(): Flow<List<Notification>> {
         return dataSource.getFirstThreeNotification()
     }
