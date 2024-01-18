@@ -17,7 +17,7 @@ class SqlDelightArchiveTripsTripsDataSource(database: OdysseyDatabase): ArchiveT
     private val queries = database.archiveTripQueries
     override fun getArchiveTripsSortedByDate(statusType: List<String>, direction: List<String>): PagingSource<Int, Trip> {
         return QueryPagingSource(
-            countQuery = queries.countArchiveTrips(),
+            countQuery = queries.countArchiveTripSortedByDate(statusType, direction, direction, direction),
             transacter = queries,
             context = Dispatchers.IO,
             queryProvider = { limit, offset ->
@@ -50,7 +50,7 @@ class SqlDelightArchiveTripsTripsDataSource(database: OdysseyDatabase): ArchiveT
 
     override fun getArchiveTripsSortedByStatus(statusType: List<String>, direction: List<String>): PagingSource<Int, Trip> {
         return QueryPagingSource(
-            countQuery = queries.countArchiveTrips(),
+            countQuery = queries.countArchiveTripSortedByStatus(statusType, direction, direction, direction),
             transacter = queries,
             context = Dispatchers.IO,
             queryProvider = { limit, offset ->

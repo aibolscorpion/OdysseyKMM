@@ -17,8 +17,14 @@ CREATE TABLE IF NOT EXISTS `active_trip` (
 `end_station_name` TEXT);
 
 
-countActiveTrips:
-SELECT count(*) FROM active_trip;
+countActiveTripSortedByDate:
+SELECT count(*) FROM active_trip WHERE (status IN ?) AND ((direction IN ?
+AND direction IS NOT NULL) OR (direction IS NULL AND 'to-work' IN ? AND 'to-home'
+IN ?));
+
+countActiveTripSortedByStatus:
+SELECT count(*) FROM active_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
+OR (direction IS NULL AND 'to-work' IN ? AND 'to-home' IN ?));
 
 getActiveTripsSortedByDate:
 SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ?
