@@ -73,7 +73,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             Pager(
                 config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
                 pagingSourceFactory = { activeTripsDataSource.getActiveTripsSortedByDate(statusType.toList(), direction.toList())},
-                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, true,
                     statusType, direction,
                     activeTripDataSource = activeTripsDataSource,
                     archiveTripDataSource = archiveTripsDataSource)
@@ -82,7 +82,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             Pager(
                 config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
                 pagingSourceFactory = { archiveTripsDataSource.getArchiveTripsSortedByDate(statusType.toList(), direction.toList())},
-                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, false,
                     statusType, direction,
                     activeTripDataSource = activeTripsDataSource,
                     archiveTripDataSource = archiveTripsDataSource)
@@ -100,7 +100,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             Pager(
                 config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
                 pagingSourceFactory = { activeTripsDataSource.getActiveTripsSortedByStatus(statusType.toList(), direction.toList())},
-                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, true,
                     statusType, direction,
                     activeTripDataSource = activeTripsDataSource,
                     archiveTripDataSource = archiveTripsDataSource)
@@ -109,7 +109,7 @@ class TripsRepositoryImpl(private val httpClient: HttpClient,
             Pager(
                 config = PagingConfig(pageSize = Constants.TRIPS_PAGE_SIZE),
                 pagingSourceFactory = { archiveTripsDataSource.getArchiveTripsSortedByStatus(statusType.toList(), direction.toList())},
-                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, isActive,
+                remoteMediator = TripRemoteMediator(httpClient, dataStoreManager, false,
                     statusType, direction,
                     activeTripDataSource = activeTripsDataSource,
                     archiveTripDataSource = archiveTripsDataSource)

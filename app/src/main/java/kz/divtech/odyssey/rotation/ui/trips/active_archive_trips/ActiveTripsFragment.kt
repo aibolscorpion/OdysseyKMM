@@ -19,12 +19,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Constants
+import kz.divtech.odyssey.rotation.common.utils.TicketDownloadUtil.downloadAllActiveTickets
 import kz.divtech.odyssey.rotation.databinding.FragmentActiveTripsBinding
 import kz.divtech.odyssey.shared.domain.model.EmptyData
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
@@ -143,9 +143,11 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
     private fun getTrips(){
         refreshing.set(true)
         lifecycleScope.launch{
-            adapter.submitData(PagingData.empty())
-            isActiveTrips?.let { viewModel.getFlowTrips(it).collectLatest { pagingData ->
+            isActiveTrips?.let {
+                viewModel.getFlowTrips(it).collectLatest { pagingData ->
                 adapter.submitData(pagingData)
+                val tripList = adapter.snapshot().items
+                downloadAllActiveTickets(tripList)
             }}
         }
         refreshing.set(false)
