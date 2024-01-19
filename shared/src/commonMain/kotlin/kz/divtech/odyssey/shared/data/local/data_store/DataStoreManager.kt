@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kz.divtech.odyssey.shared.common.Config
 import kz.divtech.odyssey.shared.common.Config.AUTHORIZATION_VALUE_PREFIX
+import kz.divtech.odyssey.shared.common.Constants
 
 
 class DataStoreManager(private val dataStore: DataStore<Preferences>) {
@@ -114,7 +115,7 @@ class DataStoreManager(private val dataStore: DataStore<Preferences>) {
 
     fun getLanguage(): Flow<String>{
         return dataStore.data.map { preferences ->
-            preferences[languageKey] ?: ""
+            preferences[languageKey] ?: Constants.LNG_RUSSIAN
         }
     }
 

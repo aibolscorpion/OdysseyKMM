@@ -63,10 +63,10 @@ object Utils {
     }
 
     fun getCountryList(): List<Country>{
-//        val rawId = when(fetchAppLanguage()){
-//            else -> R.raw.countries
-//        }
-        val jsonString = App.appContext.resources.openRawResource(R.raw.countries).bufferedReader().
+        val rawId = when(App.appContext.getAppLocale()){
+            else -> R.raw.countries
+        }
+        val jsonString = App.appContext.resources.openRawResource(rawId).bufferedReader().
             use { it.readText() }
         return Gson().fromJson(jsonString, CountryList::class.java).countries
     }

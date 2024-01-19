@@ -31,9 +31,15 @@ import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.common.Config.UPDATE_TYPE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_DATA_TITLE
@@ -49,9 +55,7 @@ import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
-import kz.divtech.odyssey.shared.domain.repository.FaqRepository
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
-import kz.divtech.odyssey.shared.domain.repository.TripsRepository
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
@@ -86,29 +90,17 @@ class MainActivity : AppCompatActivity(), NotificationListener {
     @Inject
     lateinit var dataStoreManager: DataStoreManager
 
-    @Inject
-    lateinit var faqRepository: FaqRepository
-
-    @Inject
-    lateinit var tripsRepository: TripsRepository
-
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface DataStorageManagerInterface {
+        fun getDataStorageManager() : DataStoreManager
+    }
     @OptIn(NavigationUiSaveStateControl::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         createDeviceIdIfNotExists(dataStoreManager)
-
-//        lifecycleScope.launch {
-//            repository.findByPhoneNumber("77475551993")
-//            tripsRepository.getNearestActiveTrip()
-//            delay(4000)
-//            Timber.i("${tripsRepository.getNearestTripFromBd()}")
-//            tripsRepository.deleteNearestTrip()
-//            delay(4000)
-//            Timber.i("${tripsRepository.getNearestTripFromBd()}")
-//        }
-
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
@@ -168,10 +160,13 @@ class MainActivity : AppCompatActivity(), NotificationListener {
         firebaseAnalytics = Firebase.analytics
 
     }
-    override fun attachBaseContext(newBase: Context?) {
-//        val context = newBase?.changeAppLocale(fetchAppLanguage())
-        val context = newBase?.changeAppLocale("")
-        super.attachBaseContext(context)
+    override fun attachBaseContext(newBase: Context) {
+        runBlocking {
+            val dataStorageManager = EntryPointAccessors.fromApplication(newBase, DataStorageManagerInterface::class.java)
+            val appLng = dataStorageManager.getDataStorageManager().getLanguage().first()
+            val context = newBase.changeAppLocale(appLng)
+            super.attachBaseContext(context)
+        }
     }
 
     override fun onResume() {
