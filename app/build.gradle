@@ -117,4 +117,7 @@ dependencies {
 
     implementation libs.datastore.preferences.core
 
+    //EventBus
+    implementation libs.eventbus
+
 }

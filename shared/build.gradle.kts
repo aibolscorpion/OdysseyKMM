@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.sqldelight.runtime)
             implementation(libs.coroutines.extensions)
             implementation(libs.sqldelight.paging3)
+            implementation(libs.eventbus)
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.android)

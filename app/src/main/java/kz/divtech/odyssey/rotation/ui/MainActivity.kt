@@ -54,15 +54,18 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.Per
 import kz.divtech.odyssey.rotation.common.utils.Utils.changeAppLocale
 import kz.divtech.odyssey.rotation.common.utils.Utils.convertToNotification
 import kz.divtech.odyssey.shared.data.local.data_store.DataStoreManager
+import kz.divtech.odyssey.shared.data.remote.UnauthorizedEvent
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.PushNotification
 import kz.divtech.odyssey.shared.domain.repository.FindEmployeeRepository
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.UUID
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NotificationListener {
-
+class MainActivity : AppCompatActivity(), NotificationListener{
     private val navController by lazy {
         (supportFragmentManager.findFragmentById(R.id.mainNavHostFragment)
                 as NavHostFragment).navController }
@@ -167,6 +170,27 @@ class MainActivity : AppCompatActivity(), NotificationListener {
             val context = newBase.changeAppLocale(appLng)
             super.attachBaseContext(context)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        EventBus.getDefault().register(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onUnauthorizedEvent(e: UnauthorizedEvent){
+        Toast.makeText(this, R.string.you_are_unauthorized, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch{
+            viewModel.deleteAllDataAsync().await()
+            goToLoginPage()
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onResume() {

@@ -45,14 +45,21 @@ import kz.divtech.odyssey.shared.domain.data_source.NearestTripDataSource
 import kz.divtech.odyssey.shared.domain.data_source.NewsDataSource
 import kz.divtech.odyssey.shared.domain.data_source.NotificationDataSource
 import kz.divtech.odyssey.shared.domain.data_source.OrgInfoDataSource
+import org.greenrobot.eventbus.EventBus
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
     @Singleton
-    fun provideHttpClient(dataStoreManager: DataStoreManager): HttpClient{
-        return MainApi(dataStoreManager).httpClient
+    fun provideHttpClient(dataStoreManager: DataStoreManager, eventBus: EventBus): HttpClient{
+        return MainApi(dataStoreManager, eventBus).httpClient
+    }
+
+    @Provides
+    @Singleton
+    fun provideEventBus(): EventBus {
+        return EventBus.getDefault()
     }
 
     @Provides
