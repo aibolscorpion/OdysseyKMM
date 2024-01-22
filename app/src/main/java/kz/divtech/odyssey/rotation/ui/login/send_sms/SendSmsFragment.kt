@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.login.send_sms
 
 import android.annotation.SuppressLint
-import android.content.Context.RECEIVER_NOT_EXPORTED
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
@@ -114,7 +114,7 @@ class SendSmsFragment : Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRe
         super.onResume()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), RECEIVER_NOT_EXPORTED)
+            context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), RECEIVER_EXPORTED)
         }else{
             context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
         }

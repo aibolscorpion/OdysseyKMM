@@ -1,7 +1,7 @@
 package kz.divtech.odyssey.rotation.ui.profile.personal_data.update_phone
 
 import android.annotation.SuppressLint
-import android.content.Context.RECEIVER_NOT_EXPORTED
+import android.content.Context.RECEIVER_EXPORTED
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
@@ -131,7 +131,7 @@ class SmsCodeFragment: Fragment(), OnFilledListener, SmsBroadcastReceiver.OTPRec
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                RECEIVER_NOT_EXPORTED
+                RECEIVER_EXPORTED
             )
         }else{
             context?.registerReceiver(smsReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION))
