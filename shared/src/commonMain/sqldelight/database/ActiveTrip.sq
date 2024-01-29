@@ -35,10 +35,10 @@ getActiveTripsSortedByStatus:
 SELECT * FROM active_trip WHERE (status IN ?) AND ((direction IN ? AND direction IS NOT NULL)
 OR (direction IS NULL AND 'to-work' IN ? AND 'to-home' IN ?))
 ORDER BY
-status = 'issued',
-status = 'partly',
-status = 'opened',
 status = 'returned',
+status = 'opened',
+status = 'partly',
+status = 'issued',
 date ASC LIMIT :limit OFFSET :offset;
 
 insertActiveTrips:
