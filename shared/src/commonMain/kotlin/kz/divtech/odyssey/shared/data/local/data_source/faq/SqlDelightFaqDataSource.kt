@@ -11,7 +11,7 @@ import kz.divtech.odyssey.shared.domain.model.help.faq.Faq
 class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
     private val queries = database.faqQueries
     override fun getFaq(): Flow<List<Faq>> {
-        return queries.getFaqList(mapper = { id, question, answer, _, _ ->
+        return queries.getFaqList(mapper = { id, question, answer ->
             Faq(id.toInt(), question, answer)
         }).asFlow().mapToList(Dispatchers.IO)
     }
@@ -26,9 +26,7 @@ class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
                 queries.insertFaq(
                     id = faq.id?.toLong(),
                     question = faq.question,
-                    answer = faq.answer,
-                    createdAt = null,
-                    updatedAt = null
+                    answer = faq.answer
                 )
             }
         }
@@ -41,9 +39,7 @@ class SqlDelightFaqDataSource(database: OdysseyDatabase): FaqDataSource {
                 queries.insertFaq(
                     id = faq.id?.toLong(),
                     question = faq.question,
-                    answer = faq.answer,
-                    createdAt = null,
-                    updatedAt = null
+                    answer = faq.answer
                 )
             }
         }

@@ -1,15 +1,13 @@
 CREATE TABLE IF NOT EXISTS `Faq` (
 `id` INTEGER PRIMARY KEY,
 `question` TEXT,
-`answer` TEXT,
-`createdAt` TEXT,
-`updatedAt` TEXT);
+`answer` TEXT);
 
 getFaqList:
 SELECT * FROM Faq;
 
 insertFaq:
-INSERT OR REPLACE INTO Faq(id, question, answer, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?);
+INSERT OR REPLACE INTO Faq(id, question, answer) VALUES (?, ?, ?);
 
 deleteFaqList:
 DELETE FROM Faq;
