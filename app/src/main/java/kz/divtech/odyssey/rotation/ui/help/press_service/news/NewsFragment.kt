@@ -30,7 +30,7 @@ import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsListene
 import kz.divtech.odyssey.rotation.ui.help.press_service.news.paging.NewsPagingAdapter
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.LoaderAdapter
 import kz.divtech.odyssey.rotation.common.utils.RecyclerViewUtil.addItemDecorationWithoutLastDivider
-import java.net.UnknownHostException
+import java.io.IOException
 
 @AndroidEntryPoint
 class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
@@ -77,7 +77,7 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
         binding.newsRecyclerView.addItemDecorationWithoutLastDivider()
 
         lifecycleScope.launch{
-            viewModel.getPagingNews().collectLatest {  pagingData ->
+            viewModel.getPagingNews().collect {  pagingData ->
                 adapter.submitData(pagingData)
             }
         }
@@ -124,7 +124,7 @@ class NewsFragment : Fragment(), NewsListener, LoaderAdapter.RetryCallback {
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    if(errorState.error !is UnknownHostException){
+                    if(errorState.error !is IOException){
                         Toast.makeText(requireContext(), errorState.error.toString(),
                             Toast.LENGTH_SHORT).show()
                     }

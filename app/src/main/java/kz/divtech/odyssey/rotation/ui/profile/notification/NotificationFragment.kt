@@ -19,7 +19,6 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kz.divtech.odyssey.rotation.R
 import kz.divtech.odyssey.rotation.databinding.FragmentNotificationBinding
@@ -29,7 +28,7 @@ import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationLi
 import kz.divtech.odyssey.rotation.ui.profile.notification.paging.NotificationPagingAdapter
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.Notification
 import kz.divtech.odyssey.shared.domain.model.profile.notifications.convertToPushNotification
-import java.net.UnknownHostException
+import java.io.IOException
 
 @AndroidEntryPoint
 class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.RetryCallback {
@@ -53,7 +52,7 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupTripsPagingAdapter()
+        setupNotificationPagingAdapter()
         loadState()
     }
 
@@ -66,10 +65,10 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
         Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW, bundle)
     }
 
-    private fun setupTripsPagingAdapter() {
+    private fun setupNotificationPagingAdapter() {
         binding.notificationRecyclerView.adapter = adapter.withLoadStateFooter(LoaderAdapter(this))
         lifecycleScope.launch {
-            viewModel.getPagingNotifications().collectLatest { notifications ->
+            viewModel.getPagingNotifications().collect { notifications ->
                 adapter.submitData(notifications)
             }
         }
@@ -98,7 +97,7 @@ class NotificationFragment : Fragment(), NotificationListener, LoaderAdapter.Ret
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    if(errorState.error !is UnknownHostException){
+                    if(errorState.error !is IOException){
                         Toast.makeText(requireContext(), errorState.error.toString(),
                             Toast.LENGTH_SHORT).show()
                     }

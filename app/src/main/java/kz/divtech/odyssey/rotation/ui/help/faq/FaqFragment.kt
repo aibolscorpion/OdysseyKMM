@@ -45,7 +45,7 @@ class FaqFragment : Fragment() {
 
         viewModel.faqResult.observe(viewLifecycleOwner){ result ->
             result?.let{
-                if(result is Resource.Error){
+                if(result is Resource.Error && result !is Resource.Error.IOException){
                     Toast.makeText(requireContext(), "${result.message}", Toast.LENGTH_SHORT).show()
                 }
             }

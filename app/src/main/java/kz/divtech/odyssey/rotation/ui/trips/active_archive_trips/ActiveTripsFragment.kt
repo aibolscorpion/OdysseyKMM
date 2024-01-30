@@ -37,7 +37,7 @@ import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTri
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.dialogs.SortTripType.BY_DEPARTURE_DATE
 import kz.divtech.odyssey.rotation.ui.trips.active_archive_trips.paging.TripsPagingAdapter
 import kz.divtech.odyssey.shared.domain.model.trips.response.trip.Trip
-import java.net.UnknownHostException
+import java.io.IOException
 
 @AndroidEntryPoint
 class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, LoaderAdapter.RetryCallback,
@@ -131,7 +131,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
                     ?: loadState.prepend as? LoadState.Error
 
                 errorState?.let {
-                    if(errorState.error !is UnknownHostException){
+                    if(errorState.error !is IOException){
                         Toast.makeText(requireContext(), errorState.error.toString(),
                             Toast.LENGTH_SHORT).show()
                     }
@@ -146,7 +146,7 @@ class ActiveTripsFragment : Fragment(), TripsPagingAdapter.OnTripListener, Loade
         lifecycleScope.launch{
             adapter.submitData(PagingData.empty())
             isActiveTrips?.let {
-                viewModel.getFlowTrips(it).collectLatest { pagingData ->
+                viewModel.getFlowTrips(it).collect{ pagingData ->
                 adapter.submitData(pagingData)
                 val tripList = adapter.snapshot().items
                 downloadAllActiveTickets(tripList)

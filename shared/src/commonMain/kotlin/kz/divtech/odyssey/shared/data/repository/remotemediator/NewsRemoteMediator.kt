@@ -50,7 +50,7 @@ class NewsRemoteMediator(private val httpClient: HttpClient,
             )
         }catch (e: IOException) {
             return MediatorResult.Error(
-                Exception("${e.message}"),
+                IOException("${e.message}"),
             )
         }catch (e: Exception){
             return MediatorResult.Error(
