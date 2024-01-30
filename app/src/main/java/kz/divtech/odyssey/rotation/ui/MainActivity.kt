@@ -47,6 +47,8 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_APPLICATIO
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_TICKET
+import kz.divtech.odyssey.rotation.common.SharedPrefs.fetchFirebaseToken
+import kz.divtech.odyssey.rotation.common.SharedPrefs.saveFirebaseToken
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
@@ -104,6 +106,7 @@ class MainActivity : AppCompatActivity(), NotificationListener{
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         createDeviceIdIfNotExists(dataStoreManager)
+        migrateFirebaseToken()
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
@@ -163,6 +166,7 @@ class MainActivity : AppCompatActivity(), NotificationListener{
         firebaseAnalytics = Firebase.analytics
 
     }
+
     override fun attachBaseContext(newBase: Context) {
         runBlocking {
             val dataStorageManager = EntryPointAccessors.fromApplication(newBase, DataStorageManagerInterface::class.java)
@@ -205,6 +209,17 @@ class MainActivity : AppCompatActivity(), NotificationListener{
             }else if (info.installStatus() == InstallStatus.DOWNLOADED){
                 showToastForCompleteUpdate()
             }
+        }
+
+    }
+
+    private fun migrateFirebaseToken(){
+        val firebaseToken = this.fetchFirebaseToken()
+        if(firebaseToken.isNotEmpty()){
+            lifecycleScope.launch {
+                dataStoreManager.saveFirebaseToken(firebaseToken)
+            }
+            this.saveFirebaseToken("")
         }
     }
 
