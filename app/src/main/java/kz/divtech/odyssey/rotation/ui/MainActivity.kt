@@ -105,7 +105,7 @@ class MainActivity : AppCompatActivity(), NotificationListener{
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         createDeviceIdIfNotExists(dataStoreManager)
-        getFirebaseTokenIfEmptyInStorage()
+        saveFirebaseTokenIfEmptyInDataStore()
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
@@ -212,11 +212,13 @@ class MainActivity : AppCompatActivity(), NotificationListener{
 
     }
 
-    private fun getFirebaseTokenIfEmptyInStorage(){
+    private fun saveFirebaseTokenIfEmptyInDataStore(){
         FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
-            lifecycleScope.launch {
-                if(dataStoreManager.getFirebaseToken().first().isEmpty()){
-                    dataStoreManager.saveFirebaseToken(token)
+            token?.let{
+                lifecycleScope.launch {
+                    if(dataStoreManager.getFirebaseToken().first().isEmpty()){
+                        dataStoreManager.saveFirebaseToken(token)
+                    }
                 }
             }
         }
