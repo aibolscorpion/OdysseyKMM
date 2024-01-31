@@ -31,6 +31,7 @@ import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,8 +48,6 @@ import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_APPLICATIO
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_DEVICE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_PHONE
 import kz.divtech.odyssey.rotation.common.Constants.NOTIFICATION_TYPE_TICKET
-import kz.divtech.odyssey.rotation.common.SharedPrefs.fetchFirebaseToken
-import kz.divtech.odyssey.rotation.common.SharedPrefs.saveFirebaseToken
 import kz.divtech.odyssey.rotation.databinding.ActivityMainBinding
 import kz.divtech.odyssey.rotation.ui.profile.LogoutViewModel
 import kz.divtech.odyssey.rotation.ui.profile.notification.push_notification.NotificationListener
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity(), NotificationListener{
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         createDeviceIdIfNotExists(dataStoreManager)
-        migrateFirebaseToken()
+        getFirebaseTokenIfEmptyInStorage()
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         if(UPDATE_TYPE == AppUpdateType.FLEXIBLE){
@@ -213,13 +212,13 @@ class MainActivity : AppCompatActivity(), NotificationListener{
 
     }
 
-    private fun migrateFirebaseToken(){
-        val firebaseToken = this.fetchFirebaseToken()
-        if(firebaseToken.isNotEmpty()){
+    private fun getFirebaseTokenIfEmptyInStorage(){
+        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
             lifecycleScope.launch {
-                dataStoreManager.saveFirebaseToken(firebaseToken)
+                if(dataStoreManager.getFirebaseToken().first().isEmpty()){
+                    dataStoreManager.saveFirebaseToken(token)
+                }
             }
-            this.saveFirebaseToken("")
         }
     }
 
